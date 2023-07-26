@@ -44,7 +44,7 @@ class UserController @Inject()(
     val successFunction = { user: User =>
       val createUser: Boolean = userDao.createUser(user)
       if (createUser) {
-        Redirect(routes.HomeController.home)
+        Redirect(routes.AuthenticatedUserController.home)
           .withSession(Global.SESSION_USERNAME_KEY -> user.username)
       } else {
         Redirect(routes.UserController.showSignUpForm)
@@ -67,7 +67,7 @@ class UserController @Inject()(
       // form validation/binding succeeded ...
       val foundUser: Boolean = userDao.lookupUser(user)
       if (foundUser) {
-        Redirect(routes.HomeController.home)
+        Redirect(routes.AuthenticatedUserController.home)
           .withSession(Global.SESSION_USERNAME_KEY -> user.username)
       } else {
         Redirect(routes.UserController.showLoginForm)
