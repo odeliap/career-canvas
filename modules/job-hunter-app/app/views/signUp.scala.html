@@ -1,0 +1,63 @@
+@(
+form: Form[model.User],
+postUrl: Call
+)(implicit request: MessagesRequestHeader)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+</head>
+<body>
+<div id="user-login">
+    <img src="@routes.Assets.versioned("images/logo3.png")" class="logo3">
+    <p class="slogan">Sign up to simplify the job search.</p>
+    <hr id="login-div">
+    <div class="user-login-sign-up-form">
+        @request.flash.data.map{ case (name, value) =>
+        <div>@name: @value</div>
+        }
+
+        @* Global errors are not tied to any particular form field *@
+        @if(form.hasGlobalErrors) {
+        @form.globalErrors.map { error: FormError =>
+        <div>
+            Error: @error.key: @error.message
+        </div>
+        }
+        }
+
+        @helper.form(postUrl, 'class -> "user-login-form") {
+
+        @helper.CSRF.formField
+
+        @helper.inputText(
+        form("username"),
+        '_label -> "",
+        'placeholder -> "username",
+        'class -> "username",
+        'size -> 60,
+        '_showConstraints -> false
+        )
+
+        @helper.inputPassword(
+        form("password"),
+        '_label -> "",
+        'placeholder -> "password",
+        'class -> "password",
+        'size -> 60,
+        '_showConstraints -> false
+        )
+
+        <button id="login-sign-up-btn">Sign up</button>
+
+        }
+
+    </div>
+    <p id="terms-note">By signing up, you agree to our <a href="">Terms</a>, <a href="">Privacy Policy</a> and <a href="">Cookies Policy</a>.</p>
+</div>
+<div id="switch-up">
+    <p id="switch-up-txt">Have an account <a href="@routes.UserController.showLoginForm()" id="switch-up-btn">Log in</a></p>
+</div>
+</body>
+</html>

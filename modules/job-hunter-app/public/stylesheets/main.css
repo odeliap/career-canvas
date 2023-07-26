@@ -1,33 +1,10 @@
 body {
-    margin: 0;
+    font-family: "Frank Ruhl Libre", sans-serif;
 }
 
 h1, h2, h3, h4 {
-    font-family: "Frank Ruhl Libre", sans-serif;
-    font-weight: 50;
-}
-
-.heading {
-    background: #ffe2dc;
-    border-bottom: 0.5px solid #2B2B2B;
-    padding: 20px;
-}
-
-.intro {
-    margin: 10px auto;
-}
-
-.logo {
-    height: 50px;
-    width: 150px;
-}
-
-.navigation-bar {
-    background-color: white;
-    color: #2B2B2B;
-    padding: 10px auto;
-    display: flex;
-    justify-content: center;
+    font-weight: 550;
+    color: #242526;
 }
 
 a {
@@ -36,13 +13,150 @@ a {
     text-decoration: none;
 }
 
+#header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+}
+
+#logout-btn {
+    margin: 20px 10px;
+}
+
+#logout-btn:hover {
+    text-decoration: underline;
+}
+
+#user-login {
+    border: 1px solid #D4D4D4;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 15%);
+    padding: 50px 30px;
+    width: 275px;
+    height: 400px;
+    text-align: center;
+}
+
+.user-login-sign-up-form {
+    margin-top: 30px;
+    margin-left: -40px;
+    text-align: center;
+    font-size: 12px;
+    color: red;
+}
+
+#login-div {
+    border: 0.25px solid #D4D4D4;
+    width: 250px;
+}
+
+.username, .password {
+    width: 250px;
+    height: 30px;
+    border: 1px solid #D4D4D4;
+    background: #F5F5F5;
+    font-size: 10px;
+}
+
+#login-sign-up-btn {
+    margin-right: -40px;
+    background: #26abff;
+    width: 250px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#terms-note {
+    position: fixed;
+    bottom: 15px;
+    left: 40px;
+    width: 75%;
+    text-align: center;
+    font-size: 10px;
+    color: #808080;
+}
+
+#switch-up {
+    border: 1px solid #D4D4D4;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 1125%);
+    padding: 0px 30px;
+    width: 275px;
+    height: 50px;
+    text-align: center;
+}
+
+#switch-up-txt {
+    font-size: 12px;
+    padding: 8px;
+}
+
+#switch-up-btn {
+    color: #26abff;
+    font-weight: bold;
+}
+
+.column {
+    flex: 50%;
+}
+
+.intro {
+    top: 0;
+    position: sticky;
+    margin: 5px auto;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+.slogan {
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #808080;
+    margin-top: 0;
+}
+
+.logo1 {
+    height: 150px;
+    width: 150px;
+}
+
+.logo3 {
+    width: 250px;
+    height: 100px;
+}
+
+.navigation-bar {
+    background: #ECECEC;
+    color: #2B2B2B;
+    height: 50px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+}
+
 .navigation-el {
     text-transform: uppercase;
     font-family: "Jost", sans-serif;
     font-size: 10px;
     padding: 10px;
     border: none;
-    background: white;
+    background: #ECECEC;
 }
 
 .navigation-el:hover {

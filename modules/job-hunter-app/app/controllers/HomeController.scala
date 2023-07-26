@@ -18,19 +18,20 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
-  def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
+  def home() = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.home())
   }
 
   def feed() = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.feed())
   }
 
-  def network() = Action {implicit request: Request[AnyContent] =>
+  def network() = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.network())
   }
 
-  def jobStats() = Action {implicit request: Request[AnyContent] =>
-    Ok(views.html.jobstats())
+  def jobStats() = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.jobStats())
   }
+
 }
