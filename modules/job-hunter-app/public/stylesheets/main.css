@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+}
+
+h1, h2, h3, h4 {
+    font-family: "Frank Ruhl Libre", sans-serif;
+    font-weight: 50;
+}
+
+.heading {
+    background: #ffe2dc;
+    border-bottom: 0.5px solid #2B2B2B;
+    padding: 20px;
+}
+
+.intro {
+    margin: 10px auto;
+}
+
+.logo {
+    height: 50px;
+    width: 150px;
+}
+
+.navigation-bar {
+    background-color: white;
+    color: #2B2B2B;
+    padding: 10px auto;
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    color: #2B2B2B;
+    font-style: normal;
+    text-decoration: none;
+}
+
+.navigation-el {
+    text-transform: uppercase;
+    font-family: "Jost", sans-serif;
+    font-size: 10px;
+    padding: 10px;
+    border: none;
+    background: white;
+}
+
+.navigation-el:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
