@@ -43,3 +43,13 @@ lazy val jobHunterApp = (project in file("modules/job-hunter-app"))
       libraries.test.scalaTestPlus % Test
     )
   )
+
+lazy val jobHunterDatasource = (project in file("modules/job-hunter-datasource"))
+  .settings(commonSettings)
+  .settings(
+    name := "job-hunter-datasource",
+    description := "Job Hunter data source",
+    libraryDependencies ++= Seq(
+
+    )
+  )

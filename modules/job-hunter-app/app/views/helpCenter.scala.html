@@ -1,0 +1,37 @@
+@(title: String)(content: Html)
+
+@base(title) {
+    <div id="help-center-header">
+        <p><a href="">Help Center</a></p>
+    </div>
+    <div class="split-body">
+        <div class="sidebar">
+            <div class="subnav">
+                <button class="subnav-btn">Manage Your Account</button>
+                <div class="subnav-content">
+                    <a href="">Signing Up and Getting Started</a>
+                    <a href="">Delete Your Account</a>
+                </div>
+            </div>
+            <div class="subnav">
+                <button class="subnav-btn">Privacy, Security and Reporting</button>
+                <div class="subnav-content">
+                    <a href="">Login and Passwords</a>
+                    <a href="">How to Report Things</a>
+                </div>
+            </div>
+            <div class="subnav">
+                <button class="subnav-btn">Terms and Policies</button>
+                <div class="subnav-content">
+                    <a href="@routes.PolicyController.privacyPolicy()">Privacy Policy</a>
+                    <a href="@routes.PolicyController.termsOfUse()">Terms of Use</a>
+                    <a href="@routes.PolicyController.cookiesPolicy()">Cookies Policy</a>
+                </div>
+            </div>
+        </div>
+        <div class="split-page-content">
+            @* Content goes here *@
+            @content
+        </div>
+    </div>
+}

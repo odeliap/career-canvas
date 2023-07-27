@@ -50,11 +50,10 @@ postUrl: Call
         )
 
         <button id="login-sign-up-btn">Sign up</button>
-
         }
 
     </div>
-    <p id="terms-note">By signing up, you agree to our <a href="">Terms</a>, <a href="">Privacy Policy</a> and <a href="">Cookies Policy</a>.</p>
+    <p id="terms-note">By signing up, you agree to our <a href="@routes.PolicyController.termsOfUse()">Terms</a>, <a href="@routes.PolicyController.privacyPolicy()">Privacy Policy</a> and <a href="@routes.PolicyController.cookiesPolicy">Cookies Policy</a>.</p>
 </div>
 <div id="switch-up">
     <p id="switch-up-txt">Have an account <a href="@routes.UserController.showLoginForm()" id="switch-up-btn">Log in</a></p>
