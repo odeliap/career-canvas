@@ -2,26 +2,36 @@
 
 @base(title) {
     <div id="help-center-header">
+        <img src="@routes.Assets.versioned("images/logos/logo1.png")" id="help-center-icon">
         <p><a href="">Help Center</a></p>
     </div>
     <div class="split-body">
         <div class="sidebar">
             <div class="subnav">
-                <button class="subnav-btn">Manage Your Account</button>
+                <div class="subnav-item">
+                    <img src="@routes.Assets.versioned("images/help-center/user.svg")" class="icon">
+                    <button class="subnav-btn">Manage Your Account</button>
+                </div>
                 <div class="subnav-content">
                     <a href="">Signing Up and Getting Started</a>
                     <a href="">Delete Your Account</a>
                 </div>
             </div>
             <div class="subnav">
-                <button class="subnav-btn">Privacy, Security and Reporting</button>
+                <div class="subnav-item">
+                    <img src="@routes.Assets.versioned("images/help-center/lock.svg")" class="icon">
+                    <button class="subnav-btn">Privacy, Security and Reporting</button>
+                </div>
                 <div class="subnav-content">
                     <a href="">Login and Passwords</a>
                     <a href="">How to Report Things</a>
                 </div>
             </div>
             <div class="subnav">
-                <button class="subnav-btn">Terms and Policies</button>
+                <div class="subnav-item">
+                    <img src="@routes.Assets.versioned("images/help-center/alert.svg")" class="icon">
+                    <button class="subnav-btn">Terms and Policies</button>
+                </div>
                 <div class="subnav-content">
                     <a href="@routes.PolicyController.privacyPolicy()">Privacy Policy</a>
                     <a href="@routes.PolicyController.termsOfUse()">Terms of Use</a>
