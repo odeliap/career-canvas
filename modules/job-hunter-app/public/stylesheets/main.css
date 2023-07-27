@@ -1,3 +1,4 @@
+/* Standard */
 body {
     font-family: "Frank Ruhl Libre", sans-serif;
     margin: 0;
@@ -18,6 +19,41 @@ li {
     margin: 15px 0;
 }
 
+.intro {
+    top: 0;
+    position: sticky;
+    margin: 5px auto;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+.slogan {
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #808080;
+    margin-top: 0;
+}
+
+.logo1 {
+    height: 150px;
+    width: 150px;
+}
+
+.logo3 {
+    width: 250px;
+    height: 100px;
+}
+
+/* User Home Pages */
+
 #header {
     display: flex;
     justify-content: space-between;
@@ -31,6 +67,33 @@ li {
 #logout-btn:hover {
     text-decoration: underline;
 }
+
+.navigation-bar {
+    background: #ECECEC;
+    color: #2B2B2B;
+    height: 50px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+}
+
+.navigation-el {
+    text-transform: uppercase;
+    font-family: "Jost", sans-serif;
+    font-size: 10px;
+    padding: 10px;
+    border: none;
+    background: #ECECEC;
+}
+
+.navigation-el:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+/* Login/Signup Pages */
 
 #user-login {
     border: 1px solid #D4D4D4;
@@ -107,67 +170,7 @@ li {
     font-weight: bold;
 }
 
-.column {
-    flex: 50%;
-}
-
-.intro {
-    top: 0;
-    position: sticky;
-    margin: 5px auto;
-}
-
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 10px;
-}
-
-.slogan {
-    padding: 10px;
-    font-size: 15px;
-    font-weight: bold;
-    color: #808080;
-    margin-top: 0;
-}
-
-.logo1 {
-    height: 150px;
-    width: 150px;
-}
-
-.logo3 {
-    width: 250px;
-    height: 100px;
-}
-
-.navigation-bar {
-    background: #ECECEC;
-    color: #2B2B2B;
-    height: 50px;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    list-style-type: none;
-}
-
-.navigation-el {
-    text-transform: uppercase;
-    font-family: "Jost", sans-serif;
-    font-size: 10px;
-    padding: 10px;
-    border: none;
-    background: #ECECEC;
-}
-
-.navigation-el:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-}
+/* Help Center */
 
 #help-center-header {
     font-family: "Jost", sans-serif;
