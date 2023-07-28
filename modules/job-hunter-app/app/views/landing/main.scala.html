@@ -2,26 +2,18 @@
 
 @base(title) {
 <div class="navigation-page">
-    <div class="intro">
-        <div class="header">
-            <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
-            <a href="@routes.UserController.showLoginForm()" id="login-btn">login</a>
-        </div>
-        <ul class="navigation-bar">
-            <li><a class="navigation-el" href="@routes.LandingController.showWelcomePage()">Welcome</a></li>
-            <li><a class="navigation-el" href="@routes.LandingController.showAboutPage()">About</a></li>
-        </ul>
-    </div>
+    @navigationHeader {
+        <a href="@routes.UserController.showLoginForm()" id="login-btn">login</a>
+    } {
+        <li><a class="navigation-el" href="@routes.LandingController.showWelcomePage()">Welcome</a></li>
+        <li><a class="navigation-el" href="@routes.LandingController.showAboutPage()">About</a></li>
+    }
     <div class="landing-main-content">
         <div class="landing-input-content">
             @* Content goes here *@
             @content
         </div>
-        <hr>
-        <div class="footer">
-            <p>2023 Job Hunter, LLC</p>
-            <p>Do not sell or share my information</p>
-        </div>
+        @footer()
     </div>
 </div>
 }

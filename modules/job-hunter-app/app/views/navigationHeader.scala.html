@@ -1,0 +1,11 @@
+@(logInOut: Html)(navigationElements: Html)
+
+<div class="intro">
+    <div class="header">
+        <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
+        @logInOut
+    </div>
+    <ul class="navigation-bar">
+        @navigationElements
+    </ul>
+</div>
