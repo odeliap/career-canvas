@@ -8,13 +8,13 @@ object Dependencies {
     }
 
     object play {
-      val slickVersion = "5.1.0"
+      val slickVersion = "5.0.0"
     }
 
     object slick {
-      val slickVersion = "3.4"
-      val postgresVersion = "[0.21, 0.22)"
-      val postgresDriverVersion = "42.5.3"
+      val slickVersion = "3.3.3"
+      val postgresVersion = "0.20.3"
+      val postgresDriverVersion = "42.3.4"
     }
   }
 
