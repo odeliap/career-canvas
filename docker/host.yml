@@ -1,0 +1,8 @@
+version: '2.3'
+services:
+  postgres:
+    ports:
+      - 5432:5432
+    extends:
+      service: postgres
+      file: dependencies.yml

@@ -19,8 +19,12 @@ val commonSettings = Seq(
   ),
   libraryDependencies ++= Seq(
     guice,
-    specs2 % Test,
-    libraries.test.scalaTestPlus % Test,
+    libraries.play.slick,
+    libraries.play.evolutions,
+    libraries.slick.core,
+    libraries.slick.postgres,
+    libraries.slick.postgresJson,
+    libraries.slick.postgresDriver
   )
 )
 
@@ -33,14 +37,21 @@ lazy val root = (project in file("."))
     organization := "odeliaputterman.com",
     version := "1.0-SNAPSHOT"
   )
-  .aggregate(jobHunterApp)
+  .aggregate(jobHunterApp, jobHunterDatasource)
 
 lazy val jobHunterApp = (project in file("modules/job-hunter-app"))
   .enablePlugins(PlayScala)
   .settings(commonSettings)
   .settings(
     name := "job-hunter-app",
-    description := "Job Hunter play app"
+    description := "Job Hunter play app",
+    libraryDependencies ++= Seq(
+      specs2 % Test,
+      libraries.test.scalaTestPlus % Test,
+    )
+  )
+  .dependsOn(
+    jobHunterDatasource
   )
 
 lazy val jobHunterDatasource = (project in file("modules/job-hunter-datasource"))
@@ -49,6 +60,5 @@ lazy val jobHunterDatasource = (project in file("modules/job-hunter-datasource")
     name := "job-hunter-datasource",
     description := "Job Hunter data source",
     libraryDependencies ++= Seq(
-
     )
   )

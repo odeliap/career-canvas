@@ -1,0 +1,17 @@
+version: '3'
+services:
+
+  postgres:
+    extends:
+      service: postgres
+      file: docker/dependencies.yml
+
+  jobhunter:
+    build:
+      context: .
+    ports:
+      - 9000:9000
+    environment:
+      APP_JDBC_URL: "jdbc:postgresql://postgres:5432/jobhunter"
+      APP_DB_USER: "jobhunter"
+      APP_DB_PASSWORD: "jobhunter"

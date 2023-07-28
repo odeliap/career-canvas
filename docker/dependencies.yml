@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_DB: jobhunter
+      POSTGRES_USER: jobhunter
+      POSTGRES_PASSWORD: jobhunter

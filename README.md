@@ -3,6 +3,18 @@ Job Hunter Application
 
 ## Running the app
 
+Create the docker image with:
+
+```
+sbt docker:publishLocal
+```
+
+Set up postgres DB:
+
+```
+docker-compose -f docker/host.yml up
+```
+
 Run the play app from the root of this project with:
 
 ```
