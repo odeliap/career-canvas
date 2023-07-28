@@ -43,7 +43,7 @@ hr {
     padding: 20px 0 70px 0;
 }
 
-.slogan, #welcome-slogan {
+.slogan {
     padding: 10px;
     font-size: 15px;
     font-weight: bold;
@@ -93,12 +93,20 @@ hr {
 }
 
 #welcome-slogan {
-    margin: 0 175px;
+    margin: 0 215px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 100;
+    color: #808080;
 }
 
 #welcome-img {
     right: 0;
     width: 45%;
+}
+
+#about {
+    text-align: left;
 }
 
 /* Navigation Pages */
@@ -151,15 +159,13 @@ hr {
 }
 
 .main-h2 {
-    text-align: center;
-    font-size: 35px;
+    font-size: 40px;
     margin-bottom: 40px;
     font-family: "Frank Ruhl Libre", sans-serif;
     font-weight: 600;
 }
 
 .main-h3 {
-    text-align: center;
     font-size: 25px;
     margin-bottom: 30px;
     font-family: "Frank Ruhl Libre", sans-serif;
