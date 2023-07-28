@@ -10,7 +10,7 @@ postUrl: Call
 </head>
 <body>
 <div id="user-login">
-    <img src="@routes.Assets.versioned("images/logo2.png")" class="logo2">
+    <img src="@routes.Assets.versioned("images/logos/logo2.png")" class="logo2">
     <p class="slogan">Sign up to simplify the job search.</p>
     <hr id="login-div">
     <div class="user-login-sign-up-form">
@@ -53,7 +53,7 @@ postUrl: Call
         }
 
     </div>
-    <p id="terms-note">By signing up, you agree to our <a href="@routes.PolicyController.termsOfUse()">Terms</a>, <a href="@routes.PolicyController.privacyPolicy()">Privacy Policy</a> and <a href="@routes.PolicyController.cookiesPolicy">Cookies Policy</a>.</p>
+    <p id="terms-note">By signing up, you agree to our <a href="@routes.PolicyController.showTermsOfUse()">Terms</a>, <a href="@routes.PolicyController.showPrivacyPolicy()">Privacy Policy</a> and <a href="@routes.PolicyController.showCookiesPolicy">Cookies Policy</a>.</p>
 </div>
 <div id="switch-up">
     <p id="switch-up-txt">Have an account <a href="@routes.UserController.showLoginForm()" id="switch-up-btn">Log in</a></p>

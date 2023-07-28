@@ -1,11 +1,10 @@
 /* Standard */
-html {
+html, body {
     margin: 0;
+    font-family: "Frank Ruhl Libre", sans-serif;
 }
 
 body {
-    font-family: "Frank Ruhl Libre", sans-serif;
-    margin: 0;
     height: 100vh;
     width: 100vw;
 }
@@ -25,22 +24,26 @@ li {
     margin: 15px 0;
 }
 
+hr {
+    margin: 0;
+}
+
+/* Common Elements */
+
 .intro {
     top: 0;
     position: sticky;
-    margin: 5px auto;
+    margin: 0px auto;
 }
 
 .footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
     text-align: center;
     text-transform: uppercase;
     font-size: 10px;
+    padding: 20px 0 70px 0;
 }
 
-.slogan {
+.slogan, #welcome-slogan {
     padding: 10px;
     font-size: 15px;
     font-weight: bold;
@@ -64,20 +67,51 @@ li {
     height: 100px;
 }
 
-/* User Home Pages */
-
-#header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-}
-
-#logout-btn {
+#logout-btn, #login-btn {
     margin: 20px 10px;
 }
 
-#logout-btn:hover {
+#logout-btn:hover, #login-btn:hover {
     text-decoration: underline;
+}
+
+/* Landing Pages */
+
+.signup {
+    font-weight: 600;
+}
+
+#welcome-page {
+    display: flex;
+}
+
+#welcome-left {
+    text-align: center;
+    margin: auto;
+    left: 0;
+    width: 55%;
+}
+
+#welcome-slogan {
+    margin: 0 175px;
+}
+
+#welcome-img {
+    right: 0;
+    width: 45%;
+}
+
+/* Navigation Pages */
+
+.navigation-page {
+    font-family: "Jost", sans-serif;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    background: white;
 }
 
 .navigation-bar {
@@ -85,6 +119,7 @@ li {
     color: #2B2B2B;
     height: 50px;
     margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -93,7 +128,6 @@ li {
 
 .navigation-el {
     text-transform: uppercase;
-    font-family: "Jost", sans-serif;
     font-size: 10px;
     padding: 10px;
     border: none;
@@ -103,6 +137,33 @@ li {
 .navigation-el:hover {
     text-decoration: underline;
     text-decoration-thickness: 2px;
+}
+
+.main-content, #about {
+    margin: 50px auto;
+    width: 70%;
+}
+
+.input-content, #about {
+    padding-bottom: 20px;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.main-h2 {
+    text-align: center;
+    font-size: 35px;
+    margin-bottom: 40px;
+    font-family: "Frank Ruhl Libre", sans-serif;
+    font-weight: 600;
+}
+
+.main-h3 {
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 30px;
+    font-family: "Frank Ruhl Libre", sans-serif;
+    font-weight: 600;
 }
 
 /* Login/Signup Pages */
@@ -214,9 +275,9 @@ li {
     height: 90%;
     overflow: auto;
     position: absolute;
-    left: 300px;
+    left: 400px;
+    top: 100px;
     vertical-align: top;
-    padding: 50px;
     font-family: "Jost", sans-serif;
     color: #414141;
 }
@@ -226,6 +287,7 @@ li {
     position: absolute;
     left: 0;
     padding-top: 15px;
+    padding-right: 20px;
     background: white;
     border-right: 1px solid #D4D4D4;
 }
@@ -286,3 +348,6 @@ li {
 .mini-button:hover {
     text-decoration: underline;
 }
+
+/* User Home Pages */
+

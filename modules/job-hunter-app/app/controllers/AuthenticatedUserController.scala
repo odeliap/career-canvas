@@ -16,20 +16,20 @@ class AuthenticatedUserController @Inject()(
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
-  def home() = authenticatedUserAction { implicit request: Request[AnyContent] =>
-    Ok(views.html.home())
+  def showHome() = authenticatedUserAction { implicit request: Request[AnyContent] =>
+    Ok(views.html.authenticated.user.home())
   }
 
-  def feed() = authenticatedUserAction { implicit request: Request[AnyContent] =>
-    Ok(views.html.feed())
+  def showFeed() = authenticatedUserAction { implicit request: Request[AnyContent] =>
+    Ok(views.html.authenticated.user.feed())
   }
 
-  def network() = authenticatedUserAction { implicit request: Request[AnyContent] =>
-    Ok(views.html.network())
+  def showNetwork() = authenticatedUserAction { implicit request: Request[AnyContent] =>
+    Ok(views.html.authenticated.user.network())
   }
 
-  def jobStats() = authenticatedUserAction { implicit request: Request[AnyContent] =>
-    Ok(views.html.jobStats())
+  def showJobStats() = authenticatedUserAction { implicit request: Request[AnyContent] =>
+    Ok(views.html.authenticated.user.jobStats())
   }
 
   def logout = authenticatedUserAction { implicit request: Request[AnyContent] =>

@@ -1,0 +1,29 @@
+@(title: String)(content: Html)
+
+@base(title) {
+    <div class="navigation-page">
+        <div class="intro">
+            <div class="header">
+                <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
+                <a href="@routes.AuthenticatedUserController.logout()" id="logout-btn">logout</a>
+            </div>
+            <ul class="navigation-bar">
+                <li><a class="navigation-el" href="@routes.AuthenticatedUserController.showHome()">Home</a></li>
+                <li><a class="navigation-el" href="@routes.AuthenticatedUserController.showFeed()">Job Feed</a></li>
+                <li><a class="navigation-el" href="@routes.AuthenticatedUserController.showNetwork()">Network</a></li>
+                <li><a class="navigation-el" href="@routes.AuthenticatedUserController.showJobStats()">Search Statistics</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="input-content">
+                @* Content goes here *@
+                @content
+            </div>
+            <hr>
+            <div class="footer">
+                <p>2023 Job Hunter, LLC</p>
+                <p>Do not sell or share my information</p>
+            </div>
+        </div>
+    </div>
+}

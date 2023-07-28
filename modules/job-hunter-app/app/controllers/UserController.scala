@@ -29,23 +29,24 @@ class UserController @Inject()(
   private val signUpUrl = routes.UserController.processSignUpAttempt
 
   def showSignUpForm = Action { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.signUp(form, signUpUrl))
+    Ok(views.html.user.signUp(form, signUpUrl))
   }
 
   def showLoginForm = Action { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.userLogin(form, formSubmitUrl))
+    Ok(views.html.user.userLogin(form, formSubmitUrl))
   }
 
   def processSignUpAttempt = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[User] =>
       // form validation/binding failed...
-      BadRequest(views.html.userLogin(formWithErrors, formSubmitUrl))
+      BadRequest(views.html.user.userLogin(formWithErrors, formSubmitUrl))
     }
     val successFunction = { user: User =>
       val createUser: Boolean = userDao.createUser(user)
       if (createUser) {
-        Redirect(routes.AuthenticatedUserController.home)
+        Redirect(routes.UserController.showLoginForm)
           .withSession(Global.SESSION_USERNAME_KEY -> user.username)
+          .flashing("success" -> "Account created. Please log in.")
       } else {
         Redirect(routes.UserController.showSignUpForm)
           .flashing("error" -> "Invalid username/password.")
@@ -61,13 +62,13 @@ class UserController @Inject()(
   def processLoginAttempt = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[User] =>
       // form validation/binding failed...
-      BadRequest(views.html.userLogin(formWithErrors, formSubmitUrl))
+      BadRequest(views.html.user.userLogin(formWithErrors, formSubmitUrl))
     }
     val successFunction = { user: User =>
       // form validation/binding succeeded ...
       val foundUser: Boolean = userDao.lookupUser(user)
       if (foundUser) {
-        Redirect(routes.AuthenticatedUserController.home)
+        Redirect(routes.AuthenticatedUserController.showHome)
           .withSession(Global.SESSION_USERNAME_KEY -> user.username)
       } else {
         Redirect(routes.UserController.showLoginForm)
