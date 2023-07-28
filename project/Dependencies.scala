@@ -10,7 +10,8 @@ object Dependencies {
 
   object libraries {
     object test {
-      val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0"
+      import versions.test._
+      val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % scalaTestPlusVersion
     }
   }
 

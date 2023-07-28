@@ -18,7 +18,9 @@ val commonSettings = Seq(
     Resolver.mavenLocal
   ),
   libraryDependencies ++= Seq(
-    guice
+    guice,
+    specs2 % Test,
+    libraries.test.scalaTestPlus % Test,
   )
 )
 
@@ -38,10 +40,7 @@ lazy val jobHunterApp = (project in file("modules/job-hunter-app"))
   .settings(commonSettings)
   .settings(
     name := "job-hunter-app",
-    description := "Job Hunter play app",
-    libraryDependencies ++= Seq(
-      libraries.test.scalaTestPlus % Test
-    )
+    description := "Job Hunter play app"
   )
 
 lazy val jobHunterDatasource = (project in file("modules/job-hunter-datasource"))
