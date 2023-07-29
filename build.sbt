@@ -37,7 +37,7 @@ lazy val root = (project in file("."))
     organization := "odeliaputterman.com",
     version := "1.0-SNAPSHOT"
   )
-  .aggregate(jobHunterApp, jobHunterDatasource)
+  .aggregate(jobHunterApp, jobHunterDatasource, jobHunterModel)
 
 lazy val jobHunterApp = (project in file("modules/job-hunter-app"))
   .enablePlugins(PlayScala)
@@ -51,7 +51,7 @@ lazy val jobHunterApp = (project in file("modules/job-hunter-app"))
     )
   )
   .dependsOn(
-    jobHunterDatasource
+    jobHunterDatasource, jobHunterModel
   )
 
 lazy val jobHunterDatasource = (project in file("modules/job-hunter-datasource"))
@@ -59,6 +59,18 @@ lazy val jobHunterDatasource = (project in file("modules/job-hunter-datasource")
   .settings(
     name := "job-hunter-datasource",
     description := "Job Hunter data source",
+    libraryDependencies ++= Seq(
+    )
+  )
+  .dependsOn(
+    jobHunterModel
+  )
+
+lazy val jobHunterModel = (project in file("modules/job-hunter-model"))
+  .settings(commonSettings)
+  .settings(
+    name := "job-hunter-model",
+    description := "Job Hunter model",
     libraryDependencies ++= Seq(
     )
   )

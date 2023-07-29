@@ -1,14 +1,16 @@
 package controllers
 
 import javax.inject.Inject
-import model.{Global, User, UserDao}
+import model.Global
+import odeliaputterman.com.jobhunter.model.User
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc._
+import service.UserService
 
 class UserController @Inject()(
   cc: MessagesControllerComponents,
-  userDao: UserDao
+  userService: UserService
 ) extends MessagesAbstractController(cc) {
 
   private val logger = play.api.Logger(this.getClass)
@@ -42,10 +44,10 @@ class UserController @Inject()(
       BadRequest(views.html.user.userLogin(formWithErrors, formSubmitUrl))
     }
     val successFunction = { user: User =>
-      val createUser: Boolean = userDao.createUser(user)
+      val createUser: Boolean = userService.createUser(user)
       if (createUser) {
         Redirect(routes.UserController.showLoginForm)
-          .withSession(Global.SESSION_USERNAME_KEY -> user.username)
+          .withSession(Global.SESSION_USERNAME_KEY -> user.email)
           .flashing("success" -> "Account created. Please log in.")
       } else {
         Redirect(routes.UserController.showSignUpForm)
@@ -66,10 +68,10 @@ class UserController @Inject()(
     }
     val successFunction = { user: User =>
       // form validation/binding succeeded ...
-      val foundUser: Boolean = userDao.lookupUser(user)
+      val foundUser: Boolean = userService.lookupUser(user)
       if (foundUser) {
         Redirect(routes.AuthenticatedUserController.showHome)
-          .withSession(Global.SESSION_USERNAME_KEY -> user.username)
+          .withSession(Global.SESSION_USERNAME_KEY -> user.email)
       } else {
         Redirect(routes.UserController.showLoginForm)
           .flashing("error" -> "Invalid username/password.")
