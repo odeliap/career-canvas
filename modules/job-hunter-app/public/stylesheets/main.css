@@ -67,11 +67,11 @@ hr {
     height: 100px;
 }
 
-#logout-btn, #login-btn {
+#logout-btn {
     margin: 20px 10px;
 }
 
-#logout-btn:hover, #login-btn:hover {
+#logout-btn:hover, .login-signup-btn:hover {
     text-decoration: underline;
 }
 
@@ -174,7 +174,7 @@ hr {
 
 /* Login/Signup Pages */
 
-#user-login {
+.user-login-signup {
     border: 1px solid #D4D4D4;
     position: absolute;
     left: 50%;
@@ -185,17 +185,21 @@ hr {
     text-align: center;
 }
 
-.user-login-sign-up-form {
+.user-login-signup-form {
     margin-top: 30px;
-    margin-left: -40px;
     text-align: center;
     font-size: 12px;
     color: red;
 }
 
-#login-div {
+.user-login-signup-form-fields {
+    margin-left: -40px;
+}
+
+.login-signup-div {
     border: 0.25px solid #D4D4D4;
     width: 250px;
+    margin: auto;
 }
 
 .username, .password {
@@ -206,9 +210,9 @@ hr {
     font-size: 10px;
 }
 
-#login-sign-up-btn {
-    margin-right: -40px;
+.login-signup-btn {
     background: #26abff;
+    margin: 20px 50px;
     width: 250px;
     height: 30px;
     border: none;
@@ -218,7 +222,7 @@ hr {
     font-weight: bold;
 }
 
-#terms-note {
+.terms-note {
     position: fixed;
     bottom: 15px;
     left: 40px;
@@ -228,7 +232,7 @@ hr {
     color: #808080;
 }
 
-#switch-up {
+.switch-up {
     border: 1px solid #D4D4D4;
     position: absolute;
     left: 50%;
@@ -239,12 +243,12 @@ hr {
     text-align: center;
 }
 
-#switch-up-txt {
+.switch-up-txt {
     font-size: 12px;
     padding: 8px;
 }
 
-#switch-up-btn {
+.switch-up-btn {
     color: #26abff;
     font-weight: bold;
 }

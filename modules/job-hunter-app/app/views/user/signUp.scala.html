@@ -9,11 +9,11 @@ postUrl: Call
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
     </head>
     <body>
-        <div id="user-login">
+        <div class="user-login-signup">
             <img src="@routes.Assets.versioned("images/logos/logo2.png")" class="logo2">
             <p class="slogan">Sign up to simplify the job search.</p>
-            <hr id="login-div">
-            <div class="user-login-sign-up-form">
+            <hr class="login-signup-div">
+            <div class="user-login-signup-form">
                 @request.flash.data.map{ case (name, value) =>
                 <div>@name: @value</div>
                 }
@@ -27,7 +27,7 @@ postUrl: Call
                     }
                 }
 
-                @helper.form(postUrl, 'class -> "user-login-form") {
+                @helper.form(postUrl, 'class -> "user-login-signup-form-fields") {
 
                 @helper.CSRF.formField
 
@@ -49,14 +49,14 @@ postUrl: Call
                     '_showConstraints -> false
                 )
 
-                <button id="login-sign-up-btn">Sign up</button>
+                <button class="login-signup-btn">Sign up</button>
                 }
 
             </div>
-            <p id="terms-note">By signing up, you agree to our <a href="@routes.PolicyController.showTermsOfUse()">Terms</a>, <a href="@routes.PolicyController.showPrivacyPolicy()">Privacy Policy</a> and <a href="@routes.PolicyController.showCookiesPolicy">Cookies Policy</a>.</p>
+            <p class="terms-note">By signing up, you agree to our <a href="@routes.PolicyController.showTermsOfUse()">Terms</a>, <a href="@routes.PolicyController.showPrivacyPolicy()">Privacy Policy</a> and <a href="@routes.PolicyController.showCookiesPolicy">Cookies Policy</a>.</p>
         </div>
-        <div id="switch-up">
-            <p id="switch-up-txt">Have an account <a href="@routes.UserController.showLoginForm()" id="switch-up-btn">Log in</a></p>
+        <div class="switch-up">
+            <p class="switch-up-txt">Have an account <a href="@routes.UserController.showLoginForm()" class="switch-up-btn">Log in</a></p>
         </div>
     </body>
 </html>

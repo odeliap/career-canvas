@@ -41,7 +41,7 @@ class UserController @Inject()(
   def processSignUpAttempt = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[User] =>
       // form validation/binding failed...
-      BadRequest(views.html.user.userLogin(formWithErrors, formSubmitUrl))
+      BadRequest(views.html.user.signUp(formWithErrors, formSubmitUrl))
     }
     val successFunction = { user: User =>
       userService.attemptUserCreation(user) match {
