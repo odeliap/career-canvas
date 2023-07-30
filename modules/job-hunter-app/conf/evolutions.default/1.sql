@@ -17,6 +17,7 @@ create table if not exists job_statuses (
     job_title           varchar(255)            not null,
     posting_url         varchar(255)            not null,
     status              job_status              not null,
+    app_submission_date timestamp,
     last_update         timestamp,
     interview_round     serial,
     notes               varchar(1024)
