@@ -1,0 +1,55 @@
+@(
+form: Form[careercanvas.io.model.JobPosting],
+getPostInfoUrl: Call
+)(implicit request: MessagesRequestHeader)
+
+@main("Job Feed") {
+    <div class="add-job-page">
+        <div class="add-job-button">
+            <a href="#" id="add-job" class="add-job">+</a>
+        </div>
+        <div class="job-url-input" style="display: none;">
+            @if(form.hasGlobalErrors) {
+            @form.globalErrors.map { error: FormError =>
+            <div>
+                Error: @error.key: @error.message
+            </div>
+            }
+            }
+
+            @helper.form(
+                getPostInfoUrl,
+                'id -> "job-post-url-form",
+            ) {
+            @helper.CSRF.formField
+
+            @helper.inputText(
+                form("postUrl"),
+                '_label -> "",
+                'placeholder -> "job post url",
+                'class -> "job-post-input-txt",
+                'size -> 60,
+                '_showConstraints -> false
+            )
+
+            <button>Add</button>
+            }
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("add-job").addEventListener("click", function(e) {
+            e.preventDefault();
+            var jobUrlInputDiv = document.querySelector(".job-url-input");
+            if (jobUrlInputDiv.style.display === "none") {
+                jobUrlInputDiv.style.display = "block";
+                this.style.backgroundImage = 'linear-gradient(to right, #FFB347, #FFCC33)'; // Change the background color when clicked
+                this.style.color = 'white'; // Change the text color to white when the button is clicked
+            } else {
+                jobUrlInputDiv.style.display = "none";
+                this.style.backgroundImage = 'transparent'; // Change the background color back to transparent when clicked again
+                this.style.color = '#333'; // Change the text color back to dark when the button is clicked again
+            }
+        });
+    </script>
+}

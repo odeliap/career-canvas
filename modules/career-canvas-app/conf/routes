@@ -14,12 +14,18 @@ GET     /users/signUp               controllers.UserController.showSignUpForm()
 GET     /users/doSignUp             controllers.UserController.processSignUpAttempt()
 
 # pages for authenticated users
-GET     /users/logout               controllers.AuthenticatedUserController.logout()
-
 GET     /home                       controllers.AuthenticatedUserController.showHome()
 GET     /feed                       controllers.AuthenticatedUserController.showFeed()
 GET     /network                    controllers.AuthenticatedUserController.showNetwork()
 GET     /jobStats                   controllers.AuthenticatedUserController.showJobStats()
+
+GET     /users/logout               controllers.AuthenticatedUserController.logout()
+
+# pages for job feed
+GET     /feed/addJobPost            controllers.JobFeedController.showAddJobPostForm()
+GET     /feed/doAddJobPost          controllers.JobFeedController.processJobPost()
+GET     /feed/addJobDetails         controllers.JobFeedController.showAddJobDetailsForm(baseJobInfo: careercanvas.io.model.BaseJobInfo)
+GET     /feed/saveJob               controllers.JobFeedController.saveJob(baseJobInfo: careercanvas.io.model.BaseJobInfo)
 
 # pages for policies
 GET     /helpCenter/termsOfUse          controllers.PolicyController.showTermsOfUse()

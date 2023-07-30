@@ -8,11 +8,11 @@ case class JobInfo(
   userId: Long,
   company: String,
   jobTitle: String,
-  postingUrl: String,
+  postUrl: String,
   status: JobStatus,
   appSubmissionDate: Option[Timestamp],
   lastUpdate: Timestamp = Timestamp.from(Instant.now()),
-  interviewRound: Int = 0,
+  interviewRound: Option[Int] = Option(0),
   notes: Option[String] = None
 ) {
 
@@ -20,7 +20,7 @@ case class JobInfo(
     this.copy(
       status = updateJobInfo.status.getOrElse(this.status),
       appSubmissionDate = updateJobInfo.appSubmissionDate.orElse(this.appSubmissionDate),
-      interviewRound = updateJobInfo.interviewRound.getOrElse(this.interviewRound),
+      interviewRound = updateJobInfo.interviewRound.orElse(this.interviewRound),
       notes = updateJobInfo.notes.orElse(this.notes)
     )
   }

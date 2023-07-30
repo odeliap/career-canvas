@@ -2,12 +2,13 @@ package controllers
 
 import careercanvas.io.model.User
 
-import javax.inject.Inject
 import model.Global
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc._
 import service.UserService
+
+import javax.inject.Inject
 
 class UserController @Inject()(
   cc: MessagesControllerComponents,
