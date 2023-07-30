@@ -422,19 +422,38 @@ hr {
 
 .job-tiles {
     margin-top: 50px;
+    margin-bottom: 100px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
 .job-tile {
-    flex: 0 1 20%;
-    box-sizing: border-box;
-    height: 200px;
-    margin: 10px;
-    border: 1px solid #000;
-    border-radius: 10px; /* You can adjust this to get the desired level of curvature */
-    background-color: #f5f5f5; /* This is the background color of each box. Adjust as needed */
+  background-color: #fff;
+  width: 150px;
+  height: 150px;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f0f0f0;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  border-radius: 15px;
+  position: relative;
+}
+
+.job-tile-tab {
+  background-image: linear-gradient(to right, #FFCC33, #FFB347); /* this is a similar color to Apple's highlight color */
+  color: #fff; /* white text */
+  padding: 5px;
+  width: 70px;
+  font-size: 10px;
+  text-align: center;
+  border-radius: 2px;
+  position: absolute;
+  top: -10px; /* this positions the tab at the top of the note */
+  left: 20px; /* this positions the tab to the left */
 }
 
 @media (max-width: 600px) {
