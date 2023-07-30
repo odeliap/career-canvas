@@ -6,12 +6,12 @@ services:
       service: postgres
       file: docker/dependencies.yml
 
-  jobhunter:
+  careercanvas:
     build:
       context: .
     ports:
       - 9000:9000
     environment:
-      APP_JDBC_URL: "jdbc:postgresql://postgres:5432/jobhunter"
-      APP_DB_USER: "jobhunter"
-      APP_DB_PASSWORD: "jobhunter"
+      APP_JDBC_URL: "jdbc:postgresql://postgres:5432/careercanvas"
+      APP_DB_USER: "careercanvas"
+      APP_DB_PASSWORD: "careercanvas"

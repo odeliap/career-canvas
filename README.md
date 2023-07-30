@@ -1,5 +1,5 @@
-# job-hunter
-Job Hunter Application
+# career-canvas
+Career Canvas Application
 
 ## Running the app
 
@@ -18,7 +18,7 @@ docker-compose -f docker/host.yml up
 Run the play app from the root of this project with:
 
 ```
-sbt -jvm-debug 5005 -Dconfig.file=./modules/job-hunter-app/conf/application.conf -Dhttp.port=9000 clean "jobHunterApp/run"
+sbt -jvm-debug 5005 -Dconfig.file=./modules/career-canvas-app/conf/application.conf -Dhttp.port=9000 clean "careerCanvasApp/run"
 ```
 
 When that starts in the logs, direct your browser to `https://localhost:9000/` to see the application home.

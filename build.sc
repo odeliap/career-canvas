@@ -1,7 +1,7 @@
 import mill._
 import $ivy.`com.lihaoyi::mill-contrib-playlib:`,  mill.playlib._
 
-object jobhunter extends PlayModule with SingleModule {
+object careercanvas extends PlayModule with SingleModule {
 
   def scalaVersion = "2.13.11"
   def playVersion = "2.8.20"

@@ -33,45 +33,45 @@ lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(commonSettings)
   .settings(
-    name := "job-hunter",
-    description := "Job Hunter service",
+    name := "career-canvas",
+    description := "Career Canvas service",
     organization := "odeliaputterman.com",
     version := "1.0-SNAPSHOT"
   )
-  .aggregate(jobHunterApp, jobHunterDatasource, jobHunterModel)
+  .aggregate(careerCanvasApp, careerCanvasDatasource, careerCanvasModel)
 
-lazy val jobHunterApp = (project in file("modules/job-hunter-app"))
+lazy val careerCanvasApp = (project in file("modules/career-canvas-app"))
   .enablePlugins(PlayScala)
   .settings(commonSettings)
   .settings(
-    name := "job-hunter-app",
-    description := "Job Hunter play app",
+    name := "career-canvas-app",
+    description := "Career Canvas play app",
     libraryDependencies ++= Seq(
       specs2 % Test,
       libraries.test.scalaTestPlus % Test,
     )
   )
   .dependsOn(
-    jobHunterDatasource, jobHunterModel
+    careerCanvasDatasource, careerCanvasModel
   )
 
-lazy val jobHunterDatasource = (project in file("modules/job-hunter-datasource"))
+lazy val careerCanvasDatasource = (project in file("modules/career-canvas-datasource"))
   .settings(commonSettings)
   .settings(
-    name := "job-hunter-datasource",
-    description := "Job Hunter data source",
+    name := "career-canvas-datasource",
+    description := "Career Canvas data source",
     libraryDependencies ++= Seq(
     )
   )
   .dependsOn(
-    jobHunterModel
+    careerCanvasModel
   )
 
-lazy val jobHunterModel = (project in file("modules/job-hunter-model"))
+lazy val careerCanvasModel = (project in file("modules/career-canvas-model"))
   .settings(commonSettings)
   .settings(
-    name := "job-hunter-model",
-    description := "Job Hunter model",
+    name := "career-canvas-model",
+    description := "Career Canvas model",
     libraryDependencies ++= Seq(
     )
   )

@@ -3,6 +3,6 @@ services:
   postgres:
     image: postgres:11-alpine
     environment:
-      POSTGRES_DB: jobhunter
-      POSTGRES_USER: jobhunter
-      POSTGRES_PASSWORD: jobhunter
+      POSTGRES_DB: careercanvas
+      POSTGRES_USER: careercanvas
+      POSTGRES_PASSWORD: careercanvas
