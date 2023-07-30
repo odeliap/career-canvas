@@ -419,3 +419,9 @@ input[type="text"] {
 #job-post-url-form {
     width: 90%;
 }
+
+#save-add-job-button {
+    position: absolute; /* Absolute positioning */
+    top: 332px; /* Position from the bottom */
+    right: 190px; /* Position from the right */
+}
