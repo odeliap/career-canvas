@@ -1,18 +1,18 @@
 package odeliaputterman.com.jobhunter
 
 
-import odeliaputterman.com.jobhunter.model.User
+import odeliaputterman.com.jobhunter.model.{UpdateUserInfo, User}
 
 import scala.concurrent.Future
 
 trait UserDao {
 
-  def addUser(user: User): Future[Unit]
+  def addUser(user: User): Future[Long]
 
   def checkUserExists(email: String): Future[Boolean]
 
-  def checkUserInfo(user: User): Future[Boolean]
+  def getUserId(user: User): Future[Option[Long]]
 
-  def updatePassword(email: String, currentPassword: String, newPassword: String): Future[Unit]
+  def update(updateUser: UpdateUserInfo): Future[Unit]
 
 }

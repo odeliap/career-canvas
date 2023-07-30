@@ -11,8 +11,8 @@ create table if not exists user_info (
 );
 
 create table if not exists job_statuses (
-    user_id             serial                  not null references user_info(id),
     job_id              serial                  not null unique,
+    user_id             serial                  not null references user_info(id),
     company             varchar(255)            not null,
     job_title           varchar(255)            not null,
     posting_url         varchar(255)            not null,
@@ -23,8 +23,8 @@ create table if not exists job_statuses (
 );
 
 create table if not exists connections (
-    user_id             serial                  not null references user_info(id),
     connection_id       serial                  not null,
+    user_id             serial                  not null references user_info(id),
     first_name          varchar(255)            not null,
     last_name           varchar(255)            not null,
     company             varchar(255)            not null,

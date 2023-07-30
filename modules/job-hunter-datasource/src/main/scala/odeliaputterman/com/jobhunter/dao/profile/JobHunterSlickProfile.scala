@@ -2,10 +2,10 @@ package odeliaputterman.com.jobhunter.dao.profile
 
 import com.github.tminglei.slickpg._
 import odeliaputterman.com.jobhunter.model.{ConnectionCloseness, JobStatus}
-import slick.jdbc.JdbcType
+import slick.jdbc.{JdbcType, PostgresProfile}
 
 trait JobHunterSlickProfile
-  extends ExPostgresProfile
+  extends PostgresProfile
   with PgHStoreSupport
   with PgEnumSupport
   with PgDate2Support {

@@ -18,10 +18,10 @@ class UserController @Inject()(
   val form: Form[User] = Form (
     mapping(
       "username" -> nonEmptyText
-        .verifying("too few chars",  s => lengthIsGreaterThanNCharacters(s, 2))
-        .verifying("too many chars", s => lengthIsLessThanNCharacters(s, 20)),
+        .verifying("too few chars",  s => lengthIsGreaterThanNCharacters(s, 3))
+        .verifying("too many chars", s => lengthIsLessThanNCharacters(s, 320)),
       "password" -> nonEmptyText
-        .verifying("too few chars",  s => lengthIsGreaterThanNCharacters(s, 2))
+        .verifying("too few chars",  s => lengthIsGreaterThanNCharacters(s, 10))
         .verifying("too many chars", s => lengthIsLessThanNCharacters(s, 30)),
     )(User.apply)(User.unapply)
   )
@@ -44,14 +44,14 @@ class UserController @Inject()(
       BadRequest(views.html.user.userLogin(formWithErrors, formSubmitUrl))
     }
     val successFunction = { user: User =>
-      val createUser: Boolean = userService.createUser(user)
-      if (createUser) {
-        Redirect(routes.UserController.showLoginForm)
-          .withSession(Global.SESSION_USERNAME_KEY -> user.email)
-          .flashing("success" -> "Account created. Please log in.")
-      } else {
-        Redirect(routes.UserController.showSignUpForm)
-          .flashing("error" -> "Invalid username/password.")
+      userService.attemptUserCreation(user) match {
+        case Some(userId) =>
+          Redirect(routes.UserController.showLoginForm)
+            .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email)
+            .flashing("success" -> "Account created. Please log in.")
+        case None =>
+          Redirect(routes.UserController.showSignUpForm)
+            .flashing("error" -> "An account registered with this email already exists.")
       }
     }
     val formValidationResult: Form[User] = form.bindFromRequest
@@ -68,13 +68,13 @@ class UserController @Inject()(
     }
     val successFunction = { user: User =>
       // form validation/binding succeeded ...
-      val foundUser: Boolean = userService.lookupUser(user)
-      if (foundUser) {
-        Redirect(routes.AuthenticatedUserController.showHome)
-          .withSession(Global.SESSION_USERNAME_KEY -> user.email)
-      } else {
-        Redirect(routes.UserController.showLoginForm)
-          .flashing("error" -> "Invalid username/password.")
+      userService.lookupUser(user) match {
+        case Some(userId) =>
+          Redirect(routes.AuthenticatedUserController.showHome)
+            .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email)
+        case None =>
+          Redirect(routes.UserController.showLoginForm)
+            .flashing("error" -> "Invalid username/password.")
       }
     }
     val formValidationResult: Form[User] = form.bindFromRequest

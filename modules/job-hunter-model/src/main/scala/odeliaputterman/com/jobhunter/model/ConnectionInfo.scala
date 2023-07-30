@@ -1,6 +1,6 @@
 package odeliaputterman.com.jobhunter.model
 
-import java.time.OffsetDateTime
+import java.sql.Timestamp
 
 case class ConnectionInfo(
   userId: Long,
@@ -12,11 +12,11 @@ case class ConnectionInfo(
   email: String,
   phoneNumber: Option[String],
   proximity: ConnectionCloseness,
-  lastContacted: Option[OffsetDateTime] = None,
+  lastContacted: Option[Timestamp] = None,
   notes: Option[String] = None
 ) {
 
-  def update(updateConnectionInfo: UpdateConnectionInfo): ConnectionInfo = {
+  def patch(updateConnectionInfo: UpdateConnectionInfo): ConnectionInfo = {
     this.copy(
       company = updateConnectionInfo.company.getOrElse(this.company),
       jobTitle = updateConnectionInfo.jobTitle.getOrElse(this.jobTitle),

@@ -9,6 +9,7 @@ object Dependencies {
 
     object play {
       val slickVersion = "5.0.0"
+      val jsonVersion = "2.9.4"
     }
 
     object slick {
@@ -28,6 +29,7 @@ object Dependencies {
       import versions.play._
       val slick = "com.typesafe.play" %% "play-slick" % slickVersion
       val evolutions = "com.typesafe.play" %% "play-slick-evolutions" % slickVersion
+      val json = "com.typesafe.play" %% "play-json" % jsonVersion
     }
 
     object slick {

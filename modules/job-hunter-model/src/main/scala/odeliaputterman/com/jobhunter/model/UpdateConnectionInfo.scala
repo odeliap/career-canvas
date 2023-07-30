@@ -1,15 +1,15 @@
 package odeliaputterman.com.jobhunter.model
 
-import java.time.OffsetDateTime
+import java.sql.Timestamp
 
 case class UpdateConnectionInfo(
-  userId: Long,
   connectionId: Long,
+  userId: Long,
   company: Option[String],
   jobTitle: Option[String],
   email: Option[String],
   phoneNumber: Option[String],
   proximity: Option[ConnectionCloseness],
-  lastContacted: Option[OffsetDateTime],
+  lastContacted: Option[Timestamp],
   notes: Option[String]
 )

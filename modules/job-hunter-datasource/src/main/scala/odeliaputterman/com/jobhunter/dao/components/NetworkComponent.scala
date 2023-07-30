@@ -3,7 +3,7 @@ package odeliaputterman.com.jobhunter.dao.components
 import odeliaputterman.com.jobhunter.model.{ConnectionCloseness, ConnectionInfo}
 import slick.lifted.ProvenShape
 
-import java.time.OffsetDateTime
+import java.sql.Timestamp
 
 trait NetworkComponent {
 
@@ -13,8 +13,8 @@ trait NetworkComponent {
 
   class NetworkTable(tag: Tag) extends Table[ConnectionInfo](tag, "connections") {
 
-    def userId: Rep[Long] = column[Long]("user_id")
     def connectionId: Rep[Long] = column[Long]("connection_id")
+    def userId: Rep[Long] = column[Long]("user_id")
     def firstName: Rep[String] = column[String]("first_name")
     def lastName: Rep[String] = column[String]("last_name")
     def company: Rep[String] = column[String]("company")
@@ -22,12 +22,12 @@ trait NetworkComponent {
     def email: Rep[String] = column[String]("email")
     def phoneNumber: Rep[Option[String]] = column[Option[String]]("phone_number")
     def proximity: Rep[ConnectionCloseness] = column[ConnectionCloseness]("proximity")
-    def lastContacted: Rep[Option[OffsetDateTime]] = column[Option[OffsetDateTime]]("last_contacted")
+    def lastContacted: Rep[Option[Timestamp]] = column[Option[Timestamp]]("last_contacted")
     def notes: Rep[Option[String]] = column[Option[String]]("notes")
 
     def * : ProvenShape[ConnectionInfo] = (
-      userId,
       connectionId,
+      userId,
       firstName,
       lastName,
       company,

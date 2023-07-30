@@ -3,7 +3,7 @@ package odeliaputterman.com.jobhunter.dao.components
 import odeliaputterman.com.jobhunter.model.UserInfo
 import slick.lifted.ProvenShape
 
-import java.time.OffsetDateTime
+import java.sql.Timestamp
 
 trait UserInfoComponent {
 
@@ -16,7 +16,7 @@ trait UserInfoComponent {
     def id: Rep[Long] = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def email: Rep[String] = column[String]("email")
     def password: Rep[String] = column[String]("password")
-    def lastLogin: Rep[OffsetDateTime] = column[OffsetDateTime]("last_login")
+    def lastLogin: Rep[Timestamp] = column[Timestamp]("last_login")
 
     def * : ProvenShape[UserInfo] = (
       id,

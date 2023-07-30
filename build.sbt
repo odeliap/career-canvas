@@ -21,6 +21,7 @@ val commonSettings = Seq(
     guice,
     libraries.play.slick,
     libraries.play.evolutions,
+    libraries.play.json,
     libraries.slick.core,
     libraries.slick.postgres,
     libraries.slick.postgresJson,

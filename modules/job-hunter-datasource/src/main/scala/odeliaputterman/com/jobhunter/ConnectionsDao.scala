@@ -6,7 +6,7 @@ import scala.concurrent.Future
 
 trait ConnectionsDao {
 
-  def addConnection(connectionInfo: ConnectionInfo): Future[Unit]
+  def addConnection(connectionInfo: ConnectionInfo): Future[Long]
 
   def updateConnection(updateConnectionInfo: UpdateConnectionInfo): Future[Unit]
 
