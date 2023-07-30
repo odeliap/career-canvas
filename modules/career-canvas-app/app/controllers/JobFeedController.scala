@@ -33,13 +33,13 @@ class JobFeedController @Inject()(
   private val getPostInfoUrl = routes.JobFeedController.processJobPost
   private def saveJobUrl(baseJobInfo: BaseJobInfo) = routes.JobFeedController.saveJob(baseJobInfo)
 
-  def showAddJobPostForm() = Action { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.authenticated.user.addJobPost(jobPostForm, getPostInfoUrl))
+  def showJobFeedHome() = Action { implicit request: MessagesRequest[AnyContent] =>
+    Ok(views.html.authenticated.user.jobFeedHome(jobPostForm, getPostInfoUrl))
   }
 
   def processJobPost() = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[JobPosting] =>
-      BadRequest(views.html.authenticated.user.addJobPost(formWithErrors, getPostInfoUrl))
+      BadRequest(views.html.authenticated.user.jobFeedHome(formWithErrors, getPostInfoUrl))
     }
 
     val successFunction = { data: JobPosting =>
@@ -79,7 +79,7 @@ class JobFeedController @Inject()(
         interviewRound = data.interviewRound,
         notes = data.notes
       ) // TODO: save this information to the jobs database
-      Redirect(routes.AuthenticatedUserController.showFeed())
+      Redirect(routes.JobFeedController.showJobFeedHome())
     }
     val formValidationResult: Form[UserProvidedJobDetails] = jobDetailsForm.bindFromRequest
     formValidationResult.fold(
