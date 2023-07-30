@@ -409,7 +409,7 @@ hr {
     background-image: linear-gradient(to right, #FFCC33, #FFB347);
 }
 
-input[type="text"] {
+#job-post-url-form input[type="text"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
