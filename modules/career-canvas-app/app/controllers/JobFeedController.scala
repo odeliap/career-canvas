@@ -12,7 +12,8 @@ import javax.inject.Inject
 // TODO: cache user jobs instead of making call to db every time
 class JobFeedController @Inject()(
   cc: MessagesControllerComponents,
-  jobApplicationsService: JobApplicationsService
+  jobApplicationsService: JobApplicationsService,
+  authenticatedUserMessagesAction: AuthenticatedUserMessagesAction
 ) extends MessagesAbstractController(cc) {
 
   private val logger = play.api.Logger(this.getClass)
@@ -36,12 +37,12 @@ class JobFeedController @Inject()(
   private val getPostInfoUrl = routes.JobFeedController.processJobPost()
   private val saveJobUrl = routes.JobFeedController.saveJob()
 
-  def showJobFeedHome(): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
+  def showJobFeedHome(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userJobs = jobApplicationsService.getJobs("1") // TODO: fix me to use actual user id from session
     Ok(views.html.authenticated.user.jobFeedHome(jobPostForm, getPostInfoUrl, userJobs))
   }
 
-  def processJobPost(): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
+  def processJobPost(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userJobs = jobApplicationsService.getJobs("1") // TODO: fix me to use actual user id from session
 
     val errorFunction = { formWithErrors: Form[JobPosting] =>
@@ -64,14 +65,14 @@ class JobFeedController @Inject()(
     )
   }
 
-  def showAddJobDetailsForm(baseJobInfo: BaseJobInfo): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
+  def showAddJobDetailsForm(baseJobInfo: BaseJobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userJobs = jobApplicationsService.getJobs("1") // TODO: fix me to use actual user id from session
 
     Ok(views.html.authenticated.user.addJobDetails(jobDetailsForm(baseJobInfo), saveJobUrl, userJobs))
       .withSession("company" -> baseJobInfo.company, "jobTitle" -> baseJobInfo.jobTitle, "postUrl" -> baseJobInfo.postUrl)
   }
 
-  def saveJob(): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
+  def saveJob(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userJobs = jobApplicationsService.getJobs("1") // TODO: fix me to use actual user id from session
 
     val baseJobInfo = BaseJobInfo(
@@ -98,7 +99,7 @@ class JobFeedController @Inject()(
     )
   }
 
-  def removeJobDetails(): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
+  def removeJobDetails(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     request.session -- Seq("company", "jobTitle", "postUrl")
     val userJobs = jobApplicationsService.getJobs("1") // TODO: fix me to use actual user id from session
     Ok(views.html.authenticated.user.jobFeedHome(jobPostForm, getPostInfoUrl, userJobs))
