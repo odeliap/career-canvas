@@ -16,11 +16,11 @@ postUrl: Call
             <div class="user-login-signup-form">
                 @request.flash.data.map{ case (name, value) =>
                     @if(name.equals("error")) {
-                        <div class="error-flash">@name: @value</div>
+                        <div class="error-flash">@value</div>
                     } else if (name.equals("success")) {
-                        <div class="success-flash">@name: @value</div>
+                        <div class="success-flash">@value</div>
                     } else {
-                        <div class="info-flash">@name: @value</div>
+                        <div class="info-flash">@value</div>
                     }
                 }
 
