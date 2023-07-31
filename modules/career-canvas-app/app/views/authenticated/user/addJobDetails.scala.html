@@ -25,36 +25,36 @@ saveJobUrl: Call
 
             <div id="job-description-form-first-row">
                 @helper.inputText(
-                form("company"),
-                '_label -> "Company",
-                'id -> "job-description-company",
-                'size -> 60,
-                '_showConstraints -> false
+                    form("company"),
+                    '_label -> "Company",
+                    'id -> "job-description-company",
+                    'size -> 60,
+                    '_showConstraints -> false
                 )
 
                 @helper.inputText(
-                form("jobTitle"),
-                '_label -> "Job Title",
-                'id -> "job-description-title",
-                'size -> 60,
-                '_showConstraints -> false
+                    form("jobTitle"),
+                    '_label -> "Job Title",
+                    'id -> "job-description-title",
+                    'size -> 60,
+                    '_showConstraints -> false
                 )
             </div>
 
             <div id="job-description-form-second-row">
                 @helper.inputRadioGroup(
-                form("status"),
-                options = Seq("NotSubmitted" -> "NotSubmitted", "Submitted" -> "Submitted", "InterviewScheduled" -> "InterviewScheduled", "Interviewed" -> "Interviewed", "OfferMade" -> "OfferMade", "Rejected" -> "Rejected"),
-                '_label -> "Status",
-                'id -> "job-description-status",
-                'size -> 60
+                    form("status"),
+                    options = Seq("NotSubmitted" -> "NotSubmitted", "Submitted" -> "Submitted", "InterviewScheduled" -> "InterviewScheduled", "Interviewed" -> "Interviewed", "OfferMade" -> "OfferMade", "Rejected" -> "Rejected"),
+                    '_label -> "Status",
+                    'id -> "job-description-status",
+                    'size -> 60
                 )
 
                 @helper.inputText(
-                form("interviewRound"),
-                '_label -> "Interview Round (Optional)",
-                'id -> "job-description-interview-round",
-                'size -> 60
+                    form("interviewRound"),
+                    '_label -> "Interview Round",
+                    'id -> "job-description-interview-round",
+                    'size -> 60
                 )
             </div>
 

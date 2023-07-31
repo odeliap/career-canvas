@@ -28,7 +28,6 @@ class JobFeedController @Inject()(
       "jobTitle" -> default(text, baseJobInfo.jobTitle),
       "status" -> text,
       "interviewRound" -> optional(number),
-      "dateApplied" -> optional(sqlTimestamp),
       "notes" -> optional(text)
     )(UserProvidedJobDetails.apply)(UserProvidedJobDetails.unapply)
   )

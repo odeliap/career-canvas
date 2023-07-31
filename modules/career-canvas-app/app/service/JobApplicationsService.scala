@@ -20,7 +20,7 @@ class JobApplicationsService @Inject() (
       jobTitle = data.jobTitle,
       postUrl = postUrl,
       status = JobStatus.stringToEnum(data.status),
-      appSubmissionDate = data.appSubmissionDate,
+      appSubmissionDate = None,
       interviewRound = data.interviewRound,
       notes = data.notes
     )
