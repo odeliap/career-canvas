@@ -1,9 +1,10 @@
 @(
 form: Form[careercanvas.io.model.UserProvidedJobDetails],
-saveJobUrl: Call
+saveJobUrl: Call,
+jobInfos: Seq[careercanvas.io.model.JobInfo]
 )(implicit request: MessagesRequestHeader)
 
-@jobFeedBaseForm {
+@jobFeedBaseForm(jobInfos) {
 <div class="add-job-page">
     <div class="add-job-button">
         <a href="#" id="save-job" class="add-job">+</a>

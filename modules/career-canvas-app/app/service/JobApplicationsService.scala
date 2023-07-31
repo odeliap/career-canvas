@@ -27,4 +27,8 @@ class JobApplicationsService @Inject() (
     jobApplicationsDao.addJob(jobInfo).waitForResult
   }
 
+  def getJobs(userId: String): Seq[JobInfo] = {
+    jobApplicationsDao.getJobs(userId.toLong).waitForResult
+  }
+
 }

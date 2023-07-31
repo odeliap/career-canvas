@@ -12,4 +12,6 @@ trait JobApplicationsDao {
 
   def removeJob(userId: Long, jobId: Long): Future[Unit]
 
+  def getJobs(userId: Long): Future[Seq[JobInfo]]
+
 }

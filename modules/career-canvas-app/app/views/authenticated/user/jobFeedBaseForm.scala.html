@@ -1,4 +1,4 @@
-@(content: Html)(script: Html)(implicit request: MessagesRequestHeader)
+@(jobInfos: Seq[careercanvas.io.model.JobInfo])(content: Html)(script: Html)(implicit request: MessagesRequestHeader)
 
 @main("Job Feed") {
     <div>
@@ -14,22 +14,12 @@
 </div>
     @content
     <div class="job-tiles">
-        <div class="job-tile">
-            <div class="job-tile-tab">Job Post</div>
-            <p>This is a note</p>
-        </div>
-        <div class="job-tile">
-            <div class="job-tile-tab">Job Post</div>
-            <p>This is a note</p>
-        </div>
-        <div class="job-tile">
-            <div class="job-tile-tab">Job Post</div>
-            <p>This is a note</p>
-        </div>
-        <div class="job-tile">
-            <div class="job-tile-tab">Job Post</div>
-            <p>This is a note</p>
-        </div>
+        @jobInfos.map { jobInfo =>
+            <div class="job-tile">
+                <div class="job-tile-tab">@jobInfo.jobTitle</div>
+                <p>This is a note</p>
+            </div>
+        }
     </div>
 
     <script>
