@@ -6,11 +6,11 @@ import play.api.mvc._
 @Singleton
 class LandingController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-  def showWelcomePage() = Action { implicit request: Request[AnyContent] =>
+  def showWelcomePage(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.landing.welcomePage())
   }
 
-  def showAboutPage() = Action { implicit request: Request[AnyContent] =>
+  def showAboutPage(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.landing.about())
   }
 

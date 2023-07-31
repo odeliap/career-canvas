@@ -28,19 +28,19 @@ class UserController @Inject()(
     )(User.apply)(User.unapply)
   )
 
-  private val formSubmitUrl = routes.UserController.processLoginAttempt
+  private val formSubmitUrl = routes.UserController.processLoginAttempt()
 
-  private val signUpUrl = routes.UserController.processSignUpAttempt
+  private val signUpUrl = routes.UserController.processSignUpAttempt()
 
-  def showSignUpForm = Action { implicit request: MessagesRequest[AnyContent] =>
+  def showSignUpForm: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     Ok(views.html.user.signUp(form, signUpUrl))
   }
 
-  def showLoginForm = Action { implicit request: MessagesRequest[AnyContent] =>
+  def showLoginForm: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     Ok(views.html.user.userLogin(form, formSubmitUrl))
   }
 
-  def processSignUpAttempt = Action { implicit request: MessagesRequest[AnyContent] =>
+  def processSignUpAttempt: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[User] =>
       // form validation/binding failed...
       BadRequest(views.html.user.signUp(formWithErrors, formSubmitUrl))
@@ -48,11 +48,11 @@ class UserController @Inject()(
     val successFunction = { user: User =>
       userService.attemptUserCreation(user) match {
         case Some(userId) =>
-          Redirect(routes.UserController.showLoginForm)
+          Redirect(routes.UserController.showLoginForm())
             .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email)
             .flashing("success" -> "Account created. Please log in.")
         case None =>
-          Redirect(routes.UserController.showSignUpForm)
+          Redirect(routes.UserController.showSignUpForm())
             .flashing("error" -> "An account registered with this email already exists.")
       }
     }
@@ -63,7 +63,7 @@ class UserController @Inject()(
     )
   }
 
-  def processLoginAttempt = Action { implicit request: MessagesRequest[AnyContent] =>
+  def processLoginAttempt: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[User] =>
       // form validation/binding failed...
       BadRequest(views.html.user.userLogin(formWithErrors, formSubmitUrl))
@@ -72,10 +72,10 @@ class UserController @Inject()(
       // form validation/binding succeeded ...
       userService.lookupUser(user) match {
         case Some(userId) =>
-          Redirect(routes.AuthenticatedUserController.showHome)
+          Redirect(routes.AuthenticatedUserController.showHome())
             .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email)
         case None =>
-          Redirect(routes.UserController.showLoginForm)
+          Redirect(routes.UserController.showLoginForm())
             .flashing("error" -> "Invalid username/password.")
       }
     }

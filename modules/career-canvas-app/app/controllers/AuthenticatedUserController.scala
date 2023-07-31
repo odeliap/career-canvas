@@ -16,17 +16,17 @@ class AuthenticatedUserController @Inject()(
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
-  def showHome() = authenticatedUserAction { implicit request: Request[AnyContent] =>
+  def showHome(): Action[AnyContent] = authenticatedUserAction { implicit request: Request[AnyContent] =>
     Ok(views.html.authenticated.user.home())
   }
 
-  def showJobStats() = authenticatedUserAction { implicit request: Request[AnyContent] =>
+  def showJobStats(): Action[AnyContent] = authenticatedUserAction { implicit request: Request[AnyContent] =>
     Ok(views.html.authenticated.user.jobStats())
   }
 
-  def logout = authenticatedUserAction { implicit request: Request[AnyContent] =>
+  def logout: Action[AnyContent] = authenticatedUserAction { implicit request: Request[AnyContent] =>
     // docs: “withNewSession ‘discards the whole (old) session’”
-    Redirect(routes.UserController.showLoginForm)
+    Redirect(routes.UserController.showLoginForm())
       .flashing("info" -> "You are logged out.")
       .withNewSession
   }

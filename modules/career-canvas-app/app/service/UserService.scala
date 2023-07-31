@@ -26,9 +26,9 @@ class UserService @Inject()(
 
   def attemptUserCreation(user: User): Option[Long] = {
     userDao.checkUserExists(user.email).flatMap {
-      case true => Future.successful(None) // User already exists, so creation is not attempted.
+      case true => Future.successful(None)
       case false =>
-        userDao.addUser(user).map(Option(_)) // User does not exist, so attempt to create user.
+        userDao.addUser(user).map(Option(_))
     }.waitForResult
   }
 
