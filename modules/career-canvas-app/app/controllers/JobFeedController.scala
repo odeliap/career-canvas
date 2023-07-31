@@ -1,6 +1,7 @@
 package controllers
 
 import careercanvas.io.model._
+import model.Global
 import service.JobApplicationsService
 import play.api.mvc._
 import play.api.data._
@@ -8,7 +9,6 @@ import play.api.data.Forms._
 
 import javax.inject.Inject
 
-// TODO: make these methods authenticated user actions
 // TODO: cache user jobs instead of making call to db every time
 class JobFeedController @Inject()(
   cc: MessagesControllerComponents,
@@ -38,12 +38,14 @@ class JobFeedController @Inject()(
   private val saveJobUrl = routes.JobFeedController.saveJob()
 
   def showJobFeedHome(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userJobs = jobApplicationsService.getJobs("1") // TODO: fix me to use actual user id from session
+    val userId = request.session.data(Global.SESSION_USER_ID)
+    val userJobs = jobApplicationsService.getJobs(userId)
     Ok(views.html.authenticated.user.jobFeedHome(jobPostForm, getPostInfoUrl, userJobs))
   }
 
   def processJobPost(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userJobs = jobApplicationsService.getJobs("1") // TODO: fix me to use actual user id from session
+    val userId = request.session.data(Global.SESSION_USER_ID)
+    val userJobs = jobApplicationsService.getJobs(userId)
 
     val errorFunction = { formWithErrors: Form[JobPosting] =>
       BadRequest(views.html.authenticated.user.jobFeedHome(formWithErrors, getPostInfoUrl, userJobs))
@@ -66,28 +68,31 @@ class JobFeedController @Inject()(
   }
 
   def showAddJobDetailsForm(baseJobInfo: BaseJobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userJobs = jobApplicationsService.getJobs("1") // TODO: fix me to use actual user id from session
+    val userId = request.session.data(Global.SESSION_USER_ID)
+    val userJobs = jobApplicationsService.getJobs(userId)
 
     Ok(views.html.authenticated.user.addJobDetails(jobDetailsForm(baseJobInfo), saveJobUrl, userJobs))
-      .withSession("company" -> baseJobInfo.company, "jobTitle" -> baseJobInfo.jobTitle, "postUrl" -> baseJobInfo.postUrl)
+      .withSession(request.session + ("company" -> baseJobInfo.company) + ("jobTitle" -> baseJobInfo.jobTitle) + ("postUrl" -> baseJobInfo.postUrl))
   }
 
   def saveJob(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userJobs = jobApplicationsService.getJobs("1") // TODO: fix me to use actual user id from session
+    val userId = request.session.data(Global.SESSION_USER_ID)
+    val userJobs = jobApplicationsService.getJobs(userId)
 
     val baseJobInfo = BaseJobInfo(
-      request.session.get("company").get,
-      request.session.get("jobTitle").get,
-      request.session.get("postUrl").get
+      request.session.data("company"),
+      request.session.data("jobTitle"),
+      request.session.data("postUrl")
     )
 
     val errorFunction = { formWithErrors: Form[UserProvidedJobDetails] =>
       BadRequest(views.html.authenticated.user.addJobDetails(formWithErrors, saveJobUrl, userJobs))
-        .withSession("company" -> baseJobInfo.company, "jobTitle" -> baseJobInfo.jobTitle, "postUrl" -> baseJobInfo.postUrl)
         .flashing("error" -> "Error creating job frame")
+        .withSession(request.session + ("company" -> baseJobInfo.company) + ("jobTitle" -> baseJobInfo.jobTitle) + ("postUrl" -> baseJobInfo.postUrl))
     }
     val successFunction = { data: UserProvidedJobDetails =>
-      jobApplicationsService.createJob(data, baseJobInfo.postUrl, "1") // TODO: fix me to actual user id from session
+      val userId = request.session.data(Global.SESSION_USER_ID)
+      jobApplicationsService.createJob(data, baseJobInfo.postUrl, userId)
       Redirect(routes.JobFeedController.showJobFeedHome())
         .flashing("success" -> "Job frame added")
     }
@@ -100,9 +105,10 @@ class JobFeedController @Inject()(
   }
 
   def removeJobDetails(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    request.session -- Seq("company", "jobTitle", "postUrl")
-    val userJobs = jobApplicationsService.getJobs("1") // TODO: fix me to use actual user id from session
+    val userId = request.session.data(Global.SESSION_USER_ID)
+    val userJobs = jobApplicationsService.getJobs(userId)
     Ok(views.html.authenticated.user.jobFeedHome(jobPostForm, getPostInfoUrl, userJobs))
+      .withSession(request.session -- Seq("company", "jobTitle", "postUrl"))
   }
 
 }

@@ -18,7 +18,7 @@ class AuthenticatedUserMessagesAction @Inject()(bodyParser: BodyParsers.Default,
 
   override def invokeBlock[A](request: Request[A], block: MessagesRequest[A] => Future[Result]): Future[Result] = {
     logger.info("ENTERED AuthenticatedUserAction::invokeBlock ...")
-    val maybeUsername = request.session.get(model.Global.SESSION_USERNAME_KEY)
+    val maybeUsername = request.session.get(model.Global.SESSION_USER_ID)
     maybeUsername match {
       case None =>
         Future.successful(Forbidden("" +
