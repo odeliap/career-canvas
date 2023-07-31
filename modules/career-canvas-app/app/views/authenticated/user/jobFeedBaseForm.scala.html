@@ -17,7 +17,17 @@
         @jobInfos.map { jobInfo =>
             <div class="job-tile">
                 <div class="job-tile-tab">@jobInfo.jobTitle</div>
-                <p>This is a note</p>
+                <p>Company: @jobInfo.company</p>
+                <p>Status: @jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</p>
+                @if(jobInfo.interviewRound.nonEmpty) {
+                    @if(!jobInfo.interviewRound.get.equals(0)) {
+                        <p>Interview Round: @jobInfo.interviewRound</p>
+                    }
+                }
+                @if(jobInfo.appSubmissionDate.nonEmpty) {
+                    <p>App Submission Date: @jobInfo.status</p>
+                }
+                <p>Last Update: @jobInfo.lastUpdate</p>
             </div>
         }
     </div>
