@@ -9,6 +9,7 @@ import play.api.data.Forms._
 
 import javax.inject.Inject
 
+// TODO: make these methods authenticated user actions
 class JobFeedController @Inject()(
   cc: MessagesControllerComponents
 ) extends MessagesAbstractController(cc) {
@@ -21,9 +22,11 @@ class JobFeedController @Inject()(
     )(JobPosting.apply)(JobPosting.unapply)
   )
 
-  val jobDetailsForm: Form[UserProvidedJobDetails] = Form(
+  def jobDetailsForm(baseJobInfo: BaseJobInfo): Form[UserProvidedJobDetails] = Form(
     mapping(
-      "status" -> nonEmptyText,
+      "company" -> default(text, baseJobInfo.company),
+      "jobTitle" -> default(text, baseJobInfo.jobTitle),
+      "status" -> text,
       "interviewRound" -> optional(number),
       "dateApplied" -> optional(sqlTimestamp),
       "notes" -> optional(text)
@@ -31,7 +34,7 @@ class JobFeedController @Inject()(
   )
 
   private val getPostInfoUrl = routes.JobFeedController.processJobPost
-  private def saveJobUrl(baseJobInfo: BaseJobInfo) = routes.JobFeedController.saveJob(baseJobInfo)
+  private val saveJobUrl = routes.JobFeedController.saveJob
 
   def showJobFeedHome() = Action { implicit request: MessagesRequest[AnyContent] =>
     Ok(views.html.authenticated.user.jobFeedHome(jobPostForm, getPostInfoUrl))
@@ -59,20 +62,28 @@ class JobFeedController @Inject()(
   }
 
   def showAddJobDetailsForm(baseJobInfo: BaseJobInfo) = Action { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.authenticated.user.addJobDetails(jobDetailsForm, saveJobUrl(baseJobInfo)))
+    Ok(views.html.authenticated.user.addJobDetails(jobDetailsForm(baseJobInfo), saveJobUrl))
+      .withSession("company" -> baseJobInfo.company, "jobTitle" -> baseJobInfo.jobTitle, "postUrl" -> baseJobInfo.postUrl)
   }
 
-  def saveJob(baseJobInfo: BaseJobInfo) = Action { implicit request: MessagesRequest[AnyContent] =>
+  def saveJob() = Action { implicit request: MessagesRequest[AnyContent] =>
+    val baseJobInfo = BaseJobInfo(
+      request.session.get("company").get,
+      request.session.get("jobTitle").get,
+      request.session.get("postUrl").get
+    )
     val errorFunction = { formWithErrors: Form[UserProvidedJobDetails] =>
-      BadRequest(views.html.authenticated.user.addJobDetails(formWithErrors, saveJobUrl(baseJobInfo)))
+      BadRequest(views.html.authenticated.user.addJobDetails(formWithErrors, saveJobUrl))
+        .withSession("company" -> baseJobInfo.company, "jobTitle" -> baseJobInfo.jobTitle, "postUrl" -> baseJobInfo.postUrl)
+        .flashing("error" -> "Error creating job frame")
     }
 
     val successFunction = { data: UserProvidedJobDetails =>
       val jobInfo = JobInfo(
         jobId = 0L,
-        userId = request.session.get(Global.SESSION_USER_ID).get.toLong,
-        company = baseJobInfo.company,
-        jobTitle = baseJobInfo.jobTitle,
+        userId = 0L, // TODO: fix me to actual user id from session
+        company = data.company,
+        jobTitle = data.jobTitle,
         postUrl = baseJobInfo.postUrl,
         status = JobStatus.stringToEnum(data.status),
         appSubmissionDate = data.appSubmissionDate,
@@ -80,12 +91,18 @@ class JobFeedController @Inject()(
         notes = data.notes
       ) // TODO: save this information to the jobs database
       Redirect(routes.JobFeedController.showJobFeedHome())
+        .flashing("success" -> "Job frame added")
     }
-    val formValidationResult: Form[UserProvidedJobDetails] = jobDetailsForm.bindFromRequest
+    val formValidationResult: Form[UserProvidedJobDetails] = jobDetailsForm(baseJobInfo).bindFromRequest
     formValidationResult.fold(
       errorFunction,
       successFunction
     )
+  }
+
+  def removeJobDetails() = Action { implicit request: MessagesRequest[AnyContent] =>
+    request.session -- Seq("company", "jobTitle", "postUrl")
+    Ok(views.html.authenticated.user.jobFeedHome(jobPostForm, getPostInfoUrl))
   }
 
 }

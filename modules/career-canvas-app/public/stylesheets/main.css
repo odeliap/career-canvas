@@ -75,6 +75,18 @@ hr {
     text-decoration: underline;
 }
 
+.success-flash {
+    color: green;
+}
+
+.error-flash {
+    color: red;
+}
+
+.info-flash {
+    color: yellow;
+}
+
 /* Landing Pages */
 
 .signup {
@@ -370,7 +382,7 @@ hr {
     box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
 }
 
-.add-job-button a {
+.add-job-button a, #final-save-job-button, #remove-job-description-button {
     display: inline-block;
     text-decoration: none;
     color: #333; /* Change color to dark when background is transparent */
@@ -391,8 +403,16 @@ hr {
     transition: background 0.3s;
 }
 
-.add-job-button a:hover {
+.add-job-button a:hover, #final-save-job-button, #remove-job-description-button {
     background-image: linear-gradient(to right, #FFCC33, #FFB347);
+}
+
+#final-save-job-button {
+    border: none;
+}
+
+#remove-job-description-button {
+    font-weight: 500;
 }
 
 .job-url-input {
@@ -432,7 +452,6 @@ hr {
   background-color: #fff;
   width: 150px;
   height: 150px;
-  margin: 20px;
   padding: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   border: 1px solid #f0f0f0;
@@ -460,4 +479,39 @@ hr {
     .box {
         flex: 0 1 100%;
     }
+}
+
+#job-description-form {
+    font-size: 12px;
+}
+
+#job-description-form-first-row,
+#job-description-form-second-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-right: 40px;
+}
+
+#job-description-company,
+#job-description-job-title,
+#job-description-status,
+#job-description-interview-round,
+#job-description-notes {
+    flex: 1;
+    margin-right: 10px;
+}
+
+#job-description-company, #job-description-title {
+    width: 96%;
+}
+
+#job-description-notes {
+    width: 94%;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+#job-description-interview-round {
+    width: 40px;
 }

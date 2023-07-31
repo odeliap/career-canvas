@@ -8,10 +8,9 @@ object JobStatus {
   case object InterviewScheduled extends JobStatus
   case object Interviewed extends JobStatus
   case object OfferMade extends JobStatus
-  case object Accepted extends JobStatus
   case object Rejected extends JobStatus
 
-  private val values = Seq(NotSubmitted, Submitted, InterviewScheduled, Interviewed, OfferMade, Accepted, Rejected)
+  private val values = Seq(NotSubmitted, Submitted, InterviewScheduled, Interviewed, OfferMade, Rejected)
 
   def stringToEnum(input: String): JobStatus = {
     values

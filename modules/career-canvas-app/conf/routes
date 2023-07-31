@@ -15,7 +15,6 @@ GET     /users/doSignUp             controllers.UserController.processSignUpAtte
 
 # pages for authenticated users
 GET     /home                       controllers.AuthenticatedUserController.showHome()
-GET     /network                    controllers.AuthenticatedUserController.showNetwork()
 GET     /jobStats                   controllers.AuthenticatedUserController.showJobStats()
 
 GET     /users/logout               controllers.AuthenticatedUserController.logout()
@@ -24,12 +23,13 @@ GET     /users/logout               controllers.AuthenticatedUserController.logo
 GET     /feed                       controllers.JobFeedController.showJobFeedHome()
 GET     /feed/doAddJobPost          controllers.JobFeedController.processJobPost()
 GET     /feed/addJobDetails         controllers.JobFeedController.showAddJobDetailsForm(baseJobInfo: careercanvas.io.model.BaseJobInfo)
-GET     /feed/saveJob               controllers.JobFeedController.saveJob(baseJobInfo: careercanvas.io.model.BaseJobInfo)
+GET     /feed/saveJob               controllers.JobFeedController.saveJob()
+GET     /feed/removeJobDetails      controllers.JobFeedController.removeJobDetails()
 
 # pages for policies
-GET     /helpCenter/termsOfUse          controllers.PolicyController.showTermsOfUse()
-GET     /helpCenter/privacyPolicy       controllers.PolicyController.showPrivacyPolicy()
-GET     /helpCenter/cookiesPolicy       controllers.PolicyController.showCookiesPolicy()
+GET     /helpCenter/termsOfUse      controllers.PolicyController.showTermsOfUse()
+GET     /helpCenter/privacyPolicy   controllers.PolicyController.showPrivacyPolicy()
+GET     /helpCenter/cookiesPolicy   controllers.PolicyController.showCookiesPolicy()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

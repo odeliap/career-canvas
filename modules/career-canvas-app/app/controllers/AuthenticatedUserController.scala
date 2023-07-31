@@ -20,10 +20,6 @@ class AuthenticatedUserController @Inject()(
     Ok(views.html.authenticated.user.home())
   }
 
-  def showNetwork() = authenticatedUserAction { implicit request: Request[AnyContent] =>
-    Ok(views.html.authenticated.user.network())
-  }
-
   def showJobStats() = authenticatedUserAction { implicit request: Request[AnyContent] =>
     Ok(views.html.authenticated.user.jobStats())
   }

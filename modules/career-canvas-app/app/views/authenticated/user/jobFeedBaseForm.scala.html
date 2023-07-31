@@ -1,0 +1,38 @@
+@(content: Html)(script: Html)(implicit request: MessagesRequestHeader)
+
+@main("Job Feed") {
+    <div>
+        @request.flash.data.map{ case (name, value) =>
+            @if(name.equals("error")) {
+                <div class="error-flash">@name: @value</div>
+            } else if (name.equals("success")) {
+                <div class="success-flash">@name: @value</div>
+            } else {
+                <div class="info-flash">@name: @value</div>
+            }
+        }
+</div>
+    @content
+    <div class="job-tiles">
+        <div class="job-tile">
+            <div class="job-tile-tab">Job Post</div>
+            <p>This is a note</p>
+        </div>
+        <div class="job-tile">
+            <div class="job-tile-tab">Job Post</div>
+            <p>This is a note</p>
+        </div>
+        <div class="job-tile">
+            <div class="job-tile-tab">Job Post</div>
+            <p>This is a note</p>
+        </div>
+        <div class="job-tile">
+            <div class="job-tile-tab">Job Post</div>
+            <p>This is a note</p>
+        </div>
+    </div>
+
+    <script>
+        @script
+    </script>
+}
