@@ -13,8 +13,8 @@ trait NetworkComponent {
 
   class NetworkTable(tag: Tag) extends Table[ConnectionInfo](tag, "connections") {
 
-    def connectionId: Rep[Long] = column[Long]("connection_id")
     def userId: Rep[Long] = column[Long]("user_id")
+    def connectionId: Rep[Long] = column[Long]("connection_id", O.AutoInc)
     def firstName: Rep[String] = column[String]("first_name")
     def lastName: Rep[String] = column[String]("last_name")
     def company: Rep[String] = column[String]("company")
@@ -26,8 +26,8 @@ trait NetworkComponent {
     def notes: Rep[Option[String]] = column[Option[String]]("notes")
 
     def * : ProvenShape[ConnectionInfo] = (
-      connectionId,
       userId,
+      connectionId,
       firstName,
       lastName,
       company,

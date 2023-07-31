@@ -3,8 +3,8 @@ package careercanvas.io.model
 import java.sql.Timestamp
 
 case class ConnectionInfo(
-  connectionId: Long,
   userId: Long,
+  connectionId: Long,
   firstName: String,
   lastName: String,
   company: String,

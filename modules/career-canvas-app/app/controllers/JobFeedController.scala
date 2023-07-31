@@ -79,7 +79,7 @@ class JobFeedController @Inject()(
         .flashing("error" -> "Error creating job frame")
     }
     val successFunction = { data: UserProvidedJobDetails =>
-      jobApplicationsService.createJob(data, baseJobInfo.postUrl, "0") // TODO: fix me to actual user id from session
+      jobApplicationsService.createJob(data, baseJobInfo.postUrl, "1") // TODO: fix me to actual user id from session
       Redirect(routes.JobFeedController.showJobFeedHome())
         .flashing("success" -> "Job frame added")
     }

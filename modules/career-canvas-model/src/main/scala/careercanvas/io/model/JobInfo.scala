@@ -4,8 +4,8 @@ import java.sql.Timestamp
 import java.time.Instant
 
 case class JobInfo(
-  jobId: Long,
   userId: Long,
+  jobId: Long,
   company: String,
   jobTitle: String,
   postUrl: String,

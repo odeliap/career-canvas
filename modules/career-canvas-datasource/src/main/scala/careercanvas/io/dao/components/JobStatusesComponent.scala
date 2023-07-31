@@ -13,8 +13,8 @@ trait JobStatusesComponent {
 
   class JobStatusesTable(tag: Tag) extends Table[JobInfo](tag, "job_statuses") {
 
-    def jobId: Rep[Long] = column[Long]("job_id", O.AutoInc)
     def userId: Rep[Long] = column[Long]("user_id")
+    def jobId: Rep[Long] = column[Long]("job_id", O.AutoInc)
     def company: Rep[String] = column[String]("company")
     def jobTitle: Rep[String] = column[String]("job_title")
     def postingUrl: Rep[String] = column[String]("posting_url")
@@ -25,8 +25,8 @@ trait JobStatusesComponent {
     def notes: Rep[Option[String]] = column[Option[String]]("notes")
 
     def * : ProvenShape[JobInfo] = (
-      jobId,
       userId,
+      jobId,
       company,
       jobTitle,
       postingUrl,
