@@ -1,5 +1,7 @@
 package controllers
 
+import authentication.AuthenticatedUserAction
+
 import javax.inject._
 import play.api.mvc._
 

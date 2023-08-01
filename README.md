@@ -3,6 +3,11 @@ Career Canvas Application
 
 ## Running the app
 
+Make necessary exports:
+
+- `OPENAI_SCALA_CLIENT_API_KEY`
+- `OPENAI_SCALA_CLIENT_ORG_ID`
+
 Create the docker image with:
 
 ```

@@ -1,11 +1,10 @@
-package controllers
+package authentication
 
 import play.api.i18n.MessagesApi
-
-import javax.inject.Inject
 import play.api.mvc.Results._
 import play.api.mvc._
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class AuthenticatedUserMessagesAction @Inject()(bodyParser: BodyParsers.Default, messagesApi: MessagesApi) (implicit ec: ExecutionContext)

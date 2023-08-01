@@ -38,7 +38,7 @@ lazy val root = (project in file("."))
     organization := "odeliaputterman.com",
     version := "1.0-SNAPSHOT"
   )
-  .aggregate(careerCanvasApp, careerCanvasDatasource, careerCanvasModel)
+  .aggregate(careerCanvasApp, careerCanvasDatasource, careerCanvasModel, careerCanvasProcessor)
 
 lazy val careerCanvasApp = (project in file("modules/career-canvas-app"))
   .enablePlugins(PlayScala)
@@ -52,7 +52,7 @@ lazy val careerCanvasApp = (project in file("modules/career-canvas-app"))
     )
   )
   .dependsOn(
-    careerCanvasDatasource, careerCanvasModel
+    careerCanvasDatasource, careerCanvasModel, careerCanvasProcessor
   )
 
 lazy val careerCanvasDatasource = (project in file("modules/career-canvas-datasource"))
@@ -74,4 +74,18 @@ lazy val careerCanvasModel = (project in file("modules/career-canvas-model"))
     description := "Career Canvas model",
     libraryDependencies ++= Seq(
     )
+  )
+
+lazy val careerCanvasProcessor = (project in file("modules/career-canvas-processor"))
+  .settings(commonSettings)
+  .settings(
+    name := "career-canvas-processor",
+    description := "Career Canvas processor",
+    libraryDependencies ++= Seq(
+      libraries.scraper.jsoup,
+      libraries.openai.client,
+      libraries.openai.guice
+    )
+  ).dependsOn(
+    careerCanvasModel
   )

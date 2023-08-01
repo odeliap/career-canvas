@@ -1,9 +1,9 @@
-package controllers
+package authentication
 
-import javax.inject.Inject
 import play.api.mvc.Results._
 import play.api.mvc._
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class AuthenticatedUserAction @Inject() (parser: BodyParsers.Default)(implicit ec: ExecutionContext)

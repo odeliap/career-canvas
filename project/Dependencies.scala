@@ -17,6 +17,14 @@ object Dependencies {
       val postgresVersion = "0.20.3"
       val postgresDriverVersion = "42.3.4"
     }
+
+    object scraper {
+      val jsoupVersion = "1.15.3"
+    }
+
+    object openai {
+      val clientVersion = "0.1.0"
+    }
   }
 
   object libraries {
@@ -38,6 +46,17 @@ object Dependencies {
       val postgres = "com.github.tminglei" %% "slick-pg" % postgresVersion
       val postgresJson = "com.github.tminglei" %% "slick-pg_play-json" % postgresVersion
       val postgresDriver = "org.postgresql" % "postgresql" % postgresDriverVersion
+    }
+
+    object scraper {
+      import versions.scraper._
+      val jsoup = "org.jsoup" % "jsoup" % jsoupVersion
+    }
+
+    object openai {
+      import versions.openai._
+      val client = "io.cequence" %% "openai-scala-client" % clientVersion
+      val guice = "io.cequence" %% "openai-scala-guice" % clientVersion
     }
   }
 

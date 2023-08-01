@@ -1,6 +1,8 @@
 package controllers
 
+import authentication.AuthenticatedUserMessagesAction
 import careercanvas.io.model._
+import careercanvas.io.processor.BaseJobInfoResolver
 import model.Global
 import service.JobApplicationsService
 import play.api.mvc._
@@ -13,7 +15,8 @@ import javax.inject.Inject
 class JobFeedController @Inject()(
   cc: MessagesControllerComponents,
   jobApplicationsService: JobApplicationsService,
-  authenticatedUserMessagesAction: AuthenticatedUserMessagesAction
+  authenticatedUserMessagesAction: AuthenticatedUserMessagesAction,
+  baseJobInfoResolver: BaseJobInfoResolver
 ) extends MessagesAbstractController(cc) {
 
   private val logger = play.api.Logger(this.getClass)
@@ -52,11 +55,7 @@ class JobFeedController @Inject()(
     }
 
     val successFunction = { data: JobPosting =>
-      val baseJobInfo = BaseJobInfo(
-        "company", // # TODO: get me from calling scraping api
-        "jobTitle", // # TODO: get me from calling scraping api
-        data.postUrl
-      )
+      val baseJobInfo = baseJobInfoResolver.resolve(data.postUrl)
       Redirect(routes.JobFeedController.showAddJobDetailsForm(baseJobInfo))
     }
 
