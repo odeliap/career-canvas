@@ -1,7 +1,8 @@
 @(
 form: Form[careercanvas.io.model.UserProvidedJobDetails],
 saveJobUrl: Call,
-jobInfos: Seq[careercanvas.io.model.JobInfo]
+jobInfos: Seq[careercanvas.io.model.JobInfo],
+baseJobInfo: careercanvas.io.model.BaseJobInfo
 )(implicit request: MessagesRequestHeader)
 
 @jobFeedBaseForm(jobInfos) {
@@ -25,21 +26,44 @@ jobInfos: Seq[careercanvas.io.model.JobInfo]
             @helper.CSRF.formField
 
             <div id="job-description-form-first-row">
-                @helper.inputText(
-                    form("company"),
-                    '_label -> "Company",
-                    'id -> "job-description-company",
-                    'size -> 60,
-                    '_showConstraints -> false
-                )
 
-                @helper.inputText(
-                    form("jobTitle"),
-                    '_label -> "Job Title",
-                    'id -> "job-description-title",
-                    'size -> 60,
-                    '_showConstraints -> false
-                )
+                @if(baseJobInfo.company.nonEmpty) {
+                    @helper.inputText(
+                        form("company"),
+                        '_label -> "Company",
+                        'placeholder -> baseJobInfo.company,
+                        'id -> "job-description-company",
+                        'size -> 60,
+                        '_showConstraints -> false
+                    )
+                } else {
+                    @helper.inputText(
+                        form("company"),
+                        '_label -> "Company",
+                        'id -> "job-description-company",
+                        'size -> 60,
+                        '_showConstraints -> false
+                    )
+                }
+
+                @if(baseJobInfo.company.nonEmpty) {
+                    @helper.inputText(
+                        form("jobTitle"),
+                        '_label -> "Job Title",
+                        'placeholder -> baseJobInfo.jobTitle,
+                        'id -> "job-description-title",
+                        'size -> 60,
+                        '_showConstraints -> false
+                    )
+                } else {
+                    @helper.inputText(
+                        form("jobTitle"),
+                        '_label -> "Job Title",
+                        'id -> "job-description-title",
+                        'size -> 60,
+                        '_showConstraints -> false
+                    )
+                }
             </div>
 
             <div id="job-description-form-second-row">

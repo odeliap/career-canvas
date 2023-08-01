@@ -70,7 +70,7 @@ class JobFeedController @Inject()(
     val userId = request.session.data(Global.SESSION_USER_ID)
     val userJobs = jobApplicationsService.getJobs(userId)
 
-    Ok(views.html.authenticated.user.addJobDetails(jobDetailsForm(baseJobInfo), saveJobUrl, userJobs))
+    Ok(views.html.authenticated.user.addJobDetails(jobDetailsForm(baseJobInfo), saveJobUrl, userJobs, baseJobInfo))
       .withSession(request.session + ("company" -> baseJobInfo.company) + ("jobTitle" -> baseJobInfo.jobTitle) + ("postUrl" -> baseJobInfo.postUrl))
   }
 
@@ -85,7 +85,7 @@ class JobFeedController @Inject()(
     )
 
     val errorFunction = { formWithErrors: Form[UserProvidedJobDetails] =>
-      BadRequest(views.html.authenticated.user.addJobDetails(formWithErrors, saveJobUrl, userJobs))
+      BadRequest(views.html.authenticated.user.addJobDetails(formWithErrors, saveJobUrl, userJobs, baseJobInfo))
         .flashing("error" -> "Error creating job frame")
         .withSession(request.session + ("company" -> baseJobInfo.company) + ("jobTitle" -> baseJobInfo.jobTitle) + ("postUrl" -> baseJobInfo.postUrl))
     }
