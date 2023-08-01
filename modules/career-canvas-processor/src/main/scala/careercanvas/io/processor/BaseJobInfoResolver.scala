@@ -30,7 +30,7 @@ class BaseJobInfoResolver @Inject()(
     openAiService
       .createCompletion(prompt)
       .map { completion =>
-        completion.choices.head.text
+        completion.choices.headOption.map(_.text).getOrElse("")
       }
       .waitForResult
   }
