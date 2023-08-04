@@ -9,7 +9,7 @@ object ConnectionCloseness {
   case object CloseFriend extends ConnectionCloseness
   case object FamilyMember extends ConnectionCloseness
 
-  private val values = Seq(Stranger, Acquaintance, Friend, CloseFriend, FamilyMember)
+  val values = Seq(Stranger, Acquaintance, Friend, CloseFriend, FamilyMember)
 
   def stringToEnum(input: String): ConnectionCloseness = {
     values

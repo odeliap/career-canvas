@@ -1,0 +1,18 @@
+@(jobInfo: careercanvas.io.model.JobInfo)(content: Html)
+
+@main(s"${jobInfo.company}: ${jobInfo.jobTitle}") {
+    <div id="job-view-intro">
+        <h2>@jobInfo.company - @jobInfo.jobTitle</h2>
+        <a href="@jobInfo.postUrl" target="_blank" id="job-posting-link">See job posting</a>
+        <p>Application Status: @jobInfo.status</p>
+        @if(jobInfo.appSubmissionDate.nonEmpty) {
+            <p>Application Submitted: @jobInfo.appSubmissionDate.get</p>
+        }
+        @if(jobInfo.interviewRound.nonEmpty) {
+            <p>Interview Round: @jobInfo.interviewRound.get</p>
+        }
+        <p>Last Updated: @jobInfo.lastUpdate</p>
+        <p>Notes: @jobInfo.notes</p>
+    </div>
+    @content
+}

@@ -27,7 +27,7 @@ jobInfos: Seq[JobInfo]
     <div class="job-tiles">
         @jobInfos.map { jobInfo =>
             <div class="job-tile">
-                <div class="job-tile-tab">@jobInfo.jobTitle</div>
+                <a href="@routes.JobFeedController.showJobView(jobInfo)" class="job-tile-tab">@jobInfo.jobTitle</a>
                 <p>Company: @jobInfo.company</p>
                 <p>Status: @jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</p>
                 @if(jobInfo.interviewRound.nonEmpty) {

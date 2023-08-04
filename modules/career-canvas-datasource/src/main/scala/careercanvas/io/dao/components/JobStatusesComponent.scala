@@ -35,7 +35,7 @@ trait JobStatusesComponent {
       lastUpdate,
       interviewRound,
       notes
-    ) <> (JobInfo.tupled, JobInfo.unapply)
+    ) <> ((JobInfo.apply _).tupled, JobInfo.unapply)
 
   }
 

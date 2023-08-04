@@ -1,0 +1,5 @@
+@(jobInfo: careercanvas.io.model.JobInfo)
+
+@baseJobView(jobInfo) {
+    <a id="cover-letter-button" href="@routes.JobFeedController.generateCoverLetter(jobInfo)">Generate Custom Cover Letter</a>
+}

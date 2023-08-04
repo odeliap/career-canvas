@@ -1,7 +1,10 @@
 package careercanvas.io.model
 
+import play.api.mvc.QueryStringBindable
+
 import java.sql.Timestamp
-import java.time.Instant
+import java.time.{Instant, ZoneId, ZonedDateTime}
+import scala.util.Try
 
 case class JobInfo(
   userId: Long,
@@ -25,4 +28,50 @@ case class JobInfo(
     )
   }
 
+}
+
+object JobInfo {
+
+  implicit object bindable extends QueryStringBindable[JobInfo] {
+
+    override def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, JobInfo]] = Option {
+      Try {
+        val userId = params("userId").head.toLong
+        val jobId = params("jobId").head.toLong
+        val company = params("company").head
+        val jobTitle = params("jobTitle").head
+        val postUrl = params("postUrl").head
+        val status = JobStatus.stringToEnum(params("status").head)
+        val appSubmissionDate = params.get("appSubmissionDate").flatMap(seq =>
+          if(seq.nonEmpty && seq.head.nonEmpty) {
+            Some(Timestamp.from(ZonedDateTime.parse(seq.head).toInstant))
+          } else {
+            None
+          }
+        )
+        val lastUpdate = params.get("lastUpdate").map(_.head).map { dateStr =>
+          Timestamp.from(ZonedDateTime.parse(dateStr).toInstant)
+        }.getOrElse(Timestamp.from(Instant.now()))
+        val interviewRound = params.get("interviewRound").flatMap(seq =>
+          if (seq.nonEmpty && seq.head.nonEmpty) {
+            Some(seq.head.toInt)
+          } else {
+            None
+          }
+        )
+        val notes = params.get("notes").map(_.head)
+
+        Right(JobInfo(userId, jobId, company, jobTitle, postUrl, status, appSubmissionDate, lastUpdate, interviewRound, notes))
+      }.getOrElse(Left("Unable to bind JobInfo"))
+    }
+
+    override def unbind(key: String, jobInfo: JobInfo): String = {
+      val appSubmissionDate = jobInfo.appSubmissionDate.map(_.toInstant.atZone(ZoneId.systemDefault()).toString).getOrElse("")
+      val lastUpdate = jobInfo.lastUpdate.toInstant.atZone(ZoneId.systemDefault()).toString
+      val interviewRound = jobInfo.interviewRound.map(_.toString).getOrElse("")
+      val notes = jobInfo.notes.getOrElse("")
+
+      s"userId=${jobInfo.userId}&jobId=${jobInfo.jobId}&company=${jobInfo.company}&jobTitle=${jobInfo.jobTitle}&postUrl=${jobInfo.postUrl}&status=${jobInfo.status}&appSubmissionDate=$appSubmissionDate&lastUpdate=$lastUpdate&interviewRound=$interviewRound&notes=$notes"
+    }
+  }
 }

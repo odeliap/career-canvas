@@ -25,6 +25,8 @@ GET     /feed/doAddJobPost          controllers.JobFeedController.processJobPost
 GET     /feed/addJobDetails         controllers.JobFeedController.showAddJobDetailsForm(baseJobInfo: careercanvas.io.model.BaseJobInfo)
 GET     /feed/saveJob               controllers.JobFeedController.saveJob()
 GET     /feed/removeJobDetails      controllers.JobFeedController.removeJobDetails()
+GET     /feed/job                   controllers.JobFeedController.showJobView(jobInfo: careercanvas.io.model.JobInfo)
+GET     /feed/job/coverLetter       controllers.JobFeedController.generateCoverLetter(jobInfo: careercanvas.io.model.JobInfo)
 
 # pages for policies
 GET     /helpCenter/termsOfUse      controllers.PolicyController.showTermsOfUse()

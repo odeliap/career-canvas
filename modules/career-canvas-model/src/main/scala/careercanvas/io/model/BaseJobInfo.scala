@@ -9,7 +9,9 @@ case class BaseJobInfo(
 )
 
 object BaseJobInfo {
-  implicit def queryStringBinder(implicit stringBinder: QueryStringBindable[String]) = new QueryStringBindable[BaseJobInfo] {
+
+  implicit def queryStringBinder(implicit stringBinder: QueryStringBindable[String]): QueryStringBindable[BaseJobInfo] = new QueryStringBindable[BaseJobInfo] {
+
     override def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, BaseJobInfo]] = {
       for {
         company <- stringBinder.bind("company", params)
@@ -31,4 +33,5 @@ object BaseJobInfo {
         stringBinder.unbind("postUrl", baseJobInfo.postUrl)
     }
   }
+
 }

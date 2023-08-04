@@ -525,3 +525,25 @@ hr {
     font-size: 14px;
     border: none;
 }
+
+#job-posting-link {
+    color: #808080;
+}
+
+#cover-letter-button {
+    width: 94%;
+    height: 15px;
+    font-size: 14px;
+    background-image: linear-gradient(to right, #FFCC33, #FFB347);
+    color: #fff;
+    padding: 20px;
+    border: none;
+    border-radius: 5px;
+    display: block;
+    text-align: center;
+    margin: 50px auto;
+}
+
+#cover-letter-subheader {
+    margin-top: 50px;
+}
