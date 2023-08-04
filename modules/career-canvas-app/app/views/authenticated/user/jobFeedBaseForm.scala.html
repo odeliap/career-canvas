@@ -1,4 +1,8 @@
-@(jobInfos: Seq[careercanvas.io.model.JobInfo])(content: Html)(script: Html)(implicit request: MessagesRequestHeader)
+@import careercanvas.io.model._
+@(
+sortByForm: Form[SortByForm],
+jobInfos: Seq[JobInfo]
+)(content: Html)(script: Html)(implicit request: MessagesRequestHeader)
 
 @main("Job Feed") {
     <div>
@@ -13,6 +17,13 @@
         }
 </div>
     @content
+    @helper.select(
+        sortByForm("sortKey"),
+        options = SortKey.values.map(sortKey => sortKey.toString -> s"Sort By ${sortKey.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")}"),
+        '_label -> "",
+        '_default -> "Sort By Date Created",
+        'id -> "sort-by-form"
+    )
     <div class="job-tiles">
         @jobInfos.map { jobInfo =>
             <div class="job-tile">

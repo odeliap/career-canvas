@@ -1,11 +1,12 @@
 @(
+sortByForm: Form[careercanvas.io.model.SortByForm],
 form: Form[careercanvas.io.model.UserProvidedJobDetails],
 saveJobUrl: Call,
 jobInfos: Seq[careercanvas.io.model.JobInfo],
 baseJobInfo: careercanvas.io.model.BaseJobInfo
 )(implicit request: MessagesRequestHeader)
 
-@jobFeedBaseForm(jobInfos) {
+@jobFeedBaseForm(sortByForm, jobInfos) {
 <div class="add-job-page">
     <div class="add-job-button">
         <a href="#" id="save-job" class="add-job">+</a>

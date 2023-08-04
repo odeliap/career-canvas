@@ -1,6 +1,7 @@
 package controllers
 
 import authentication.AuthenticatedUserMessagesAction
+import careercanvas.io.converter.Converters
 import careercanvas.io.model._
 import careercanvas.io.processor.BaseJobInfoResolver
 import model.Global
@@ -8,6 +9,7 @@ import service.JobApplicationsService
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
+import play.api.data.format.Formatter
 
 import javax.inject.Inject
 
@@ -17,9 +19,15 @@ class JobFeedController @Inject()(
   jobApplicationsService: JobApplicationsService,
   authenticatedUserMessagesAction: AuthenticatedUserMessagesAction,
   baseJobInfoResolver: BaseJobInfoResolver
-) extends MessagesAbstractController(cc) {
+) extends MessagesAbstractController(cc) with Converters {
 
   private val logger = play.api.Logger(this.getClass)
+
+  val sortByForm: Form[SortByForm] = Form (
+    mapping(
+      "sortKey" -> of[SortKey]
+    )(SortByForm.apply)(SortByForm.unapply)
+  )
 
   val jobPostForm: Form[JobPosting] = Form (
     mapping(
@@ -43,7 +51,7 @@ class JobFeedController @Inject()(
   def showJobFeedHome(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = request.session.data(Global.SESSION_USER_ID)
     val userJobs = jobApplicationsService.getJobs(userId)
-    Ok(views.html.authenticated.user.jobFeedHome(jobPostForm, getPostInfoUrl, userJobs))
+    Ok(views.html.authenticated.user.jobFeedHome(sortByForm, jobPostForm, getPostInfoUrl, userJobs))
   }
 
   def processJobPost(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
@@ -51,7 +59,7 @@ class JobFeedController @Inject()(
     val userJobs = jobApplicationsService.getJobs(userId)
 
     val errorFunction = { formWithErrors: Form[JobPosting] =>
-      BadRequest(views.html.authenticated.user.jobFeedHome(formWithErrors, getPostInfoUrl, userJobs))
+      BadRequest(views.html.authenticated.user.jobFeedHome(sortByForm, formWithErrors, getPostInfoUrl, userJobs))
     }
 
     val successFunction = { data: JobPosting =>
@@ -70,7 +78,7 @@ class JobFeedController @Inject()(
     val userId = request.session.data(Global.SESSION_USER_ID)
     val userJobs = jobApplicationsService.getJobs(userId)
 
-    Ok(views.html.authenticated.user.addJobDetails(jobDetailsForm(baseJobInfo), saveJobUrl, userJobs, baseJobInfo))
+    Ok(views.html.authenticated.user.addJobDetails(sortByForm, jobDetailsForm(baseJobInfo), saveJobUrl, userJobs, baseJobInfo))
       .withSession(request.session + ("company" -> baseJobInfo.company) + ("jobTitle" -> baseJobInfo.jobTitle) + ("postUrl" -> baseJobInfo.postUrl))
   }
 
@@ -85,7 +93,7 @@ class JobFeedController @Inject()(
     )
 
     val errorFunction = { formWithErrors: Form[UserProvidedJobDetails] =>
-      BadRequest(views.html.authenticated.user.addJobDetails(formWithErrors, saveJobUrl, userJobs, baseJobInfo))
+      BadRequest(views.html.authenticated.user.addJobDetails(sortByForm, formWithErrors, saveJobUrl, userJobs, baseJobInfo))
         .flashing("error" -> "Error creating job frame")
         .withSession(request.session + ("company" -> baseJobInfo.company) + ("jobTitle" -> baseJobInfo.jobTitle) + ("postUrl" -> baseJobInfo.postUrl))
     }
@@ -106,7 +114,7 @@ class JobFeedController @Inject()(
   def removeJobDetails(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = request.session.data(Global.SESSION_USER_ID)
     val userJobs = jobApplicationsService.getJobs(userId)
-    Ok(views.html.authenticated.user.jobFeedHome(jobPostForm, getPostInfoUrl, userJobs))
+    Ok(views.html.authenticated.user.jobFeedHome(sortByForm, jobPostForm, getPostInfoUrl, userJobs))
       .withSession(request.session -- Seq("company", "jobTitle", "postUrl"))
   }
 

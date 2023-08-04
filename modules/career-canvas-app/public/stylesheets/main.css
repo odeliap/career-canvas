@@ -518,3 +518,10 @@ hr {
 #job-description-interview-round {
     width: 40px;
 }
+
+#sort-by-form {
+    display: block;
+    margin-left: auto;
+    font-size: 14px;
+    border: none;
+}
