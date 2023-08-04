@@ -9,7 +9,6 @@ import service.JobApplicationsService
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
-import play.api.data.format.Formatter
 
 import javax.inject.Inject
 
