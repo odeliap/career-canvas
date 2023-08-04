@@ -1,7 +1,7 @@
 package service
 
 import careercanvas.io.JobApplicationsDao
-import careercanvas.io.model.{JobInfo, JobStatus, UserProvidedJobDetails}
+import careercanvas.io.model.{CoverLetter, JobInfo, JobStatus, UserProvidedJobDetails}
 import careercanvas.io.util.AwaitResult
 
 import javax.inject.Inject
@@ -32,7 +32,7 @@ class JobApplicationsService @Inject() (
   }
 
   def generateCoverLetter(jobInfo: JobInfo): CoverLetter = {
-
+    CoverLetter("Some cover letter content")
   }
 
 }

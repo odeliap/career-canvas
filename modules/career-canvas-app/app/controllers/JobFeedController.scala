@@ -122,7 +122,7 @@ class JobFeedController @Inject()(
   }
 
   def generateCoverLetter(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val coverLetter = "TODO update me to actually generated cover letter"
+    val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo)
     Ok(views.html.authenticated.user.showCoverLetter(jobInfo, coverLetter))
   }
 
