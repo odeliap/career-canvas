@@ -562,3 +562,17 @@ hr {
 #cover-letter-subheader {
     margin-top: 50px;
 }
+
+#cover-letter-content {
+    width: 96%;
+    height: 475px; /* Adjust based on desired height */
+    resize: none; /* Prevents the user from resizing the textarea */
+    border: 1px solid #ccc;
+    padding: 2px 4px;
+    box-sizing: border-box;
+    overflow: auto; /* Hide the overflow to give input-feel */
+    white-space: pre-wrap; /* Enables text wrapping */
+    word-wrap: break-word;
+    font-family: inherit; /* Make it look like a standard input text */
+    font-size: inherit;
+}
