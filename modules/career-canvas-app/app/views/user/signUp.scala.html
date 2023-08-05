@@ -38,6 +38,15 @@ postUrl: Call
                 @helper.CSRF.formField
 
                 @helper.inputText(
+                    form("fullName"),
+                    '_label -> "",
+                    'placeholder -> "fullName",
+                    'class -> "fullName",
+                    'size -> 60,
+                    '_showConstraints -> false
+                )
+
+                @helper.inputText(
                     form("username"),
                     '_label -> "",
                     'placeholder -> "username",
@@ -59,10 +68,12 @@ postUrl: Call
                 }
 
             </div>
+            <hr class="login-signup-div">
+            <a href="" class="forgot-password">Forgot Password?</a>
             <p class="terms-note">By signing up, you agree to our <a href="@routes.PolicyController.showTermsOfUse()">Terms</a>, <a href="@routes.PolicyController.showPrivacyPolicy()">Privacy Policy</a> and <a href="@routes.PolicyController.showCookiesPolicy">Cookies Policy</a>.</p>
         </div>
         <div class="switch-up">
-            <p class="switch-up-txt">Have an account <a href="@routes.UserController.showLoginForm()" class="switch-up-btn">Log in</a></p>
+            <p class="switch-up-txt">Have an account? <a href="@routes.UserController.showLoginForm()" class="switch-up-btn">Log in</a></p>
         </div>
     </body>
 </html>

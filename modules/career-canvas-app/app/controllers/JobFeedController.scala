@@ -122,7 +122,8 @@ class JobFeedController @Inject()(
   }
 
   def generateCoverLetter(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo)
+    val fullName = request.session.data(Global.SESSION_USER_FULL_NAME)
+    val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo, fullName)
     Ok(views.html.authenticated.user.showCoverLetter(jobInfo, coverLetter))
   }
 

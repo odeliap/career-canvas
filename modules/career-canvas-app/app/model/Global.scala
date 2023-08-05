@@ -7,5 +7,6 @@ object Global {
 
   val SESSION_USER_ID = "userId"
   val SESSION_USERNAME_KEY = "username"
+  val SESSION_USER_FULL_NAME = "userFirstLastName"
 
 }

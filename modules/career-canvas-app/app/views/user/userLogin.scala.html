@@ -38,6 +38,15 @@ postUrl: Call
                 @helper.CSRF.formField
 
                 @helper.inputText(
+                form("fullName"),
+                '_label -> "",
+                'placeholder -> "fullName",
+                'class -> "fullName",
+                'size -> 60,
+                '_showConstraints -> false
+                )
+
+                @helper.inputText(
                 form("username"),
                 '_label -> "",
                 'placeholder -> "username",

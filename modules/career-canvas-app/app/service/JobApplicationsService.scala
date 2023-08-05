@@ -33,8 +33,8 @@ class JobApplicationsService @Inject() (
     jobApplicationsDao.getJobs(userId.toLong).waitForResult
   }
 
-  def generateCoverLetter(jobInfo: JobInfo): CoverLetter = {
-    coverLetterWriter.generateCoverLetter(jobInfo.postUrl)
+  def generateCoverLetter(jobInfo: JobInfo, name: String): CoverLetter = {
+    coverLetterWriter.generateCoverLetter(jobInfo, name)
   }
 
 }

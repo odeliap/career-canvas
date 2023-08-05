@@ -87,6 +87,11 @@ hr {
     color: #26abff;
 }
 
+.error-flash {
+    font-size: 10px;
+    margin: 0;
+}
+
 /* Landing Pages */
 
 .signup {
@@ -193,7 +198,7 @@ hr {
     transform: translate(-50%, 15%);
     padding: 50px 30px;
     width: 275px;
-    height: 400px;
+    height: 470px;
     text-align: center;
 }
 
@@ -214,7 +219,7 @@ hr {
     margin: auto;
 }
 
-.username, .password {
+.username, .password, .fullName {
     width: 250px;
     height: 30px;
     border: 1px solid #D4D4D4;
@@ -224,7 +229,7 @@ hr {
 
 .login-signup-btn {
     background: #26abff;
-    margin: 20px 50px;
+    margin: 10px 50px;
     width: 250px;
     height: 30px;
     border: none;
@@ -234,21 +239,31 @@ hr {
     font-weight: bold;
 }
 
-.terms-note {
-    position: fixed;
-    bottom: 15px;
-    left: 40px;
-    width: 75%;
+.forgot-password, .terms-note {
     text-align: center;
     font-size: 10px;
     color: #808080;
+}
+
+.forgot-password {
+    position: fixed;
+    bottom: 50px;
+    left: 40px;
+    width: 75%;
+}
+
+.terms-note {
+    position: fixed;
+    bottom: 10px;
+    left: 40px;
+    width: 75%;
 }
 
 .switch-up {
     border: 1px solid #D4D4D4;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, 1125%);
+    transform: translate(-50%, 1275%);
     padding: 0px 30px;
     width: 275px;
     height: 50px;

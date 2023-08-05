@@ -7,6 +7,7 @@ create table if not exists user_info (
     id                  serial                  primary key,
     email               varchar(255)            not null unique,
     password            varchar(255)            not null,
+    full_name           varchar(255)            not null,
     last_login          timestamp
 );
 

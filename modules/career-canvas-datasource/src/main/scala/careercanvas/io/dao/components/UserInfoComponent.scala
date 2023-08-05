@@ -16,12 +16,14 @@ trait UserInfoComponent {
     def id: Rep[Long] = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def email: Rep[String] = column[String]("email")
     def password: Rep[String] = column[String]("password")
+    def fullName: Rep[String] = column[String]("full_name")
     def lastLogin: Rep[Timestamp] = column[Timestamp]("last_login")
 
     def * : ProvenShape[UserInfo] = (
       id,
       email,
       password,
+      fullName,
       lastLogin
     ) <> (UserInfo.tupled, UserInfo.unapply)
 

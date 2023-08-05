@@ -20,9 +20,9 @@ class Scraper @Inject()() {
 
   def getPageContent(pageUrl: String): String = {
     Try {
-      Jsoup.connect(pageUrl).timeout(10000).get()
+      Jsoup.connect(pageUrl).timeout(10000).get().body()
     } match {
-      case Success(document) => document.toString
+      case Success(content) => content.toString.substring(0, 2049)
       case Failure(_) => ""
     }
   }

@@ -2,7 +2,7 @@ package careercanvas.io.processor
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import careercanvas.io.model.CoverLetter
+import careercanvas.io.model.{CoverLetter, JobInfo}
 import careercanvas.io.scraper.Scraper
 import careercanvas.io.util.AwaitResult
 import io.cequence.openaiscala.service.{OpenAIService, OpenAIServiceFactory}
@@ -20,9 +20,9 @@ class CoverLetterWriter @Inject() (
 
   val openAiService: OpenAIService = OpenAIServiceFactory()
 
-  def generateCoverLetter(pageUrl: String): CoverLetter = {
-    val content = scraper.getPageContent(pageUrl)
-    val prompt = resolvePrompt(content)
+  def generateCoverLetter(jobInfo: JobInfo, name: String): CoverLetter = {
+    val content = scraper.getPageContent(jobInfo.postUrl)
+    val prompt = resolvePrompt(name, jobInfo.company, jobInfo.jobTitle, content)
     val completion = openAiConnector.complete(prompt)
     completionToCoverLetter(completion)
   }
@@ -31,9 +31,14 @@ class CoverLetterWriter @Inject() (
     CoverLetter(completion)
   }
 
-  private def resolvePrompt(content: String): String = {
-    s"""Write me a cover letter for the following job description post:
-       |$content
+  private def resolvePrompt(name: String, company: String, jobTitle: String, content: String): String = {
+    s"""Write a cover letter for the following position:
+       |Applicant Name: $name
+       |Job Title: $jobTitle
+       |Company: $company
+       |Job Description: $content
+       |
+       |Please format the response with newline characters suitable for Scala code.
     """.stripMargin
   }
 

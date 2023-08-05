@@ -19,6 +19,7 @@ class UserController @Inject()(
 
   val form: Form[User] = Form (
     mapping(
+      "fullName" -> nonEmptyText,
       "username" -> nonEmptyText
         .verifying("too few chars",  s => lengthIsGreaterThanNCharacters(s, 3))
         .verifying("too many chars", s => lengthIsLessThanNCharacters(s, 320)),
@@ -49,7 +50,7 @@ class UserController @Inject()(
       userService.attemptUserCreation(user) match {
         case Some(userId) =>
           Redirect(routes.UserController.showLoginForm())
-            .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email)
+            .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email, Global.SESSION_USER_FULL_NAME -> user.fullName)
             .flashing("success" -> "Account created. Please log in.")
         case None =>
           Redirect(routes.UserController.showSignUpForm())
@@ -73,7 +74,7 @@ class UserController @Inject()(
       userService.lookupUser(user) match {
         case Some(userId) =>
           Redirect(routes.AuthenticatedUserController.showHome())
-            .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email)
+            .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email, Global.SESSION_USER_FULL_NAME -> user.fullName)
         case None =>
           Redirect(routes.UserController.showLoginForm())
             .flashing("error" -> "Invalid username/password.")
