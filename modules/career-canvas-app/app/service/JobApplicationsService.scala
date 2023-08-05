@@ -2,13 +2,15 @@ package service
 
 import careercanvas.io.JobApplicationsDao
 import careercanvas.io.model.{CoverLetter, JobInfo, JobStatus, UserProvidedJobDetails}
+import careercanvas.io.processor.CoverLetterWriter
 import careercanvas.io.util.AwaitResult
 
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
 class JobApplicationsService @Inject() (
-  jobApplicationsDao: JobApplicationsDao
+  jobApplicationsDao: JobApplicationsDao,
+  coverLetterWriter: CoverLetterWriter
 )(implicit ec: ExecutionContext)
   extends AwaitResult {
 
@@ -32,7 +34,7 @@ class JobApplicationsService @Inject() (
   }
 
   def generateCoverLetter(jobInfo: JobInfo): CoverLetter = {
-    CoverLetter("Some cover letter content")
+    coverLetterWriter.generateCoverLetter(jobInfo.postUrl)
   }
 
 }

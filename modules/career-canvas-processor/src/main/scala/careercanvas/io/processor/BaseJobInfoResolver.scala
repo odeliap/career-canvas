@@ -1,38 +1,22 @@
 package careercanvas.io.processor
 
-import akka.actor.ActorSystem
-import akka.stream.Materializer
 import careercanvas.io.model.BaseJobInfo
 import careercanvas.io.scraper.Scraper
 import careercanvas.io.util.AwaitResult
-import io.cequence.openaiscala.service.{OpenAIService, OpenAIServiceFactory}
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.ExecutionContext
 
 @Singleton
 class BaseJobInfoResolver @Inject()(
-  scraper: Scraper
-)(implicit ec: ExecutionContext) extends AwaitResult {
-
-  implicit val materializer: Materializer = Materializer(ActorSystem())
-
-  val openAiService: OpenAIService = OpenAIServiceFactory()
+  scraper: Scraper,
+  openAiConnector: OpenAiConnector
+) extends AwaitResult {
 
   def resolve(pageUrl: String): BaseJobInfo = {
     val title = scraper.getPageTitle(pageUrl)
     val prompt = resolvePrompt(title.title)
-    val completion = complete(prompt)
+    val completion = openAiConnector.complete(prompt)
     completionToBaseJobInfo(completion, pageUrl)
-  }
-
-  private def complete(prompt: String): String = {
-    openAiService
-      .createCompletion(prompt)
-      .map { completion =>
-        completion.choices.headOption.map(_.text).getOrElse("")
-      }
-      .waitForResult
   }
 
   private def completionToBaseJobInfo(completion: String, pageUrl: String): BaseJobInfo = {

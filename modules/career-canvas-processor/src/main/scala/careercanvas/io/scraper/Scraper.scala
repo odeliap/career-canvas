@@ -18,4 +18,13 @@ class Scraper @Inject()() {
     }
   }
 
+  def getPageContent(pageUrl: String): String = {
+    Try {
+      Jsoup.connect(pageUrl).timeout(10000).get()
+    } match {
+      case Success(document) => document.toString
+      case Failure(_) => ""
+    }
+  }
+
 }
