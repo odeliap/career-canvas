@@ -1,15 +1,22 @@
 package controllers
 
 import authentication.AuthenticatedUserAction
+import model.Global
+import play.api.libs.json.Json
 
 import javax.inject._
 import play.api.mvc._
+import play.twirl.api.Html
+import service.JobStatisticsService
 
 @Singleton
 class AuthenticatedUserController @Inject()(
   cc: ControllerComponents,
-  authenticatedUserAction: AuthenticatedUserAction
+  authenticatedUserAction: AuthenticatedUserAction,
+  jobStatisticsService: JobStatisticsService
 ) extends AbstractController(cc) {
+
+  private val logger = play.api.Logger(this.getClass)
 
   /**
    * Create an Action to render an HTML page.
@@ -23,7 +30,10 @@ class AuthenticatedUserController @Inject()(
   }
 
   def showJobStats(): Action[AnyContent] = authenticatedUserAction { implicit request: Request[AnyContent] =>
-    Ok(views.html.authenticated.user.jobStats())
+    val userId = request.session.data(Global.SESSION_USER_ID)
+    val statusPercentages = jobStatisticsService.getStatusBreakdown(userId)
+    val statusPercentagesHtml = new Html(Json.toJson(statusPercentages).toString())
+    Ok(views.html.authenticated.user.jobStats(statusPercentagesHtml))
   }
 
   def logout: Action[AnyContent] = authenticatedUserAction { implicit request: Request[AnyContent] =>
