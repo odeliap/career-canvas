@@ -4,7 +4,7 @@ import authentication.AuthenticatedUserMessagesAction
 import model.{Global, NewEvent}
 import service.CalendarEventsService
 import play.api.mvc._
-import play.api.libs.json.{JsResult, JsSuccess, JsValue, Json}
+import play.api.libs.json.Json
 import play.twirl.api.Html
 
 import javax.inject._

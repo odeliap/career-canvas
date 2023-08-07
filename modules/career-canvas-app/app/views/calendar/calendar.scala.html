@@ -3,97 +3,101 @@
 @base("Calendar") {
 
 <html lang='en'>
-<head>
-    <meta charset='utf-8' />
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/calendar.css")">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@@6.1.8/index.global.min.js"></script>
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@@6.1.8/index.global.min.js'></script>
-    <script>
+    <head>
+        <meta charset='utf-8' />
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/calendar.css")">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@@6.1.8/index.global.min.js"></script>
+        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@@6.1.8/index.global.min.js'></script>
+        <script>
 
-      document.addEventListener('DOMContentLoaded', function() {
-        var events = @events;
-        const data = Array.from(events);
-        var series = [];
-        for(n in data) {
-            series.push({
-                id: data[n][0],
-                title: data[n][1],
-                start: data[n][2],
-                end: data[n][3]
-            })
-        };
-        var calendarEl = document.getElementById('calendar');
+          document.addEventListener('DOMContentLoaded', function() {
+            var events = @events;
+            const data = Array.from(events);
+            var series = [];
+            for(n in data) {
+                series.push({
+                    id: data[n][0],
+                    title: data[n][1],
+                    start: data[n][2],
+                    end: data[n][3]
+                })
+            };
+            var calendarEl = document.getElementById('calendar');
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            initialDate: String(new Date().toISOString().slice(0, 10)),
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-            selectable:true,
-            selectHelper:true,
-            select:function (start, end, allDay) {
-                var title = prompt('Event Title:');
-                if (title) {
-                    jQuery("#newTitle").val(title);
-                    jQuery("#newStart").val(convertDate(start));
-                    jQuery("#newEnd").val(convertDate(end));
-                    jQuery("#newAllDay").val(allDay);
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                initialDate: String(new Date().toISOString().slice(0, 10)),
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                selectable:true,
+                selectHelper:true,
+                select:function (start, end, allDay) {
+                    var title = prompt('Event Title:');
+                    if (title) {
+                        jQuery("#newTitle").val(title);
+                        jQuery("#newStart").val(convertDate(start));
+                        jQuery("#newEnd").val(convertDate(end));
+                        jQuery("#newAllDay").val(allDay);
 
-                    jQuery.ajax({
-                        type: 'POST',
-                        url:  jQuery("#eventFormNew").attr("action"),
-                        data: jQuery("#eventFormNew").serialize() ,
-                        dataType: "json",
-                        statusCode: {
-                            200: function(data) {
-                                calendar.fullCalendar('renderEvent',{id:data.id,title:title,start:start,end:end,allDay:allDay, url:data.url },true);
+                        jQuery.ajax({
+                            type: 'POST',
+                            url:  jQuery("#eventFormNew").attr("action"),
+                            data: jQuery("#eventFormNew").serialize() ,
+                            dataType: "json",
+                            statusCode: {
+                                200: function(data) {
+                                    calendar.fullCalendar('renderEvent',{id:data.id,title:title,start:start,end:end,allDay:allDay, url:data.url },true);
+                                }
                             }
-                        }
-                    });
-                } else {
-                    alert("Title is required!");
-                }
-                calendar.fullCalendar('unselect');
-            },
-            timezone: 'America/New_York',
-            editable: true,
-            events: series
-      });
+                        });
+                    } else {
+                        alert("Title is required!");
+                    }
+                    calendar.fullCalendar('unselect');
+                },
+                timezone: 'America/New_York',
+                editable: true,
+                events: series
+          });
 
-      calendar.render();
-    });
+          calendar.render();
+        });
 
-    function convertDate(date){
-        return(date.getDate()+"."+(date.getUTCMonth()+1)+"."+date.getUTCFullYear()+" "+date.getHours()+":"+date.getMinutes());
-    }
+        function convertDate(date){
+            return(date.getDate()+"."+(date.getUTCMonth()+1)+"."+date.getUTCFullYear()+" "+date.getHours()+":"+date.getMinutes());
+        }
 
-    </script>
-</head>
-<body>
-    <div class="intro">
-        <div class="header">
-            <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
-            <a href="@routes.AuthenticatedUserController.logout()" id="logout-btn">logout</a>
+        </script>
+    </head>
+    <body>
+        <div class="intro">
+            <div class="header">
+                <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
+                <a href="@routes.AuthenticatedUserController.logout()" id="logout-btn">logout</a>
+            </div>
+            <ul class="navigation-bar">
+                <li><a class="navigation-el" href="@routes.AuthenticatedUserController.showHome()">Home</a></li>
+                <li><a class="navigation-el" href="@routes.CalendarController.showHomeCalendar()">Calendar</a></li>
+                <li><a class="navigation-el" href="@routes.JobFeedController.showJobFeedHome()">Job Feed</a></li>
+                <li><a class="navigation-el" href="@routes.JobStatisticsController.showJobStats()">Search Statistics</a></li>
+            </ul>
         </div>
-        <ul class="navigation-bar">
-        </ul>
-    </div>
-    <div id='calendar'>
-        <div style="display: none;">
-            <form action="@routes.CalendarController.addByAjax()" method="POST" id="eventFormNew">
-                <input type="text" name="title" id="newTitle"/>
-                <input type="text" name="start" id="newStart"/>
-                <input type="text" name="end" id="newEnd"/>
-                <input type="text" name="allDay" id="newAllDay"/>
-            </form>
+        <div id='calendar'>
+            <div style="display: none;">
+                <form action="@routes.CalendarController.addByAjax()" method="POST" id="eventFormNew">
+                    <input type="text" name="title" id="newTitle"/>
+                    <input type="text" name="start" id="newStart"/>
+                    <input type="text" name="end" id="newEnd"/>
+                    <input type="text" name="allDay" id="newAllDay"/>
+                </form>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
 
 }
