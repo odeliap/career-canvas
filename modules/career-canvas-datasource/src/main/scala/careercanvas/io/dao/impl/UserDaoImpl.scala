@@ -3,7 +3,7 @@ package careercanvas.io.dao.impl
 import careercanvas.io.UserDao
 import careercanvas.io.converter.Converters
 import careercanvas.io.dao.components.UserInfoComponent
-import careercanvas.io.model.{UpdateUserInfo, User, UserInfo}
+import careercanvas.io.model.{BaseUser, UpdateUserInfo, User, UserInfo}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 
@@ -41,12 +41,19 @@ class UserDaoImpl @Inject() (
     db.run(userExistsQuery.result)
   }
 
-  override def getUserId(user: User): Future[Option[Long]]  = {
+  override def getUserId(user: BaseUser): Future[Option[Long]]  = {
     val userIdQuery = UserInfoQuery
       .filter(row => row.email === user.email && row.password === user.password)
       .map(_.id)
 
     db.run(userIdQuery.result.headOption)
+  }
+
+  override def getUser(userId: Long): Future[Option[UserInfo]] = {
+    val userQuery = UserInfoQuery
+      .filter(_.id === userId)
+
+    db.run(userQuery.result.headOption)
   }
 
   override def update(updateUser: UpdateUserInfo): Future[Unit] = {

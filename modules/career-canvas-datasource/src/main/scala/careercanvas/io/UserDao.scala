@@ -1,6 +1,6 @@
 package careercanvas.io
 
-import careercanvas.io.model.{UpdateUserInfo, User}
+import careercanvas.io.model._
 
 import scala.concurrent.Future
 
@@ -10,7 +10,9 @@ trait UserDao {
 
   def checkUserExists(email: String): Future[Boolean]
 
-  def getUserId(user: User): Future[Option[Long]]
+  def getUserId(user: BaseUser): Future[Option[Long]]
+
+  def getUser(userId: Long): Future[Option[UserInfo]]
 
   def update(updateUser: UpdateUserInfo): Future[Unit]
 

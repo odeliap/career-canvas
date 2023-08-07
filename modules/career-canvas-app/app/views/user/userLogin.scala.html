@@ -1,5 +1,5 @@
 @(
-form: Form[careercanvas.io.model.User],
+form: Form[careercanvas.io.model.BaseUser],
 postUrl: Call
 )(implicit request: MessagesRequestHeader)
 
@@ -36,15 +36,6 @@ postUrl: Call
                 @helper.form(postUrl, 'class -> "user-login-signup-form-fields") {
 
                 @helper.CSRF.formField
-
-                @helper.inputText(
-                form("fullName"),
-                '_label -> "",
-                'placeholder -> "full name",
-                'class -> "fullName",
-                'size -> 60,
-                '_showConstraints -> false
-                )
 
                 @helper.inputText(
                 form("username"),

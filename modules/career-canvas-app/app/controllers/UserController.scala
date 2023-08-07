@@ -1,7 +1,6 @@
 package controllers
 
-import careercanvas.io.model.User
-
+import careercanvas.io.model.{BaseUser, User}
 import model.Global
 import play.api.data.Forms._
 import play.api.data._
@@ -17,7 +16,18 @@ class UserController @Inject()(
 
   private val logger = play.api.Logger(this.getClass)
 
-  val form: Form[User] = Form (
+  val loginForm: Form[BaseUser] = Form (
+    mapping(
+      "username" -> nonEmptyText
+        .verifying("too few chars",  s => lengthIsGreaterThanNCharacters(s, 3))
+        .verifying("too many chars", s => lengthIsLessThanNCharacters(s, 320)),
+      "password" -> nonEmptyText
+        .verifying("too few chars",  s => lengthIsGreaterThanNCharacters(s, 10))
+        .verifying("too many chars", s => lengthIsLessThanNCharacters(s, 30)),
+    )(BaseUser.apply)(BaseUser.unapply)
+  )
+
+  val signUpForm: Form[User] = Form (
     mapping(
       "fullName" -> nonEmptyText,
       "username" -> nonEmptyText
@@ -34,11 +44,11 @@ class UserController @Inject()(
   private val signUpUrl = routes.UserController.processSignUpAttempt()
 
   def showSignUpForm: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.user.signUp(form, signUpUrl))
+    Ok(views.html.user.signUp(signUpForm, signUpUrl))
   }
 
   def showLoginForm: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.user.userLogin(form, formSubmitUrl))
+    Ok(views.html.user.userLogin(loginForm, formSubmitUrl))
   }
 
   def processSignUpAttempt: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
@@ -57,7 +67,7 @@ class UserController @Inject()(
             .flashing("error" -> "An account registered with this email already exists.")
       }
     }
-    val formValidationResult: Form[User] = form.bindFromRequest
+    val formValidationResult: Form[User] = signUpForm.bindFromRequest
     formValidationResult.fold(
       errorFunction,
       successFunction
@@ -65,22 +75,23 @@ class UserController @Inject()(
   }
 
   def processLoginAttempt: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
-    val errorFunction = { formWithErrors: Form[User] =>
+    val errorFunction = { formWithErrors: Form[BaseUser] =>
       // form validation/binding failed...
       BadRequest(views.html.user.userLogin(formWithErrors, formSubmitUrl))
     }
-    val successFunction = { user: User =>
+    val successFunction = { user: BaseUser =>
       // form validation/binding succeeded ...
       userService.lookupUser(user) match {
         case Some(userId) =>
+          val fullName = userService.getUserName(userId).get
           Redirect(routes.AuthenticatedUserController.showHome())
-            .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email, Global.SESSION_USER_FULL_NAME -> user.fullName)
+            .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email, Global.SESSION_USER_FULL_NAME -> fullName)
         case None =>
           Redirect(routes.UserController.showLoginForm())
             .flashing("error" -> "Invalid username/password.")
       }
     }
-    val formValidationResult: Form[User] = form.bindFromRequest
+    val formValidationResult: Form[BaseUser] = loginForm.bindFromRequest
     formValidationResult.fold(
       errorFunction,
       successFunction

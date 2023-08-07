@@ -2,7 +2,7 @@ package service
 
 import careercanvas.io.UserDao
 import careercanvas.io.converter.Converters
-import careercanvas.io.model.{UpdateUserInfo, User}
+import careercanvas.io.model.{BaseUser, UpdateUserInfo, User}
 import careercanvas.io.util.AwaitResult
 
 import java.time.OffsetDateTime
@@ -16,11 +16,19 @@ class UserService @Inject()(
   extends AwaitResult
   with Converters {
 
-  def lookupUser(user: User): Option[Long] = {
+  def lookupUser(user: BaseUser): Option[Long] = {
     userDao.getUserId(user).flatMap { userIdOption =>
       userIdOption.map { userId =>
+        userDao.getUser(userId)
         userDao.update(UpdateUserInfo(userId, lastLogin = Option(OffsetDateTime.now()))).map(_ => Some(userId))
       }.getOrElse(Future.successful(None))
+    }.waitForResult
+  }
+
+  def getUserName(userId: Long): Option[String] = {
+    userDao.getUser(userId).map {
+      case Some(info) => Some(info.fullName)
+      case None => None
     }.waitForResult
   }
 
