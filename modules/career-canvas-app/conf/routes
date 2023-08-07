@@ -33,9 +33,6 @@ GET     /jobStats                   controllers.JobStatisticsController.showJobS
 # pages for calendar
 GET     /calendar                   controllers.CalendarController.showHomeCalendar()
 
-+ nocsrf
-POST    /event-ajax                 controllers.CalendarController.addByAjax()
-
 # pages for policies
 GET     /helpCenter/termsOfUse      controllers.PolicyController.showTermsOfUse()
 GET     /helpCenter/privacyPolicy   controllers.PolicyController.showPrivacyPolicy()

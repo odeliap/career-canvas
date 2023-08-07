@@ -27,16 +27,4 @@ class CalendarController @Inject()(
     Ok(views.html.calendar.calendar(eventsHtml))
   }
 
-  def addByAjax(): Action[AnyContent] = authenticatedUserMessagesAction { request: MessagesRequest[AnyContent] =>
-    val json = request.body.asJson.get
-    val event = json.as[NewEvent]
-    val userId = request.session.data(Global.SESSION_USER_ID)
-    val addedEvent = calendarEventsService.addEvent(userId, event)
-    val addedEventMap = addedEvent.getClass.getDeclaredFields.foldLeft(Map.empty[String, String]) { (a, f) =>
-      f.setAccessible(true)
-      a + (f.getName -> f.get(addedEvent).toString)
-    }
-    Ok(Json.toJson(addedEventMap))
-  }
-
 }
