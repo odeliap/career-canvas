@@ -1,0 +1,56 @@
+@(events: Html)
+
+@base("Calendar") {
+
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/calendar.css")">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@@6.1.8/index.global.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@@6.1.8/index.global.min.js'></script>
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var events = @events;
+        const data = Array.from(events);
+        var series = [];
+        for(n in data) {
+            series.push({
+                title: data[n][0],
+                start: data[n][1],
+                end: data[n][2]
+            })
+        };
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            initialDate: String(new Date().toISOString().slice(0, 10)),
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            timezone: 'UTC',
+            events: series
+      });
+
+      calendar.render();
+    });
+
+    </script>
+</head>
+<body>
+<div class="intro">
+    <div class="header">
+        <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
+        <a href="@routes.AuthenticatedUserController.logout()" id="logout-btn">logout</a>
+    </div>
+    <ul class="navigation-bar">
+    </ul>
+</div>
+<div id='calendar'></div>
+</body>
+</html>
+
+}

@@ -30,6 +30,9 @@ GET     /feed/job/coverLetter       controllers.JobFeedController.generateCoverL
 # pages for job statistics
 GET     /jobStats                   controllers.JobStatisticsController.showJobStats()
 
+# pages for calendar
+GET     /calendar                   controllers.CalendarController.showHomeCalendar()
+
 # pages for policies
 GET     /helpCenter/termsOfUse      controllers.PolicyController.showTermsOfUse()
 GET     /helpCenter/privacyPolicy   controllers.PolicyController.showPrivacyPolicy()
