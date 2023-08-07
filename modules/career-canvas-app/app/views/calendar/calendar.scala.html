@@ -6,6 +6,8 @@
 <head>
     <meta charset='utf-8' />
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/calendar.css")">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@@6.1.8/index.global.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@@6.1.8/index.global.min.js'></script>
     <script>
@@ -16,9 +18,10 @@
         var series = [];
         for(n in data) {
             series.push({
-                title: data[n][0],
-                start: data[n][1],
-                end: data[n][2]
+                id: data[n][0],
+                title: data[n][1],
+                start: data[n][2],
+                end: data[n][3]
             })
         };
         var calendarEl = document.getElementById('calendar');
@@ -31,12 +34,44 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
-            timezone: 'UTC',
+            selectable:true,
+            selectHelper:true,
+            select:function (start, end, allDay) {
+                var title = prompt('Event Title:');
+                if (title) {
+                    var newEvent = {
+                        "title": title,
+                        "start": convertDate(start),
+                        "end": convertDate(end),
+                        "allDay": String(allDay)
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        url:  '@routes.CalendarController.addByAjax()',
+                        data: JSON.stringify(newEvent),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        statusCode: {
+                            200: function(data) {
+                                calendar.fullCalendar('renderEvent',{title:title,start:start,end:end,allDay:allDay },true);
+                            }
+                        }
+                    });
+                } else {
+                    alert("Title is required!");
+                }
+            },
+            timezone: 'America/New_York',
             events: series
       });
 
       calendar.render();
     });
+
+    function convertDate(date){
+        return(date.getDate()+"."+(date.getUTCMonth()+1)+"."+date.getUTCFullYear()+" "+date.getHours()+":"+date.getMinutes());
+    }
 
     </script>
 </head>
