@@ -39,30 +39,29 @@
             select:function (start, end, allDay) {
                 var title = prompt('Event Title:');
                 if (title) {
-                    var newEvent = {
-                        "title": title,
-                        "start": convertDate(start),
-                        "end": convertDate(end),
-                        "allDay": String(allDay)
-                    };
+                    jQuery("#newTitle").val(title);
+                    jQuery("#newStart").val(convertDate(start));
+                    jQuery("#newEnd").val(convertDate(end));
+                    jQuery("#newAllDay").val(allDay);
 
-                    $.ajax({
+                    jQuery.ajax({
                         type: 'POST',
-                        url:  '@routes.CalendarController.addByAjax()',
-                        data: JSON.stringify(newEvent),
-                        contentType: "application/json; charset=utf-8",
+                        url:  jQuery("#eventFormNew").attr("action"),
+                        data: jQuery("#eventFormNew").serialize() ,
                         dataType: "json",
                         statusCode: {
                             200: function(data) {
-                                calendar.fullCalendar('renderEvent',{title:title,start:start,end:end,allDay:allDay },true);
+                                calendar.fullCalendar('renderEvent',{id:data.id,title:title,start:start,end:end,allDay:allDay, url:data.url },true);
                             }
                         }
                     });
                 } else {
                     alert("Title is required!");
                 }
+                calendar.fullCalendar('unselect');
             },
             timezone: 'America/New_York',
+            editable: true,
             events: series
       });
 
@@ -76,15 +75,24 @@
     </script>
 </head>
 <body>
-<div class="intro">
-    <div class="header">
-        <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
-        <a href="@routes.AuthenticatedUserController.logout()" id="logout-btn">logout</a>
+    <div class="intro">
+        <div class="header">
+            <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
+            <a href="@routes.AuthenticatedUserController.logout()" id="logout-btn">logout</a>
+        </div>
+        <ul class="navigation-bar">
+        </ul>
     </div>
-    <ul class="navigation-bar">
-    </ul>
-</div>
-<div id='calendar'></div>
+    <div id='calendar'>
+        <div style="display: none;">
+            <form action="@routes.CalendarController.addByAjax()" method="POST" id="eventFormNew">
+                <input type="text" name="title" id="newTitle"/>
+                <input type="text" name="start" id="newStart"/>
+                <input type="text" name="end" id="newEnd"/>
+                <input type="text" name="allDay" id="newAllDay"/>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
 

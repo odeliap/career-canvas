@@ -24,8 +24,8 @@ class CalendarEventsDaoImpl @Inject() (
 
   import careercanvas.io.dao.profile.CareerCanvasSlickProfile.api._
 
-  override def add(event: CalendarEvent): Future[Long] = {
-    val insertQuery = CalendarEventsQuery returning CalendarEventsQuery.map(_.userId) += event
+  override def add(event: CalendarEvent): Future[CalendarEvent] = {
+    val insertQuery = CalendarEventsQuery returning CalendarEventsQuery += event
 
     db.run(insertQuery)
   }

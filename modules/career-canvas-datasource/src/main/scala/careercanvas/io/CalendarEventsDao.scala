@@ -7,7 +7,7 @@ import scala.concurrent.Future
 
 trait CalendarEventsDao {
 
-  def add(event: CalendarEvent): Future[Long]
+  def add(event: CalendarEvent): Future[CalendarEvent]
 
   def edit(updateCalendarEvent: UpdateCalendarEvent): Future[Unit]
 

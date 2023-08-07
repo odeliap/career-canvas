@@ -7,6 +7,7 @@ import model.NewEvent
 
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
+import java.util.Date
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
@@ -21,7 +22,7 @@ class CalendarEventsService @Inject() (
   }
 
   def addEvent(userId: String, newEvent: NewEvent): CalendarEvent = {
-    val dateFormatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss")
+    val dateFormatter = new SimpleDateFormat("dd.MMM.yyyy HH:mm:ss")
     val event = CalendarEvent(
       userId.toLong,
       0L,
@@ -31,8 +32,7 @@ class CalendarEventsService @Inject() (
       Timestamp.from(dateFormatter.parse(newEvent.end).toInstant),
       endsSameDay(newEvent.start, newEvent.end)
     )
-    val eventId = calendarEventsDao.add(event).waitForResult
-    calendarEventsDao.getById(eventId).waitForResult
+    calendarEventsDao.add(event).waitForResult
   }
 
   def updateEvent(updateCalendarEvent: UpdateCalendarEvent): Unit = {
@@ -47,8 +47,10 @@ class CalendarEventsService @Inject() (
     calendarEventsDao.findAllEvents(userId.toLong).waitForResult
   }
 
-  def findEventsInDateRange(userId: Long, start: Timestamp, end: Timestamp): Seq[CalendarEvent] = {
-    calendarEventsDao.findEventsInDateRange(userId, start, end).waitForResult
+  def findEventsInDateRange(userId: String, start: Long, end: Long): Seq[CalendarEvent] = {
+    val startDate = Timestamp.from(new Date(start * 1000).toInstant)
+    val endDate = Timestamp.from(new Date(end * 1000).toInstant)
+    calendarEventsDao.findEventsInDateRange(userId.toLong, startDate, endDate).waitForResult
   }
 
   def deleteEvent(eventId: Long): Unit = {
