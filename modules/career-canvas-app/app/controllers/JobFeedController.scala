@@ -4,7 +4,7 @@ import authentication.AuthenticatedUserMessagesAction
 import careercanvas.io.converter.Converters
 import careercanvas.io.model._
 import careercanvas.io.processor.BaseJobInfoResolver
-import model.Global
+import model.{Global, SortByForm}
 import service.JobApplicationsService
 import play.api.mvc._
 import play.api.data._

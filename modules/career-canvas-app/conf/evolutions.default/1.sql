@@ -38,12 +38,27 @@ create table if not exists connections (
     notes               varchar(1024)           null
 );
 
+create table calendar_event (
+    user_id             serial                  not null references user_info(id),
+    event_id            serial,
+    title               varchar(255),
+    all_day             boolean,
+    start_timestamp     timestamp,
+    end_timestamp       timestamp,
+    ends_same_day       boolean
+);
+
+create sequence event_seq;
+
 
 -- !Downs
 
 drop table if exists connections;
 drop table if exists job_statuses;
 drop table if exists user_info;
+drop table if exists calendar_event;
 
 drop type if exists job_status;
 drop type if exists connection_closeness;
+
+drop sequence if exists event_seq;

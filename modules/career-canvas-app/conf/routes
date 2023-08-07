@@ -15,7 +15,6 @@ GET     /users/doSignUp             controllers.UserController.processSignUpAtte
 
 # pages for authenticated users
 GET     /home                       controllers.AuthenticatedUserController.showHome()
-GET     /jobStats                   controllers.AuthenticatedUserController.showJobStats()
 
 GET     /users/logout               controllers.AuthenticatedUserController.logout()
 
@@ -27,6 +26,9 @@ GET     /feed/saveJob               controllers.JobFeedController.saveJob()
 GET     /feed/removeJobDetails      controllers.JobFeedController.removeJobDetails()
 GET     /feed/job                   controllers.JobFeedController.showJobView(jobInfo: careercanvas.io.model.JobInfo)
 GET     /feed/job/coverLetter       controllers.JobFeedController.generateCoverLetter(jobInfo: careercanvas.io.model.JobInfo)
+
+# pages for job statistics
+GET     /jobStats                   controllers.JobStatisticsController.showJobStats()
 
 # pages for policies
 GET     /helpCenter/termsOfUse      controllers.PolicyController.showTermsOfUse()

@@ -1,7 +1,7 @@
 package careercanvas.io.inject
 
-import careercanvas.io.{ConnectionsDao, JobApplicationsDao, JobStatisticsDao, UserDao}
-import careercanvas.io.dao.impl.{ConnectionsDaoImpl, JobApplicationsDaoImpl, JobStatisticsDaoImpl, UserDaoImpl}
+import careercanvas.io._
+import careercanvas.io.dao.impl._
 import com.google.inject.{AbstractModule, Scopes}
 
 import java.util.TimeZone
@@ -15,6 +15,7 @@ class SlickDaoModule() extends AbstractModule {
     bind(classOf[JobApplicationsDao]).to(classOf[JobApplicationsDaoImpl]).in(Scopes.SINGLETON)
     bind(classOf[JobStatisticsDao]).to(classOf[JobStatisticsDaoImpl]).in(Scopes.SINGLETON)
     bind(classOf[ConnectionsDao]).to(classOf[ConnectionsDaoImpl]).in(Scopes.SINGLETON)
+    bind(classOf[CalendarEventsDao]).to(classOf[CalendarEventsDaoImpl]).in(Scopes.SINGLETON)
   }
 
 }
