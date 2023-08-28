@@ -84,7 +84,7 @@ class UserController @Inject()(
       userService.lookupUser(user) match {
         case Some(userId) =>
           val fullName = userService.getUserName(userId).get
-          Redirect(routes.AuthenticatedUserController.showHome())
+          Redirect(routes.HomeController.showHome())
             .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email, Global.SESSION_USER_FULL_NAME -> fullName)
         case None =>
           Redirect(routes.UserController.showLoginForm())

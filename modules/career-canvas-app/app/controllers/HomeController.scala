@@ -6,7 +6,7 @@ import javax.inject._
 import play.api.mvc._
 
 @Singleton
-class AuthenticatedUserController @Inject()(
+class HomeController @Inject()(
   cc: ControllerComponents,
   authenticatedUserAction: AuthenticatedUserAction
 ) extends AbstractController(cc) {

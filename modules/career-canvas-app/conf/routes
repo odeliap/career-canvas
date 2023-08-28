@@ -13,10 +13,10 @@ GET     /users/doLogin              controllers.UserController.processLoginAttem
 GET     /users/signUp               controllers.UserController.showSignUpForm()
 GET     /users/doSignUp             controllers.UserController.processSignUpAttempt()
 
-# pages for authenticated users
-GET     /home                       controllers.AuthenticatedUserController.showHome()
+# Home pages for authenticated users
+GET     /home                       controllers.HomeController.showHome()
 
-GET     /users/logout               controllers.AuthenticatedUserController.logout()
+GET     /users/logout               controllers.HomeController.logout()
 
 # pages for job feed
 GET     /feed                       controllers.JobFeedController.showJobFeedHome()

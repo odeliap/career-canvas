@@ -47,10 +47,10 @@
         <div class="intro">
             <div class="header">
                 <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
-                <a href="@routes.AuthenticatedUserController.logout()" id="logout-btn">logout</a>
+                <a href="@routes.HomeController.logout()" id="logout-btn">logout</a>
             </div>
             <ul class="navigation-bar">
-                <li><a class="navigation-el" href="@routes.AuthenticatedUserController.showHome()">Home</a></li>
+                <li><a class="navigation-el" href="@routes.HomeController.showHome()">Home</a></li>
                 <li><a class="navigation-el" href="@routes.CalendarController.showHomeCalendar()">Calendar</a></li>
                 <li><a class="navigation-el" href="@routes.JobFeedController.showJobFeedHome()">Job Feed</a></li>
                 <li><a class="navigation-el" href="@routes.JobStatisticsController.showJobStats()">Search Statistics</a></li>
