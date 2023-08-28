@@ -25,7 +25,8 @@ val commonSettings = Seq(
     libraries.slick.core,
     libraries.slick.postgres,
     libraries.slick.postgresJson,
-    libraries.slick.postgresDriver
+    libraries.slick.postgresDriver,
+    libraries.standard.betterFiles
   )
 )
 
@@ -48,7 +49,7 @@ lazy val careerCanvasApp = (project in file("modules/career-canvas-app"))
     description := "Career Canvas play app",
     libraryDependencies ++= Seq(
       specs2 % Test,
-      libraries.test.scalaTestPlus % Test,
+      libraries.test.scalaTestPlus % Test
     )
   )
   .dependsOn(
@@ -84,7 +85,8 @@ lazy val careerCanvasProcessor = (project in file("modules/career-canvas-process
     libraryDependencies ++= Seq(
       libraries.scraper.jsoup,
       libraries.openai.client,
-      libraries.openai.guice
+      libraries.openai.guice,
+      libraries.aws.s3
     )
   ).dependsOn(
     careerCanvasModel

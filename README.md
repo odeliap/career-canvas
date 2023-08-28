@@ -7,6 +7,8 @@ Make necessary exports:
 
 - `OPENAI_SCALA_CLIENT_API_KEY`
 - `OPENAI_SCALA_CLIENT_ORG_ID`
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
 
 Create the docker image with:
 

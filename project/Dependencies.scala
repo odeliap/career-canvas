@@ -25,6 +25,14 @@ object Dependencies {
     object openai {
       val clientVersion = "0.1.0"
     }
+
+    object aws {
+      val s3Version = "2.19.30"
+    }
+
+    object standard {
+      val betterFilesVersion = "3.9.1"
+    }
   }
 
   object libraries {
@@ -57,6 +65,16 @@ object Dependencies {
       import versions.openai._
       val client = "io.cequence" %% "openai-scala-client" % clientVersion
       val guice = "io.cequence" %% "openai-scala-guice" % clientVersion
+    }
+
+    object aws {
+      import versions.aws._
+      val s3 = "software.amazon.awssdk" % "s3" % s3Version
+    }
+
+    object standard {
+      import versions.standard._
+      val betterFiles = "com.github.pathikrit" %% "better-files" % betterFilesVersion
     }
   }
 
