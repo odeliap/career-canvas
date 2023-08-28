@@ -4,7 +4,7 @@ sortByForm: Form[model.SortByForm],
 jobInfos: Seq[JobInfo]
 )(content: Html)(script: Html)(implicit request: MessagesRequestHeader)
 
-@main("Job Feed") {
+@authenticated.user.main("Job Feed") {
     <div>
         @request.flash.data.map{ case (name, value) =>
             @if(name.equals("error")) {

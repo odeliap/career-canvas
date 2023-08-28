@@ -21,7 +21,7 @@ class AuthenticatedUserController @Inject()(
    * a path of `/`.
    */
   def showHome(): Action[AnyContent] = authenticatedUserAction { implicit request: Request[AnyContent] =>
-    Ok(views.html.authenticated.user.home())
+    Ok(views.html.authenticated.user.home.home())
   }
 
   def logout: Action[AnyContent] = authenticatedUserAction { implicit request: Request[AnyContent] =>
