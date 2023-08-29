@@ -23,6 +23,7 @@ class ProfileService @Inject()(
   def updateUserProfile(userId: String, editProfileForm: EditProfileForm): Unit = {
     val updateUserInfo = UpdateUserInfo(
       id = userId.toLong,
+      email = editProfileForm.email,
       fullName = editProfileForm.name,
       resume = editProfileForm.resume,
       linkedIn = editProfileForm.linkedIn,

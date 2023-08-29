@@ -9,12 +9,13 @@ import play.api.data.Forms._
 
 import javax.inject._
 import play.api.mvc._
-import service.ProfileService
+import service.{ ProfileService, UserService }
 
 @Singleton
 class ProfileController @Inject()(
   cc: MessagesControllerComponents,
   profileService: ProfileService,
+  userService: UserService,
   authenticatedUserMessagesAction: AuthenticatedUserMessagesAction
 ) extends MessagesAbstractController(cc) {
 
@@ -26,8 +27,10 @@ class ProfileController @Inject()(
       "linkedIn" -> optional(text),
       "gitHub" -> optional(text),
       "website" -> optional(text),
-      "email" -> optional(text),
+      "email" -> optional(text)
+        .verifying("email address is already in use", s => userService.checkValidEmail(s)),
       "name" -> optional(text)
+        .verifying("full name must contain at least a first name and last name", s => userService.checkValidName(s))
     )(EditProfileForm.apply)(EditProfileForm.unapply)
   )
 

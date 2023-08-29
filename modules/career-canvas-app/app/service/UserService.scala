@@ -44,4 +44,20 @@ class UserService @Inject()(
     userDao.update(UpdateUserInfo(id = id, password = Option(newPassword))).waitForResult
   }
 
+  def checkValidEmail(email: Option[String]): Boolean = {
+    if (email.isDefined) {
+      !userDao.checkUserExists(email.get).waitForResult
+    } else {
+      true
+    }
+  }
+
+  def checkValidName(name: Option[String]): Boolean = {
+    if (name.isDefined) {
+      name.get.split("\\s+").count(_.nonEmpty) >= 2
+    } else {
+      true
+    }
+  }
+
 }
