@@ -47,7 +47,19 @@
         <div class="intro">
             <div class="header">
                 <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
-                <a href="@routes.HomeController.logout()" id="logout-btn">logout</a>
+                <div class="navbar">
+                    <div class="profile-dropdown">
+                        <button class="profile-dropbtn">
+                            <img src="@routes.Assets.versioned("images/help-center/user.svg")" class="profile">
+                            Profile
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="profile-dropdown-content">
+                            <a href="@routes.ProfileController.editProfile()">Edit Profile</a>
+                            <a href="@routes.ProfileController.logout()">Log Out</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <ul class="navigation-bar">
                 <li><a class="navigation-el" href="@routes.HomeController.showHome()">Home</a></li>

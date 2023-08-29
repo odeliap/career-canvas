@@ -52,6 +52,12 @@ hr {
     margin-top: 0;
 }
 
+.profile {
+    height: 25px;
+    width: 25px;
+    padding-right: 10px;
+}
+
 .icon {
     height: 20px;
     width: 20px;
@@ -68,11 +74,7 @@ hr {
     height: 100px;
 }
 
-#logout-btn {
-    margin: 20px 10px;
-}
-
-#logout-btn:hover, .login-signup-btn:hover {
+.login-signup-btn:hover, .profile-edit-submit-btn:hover {
     text-decoration: underline;
 }
 
@@ -91,6 +93,80 @@ hr {
 .error-flash {
     font-size: 10px;
     margin: 0;
+}
+
+/* Navbar container */
+.navbar {
+  overflow: hidden;
+  font-family: Arial;
+  margin: 50px 50px 0 0;
+}
+
+/* Links inside the navbar */
+.navbar a {
+  float: left;
+  font-size: 16px;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* The dropdown container */
+.profile-dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+/* Dropdown button */
+.profile-dropdown .profile-dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit; /* Important for vertical align on mobile phones */
+  margin: 0; /* Important for vertical align on mobile phones */
+}
+
+.profile-dropbtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Add a red background color to navbar links on hover */
+.navbar a:hover, .profile-dropdown:hover .profile-dropbtn {
+  background-color: #D3D3D3;
+}
+
+/* Dropdown content (hidden by default) */
+.profile-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 113px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.profile-dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.profile-dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.profile-dropdown:hover .profile-dropdown-content {
+  display: block;
 }
 
 /* Landing Pages */
@@ -576,4 +652,93 @@ hr {
     word-wrap: break-word;
     font-family: inherit; /* Make it look like a standard input text */
     font-size: inherit;
+}
+
+/* Profile Pages */
+
+/* Main Container */
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #D3D3D3;
+}
+
+/* Left Side Panel */
+.left-panel {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Right Section */
+.right-section {
+    width: 75%;
+    height: 100%;
+    border-left: 1px solid #D3D3D3;
+}
+
+/* Top and Bottom parts of Left Panel */
+.top-part {
+    height: 33.333%;
+    border-bottom: 1px solid #D3D3D3;
+}
+
+.bottom-part {
+    height: 66.667%;
+}
+
+.settings-content {
+    padding: 20px;
+}
+
+.settings-sub-content {
+    font-size: 12px;
+}
+
+.settings-opts {
+    font-size: 14px;
+}
+
+.settings-opts:hover {
+    font-weight: bold;
+}
+
+.edit-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px 30px 30px 30px;
+}
+
+.edit-key {
+    font-weight: bold;
+    width: 25%; /* 1/5 of the width */
+    text-align: right;
+    padding-right: 30px;
+}
+
+.edit-value {
+    width: 75%; /* 4/5 of the width */
+    text-align: left;
+    padding-left; 30px;
+}
+
+#edit-profile-header {
+    padding-bottom: 35px;
+}
+
+.profile-edit-submit-btn {
+    background: #26abff;
+    width: 76px;
+    height: 32px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
 }

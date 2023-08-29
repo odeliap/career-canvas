@@ -16,8 +16,6 @@ GET     /users/doSignUp             controllers.UserController.processSignUpAtte
 # Home pages for authenticated users
 GET     /home                       controllers.HomeController.showHome()
 
-GET     /users/logout               controllers.HomeController.logout()
-
 # pages for job feed
 GET     /feed                       controllers.JobFeedController.showJobFeedHome()
 GET     /feed/doAddJobPost          controllers.JobFeedController.processJobPost()
@@ -32,6 +30,10 @@ GET     /jobStats                   controllers.JobStatisticsController.showJobS
 
 # pages for calendar
 GET     /calendar                   controllers.CalendarController.showHomeCalendar()
+
+# pages for profile actions
+GET     /users/editProfile          controllers.ProfileController.editProfile()
+GET     /users/logout               controllers.ProfileController.logout()
 
 # pages for policies
 GET     /helpCenter/termsOfUse      controllers.PolicyController.showTermsOfUse()

@@ -1,0 +1,62 @@
+@(
+    userShowcase: careercanvas.io.model.UserShowcase,
+    email: String,
+    name: String
+)
+
+@authenticated.user.main("Edit Profile") {
+    <h2>Settings</h2>
+    <div class="container">
+        <div class="left-panel">
+            <div class="top-part">
+                <div class="settings-content">
+                    <h4>Accounts Center</h4>
+                    <p class="settings-sub-content">
+                        Manage your account settings.
+                    </p>
+                </div>
+            </div>
+            <div class="bottom-part">
+                <div class="settings-content">
+                    <a href="#" class="settings-opts">Edit profile</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="settings-content">
+                <h2 id="edit-profile-header">Edit profile</h2>
+                <div class="edit-container">
+                    <div class="edit-key">Resume</div>
+                    <div class="edit-value">@userShowcase.resume</div>
+                </div>
+                <div class="edit-container">
+                    <div class="edit-key">LinkedIn</div>
+                    <div class="edit-value">@userShowcase.linkedIn</div>
+                </div>
+                <div class="edit-container">
+                    <div class="edit-key">GitHub</div>
+                    <div class="edit-value">@userShowcase.gitHub</div>
+                </div>
+                <div class="edit-container">
+                    <div class="edit-key">Website</div>
+                    <div class="edit-value">@userShowcase.website</div>
+                </div>
+                <div class="edit-container">
+                    <div class="edit-key">Email</div>
+                    <div class="edit-value">@email</div>
+                </div>
+                <div class="edit-container">
+                    <div class="edit-key">Name</div>
+                    <div class="edit-value">@name</div>
+                </div>
+                <div class="edit-container">
+                    <div class="edit-key"></div>
+                    <div class="edit-value">
+                        <button class="profile-edit-submit-btn">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

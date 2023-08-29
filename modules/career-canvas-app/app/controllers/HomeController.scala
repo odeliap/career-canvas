@@ -24,10 +24,4 @@ class HomeController @Inject()(
     Ok(views.html.authenticated.user.home.home())
   }
 
-  def logout: Action[AnyContent] = authenticatedUserAction { implicit request: Request[AnyContent] =>
-    Redirect(routes.UserController.showLoginForm())
-      .flashing("info" -> "You are logged out.")
-      .withNewSession
-  }
-
 }
