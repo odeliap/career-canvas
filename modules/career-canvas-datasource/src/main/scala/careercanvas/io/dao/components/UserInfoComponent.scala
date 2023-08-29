@@ -18,14 +18,22 @@ trait UserInfoComponent {
     def password: Rep[String] = column[String]("password")
     def fullName: Rep[String] = column[String]("full_name")
     def lastLogin: Rep[Timestamp] = column[Timestamp]("last_login")
+    def resume: Rep[Option[String]] = column[Option[String]]("resume")
+    def linkedIn: Rep[Option[String]] = column[Option[String]]("linkedin")
+    def gitHub: Rep[Option[String]] = column[Option[String]]("github")
+    def website: Rep[Option[String]] = column[Option[String]]("website")
 
     def * : ProvenShape[UserInfo] = (
       id,
       email,
       password,
       fullName,
-      lastLogin
-    ) <> (UserInfo.tupled, UserInfo.unapply)
+      lastLogin,
+      resume,
+      linkedIn,
+      gitHub,
+      website
+    ) <> ((UserInfo.apply _).tupled, UserInfo.unapply)
 
   }
 

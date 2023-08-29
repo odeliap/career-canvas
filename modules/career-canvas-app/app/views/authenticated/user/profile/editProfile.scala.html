@@ -1,9 +1,8 @@
 @(
-    userShowcase: careercanvas.io.model.user.UserShowcase,
-    email: String,
-    name: String,
-    editProfileForm: Form[model.forms.EditProfileForm]
-)
+    userInfo: careercanvas.io.model.user.UserInfo,
+    form: Form[model.forms.EditProfileForm],
+    putUrl: Call
+)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.main("Edit Profile") {
     <h2>Settings</h2>
@@ -27,36 +26,119 @@
         <div class="right-section">
             <div class="settings-content">
                 <h2 id="edit-profile-header">Edit profile</h2>
-                <div class="edit-container">
-                    <div class="edit-key">Resume</div>
-                    <div class="edit-value">@userShowcase.resume</div>
+                @request.flash.data.map{ case (name, value) =>
+                @if(name.equals("error")) {
+                <div class="error-flash">@value</div>
+                } else if (name.equals("success")) {
+                <div class="success-flash">@value</div>
+                } else {
+                <div class="info-flash">@value</div>
+                }
+                }
+
+                @* Global errors are not tied to any particular form field *@
+                @if(form.hasGlobalErrors) {
+                @form.globalErrors.map { error: FormError =>
+                <div>
+                    Error: @error.key: @error.message
                 </div>
-                <div class="edit-container">
-                    <div class="edit-key">LinkedIn</div>
-                    <div class="edit-value">@userShowcase.linkedIn</div>
-                </div>
-                <div class="edit-container">
-                    <div class="edit-key">GitHub</div>
-                    <div class="edit-value">@userShowcase.gitHub</div>
-                </div>
-                <div class="edit-container">
-                    <div class="edit-key">Website</div>
-                    <div class="edit-value">@userShowcase.website</div>
-                </div>
-                <div class="edit-container">
-                    <div class="edit-key">Email</div>
-                    <div class="edit-value">@email</div>
-                </div>
-                <div class="edit-container">
-                    <div class="edit-key">Name</div>
-                    <div class="edit-value">@name</div>
-                </div>
-                <div class="edit-container">
-                    <div class="edit-key"></div>
-                    <div class="edit-value">
-                        <button class="profile-edit-submit-btn">Submit</button>
+                }
+                }
+
+                @helper.form(putUrl, 'class -> "edit-profile-form-fields") {
+                    @helper.CSRF.formField
+
+                    <div class="edit-container">
+                        <div class="edit-key">Resume</div>
+                        <div class="edit-value">
+                            @helper.inputText(
+                            form("resume"),
+                            '_label -> "",
+                            'placeholder -> userInfo.resume.getOrElse(""),
+                            'class -> "edit-value-field",
+                            'size -> 60,
+                            '_showConstraints -> false
+                            )
+                        </div>
                     </div>
-                </div>
+
+                    <div class="edit-container">
+                        <div class="edit-key">LinkedIn</div>
+                        <div class="edit-value">
+                            @helper.inputText(
+                            form("linkedIn"),
+                            '_label -> "",
+                            'placeholder -> userInfo.linkedIn.getOrElse(""),
+                            'class -> "edit-value-field",
+                            'size -> 60,
+                            '_showConstraints -> false
+                            )
+                        </div>
+                    </div>
+
+                    <div class="edit-container">
+                        <div class="edit-key">GitHub</div>
+                        <div class="edit-value">
+                            @helper.inputText(
+                            form("gitHub"),
+                            '_label -> "",
+                            'placeholder -> userInfo.gitHub.getOrElse(""),
+                            'class -> "edit-value-field",
+                            'size -> 60,
+                            '_showConstraints -> false
+                            )
+                        </div>
+                    </div>
+
+                    <div class="edit-container">
+                        <div class="edit-key">Website</div>
+                        <div class="edit-value">
+                            @helper.inputText(
+                            form("website"),
+                            '_label -> "",
+                            'placeholder -> userInfo.website.getOrElse(""),
+                            'class -> "edit-value-field",
+                            'size -> 60,
+                            '_showConstraints -> false
+                            )
+                        </div>
+                    </div>
+
+                    <div class="edit-container">
+                        <div class="edit-key">Email</div>
+                        <div class="edit-value">
+                            @helper.inputText(
+                            form("email"),
+                            '_label -> "",
+                            'placeholder -> userInfo.email,
+                            'class -> "edit-value-field",
+                            'size -> 60,
+                            '_showConstraints -> false
+                            )
+                        </div>
+                    </div>
+
+                    <div class="edit-container">
+                        <div class="edit-key">Full Name</div>
+                        <div class="edit-value">
+                            @helper.inputText(
+                            form("name"),
+                            '_label -> "",
+                            'placeholder -> userInfo.fullName,
+                            'class -> "edit-value-field",
+                            'size -> 60,
+                            '_showConstraints -> false
+                            )
+                        </div>
+                    </div>
+
+                    <div class="edit-container">
+                        <div class="edit-key"></div>
+                        <div class="edit-value">
+                            <button class="profile-edit-submit-btn">Submit</button>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>

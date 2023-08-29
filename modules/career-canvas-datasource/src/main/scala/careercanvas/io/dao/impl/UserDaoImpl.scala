@@ -27,7 +27,17 @@ class UserDaoImpl @Inject() (
   import profile.api._
 
   override def addUser(user: User): Future[Long] = {
-    val newUserInfo = UserInfo(0L, user.email, user.password, user.fullName, OffsetDateTime.now())
+    val newUserInfo = UserInfo(
+      0L,
+      user.email,
+      user.password,
+      user.fullName,
+      OffsetDateTime.now(),
+      None,
+      None,
+      None,
+      None
+    )
 
   val insertQuery = UserInfoQuery returning UserInfoQuery.map(_.id) += newUserInfo
 

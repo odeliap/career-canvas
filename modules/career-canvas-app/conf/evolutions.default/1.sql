@@ -5,10 +5,14 @@ create type connection_closeness as enum('Stranger', 'Acquaintance', 'Friend', '
 
 create table if not exists user_info (
     id                  serial                  primary key,
-    email               varchar(255)            not null unique,
+    email               varchar(320)            not null unique,
     password            varchar(255)            not null,
     full_name           varchar(255)            not null,
-    last_login          timestamp
+    last_login          timestamp,
+    resume              varchar(255),
+    linkedin            varchar(255),
+    github              varchar(255),
+    website             varchar(255)
 );
 
 create table if not exists job_statuses (

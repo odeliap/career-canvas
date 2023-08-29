@@ -1,7 +1,7 @@
 package controllers
 
-import authentication.AuthenticatedUserAction
-import careercanvas.io.model.user.UserShowcase
+import authentication.AuthenticatedUserMessagesAction
+import careercanvas.io.model.user.UserInfo
 import model.Global
 import model.forms.EditProfileForm
 import play.api.data.Form
@@ -13,10 +13,10 @@ import service.ProfileService
 
 @Singleton
 class ProfileController @Inject()(
-  cc: ControllerComponents,
+  cc: MessagesControllerComponents,
   profileService: ProfileService,
-  authenticatedUserAction: AuthenticatedUserAction
-) extends AbstractController(cc) {
+  authenticatedUserMessagesAction: AuthenticatedUserMessagesAction
+) extends MessagesAbstractController(cc) {
 
   private val logger = play.api.Logger(this.getClass)
 
@@ -31,15 +31,34 @@ class ProfileController @Inject()(
     )(EditProfileForm.apply)(EditProfileForm.unapply)
   )
 
-  def editProfile(): Action[AnyContent] = authenticatedUserAction { implicit request: Request[AnyContent] =>
+  def editProfileUrl(userInfo: UserInfo): Call = routes.ProfileController.processEditProfileAttempt(userInfo)
+
+  def editProfile(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = request.session.data(Global.SESSION_USER_ID)
-    val userEmail = request.session.data(Global.SESSION_USERNAME_KEY)
-    val userName = request.session.data(Global.SESSION_USER_FULL_NAME)
-    val userShowcase = profileService.getUserShowcase(userId)
-    Ok(views.html.authenticated.user.profile.editProfile(userShowcase, userEmail, userName, editProfileForm))
+    val userInfo = profileService.getUserInfo(userId)
+    Ok(views.html.authenticated.user.profile.editProfile(userInfo, editProfileForm, editProfileUrl(userInfo)))
   }
 
-  def logout: Action[AnyContent] = authenticatedUserAction { implicit request: Request[AnyContent] =>
+  def processEditProfileAttempt(userInfo: UserInfo): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
+    val errorFunction = { formWithErrors: Form[EditProfileForm] =>
+      // form validation/binding failed...
+      BadRequest(views.html.authenticated.user.profile.editProfile(userInfo, formWithErrors, editProfileUrl(userInfo)))
+    }
+    val successFunction = { editProfileForm: EditProfileForm =>
+      val userId = request.session.data(Global.SESSION_USER_ID)
+      profileService.updateUserProfile(userId, editProfileForm)
+      Redirect(routes.ProfileController.editProfile())
+        .withSession(request.session)
+        .flashing("success" -> "Profile information updated.")
+    }
+    val formValidationResult: Form[EditProfileForm] = editProfileForm.bindFromRequest
+    formValidationResult.fold(
+      errorFunction,
+      successFunction
+    )
+  }
+
+  def logout: Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     Redirect(routes.UserController.showLoginForm())
       .flashing("info" -> "You are logged out.")
       .withNewSession

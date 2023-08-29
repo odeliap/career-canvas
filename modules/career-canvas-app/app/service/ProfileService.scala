@@ -2,12 +2,12 @@ package service
 
 import careercanvas.io.UserDao
 import careercanvas.io.converter.Converters
-import careercanvas.io.model.user.UserShowcase
+import careercanvas.io.model.user.{UpdateUserInfo, UserInfo}
 import careercanvas.io.util.AwaitResult
+import model.forms.EditProfileForm
 
-import java.time.OffsetDateTime
 import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @javax.inject.Singleton
 class ProfileService @Inject()(
@@ -16,8 +16,20 @@ class ProfileService @Inject()(
   extends AwaitResult
     with Converters {
 
-  def getUserShowcase(id: String): UserShowcase = {
-    UserShowcase(id, Option("resume url"), Option("linkedIn url"), Option("github url"), Option("website url"))
+  def getUserInfo(id: String): UserInfo = {
+    userDao.getUser(id.toLong).waitForResult.getOrElse(throw new IllegalArgumentException(s"No user exists with user id $id"))
+  }
+
+  def updateUserProfile(userId: String, editProfileForm: EditProfileForm): Unit = {
+    val updateUserInfo = UpdateUserInfo(
+      id = userId.toLong,
+      fullName = editProfileForm.name,
+      resume = editProfileForm.resume,
+      linkedIn = editProfileForm.linkedIn,
+      gitHub = editProfileForm.gitHub,
+      website = editProfileForm.website
+    )
+    userDao.update(updateUserInfo).waitForResult
   }
 
 }
