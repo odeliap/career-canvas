@@ -1,6 +1,6 @@
 package careercanvas.io.dao.components
 
-import careercanvas.io.model.CalendarEvent
+import careercanvas.io.model.calendar.CalendarEvent
 import slick.lifted.ProvenShape
 
 import java.sql.Timestamp

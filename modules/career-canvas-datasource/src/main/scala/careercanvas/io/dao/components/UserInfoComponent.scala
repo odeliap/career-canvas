@@ -1,6 +1,6 @@
 package careercanvas.io.dao.components
 
-import careercanvas.io.model.UserInfo
+import careercanvas.io.model.user.UserInfo
 import slick.lifted.ProvenShape
 
 import java.sql.Timestamp

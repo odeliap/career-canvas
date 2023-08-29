@@ -1,6 +1,6 @@
 package controllers
 
-import careercanvas.io.model.{BaseUser, User}
+import careercanvas.io.model.user.{BaseUser, User}
 import model.Global
 import play.api.data.Forms._
 import play.api.data._

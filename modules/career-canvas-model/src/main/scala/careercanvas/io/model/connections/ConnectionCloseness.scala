@@ -1,4 +1,6 @@
-package careercanvas.io.model
+package careercanvas.io.model.connections
+
+import careercanvas.io.model.EnumEntry
 
 sealed trait ConnectionCloseness extends EnumEntry
 

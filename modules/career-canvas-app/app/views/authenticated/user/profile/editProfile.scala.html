@@ -1,7 +1,8 @@
 @(
-    userShowcase: careercanvas.io.model.UserShowcase,
+    userShowcase: careercanvas.io.model.user.UserShowcase,
     email: String,
-    name: String
+    name: String,
+    editProfileForm: Form[model.forms.EditProfileForm]
 )
 
 @authenticated.user.main("Edit Profile") {

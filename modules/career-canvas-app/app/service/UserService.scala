@@ -2,7 +2,7 @@ package service
 
 import careercanvas.io.UserDao
 import careercanvas.io.converter.Converters
-import careercanvas.io.model.{BaseUser, UpdateUserInfo, User}
+import careercanvas.io.model.user.{BaseUser, UpdateUserInfo, User}
 import careercanvas.io.util.AwaitResult
 
 import java.time.OffsetDateTime

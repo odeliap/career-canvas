@@ -1,16 +1,16 @@
-package careercanvas.io.model
+package careercanvas.io.model.calendar
 
 import java.sql.Timestamp
 
 case class CalendarEvent(
-  userId: Long,
-  eventId: Long,
-  title: String,
-  allDay: Boolean,
-  start: Timestamp,
-  end: Timestamp,
-  endsSameDay: Boolean
-) {
+                          userId: Long,
+                          eventId: Long,
+                          title: String,
+                          allDay: Boolean,
+                          start: Timestamp,
+                          end: Timestamp,
+                          endsSameDay: Boolean
+                        ) {
 
   def patch(updateCalendarEvent: UpdateCalendarEvent): CalendarEvent = {
     this.copy(

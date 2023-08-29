@@ -1,4 +1,4 @@
-package careercanvas.io.model
+package careercanvas.io.model.jobfeed
 
 import play.api.mvc.QueryStringBindable
 

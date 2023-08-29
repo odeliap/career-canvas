@@ -1,7 +1,7 @@
 package service
 
 import careercanvas.io.JobApplicationsDao
-import careercanvas.io.model.{CoverLetter, JobInfo, JobStatus, UserProvidedJobDetails}
+import careercanvas.io.model.jobfeed._
 import careercanvas.io.processor.CoverLetterWriter
 import careercanvas.io.util.AwaitResult
 

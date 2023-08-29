@@ -1,4 +1,6 @@
-package careercanvas.io.model
+package careercanvas.io.model.jobfeed
+
+import careercanvas.io.model.EnumEntry
 
 sealed trait JobStatus extends EnumEntry
 

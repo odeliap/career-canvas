@@ -2,7 +2,7 @@ package careercanvas.io.dao.impl
 
 import careercanvas.io.JobStatisticsDao
 import careercanvas.io.dao.components.StatusPercentagesComponent
-import careercanvas.io.model.StatusPercentage
+import careercanvas.io.model.metrics.StatusPercentage
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 

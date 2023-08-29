@@ -1,8 +1,8 @@
 @(
-sortByForm: Form[model.SortByForm],
-form: Form[careercanvas.io.model.JobPosting],
+sortByForm: Form[model.forms.SortByForm],
+form: Form[careercanvas.io.model.jobfeed.JobPosting],
 getPostInfoUrl: Call,
-jobInfos: Seq[careercanvas.io.model.JobInfo]
+jobInfos: Seq[careercanvas.io.model.jobfeed.JobInfo]
 )(implicit request: MessagesRequestHeader)
 
 @jobFeedBaseForm(sortByForm, jobInfos) {

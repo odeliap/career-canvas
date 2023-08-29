@@ -1,6 +1,6 @@
 package careercanvas.io
 
-import careercanvas.io.model.{CalendarEvent, UpdateCalendarEvent}
+import careercanvas.io.model.calendar.{CalendarEvent, UpdateCalendarEvent}
 
 import java.sql.Timestamp
 import scala.concurrent.Future

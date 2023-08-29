@@ -1,20 +1,20 @@
-package careercanvas.io.model
+package careercanvas.io.model.connections
 
 import java.sql.Timestamp
 
 case class ConnectionInfo(
-  userId: Long,
-  connectionId: Long,
-  firstName: String,
-  lastName: String,
-  company: String,
-  jobTitle: String,
-  email: String,
-  phoneNumber: Option[String],
-  proximity: ConnectionCloseness,
-  lastContacted: Option[Timestamp] = None,
-  notes: Option[String] = None
-) {
+                           userId: Long,
+                           connectionId: Long,
+                           firstName: String,
+                           lastName: String,
+                           company: String,
+                           jobTitle: String,
+                           email: String,
+                           phoneNumber: Option[String],
+                           proximity: ConnectionCloseness,
+                           lastContacted: Option[Timestamp] = None,
+                           notes: Option[String] = None
+                         ) {
 
   def patch(updateConnectionInfo: UpdateConnectionInfo): ConnectionInfo = {
     this.copy(

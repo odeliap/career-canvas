@@ -2,7 +2,7 @@ package careercanvas.io.dao.impl
 
 import careercanvas.io.ConnectionsDao
 import careercanvas.io.dao.components.NetworkComponent
-import careercanvas.io.model.{ConnectionInfo, UpdateConnectionInfo}
+import careercanvas.io.model.connections.{ConnectionInfo, UpdateConnectionInfo}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 

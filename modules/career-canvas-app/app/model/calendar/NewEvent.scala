@@ -1,8 +1,7 @@
-package model
+package model.calendar
 
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import java.util.Date
+import play.api.libs.json._
 
 case class NewEvent(
   title: String,

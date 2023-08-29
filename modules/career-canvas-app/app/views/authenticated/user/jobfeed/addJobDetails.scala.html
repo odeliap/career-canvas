@@ -1,9 +1,9 @@
 @(
-sortByForm: Form[model.SortByForm],
-form: Form[careercanvas.io.model.UserProvidedJobDetails],
+sortByForm: Form[model.forms.SortByForm],
+form: Form[careercanvas.io.model.jobfeed.UserProvidedJobDetails],
 saveJobUrl: Call,
-jobInfos: Seq[careercanvas.io.model.JobInfo],
-baseJobInfo: careercanvas.io.model.BaseJobInfo
+jobInfos: Seq[careercanvas.io.model.jobfeed.JobInfo],
+baseJobInfo: careercanvas.io.model.jobfeed.BaseJobInfo
 )(implicit request: MessagesRequestHeader)
 
 @jobFeedBaseForm(sortByForm, jobInfos) {

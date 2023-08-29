@@ -1,6 +1,6 @@
 package careercanvas.io.dao.components
 
-import careercanvas.io.model.{JobInfo, JobStatus}
+import careercanvas.io.model.jobfeed.{JobInfo, JobStatus}
 import slick.lifted.ProvenShape
 
 import java.sql.Timestamp

@@ -1,4 +1,4 @@
-@(jobInfo: careercanvas.io.model.JobInfo)(content: Html)
+@(jobInfo: careercanvas.io.model.jobfeed.JobInfo)(content: Html)
 
 @authenticated.user.main(s"${jobInfo.company}: ${jobInfo.jobTitle}") {
     <div id="job-view-intro">

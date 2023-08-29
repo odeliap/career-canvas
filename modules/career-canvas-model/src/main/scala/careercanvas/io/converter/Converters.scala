@@ -1,6 +1,6 @@
 package careercanvas.io.converter
 
-import careercanvas.io.model.SortKey
+import careercanvas.io.model.jobfeed.SortKey
 import play.api.data.FormError
 import play.api.data.format.Formatter
 

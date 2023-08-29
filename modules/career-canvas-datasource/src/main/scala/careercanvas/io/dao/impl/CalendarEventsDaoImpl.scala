@@ -2,7 +2,7 @@ package careercanvas.io.dao.impl
 
 import careercanvas.io.CalendarEventsDao
 import careercanvas.io.dao.components.CalendarEventsComponent
-import careercanvas.io.model.{CalendarEvent, UpdateCalendarEvent}
+import careercanvas.io.model.calendar.{CalendarEvent, UpdateCalendarEvent}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 

@@ -1,6 +1,6 @@
 package careercanvas.io
 
-import careercanvas.io.model.StatusPercentage
+import careercanvas.io.model.metrics.StatusPercentage
 
 import scala.concurrent.Future
 

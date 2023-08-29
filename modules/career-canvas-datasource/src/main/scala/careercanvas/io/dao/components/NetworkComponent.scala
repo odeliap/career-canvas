@@ -1,6 +1,6 @@
 package careercanvas.io.dao.components
 
-import careercanvas.io.model.{ConnectionCloseness, ConnectionInfo}
+import careercanvas.io.model.connections.{ConnectionCloseness, ConnectionInfo}
 import slick.lifted.ProvenShape
 
 import java.sql.Timestamp

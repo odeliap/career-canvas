@@ -1,9 +1,10 @@
 package service
 
 import careercanvas.io.CalendarEventsDao
-import careercanvas.io.model.{CalendarEvent, UpdateCalendarEvent}
+import careercanvas.io.model.calendar
+import careercanvas.io.model.calendar.{CalendarEvent, UpdateCalendarEvent}
 import careercanvas.io.util.AwaitResult
-import model.NewEvent
+import model.calendar.NewEvent
 
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
@@ -23,7 +24,7 @@ class CalendarEventsService @Inject() (
 
   def addEvent(userId: String, newEvent: NewEvent): CalendarEvent = {
     val dateFormatter = new SimpleDateFormat("dd.MMM.yyyy HH:mm:ss")
-    val event = CalendarEvent(
+    val event = calendar.CalendarEvent(
       userId.toLong,
       0L,
       newEvent.title,

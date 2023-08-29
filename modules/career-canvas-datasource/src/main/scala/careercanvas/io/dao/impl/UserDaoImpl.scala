@@ -3,7 +3,7 @@ package careercanvas.io.dao.impl
 import careercanvas.io.UserDao
 import careercanvas.io.converter.Converters
 import careercanvas.io.dao.components.UserInfoComponent
-import careercanvas.io.model.{BaseUser, UpdateUserInfo, User, UserInfo}
+import careercanvas.io.model.user._
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 

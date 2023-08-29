@@ -1,7 +1,7 @@
 package controllers
 
 import authentication.AuthenticatedUserMessagesAction
-import model.{Global, NewEvent}
+import model.Global
 import service.CalendarEventsService
 import play.api.mvc._
 import play.api.libs.json.Json

@@ -1,6 +1,7 @@
 package careercanvas.io.dao.profile
 
-import careercanvas.io.model.{ConnectionCloseness, JobStatus}
+import careercanvas.io.model.connections.ConnectionCloseness
+import careercanvas.io.model.jobfeed.JobStatus
 import com.github.tminglei.slickpg._
 import slick.jdbc.{JdbcType, PostgresProfile}
 

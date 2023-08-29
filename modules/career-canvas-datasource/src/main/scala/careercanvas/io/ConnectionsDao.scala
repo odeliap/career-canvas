@@ -1,6 +1,6 @@
 package careercanvas.io
 
-import careercanvas.io.model.{ConnectionInfo, UpdateConnectionInfo}
+import careercanvas.io.model.connections.{ConnectionInfo, UpdateConnectionInfo}
 
 import scala.concurrent.Future
 
