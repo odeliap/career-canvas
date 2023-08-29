@@ -24,7 +24,7 @@ class CalendarController @Inject()(
       .findAllEvents(userId)
       .map(event => (event.eventId, event.title, event.start, event.end))
     val eventsHtml = new Html(Json.toJson(events.toList).toString())
-    Ok(views.html.calendar.calendar(eventsHtml))
+    Ok(views.html.authenticated.user.calendar.calendar(eventsHtml))
   }
 
 }
