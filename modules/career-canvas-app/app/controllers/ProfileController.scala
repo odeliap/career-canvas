@@ -63,7 +63,9 @@ class ProfileController @Inject()(
   }
 
   def showResumes(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.authenticated.user.profile.resumes())
+    val userId = request.session.data(Global.SESSION_USER_ID)
+    val resumes = profileService.getResumes(userId)
+    Ok(views.html.authenticated.user.profile.resumes(resumes))
   }
 
   def uploadResume(): Action[MultipartFormData[Files.TemporaryFile]] = Action(parse.multipartFormData) { request =>
@@ -73,12 +75,12 @@ class ProfileController @Inject()(
       .map { resume =>
         profileService.addResume(userId, resume)
 
-        Redirect(routes.ProfileController.editProfile())
+        Redirect(routes.ProfileController.showResumes())
           .withSession(request.session)
           .flashing("success" -> "Resume uploaded.")
       }
       .getOrElse {
-        Redirect(routes.ProfileController.editProfile())
+        Redirect(routes.ProfileController.showResumes())
           .withSession(request.session)
           .flashing("error" -> "Error uploading resume.")
       }

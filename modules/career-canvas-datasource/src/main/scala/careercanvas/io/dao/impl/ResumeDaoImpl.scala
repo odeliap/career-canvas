@@ -31,6 +31,13 @@ class ResumeDaoImpl @Inject() (
     db.run(insertQuery)
   }
 
+  override def getAll(userId: Long): Future[Seq[Resume]] = {
+    val resumesQuery = ResumeQuery
+      .filter(_.userId === userId)
+
+    db.run(resumesQuery.result)
+  }
+
   override def delete(resumeId: Long): Future[Unit] = {
     val deleteQuery = ResumeQuery
       .filter(_.resumeId === resumeId)

@@ -8,6 +8,8 @@ trait ResumeDao {
 
   def register(resume: Resume): Future[Long]
 
+  def getAll(userId: Long): Future[Seq[Resume]]
+
   def delete(resumeId: Long): Future[Unit]
 
 }

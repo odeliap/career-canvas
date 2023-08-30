@@ -9,7 +9,7 @@ import model.forms.EditProfileForm
 import play.api.libs.Files
 import play.api.mvc.MultipartFormData
 
-import java.nio.file.Paths
+import java.nio.file.{ Files => NioFiles, Paths }
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -41,6 +41,10 @@ class ProfileService @Inject()(
     userDao.update(updateUserInfo).waitForResult
   }
 
+  def getResumes(userId: String): Seq[Resume] = {
+    resumeDao.getAll(userId.toLong).waitForResult
+  }
+
   def addResume(userId: String, resume: MultipartFormData.FilePart[Files.TemporaryFile]): Unit = {
     val resumeUploadName = resolveResumeUploadName(resume)
     val s3FullyQualifiedUploadPath = uploadResume(userId, resume, resumeUploadName)
@@ -68,6 +72,7 @@ class ProfileService @Inject()(
     val bucket = "career-canvas-resumes"
     val key = s"$userId/$resumeUploadName"
     storageService.uploadFile(bucket, key, tempFile.toFile)
+    NioFiles.deleteIfExists(tempFile)
     s"$bucket/$key"
   }
 

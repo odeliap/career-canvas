@@ -1,7 +1,9 @@
 @(
+resumes: Seq[careercanvas.io.model.user.Resume]
 )(implicit request: MessagesRequestHeader)
 
 @baseProfileView("Resumes") {
+    <h2>Upload Resume</h2>
     @helper.form(action = routes.ProfileController.uploadResume, Symbol("enctype") -> "multipart/form-data") {
         @helper.CSRF.formField
         <input type="file" name="resume">
@@ -9,4 +11,15 @@
             <input type="submit">
         </p>
     }
+    <h2>My Resumes</h2>
+    <div class="resume-stack">
+        @resumes.map { resume =>
+        <div class="resume-tile">
+            <h3>Resume Id: @resume.resumeId</h3>
+            <p>Name: @resume.name</p>
+            <p>Upload Date: @resume.uploadDate.toString.split("\\.")(0)</p>
+            <button>View</button>
+        </div>
+        }
+    </div>
 }
