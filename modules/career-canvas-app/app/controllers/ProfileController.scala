@@ -6,10 +6,11 @@ import model.Global
 import model.forms.EditProfileForm
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.libs.Files
 
 import javax.inject._
 import play.api.mvc._
-import service.{ ProfileService, UserService }
+import service.{ProfileService, UserService}
 
 @Singleton
 class ProfileController @Inject()(
@@ -23,7 +24,7 @@ class ProfileController @Inject()(
 
   val editProfileForm: Form[EditProfileForm] = Form(
     mapping(
-      "resume" -> optional(text),
+      "resume" -> optional(longNumber),
       "linkedIn" -> optional(text),
       "gitHub" -> optional(text),
       "website" -> optional(text),
@@ -59,6 +60,28 @@ class ProfileController @Inject()(
       errorFunction,
       successFunction
     )
+  }
+
+  def showResumes(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
+    Ok(views.html.authenticated.user.profile.resumes())
+  }
+
+  def uploadResume(): Action[MultipartFormData[Files.TemporaryFile]] = Action(parse.multipartFormData) { request =>
+    val userId = request.session.data(Global.SESSION_USER_ID)
+    request.body
+      .file("resume")
+      .map { resume =>
+        profileService.addResume(userId, resume)
+
+        Redirect(routes.ProfileController.editProfile())
+          .withSession(request.session)
+          .flashing("success" -> "Resume uploaded.")
+      }
+      .getOrElse {
+        Redirect(routes.ProfileController.editProfile())
+          .withSession(request.session)
+          .flashing("error" -> "Error uploading resume.")
+      }
   }
 
   def logout: Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>

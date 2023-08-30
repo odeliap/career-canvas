@@ -1,0 +1,33 @@
+@(
+pageName: String
+)(content: Html)(implicit request: MessagesRequestHeader)
+
+@authenticated.user.main(pageName) {
+<h2>Settings</h2>
+<div class="container">
+    <div class="left-panel">
+        <div class="top-part">
+            <div class="settings-content">
+                <h4>Accounts Center</h4>
+                <p class="settings-sub-content">
+                    Manage your account settings.
+                </p>
+            </div>
+        </div>
+        <div class="bottom-part">
+            <div class="settings-content">
+                <div class="settings-sidebar-opts">
+                    <a href="@routes.ProfileController.editProfile()" class="settings-opts">Edit profile</a>
+                    <a href="@routes.ProfileController.showResumes()" class="settings-opts">Resumes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-section">
+        <div class="settings-content">
+            @content
+        </div>
+    </div>
+</div>
+}

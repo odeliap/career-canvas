@@ -8,7 +8,7 @@ case class UpdateUserInfo(
   password: Option[String] = None,
   fullName: Option[String] = None,
   lastLogin: Option[Timestamp] = None,
-  resume: Option[String] = None,
+  resumeId: Option[Long] = None,
   linkedIn: Option[String] = None,
   gitHub: Option[String] = None,
   website: Option[String] = None,

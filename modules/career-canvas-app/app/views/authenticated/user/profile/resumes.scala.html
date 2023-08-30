@@ -1,0 +1,12 @@
+@(
+)(implicit request: MessagesRequestHeader)
+
+@baseProfileView("Resumes") {
+    @helper.form(action = routes.ProfileController.uploadResume, Symbol("enctype") -> "multipart/form-data") {
+        @helper.CSRF.formField
+        <input type="file" name="resume">
+        <p>
+            <input type="submit">
+        </p>
+    }
+}

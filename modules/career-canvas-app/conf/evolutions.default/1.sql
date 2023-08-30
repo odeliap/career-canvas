@@ -9,7 +9,7 @@ create table if not exists user_info (
     password            varchar(255)            not null,
     full_name           varchar(255)            not null,
     last_login          timestamp,
-    resume              varchar(255),
+    resume_id           bigint,
     linkedin            varchar(255),
     github              varchar(255),
     website             varchar(255)
@@ -60,6 +60,14 @@ create table job_status_breakdown (
     percentage          numeric
 );
 
+create table resumes (
+    user_id             serial                 not null references user_info(id),
+    resume_id           serial,
+    name                varchar(255)           not null,
+    location_path       varchar(320)           not null,
+    upload_date         timestamp
+);
+
 
 -- !Downs
 
@@ -68,6 +76,7 @@ drop table if exists job_statuses;
 drop table if exists user_info;
 drop table if exists calendar_event;
 drop table if exists job_status_breakdown;
+drop table if exists resumes;
 
 drop type if exists job_status;
 drop type if exists connection_closeness;

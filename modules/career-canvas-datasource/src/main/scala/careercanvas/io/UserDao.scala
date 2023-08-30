@@ -1,6 +1,5 @@
 package careercanvas.io
 
-import careercanvas.io.model._
 import careercanvas.io.model.user.{BaseUser, UpdateUserInfo, User, UserInfo}
 
 import scala.concurrent.Future

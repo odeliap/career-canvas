@@ -14,7 +14,7 @@ class CareerCanvasAppModule extends AbstractModule {
 
   @Provides
   def s3StorageService(): S3StorageService = {
-    val region = Region.US_WEST_2
+    val region = Region.US_WEST_1
     val s3Client = S3Client.builder()
       .region(region)
       .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
