@@ -29,20 +29,6 @@
     @helper.CSRF.formField
 
     <div class="edit-container">
-        <div class="edit-key">Resume</div>
-        <div class="edit-value">
-            @helper.inputText(
-            form("resume"),
-            '_label -> "",
-            'placeholder -> userInfo.resumeId.getOrElse(""),
-            'class -> "edit-value-field",
-            'size -> 60,
-            '_showConstraints -> false
-            )
-        </div>
-    </div>
-
-    <div class="edit-container">
         <div class="edit-key">LinkedIn</div>
         <div class="edit-value">
             @helper.inputText(

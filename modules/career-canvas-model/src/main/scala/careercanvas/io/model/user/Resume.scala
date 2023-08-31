@@ -4,8 +4,9 @@ import java.sql.Timestamp
 
 case class Resume(
   userId: Long,
-  resumeId: Long,
+  version: Int,
   name: String,
-  locationPath: String,
+  bucket: String,
+  prefix: String,
   uploadDate: Timestamp
 )

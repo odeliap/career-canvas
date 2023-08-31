@@ -1,6 +1,6 @@
 package controllers
 
-import authentication.AuthenticatedUserMessagesAction
+import authentication.{AuthenticatedUserAction, AuthenticatedUserMessagesAction}
 import model.Global
 import service.CalendarEventsService
 import play.api.mvc._
@@ -12,13 +12,13 @@ import javax.inject._
 @Singleton
 class CalendarController @Inject()(
   cc: MessagesControllerComponents,
-  authenticatedUserMessagesAction: AuthenticatedUserMessagesAction,
+  authenticatedUserAction: AuthenticatedUserAction,
   calendarEventsService: CalendarEventsService
 ) extends MessagesAbstractController(cc) {
 
   private val logger = play.api.Logger(this.getClass)
 
-  def showHomeCalendar(): Action[AnyContent] = authenticatedUserMessagesAction { request: MessagesRequest[AnyContent] =>
+  def showHomeCalendar(): Action[AnyContent] = authenticatedUserAction { request =>
     val userId = request.session.data(Global.SESSION_USER_ID)
     val events = calendarEventsService
       .findAllEvents(userId)

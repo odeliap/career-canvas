@@ -14,16 +14,18 @@ trait ResumeComponent {
   class ResumesTable(tag: Tag) extends Table[Resume](tag, "resumes") {
 
     def userId: Rep[Long] = column[Long]("user_id")
-    def resumeId: Rep[Long] = column[Long]("resume_id", O.AutoInc)
+    def version: Rep[Int] = column[Int]("version")
     def name: Rep[String] = column[String]("name")
-    def locationPath: Rep[String] = column[String]("location_path")
+    def bucket: Rep[String] = column[String]("bucket")
+    def prefix: Rep[String] = column[String]("prefix")
     def uploadDate: Rep[Timestamp] = column[Timestamp]("upload_date")
 
     def * : ProvenShape[Resume] = (
       userId,
-      resumeId,
+      version,
       name,
-      locationPath,
+      bucket,
+      prefix,
       uploadDate
     ) <> (Resume.tupled, Resume.unapply)
 

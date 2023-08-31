@@ -1,6 +1,6 @@
 package controllers
 
-import authentication.AuthenticatedUserMessagesAction
+import authentication.{AuthenticatedUserAction, AuthenticatedUserMessagesAction}
 import careercanvas.io.model.user.UserInfo
 import model.Global
 import model.forms.EditProfileForm
@@ -17,6 +17,7 @@ class ProfileController @Inject()(
   cc: MessagesControllerComponents,
   profileService: ProfileService,
   userService: UserService,
+  authenticatedUserAction: AuthenticatedUserAction,
   authenticatedUserMessagesAction: AuthenticatedUserMessagesAction
 ) extends MessagesAbstractController(cc) {
 
@@ -24,7 +25,6 @@ class ProfileController @Inject()(
 
   val editProfileForm: Form[EditProfileForm] = Form(
     mapping(
-      "resume" -> optional(longNumber),
       "linkedIn" -> optional(text),
       "gitHub" -> optional(text),
       "website" -> optional(text),
@@ -86,7 +86,14 @@ class ProfileController @Inject()(
       }
   }
 
-  def logout: Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
+  def deleteResume(version: Int): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
+    val userId = request.session.data(Global.SESSION_USER_ID)
+    profileService.deleteResume(userId, version)
+    Redirect(routes.ProfileController.showResumes())
+  }
+
+
+  def logout: Action[AnyContent] = authenticatedUserAction { implicit request =>
     Redirect(routes.UserController.showLoginForm())
       .flashing("info" -> "You are logged out.")
       .withNewSession

@@ -33,7 +33,6 @@ class ProfileService @Inject()(
       id = userId.toLong,
       email = editProfileForm.email,
       fullName = editProfileForm.name,
-      resumeId = editProfileForm.resumeId,
       linkedIn = editProfileForm.linkedIn,
       gitHub = editProfileForm.gitHub,
       website = editProfileForm.website
@@ -47,9 +46,14 @@ class ProfileService @Inject()(
 
   def addResume(userId: String, resume: MultipartFormData.FilePart[Files.TemporaryFile]): Unit = {
     val resumeUploadName = resolveResumeUploadName(resume)
-    val s3FullyQualifiedUploadPath = uploadResume(userId, resume, resumeUploadName)
-    val resumeId = registerResume(userId, resumeUploadName, s3FullyQualifiedUploadPath)
-    updateProfileResume(userId, resumeId)
+    val (bucket, prefix) = uploadResume(userId, resume, resumeUploadName)
+    registerResume(userId, resumeUploadName, bucket, prefix)
+  }
+
+  def deleteResume(userId: String, version: Int): Unit = {
+    val resume = resumeDao.getByVersion(userId.toLong, version).waitForResult
+    resumeDao.delete(userId.toLong, version)
+    storageService.deleteFile(resume.bucket, resume.prefix)
   }
 
   private def resolveResumeUploadName(resume: MultipartFormData.FilePart[Files.TemporaryFile]): String = {
@@ -67,23 +71,20 @@ class ProfileService @Inject()(
     s"$sanitizedBaseName$extension"
   }
 
-  private def uploadResume(userId: String, resume: MultipartFormData.FilePart[Files.TemporaryFile], resumeUploadName: String): String = {
+  private def uploadResume(userId: String, resume: MultipartFormData.FilePart[Files.TemporaryFile], resumeUploadName: String): (String, String) = {
     val tempFile = resume.ref.copyTo(Paths.get(resumeUploadName), replace = true)
     val bucket = "career-canvas-resumes"
     val key = s"$userId/$resumeUploadName"
     storageService.uploadFile(bucket, key, tempFile.toFile)
     NioFiles.deleteIfExists(tempFile)
-    s"$bucket/$key"
+    (bucket, key)
   }
 
-  private def registerResume(userId: String, resumeUploadName: String, s3FullyQualifiedUploadPath: String): Long = {
-    val resumeInfo = Resume(userId.toLong, 0L, resumeUploadName, s3FullyQualifiedUploadPath, Timestamp.valueOf(LocalDateTime.now()))
+  private def registerResume(userId: String, resumeUploadName: String, bucket: String, prefix: String): Unit = {
+    val latestResumeIdOpt = resumeDao.getLatest(userId.toLong).waitForResult.map(_.version)
+    val nextResumeId = if (latestResumeIdOpt.isDefined) latestResumeIdOpt.get + 1 else 1
+    val resumeInfo = Resume(userId.toLong, nextResumeId, resumeUploadName, bucket, prefix, Timestamp.valueOf(LocalDateTime.now()))
     resumeDao.register(resumeInfo).waitForResult
-  }
-
-  private def updateProfileResume(userId: String, resumeId: Long): Unit = {
-    val updateUserInfo = UpdateUserInfo(id = userId.toLong, resumeId = Option(resumeId))
-    userDao.update(updateUserInfo)
   }
 
 }

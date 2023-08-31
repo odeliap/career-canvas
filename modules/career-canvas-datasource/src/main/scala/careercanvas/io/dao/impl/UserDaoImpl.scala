@@ -35,7 +35,6 @@ class UserDaoImpl @Inject() (
       OffsetDateTime.now(),
       None,
       None,
-      None,
       None
     )
 

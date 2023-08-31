@@ -25,10 +25,25 @@ class ResumeDaoImpl @Inject() (
 
   import profile.api._
 
-  override def register(resume: Resume): Future[Long] = {
-    val insertQuery = ResumeQuery returning ResumeQuery.map(_.resumeId) += resume
+  override def register(resume: Resume): Future[Int] = {
+    val insertQuery = ResumeQuery returning ResumeQuery.map(_.version) += resume
 
     db.run(insertQuery)
+  }
+
+  override def getLatest(userId: Long): Future[Option[Resume]] = {
+    val query = ResumeQuery
+      .filter(_.userId === userId)
+      .sortBy(_.version.desc)
+
+    db.run(query.result.headOption)
+  }
+
+  override def getByVersion(userId: Long, version: Int): Future[Resume] = {
+    val query = ResumeQuery
+      .filter(resume => resume.userId === userId && resume.version === version)
+
+    db.run(query.result.head)
   }
 
   override def getAll(userId: Long): Future[Seq[Resume]] = {
@@ -38,9 +53,9 @@ class ResumeDaoImpl @Inject() (
     db.run(resumesQuery.result)
   }
 
-  override def delete(resumeId: Long): Future[Unit] = {
+  override def delete(userId: Long, version: Int): Future[Unit] = {
     val deleteQuery = ResumeQuery
-      .filter(_.resumeId === resumeId)
+      .filter(resume => resume.userId === userId && resume.version === version)
       .delete
 
     db.run(deleteQuery).map(_ => ())

@@ -1,7 +1,7 @@
 package careercanvas.io.storage
 
 import software.amazon.awssdk.services.s3.S3Client
-import software.amazon.awssdk.services.s3.model.{GetObjectRequest, PutObjectRequest}
+import software.amazon.awssdk.services.s3.model._
 
 import java.io.{File, InputStream}
 import software.amazon.awssdk.core.sync.RequestBody
@@ -22,6 +22,14 @@ class S3StorageService(s3Client: S3Client) extends StorageService {
       .key(key)
       .build()
     s3Client.putObject(uploadObjectRequest, RequestBody.fromFile(file))
+  }
+
+  override def deleteFile(bucket: String, key: String): Unit = {
+    val deleteObjectRequest = DeleteObjectRequest.builder()
+      .bucket(bucket)
+      .key(key)
+      .build()
+    s3Client.deleteObject(deleteObjectRequest)
   }
 
 }

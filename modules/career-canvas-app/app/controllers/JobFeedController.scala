@@ -1,6 +1,6 @@
 package controllers
 
-import authentication.AuthenticatedUserMessagesAction
+import authentication.{AuthenticatedUserAction, AuthenticatedUserMessagesAction}
 import careercanvas.io.converter.Converters
 import careercanvas.io.model.jobfeed.{BaseJobInfo, JobInfo, JobPosting, SortKey, UserProvidedJobDetails}
 import careercanvas.io.processor.BaseJobInfoResolver
@@ -13,10 +13,10 @@ import play.api.data.Forms._
 
 import javax.inject.Inject
 
-// TODO: cache user jobs instead of making call to db every time
 class JobFeedController @Inject()(
   cc: MessagesControllerComponents,
   jobApplicationsService: JobApplicationsService,
+  authenticatedUserAction: AuthenticatedUserAction,
   authenticatedUserMessagesAction: AuthenticatedUserMessagesAction,
   baseJobInfoResolver: BaseJobInfoResolver
 ) extends MessagesAbstractController(cc) with Converters {
@@ -118,11 +118,11 @@ class JobFeedController @Inject()(
       .withSession(request.session -- Seq("company", "jobTitle", "postUrl"))
   }
 
-  def showJobView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
+  def showJobView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserAction { implicit request =>
     Ok(views.html.authenticated.user.jobfeed.jobView(jobInfo))
   }
 
-  def generateCoverLetter(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
+  def generateCoverLetter(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserAction { implicit request =>
     val fullName = request.session.data(Global.SESSION_USER_FULL_NAME)
     val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo, fullName)
     Ok(views.html.authenticated.user.jobfeed.showCoverLetter(jobInfo, coverLetter))

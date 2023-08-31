@@ -12,7 +12,6 @@ case class UserInfo(
   password: String,
   fullName: String,
   lastLogin: Timestamp,
-  resumeId: Option[Long],
   linkedIn: Option[String],
   gitHub: Option[String],
   website: Option[String]
@@ -23,7 +22,6 @@ case class UserInfo(
       password = updateJobInfo.password.getOrElse(this.password),
       fullName = updateJobInfo.fullName.getOrElse(this.fullName),
       lastLogin = updateJobInfo.lastLogin.getOrElse(this.lastLogin),
-      resumeId = updateJobInfo.resumeId.orElse(this.resumeId),
       linkedIn = updateJobInfo.linkedIn.orElse(this.linkedIn),
       gitHub = updateJobInfo.gitHub.orElse(this.gitHub),
       website = updateJobInfo.website.orElse(this.website)
@@ -41,13 +39,12 @@ object UserInfo {
         val password = params.get("password").flatMap(_.headOption)
         val fullName = params.get("fullName").flatMap(_.headOption)
         val lastLogin = params.get("lastLogin").flatMap(_.headOption).map(Timestamp.valueOf)
-        val resumeId = params.get("resume").flatMap(_.headOption).flatMap(_.toLongOption)
         val linkedIn = params.get("linkedIn").flatMap(_.headOption)
         val gitHub = params.get("gitHub").flatMap(_.headOption)
         val website = params.get("website").flatMap(_.headOption)
 
         // Here you can also add validation checks
-        Right(UserInfo(id.getOrElse(0L), email.getOrElse(""), password.getOrElse(""), fullName.getOrElse(""), lastLogin.getOrElse(Timestamp.valueOf(LocalDateTime.now())), resumeId, linkedIn, gitHub, website))
+        Right(UserInfo(id.getOrElse(0L), email.getOrElse(""), password.getOrElse(""), fullName.getOrElse(""), lastLogin.getOrElse(Timestamp.valueOf(LocalDateTime.now())), linkedIn, gitHub, website))
       }.getOrElse(Left("Unable to bind UserInfo"))
     }
 
@@ -58,7 +55,6 @@ object UserInfo {
         Some(s"password=${userInfo.password}"),
         Some(s"fullName=${userInfo.fullName}"),
         Some(s"lastLogin=${userInfo.lastLogin}"),
-        userInfo.resumeId.map(r => s"resume=$r"),
         userInfo.linkedIn.map(li => s"linkedIn=$li"),
         userInfo.gitHub.map(gh => s"gitHub=$gh"),
         userInfo.website.map(w => s"website=$w")

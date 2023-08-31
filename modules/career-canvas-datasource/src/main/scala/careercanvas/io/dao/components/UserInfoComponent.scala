@@ -18,7 +18,6 @@ trait UserInfoComponent {
     def password: Rep[String] = column[String]("password")
     def fullName: Rep[String] = column[String]("full_name")
     def lastLogin: Rep[Timestamp] = column[Timestamp]("last_login")
-    def resumeId: Rep[Option[Long]] = column[Option[Long]]("resume_id")
     def linkedIn: Rep[Option[String]] = column[Option[String]]("linkedin")
     def gitHub: Rep[Option[String]] = column[Option[String]]("github")
     def website: Rep[Option[String]] = column[Option[String]]("website")
@@ -29,7 +28,6 @@ trait UserInfoComponent {
       password,
       fullName,
       lastLogin,
-      resumeId,
       linkedIn,
       gitHub,
       website

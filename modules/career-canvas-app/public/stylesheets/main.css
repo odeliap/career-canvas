@@ -810,3 +810,29 @@ hr {
 .resume-tile button:hover {
   background-color: #0056b3;
 }
+
+#delete-resume-button {
+  background-color: transparent;  /* No background */
+  color: #000;                    /* Black text */
+  border: 1px solid #000;         /* Black border */
+  margin-top: 10px;
+  padding: 10px 20px;             /* Padding */
+  text-align: center;             /* Center text */
+  font-size: 8px;                /* Font size */
+  font-family: 'Helvetica Neue', sans-serif; /* Font family */
+  text-decoration: none;          /* No underline */
+  border-radius: 5px;             /* Slightly rounded corners */
+  transition: all 0.3s ease;      /* Transition for hover effect */
+}
+
+#delete-resume-button:hover {
+  background-color: #000;  /* Black background */
+  color: #fff;             /* White text */
+}
+
+#delete-resume-button:disabled {
+  background-color: transparent; /* No background */
+  color: #ccc;                    /* Gray text */
+  border: 1px solid #ccc;         /* Gray border */
+  cursor: not-allowed;            /* No-click cursor */
+}

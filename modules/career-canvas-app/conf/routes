@@ -37,6 +37,7 @@ GET     /users/logout               controllers.ProfileController.logout()
 GET     /users/doEditProfile        controllers.ProfileController.processEditProfileAttempt(userInfo: careercanvas.io.model.user.UserInfo)
 GET     /users/showResumes          controllers.ProfileController.showResumes()
 POST    /users/uploadResume         controllers.ProfileController.uploadResume()
+POST    /resumes/:version           controllers.ProfileController.deleteResume(version: Int)
 
 # pages for policies
 GET     /helpCenter/termsOfUse      controllers.PolicyController.showTermsOfUse()

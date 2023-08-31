@@ -9,7 +9,6 @@ create table if not exists user_info (
     password            varchar(255)            not null,
     full_name           varchar(255)            not null,
     last_login          timestamp,
-    resume_id           bigint,
     linkedin            varchar(255),
     github              varchar(255),
     website             varchar(255)
@@ -62,9 +61,10 @@ create table job_status_breakdown (
 
 create table resumes (
     user_id             serial                 not null references user_info(id),
-    resume_id           serial,
+    version             serial,
     name                varchar(255)           not null,
-    location_path       varchar(320)           not null,
+    bucket              varchar(120)           not null,
+    prefix              varchar(320)           not null,
     upload_date         timestamp
 );
 

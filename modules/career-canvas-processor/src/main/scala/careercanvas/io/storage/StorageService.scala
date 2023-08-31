@@ -8,4 +8,6 @@ trait StorageService {
 
   def uploadFile(bucket: String, key: String, file: File): Unit
 
+  def deleteFile(bucket: String, key: String): Unit
+
 }
