@@ -28,9 +28,6 @@ GET     /feed/job/coverLetter       controllers.JobFeedController.generateCoverL
 # pages for job statistics
 GET     /jobStats                   controllers.JobStatisticsController.showJobStats()
 
-# pages for calendar
-GET     /calendar                   controllers.CalendarController.showHomeCalendar()
-
 # pages for profile actions
 GET     /users/editProfile          controllers.ProfileController.editProfile()
 GET     /users/doEditProfile        controllers.ProfileController.processEditProfileAttempt(userInfo: careercanvas.io.model.user.UserInfo)
