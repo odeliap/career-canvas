@@ -1,6 +1,6 @@
 /* Welcome Page */
 
-.welcome-header {
+.header {
     background-color: white;
     padding: 10px 20px;
     display: flex;
@@ -8,19 +8,19 @@
     align-items: center;
 }
 
-#welcome-content {
+.content {
     display: flex;
     margin: 30px auto 50px auto;
 }
 
-#welcome-left {
+.content-left {
     text-align: left;
     margin: -50px auto auto 15px;
     left: 0;
     width: 55%;
 }
 
-#welcome-login-form {
+.login-form {
     margin-left: 10px;
 }
 
@@ -91,7 +91,7 @@
     margin: 0 15px;
 }
 
-.join-now-button {
+#join-now-button {
     margin-left: 10px;
     margin-top: 20px;
     border-radius: 30px;
@@ -104,7 +104,7 @@
     color: #5A5A5A;
 }
 
-.join-now-button:hover, .welcome-join:hover, .username:hover, .password:hover {
+.join-now-button:hover, .header-join:hover, .username:hover, .password:hover {
     background-color: #F5F5F5;
 }
 
@@ -114,12 +114,12 @@
     margin: 15px auto;
 }
 
-.welcome-buttons {
+.header-buttons {
     display: flex;
     gap: 10px;
 }
 
-.welcome-button {
+.header-button {
     padding: 15px 20px;
     border: none;
     border-radius: 25px;
@@ -128,23 +128,23 @@
     background-color: white;
 }
 
-.welcome-join {
+.header-join {
     color: #5A5A5A;
     font-weight: bold;
 }
 
-.welcome-sign-in {
+.header-sign-in {
     color: #0073b1;
     border: 1px solid #0073b1;
     font-weight: bold;
-    width: 100px;
+    width: 55px;
 }
 
-.welcome-sign-in:hover {
+.header-sign-in:hover {
     background-color: #ecf5ff;
 }
 
-#welcome-slogan {
+.slogan {
     padding: 10px;
     font-size: 42px;
     font-weight: lighter;
@@ -152,7 +152,7 @@
     margin-bottom: 20px;
 }
 
-.welcome-section {
+.section {
     text-align: left;
     padding: 70px 30px;
     font-weight: lighter;
@@ -174,29 +174,29 @@
     margin-left: 10px;
 }
 
-#welcome-section-1 {
+#section-1 {
     background-color: #D6D4D2;
 }
 
-#welcome-section-2, #welcome-section-5 {
+#section-2, #section-5 {
     background-color: white;
 }
 
-#welcome-section-3 {
+#section-3 {
     background-color: #f6f0e8;
 }
 
-#welcome-section-4 {
+#section-4 {
     background-color: #F5F5F5;
 }
 
-.welcome-section-title {
+.section-title {
     font-size: 38px;
     color: #333333;
     padding: 30px 0;
 }
 
-.welcome-section-info {
+.section-info {
     font-size: 20px;
     color: #444444;
 }
