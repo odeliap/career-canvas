@@ -10,8 +10,4 @@ class LandingController @Inject()(cc: ControllerComponents) extends AbstractCont
     Ok(views.html.landing.welcomePage())
   }
 
-  def showAboutPage(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.landing.about())
-  }
-
 }

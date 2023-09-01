@@ -5,7 +5,6 @@
 
 # Home page
 GET     /                           controllers.LandingController.showWelcomePage()
-GET     /about                      controllers.LandingController.showAboutPage()
 
 # User/admin stuff
 GET     /users/login                controllers.UserController.showLoginForm()
