@@ -101,7 +101,7 @@ class ProfileController @Inject()(
 
 
   def logout: Action[AnyContent] = authenticatedUserAction { implicit request =>
-    Redirect(routes.UserController.showLoginForm())
+    Redirect(routes.LandingController.showLoginForm())
       .flashing("info" -> "You are logged out.")
       .withNewSession
   }

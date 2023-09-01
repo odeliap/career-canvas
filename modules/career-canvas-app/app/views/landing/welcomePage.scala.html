@@ -1,4 +1,21 @@
-@main("Welcome to Career Canvas") {
+@(
+form: Form[careercanvas.io.model.user.BaseUser],
+postUrl: Call
+)(implicit request: MessagesRequestHeader)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Career Canvas</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/welcome.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/logos/logo1.png")">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&family=Jost:ital,wght@@1,300&display=swap" rel="stylesheet">
+</head>
+<body>
     <div class="welcome-header">
         <img src="@routes.Assets.versioned("images/logos/logo2.png")" class="logo2">
         <div class="welcome-buttons">
@@ -6,9 +23,63 @@
             <button class="welcome-button welcome-sign-in">Sign In</button>
         </div>
     </div>
-    <div id="welcome-page">
+    <div id="welcome-content">
         <div id="welcome-left">
             <p id="welcome-slogan">Welcome to your job search organization</p>
+            <div id="welcome-login-form">
+                @request.flash.data.map{ case (name, value) =>
+                @if(name.equals("error")) {
+                <div class="error-flash">@value</div>
+                } else if (name.equals("success")) {
+                <div class="success-flash">@value</div>
+                } else {
+                <div class="info-flash">@value</div>
+                }
+                }
+
+                @* Global errors are not tied to any particular form field *@
+                @if(form.hasGlobalErrors) {
+                @form.globalErrors.map { error: FormError =>
+                <div>
+                    Error: @error.key: @error.message
+                </div>
+                }
+                }
+
+                @helper.form(postUrl, 'class -> "login-form-fields") {
+
+                @helper.CSRF.formField
+
+                <div class="form-descriptor">Email</div>
+
+                @helper.inputText(
+                form("username"),
+                '_label -> "",
+                'class -> "username",
+                'size -> 60,
+                '_showConstraints -> false
+                )
+
+                <div class="form-descriptor">Password</div>
+
+                @helper.inputPassword(
+                form("password"),
+                '_label -> "",
+                'class -> "password",
+                'size -> 60,
+                '_showConstraints -> false
+                )
+
+                <button class="login-button">Sign in</button>
+                }
+            </div>
+            <button class="forgot-password-button">Forgot password?</button>
+            <div class="or-container">
+                <div class="split-line"></div>
+                <div class="or-text">or</div>
+                <div class="split-line"></div>
+            </div>
+            <button class="join-now-button">New to CareerCanvas? Join now</button>
         </div>
         <img src="@routes.Assets.versioned("images/landing/welcome.png")" id="welcome-img">
     </div>
@@ -63,4 +134,6 @@
         </div>
         <div class="subsection"></div>
     </div>
-}
+<script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
+</body>
+</html>

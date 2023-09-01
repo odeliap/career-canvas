@@ -1,0 +1,206 @@
+/* Welcome Page */
+
+.welcome-header {
+    background-color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#welcome-content {
+    display: flex;
+    margin: 30px auto 50px auto;
+}
+
+#welcome-left {
+    text-align: left;
+    margin: -50px auto auto 15px;
+    left: 0;
+    width: 55%;
+}
+
+#welcome-login-form {
+    margin-left: 10px;
+}
+
+.form-descriptor {
+    font-size: 13px;
+    font-weight: bold;
+    color: #444444;
+}
+
+.username, .password {
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-top: -5px;
+    margin-left: -40px;
+    margin-bottom: 12px;
+    width: 70%;
+    height: 50px;
+}
+
+.login-button {
+    background-color: #2a9df4;
+    margin: 10px 0;
+    width: 66%;
+    height: 50px;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.login-button:hover {
+    background-color: #187bcd;
+}
+
+.forgot-password-button {
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    margin-left: 10px;
+    margin-top: 10px;
+    background: white;
+    color: #2a9df4;
+}
+
+.forgot-password-button:hover {
+    text-decoration: underline;
+    color: #187bcd;
+}
+
+.or-container {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-left: 10px;
+    margin-top: 30px;
+}
+
+.split-line {
+    width: 30%;
+    height: 1px;
+    background-color: grey;
+}
+
+.or-text {
+    font-size: 14px;
+    margin: 0 15px;
+}
+
+.join-now-button {
+    margin-left: 10px;
+    margin-top: 20px;
+    border-radius: 30px;
+    border: 1px solid #5A5A5A;
+    background-color: white;
+    width: 66%;
+    height: 50px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #5A5A5A;
+}
+
+.join-now-button:hover {
+    background-color: #F5F5F5;
+}
+
+#welcome-img {
+    right: 0;
+    width: 45%;
+    margin: 15px auto;
+}
+
+.welcome-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.welcome-button {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: white;
+}
+
+.welcome-join {
+    color: #5A5A5A;
+    font-weight: bold;
+}
+
+.welcome-join:hover {
+    background-color: #F5F5F5;
+}
+
+.welcome-sign-in {
+    color: #0073b1;
+    border: 1px solid #0073b1;
+    font-weight: bold;
+    width: 100px;
+}
+
+.welcome-sign-in:hover {
+    background-color: #ecf5ff;
+}
+
+#welcome-slogan {
+    padding: 10px;
+    font-size: 42px;
+    font-weight: lighter;
+    color: #808080;
+    margin-bottom: 20px;
+}
+
+.welcome-section {
+    text-align: left;
+    padding: 70px 30px;
+    font-weight: lighter;
+    display: flex;
+    justify-content: space-between;
+}
+
+.subsection {
+    padding: 20px;
+}
+
+.subsection:first-child {
+    flex: 4;  /* Takes up 1/3 */
+    margin-right: 10px;
+}
+
+.subsection:last-child {
+    flex: 6;  /* Takes up 2/3 */
+    margin-left: 10px;
+}
+
+#welcome-section-1 {
+    background-color: #D6D4D2;
+}
+
+#welcome-section-2, #welcome-section-5 {
+    background-color: white;
+}
+
+#welcome-section-3 {
+    background-color: #f6f0e8;
+}
+
+#welcome-section-4 {
+    background-color: #F5F5F5;
+}
+
+.welcome-section-title {
+    font-size: 38px;
+    color: #333333;
+    padding: 30px 0;
+}
+
+.welcome-section-info {
+    font-size: 20px;
+    color: #444444;
+}

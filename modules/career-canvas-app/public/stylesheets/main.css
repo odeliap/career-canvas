@@ -1,96 +1,6 @@
-/* Standard */
-html, body {
-    margin: 0;
-    font-family: 'Artifakt', Arial, sans-serif;
-}
-
-body {
-    height: 100vh;
-    width: 100vw;
-}
-
-h1, h2, h3, h4 {
-    font-weight: 550;
-    color: #242526;
-}
-
-a {
-    color: #2B2B2B;
-    font-style: normal;
-    text-decoration: none;
-}
-
-li {
-    margin: 15px 0;
-}
-
-hr {
-    margin: 0;
-}
-
-/* Common Elements */
-
-.intro {
-    top: 0;
-    position: sticky;
-    margin: 0px auto;
-    z-index: 1000;
-}
-
-.footer {
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 10px;
-    padding: 20px 0 70px 0;
-}
-
-.profile {
-    height: 25px;
-    width: 25px;
-    padding-right: 10px;
-}
-
-.icon {
-    height: 20px;
-    width: 20px;
-    padding: 14px;
-}
-
-.logo1 {
-    height: 150px;
-    width: 150px;
-}
-
-.logo2 {
-    width: 250px;
-    height: 100px;
-}
-
-.login-signup-btn:hover, .profile-edit-submit-btn:hover {
-    text-decoration: underline;
-}
-
-.success-flash {
-    color: green;
-}
-
-.error-flash {
-    color: red;
-}
-
-.info-flash {
-    color: #26abff;
-}
-
-.error-flash {
-    font-size: 10px;
-    margin: 0;
-}
-
 /* Navbar container */
 .navbar {
   overflow: hidden;
-  font-family: Arial;
   margin: 50px 50px 0 0;
 }
 
@@ -161,121 +71,7 @@ hr {
   display: block;
 }
 
-/* Welcome Page */
-
-#welcome-page {
-    display: flex;
-    margin-top: 50px;
-}
-
-#welcome-left {
-    text-align: left;
-    margin: -50px auto auto 15px;
-    left: 0;
-    width: 55%;
-}
-
-#welcome-img {
-    right: 0;
-    width: 45%;
-    margin: 25px auto;
-}
-
-.welcome-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.welcome-button {
-    padding: 15px 20px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 16px;
-    background-color: white;
-}
-
-.welcome-join {
-    color: #5A5A5A;
-    font-weight: bold;
-}
-
-.welcome-sign-in {
-    color: #0073b1;
-    border: 1px solid #0073b1;
-    font-weight: bold;
-    width: 100px;
-}
-
-#welcome-slogan {
-    padding: 10px;
-    font-size: 42px;
-    color: #808080;
-    margin-bottom: 20px;
-}
-
-.welcome-header {
-    background-color: white;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.welcome-section {
-    text-align: left;
-    padding: 70px 30px;
-    font-weight: lighter;
-    display: flex;
-    justify-content: space-between;
-}
-
-.subsection {
-    padding: 20px;
-}
-
-.subsection:first-child {
-    flex: 4;  /* Takes up 1/3 */
-    margin-right: 10px;
-}
-
-.subsection:last-child {
-    flex: 6;  /* Takes up 2/3 */
-    margin-left: 10px;
-}
-
-#welcome-section-1 {
-    background-color: #D6D4D2;
-}
-
-#welcome-section-2, #welcome-section-5 {
-    background-color: white;
-}
-
-#welcome-section-3 {
-    background-color: #f6f0e8;
-}
-
-#welcome-section-4 {
-    background-color: #F5F5F5;
-}
-
-.welcome-section-title {
-    font-size: 38px;
-    color: #333333;
-    padding: 30px 0;
-}
-
-.welcome-section-info {
-    font-size: 20px;
-    color: #444444;
-}
-
 /* Navigation Pages */
-
-.navigation-page {
-    font-family: "Jost", sans-serif;
-}
 
 .header {
     display: flex;
@@ -323,14 +119,12 @@ hr {
 .main-h2 {
     font-size: 40px;
     margin-bottom: 40px;
-    font-family: "Frank Ruhl Libre", sans-serif;
     font-weight: 600;
 }
 
 .main-h3 {
     font-size: 25px;
     margin-bottom: 30px;
-    font-family: "Frank Ruhl Libre", sans-serif;
     font-weight: 600;
 }
 
@@ -364,7 +158,7 @@ hr {
     margin: auto;
 }
 
-.username, .password, .fullName {
+.fullName {
     width: 250px;
     height: 30px;
     border: 1px solid #D4D4D4;
@@ -428,7 +222,6 @@ hr {
 /* Help Center */
 
 #help-center-header {
-    font-family: "Jost", sans-serif;
     font-size: 17px;
     font-weight: 500;
     padding: 3px 16px;
@@ -460,7 +253,6 @@ hr {
     left: 400px;
     top: 100px;
     vertical-align: top;
-    font-family: "Jost", sans-serif;
     color: #414141;
 }
 
@@ -495,7 +287,6 @@ hr {
     min-width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    font-family: "Jost", sans-serif;
     font-weight: 300;
 }
 
@@ -504,7 +295,6 @@ hr {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    font-family: "Jost", sans-serif;
 }
 
 .subnav-content a:hover {
@@ -615,7 +405,6 @@ hr {
   padding: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   border: 1px solid #f0f0f0;
-  font-family: 'Helvetica', 'Arial', sans-serif;
   font-size: 14px;
   line-height: 20px;
   border-radius: 15px;
@@ -887,7 +676,6 @@ hr {
   padding: 10px 20px;             /* Padding */
   text-align: center;             /* Center text */
   font-size: 8px;                /* Font size */
-  font-family: 'Helvetica Neue', sans-serif; /* Font family */
   text-decoration: none;          /* No underline */
   border-radius: 5px;             /* Slightly rounded corners */
   transition: all 0.3s ease;      /* Transition for hover effect */
@@ -917,7 +705,6 @@ hr {
   border-radius: 12px;  /* Rounded corners */
   padding: 10px 20px;  /* Padding around text */
   font-size: 16px;  /* Text size */
-  font-family: 'Helvetica Neue', sans-serif;  /* Apple's default font */
   text-align: center;  /* Center-align text */
   cursor: pointer;  /* Hand cursor on hover */
   transition: background-color 0.3s ease, transform 0.3s ease;  /* Transition effects */

@@ -3,14 +3,12 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
-# Home page
+# Home page and user/admin stuff
 GET     /                           controllers.LandingController.showWelcomePage()
-
-# User/admin stuff
-GET     /users/login                controllers.UserController.showLoginForm()
-GET     /users/doLogin              controllers.UserController.processLoginAttempt()
-GET     /users/signUp               controllers.UserController.showSignUpForm()
-GET     /users/doSignUp             controllers.UserController.processSignUpAttempt()
+GET     /users/login                controllers.LandingController.showLoginForm()
+GET     /users/doLogin              controllers.LandingController.processLoginAttempt()
+GET     /users/signUp               controllers.LandingController.showSignUpForm()
+GET     /users/doSignUp             controllers.LandingController.processSignUpAttempt()
 
 # Home pages for authenticated users
 GET     /home                       controllers.HomeController.showHome()
