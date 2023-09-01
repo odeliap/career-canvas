@@ -79,6 +79,30 @@ class LandingController @Inject()(
     )
   }
 
+  def processWelcomeLoginAttempt: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
+    val errorFunction = { formWithErrors: Form[BaseUser] =>
+      // form validation/binding failed...
+      BadRequest(views.html.landing.welcomePage(formWithErrors, loginSubmitUrl))
+    }
+    val successFunction = { user: BaseUser =>
+      // form validation/binding succeeded ...
+      userService.lookupUser(user) match {
+        case Some(userId) =>
+          val fullName = userService.getUserName(userId).get
+          Redirect(routes.HomeController.showHome())
+            .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email, Global.SESSION_USER_FULL_NAME -> fullName)
+        case None =>
+          Redirect(routes.LandingController.showWelcomePage())
+            .flashing("error" -> "Invalid username/password.")
+      }
+    }
+    val formValidationResult: Form[BaseUser] = loginForm.bindFromRequest
+    formValidationResult.fold(
+      errorFunction,
+      successFunction
+    )
+  }
+
   def processLoginAttempt: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[BaseUser] =>
       // form validation/binding failed...
