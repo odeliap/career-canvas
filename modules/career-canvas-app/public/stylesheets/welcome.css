@@ -104,7 +104,7 @@
     color: #5A5A5A;
 }
 
-.join-now-button:hover {
+.join-now-button:hover, .welcome-join:hover, .username:hover, .password:hover {
     background-color: #F5F5F5;
 }
 
@@ -131,10 +131,6 @@
 .welcome-join {
     color: #5A5A5A;
     font-weight: bold;
-}
-
-.welcome-join:hover {
-    background-color: #F5F5F5;
 }
 
 .welcome-sign-in {
