@@ -86,10 +86,17 @@ class ProfileController @Inject()(
       }
   }
 
-  def deleteResume(version: Int): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
+  def deleteResume(version: Int): Action[AnyContent] = authenticatedUserAction { implicit request =>
     val userId = request.session.data(Global.SESSION_USER_ID)
     profileService.deleteResume(userId, version)
     Redirect(routes.ProfileController.showResumes())
+  }
+
+  def viewResume(version: Int): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
+    val userId = request.session.data(Global.SESSION_USER_ID)
+    val presignedUrl = profileService.getPresignedUrl(userId, version)
+    val resumeTitle = s"Version $version"
+    Ok(views.html.authenticated.user.profile.resumeView(resumeTitle, presignedUrl))
   }
 
 

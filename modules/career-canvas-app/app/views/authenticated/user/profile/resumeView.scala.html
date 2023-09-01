@@ -1,0 +1,12 @@
+@(
+resumeTitle: String,
+signedUrl: String
+)(implicit request: MessagesRequestHeader)
+
+@baseProfileView("Resume View") {
+    <h2>@resumeTitle</h2>
+    <embed src="@signedUrl" type="application/pdf" width="600" height="500" />
+    <a href="@signedUrl" download>
+        <button class="download-resume-button">Download</button>
+    </a>
+}

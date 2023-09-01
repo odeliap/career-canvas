@@ -33,11 +33,14 @@ GET     /calendar                   controllers.CalendarController.showHomeCalen
 
 # pages for profile actions
 GET     /users/editProfile          controllers.ProfileController.editProfile()
-GET     /users/logout               controllers.ProfileController.logout()
 GET     /users/doEditProfile        controllers.ProfileController.processEditProfileAttempt(userInfo: careercanvas.io.model.user.UserInfo)
+
 GET     /users/showResumes          controllers.ProfileController.showResumes()
 POST    /users/uploadResume         controllers.ProfileController.uploadResume()
 POST    /resumes/:version           controllers.ProfileController.deleteResume(version: Int)
+GET     /resume/:version            controllers.ProfileController.viewResume(version: Int)
+
+GET     /users/logout               controllers.ProfileController.logout()
 
 # pages for policies
 GET     /helpCenter/termsOfUse      controllers.PolicyController.showTermsOfUse()

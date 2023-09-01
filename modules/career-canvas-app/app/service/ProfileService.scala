@@ -56,6 +56,11 @@ class ProfileService @Inject()(
     storageService.deleteFile(resume.bucket, resume.prefix)
   }
 
+  def getPresignedUrl(userId: String, version: Int): String = {
+    val resume = resumeDao.getByVersion(userId.toLong, version).waitForResult
+    storageService.generateSignedUrl(resume.bucket, resume.prefix)
+  }
+
   private def resolveResumeUploadName(resume: MultipartFormData.FilePart[Files.TemporaryFile]): String = {
     val originalFileName = Paths.get(resume.filename).getFileName.toString
     val (name, extension) = originalFileName.lastIndexOf('.') match {

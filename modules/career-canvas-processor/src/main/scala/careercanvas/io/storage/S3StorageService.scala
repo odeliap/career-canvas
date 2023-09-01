@@ -5,8 +5,12 @@ import software.amazon.awssdk.services.s3.model._
 
 import java.io.{File, InputStream}
 import software.amazon.awssdk.core.sync.RequestBody
+import software.amazon.awssdk.services.s3.presigner.S3Presigner
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
 
-class S3StorageService(s3Client: S3Client) extends StorageService {
+import java.time.Duration
+
+class S3StorageService(s3Client: S3Client, presigner: S3Presigner) extends StorageService {
 
   override def getInputStream(bucket: String, key: String): InputStream = {
     val getObjectRequest = GetObjectRequest.builder()
@@ -30,6 +34,20 @@ class S3StorageService(s3Client: S3Client) extends StorageService {
       .key(key)
       .build()
     s3Client.deleteObject(deleteObjectRequest)
+  }
+
+  override def generateSignedUrl(bucket: String, key: String): String = {
+    val getObjectRequest = GetObjectRequest.builder()
+      .bucket(bucket)
+      .key(key)
+      .build()
+    val getObjectPresignRequest = GetObjectPresignRequest.builder()
+      .signatureDuration(Duration.ofHours(1))
+      .getObjectRequest(getObjectRequest)
+      .build()
+    val presignedGetObjectRequest = presigner.presignGetObject(getObjectPresignRequest)
+    val presignedUrl = presignedGetObjectRequest.url()
+    presignedUrl.toString
   }
 
 }

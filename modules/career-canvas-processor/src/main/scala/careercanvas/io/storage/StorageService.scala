@@ -10,4 +10,6 @@ trait StorageService {
 
   def deleteFile(bucket: String, key: String): Unit
 
+  def generateSignedUrl(bucket: String, key: String): String
+
 }

@@ -18,7 +18,7 @@ resumes: Seq[careercanvas.io.model.user.Resume]
             <h3>Version @resume.version</h3>
             <p>Name: @resume.name</p>
             <p>Upload Date: @resume.uploadDate.toString.split("\\.")(0)</p>
-            <button>View</button>
+            <a href="@routes.ProfileController.viewResume(resume.version)" id="view-resume-button">View</a>
 
             <form action="@routes.ProfileController.deleteResume(resume.version)" method="POST" id="delete-resume-form">
                 @helper.CSRF.formField

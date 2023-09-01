@@ -798,7 +798,7 @@ hr {
 }
 
 /* Button styling */
-.resume-tile button {
+.resume-tile button, .resume-tile a {
   padding: 0.5rem 1rem;
   background-color: #007bff;
   color: #fff;
@@ -835,4 +835,34 @@ hr {
   color: #ccc;                    /* Gray text */
   border: 1px solid #ccc;         /* Gray border */
   cursor: not-allowed;            /* No-click cursor */
+}
+
+#view-resume-button {
+    font-size: 10px;
+}
+
+/* Apple-style Download Resume button */
+.download-resume-button {
+  background-color: #007aff;  /* Blue background */
+  color: #ffffff;  /* White text */
+  border: none;  /* Remove default borders */
+  border-radius: 12px;  /* Rounded corners */
+  padding: 10px 20px;  /* Padding around text */
+  font-size: 16px;  /* Text size */
+  font-family: 'Helvetica Neue', sans-serif;  /* Apple's default font */
+  text-align: center;  /* Center-align text */
+  cursor: pointer;  /* Hand cursor on hover */
+  transition: background-color 0.3s ease, transform 0.3s ease;  /* Transition effects */
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Hover effects */
+.download-resume-button:hover {
+  background-color: #0056d6;  /* Slightly darker blue on hover */
+}
+
+/* Click effects */
+.download-resume-button:active {
+  transform: scale(0.95);  /* Slightly reduce size when clicked */
 }
