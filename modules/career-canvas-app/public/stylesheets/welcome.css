@@ -152,7 +152,7 @@
     margin-bottom: 20px;
 }
 
-.section {
+.section, #router {
     text-align: left;
     padding: 70px 30px;
     font-weight: lighter;
@@ -199,4 +199,41 @@
 .section-info {
     font-size: 20px;
     color: #444444;
+}
+
+#router {
+    background-color: #F5F5F5;
+}
+
+#router-header {
+    margin-right: 30px;
+}
+
+.router-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.router-section:first-child {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.router-section:last-child {
+    flex: 3;
+    margin-left: 30px;
+}
+
+.route-header {
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+    margin: 10px 0;
+}
+
+.route-field {
+    font-size: 13px;
+    font-weight: bold;
+    color: #5A5A5A;
 }

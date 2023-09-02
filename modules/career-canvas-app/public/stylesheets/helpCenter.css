@@ -1,0 +1,101 @@
+/* Help Center */
+
+#help-center-header {
+    font-size: 17px;
+    font-weight: 500;
+    padding: 3px 16px;
+    border-bottom: 1px solid #D4D4D4;
+    display: flex;
+    justify-content: left;
+}
+
+#help-center-icon {
+    width: 55px;
+    height: 55px;
+    padding-right: 6px;
+}
+
+.subheader {
+    color: #777777;
+}
+
+.split-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.split-page-content {
+    width: 55%;
+    height: 90%;
+    overflow: auto;
+    position: absolute;
+    left: 400px;
+    top: 100px;
+    vertical-align: top;
+    color: #414141;
+}
+
+.sidebar {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    padding-top: 15px;
+    padding-right: 20px;
+    background: white;
+    border-right: 1px solid #D4D4D4;
+}
+
+.subnav-item {
+    display: flex;
+    justify-content: left;
+}
+
+.subnav-btn {
+    padding: 15px;
+    font-size: 17px;
+    font-weight: 500;
+    display: block;
+    background: white;
+    border: none;
+}
+
+.subnav-content {
+    display: none;
+    position: absolute;
+    background: white;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    font-weight: 300;
+}
+
+.subnav-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.subnav-content a:hover {
+    background-color: #ECECEC;
+}
+
+.subnav:hover .subnav-content {
+    display: block;
+}
+
+.subnav:hover, .subnav:hover .subnav-btn {
+    background-color: #DEDEDE;
+}
+
+.mini-button {
+    color: #26abff;
+    font-size: 12px;
+    border: none;
+    background: white;
+    padding: 0 0 20px 0;
+}
+
+.mini-button:hover {
+    text-decoration: underline;
+}

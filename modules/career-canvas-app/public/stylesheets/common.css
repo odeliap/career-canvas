@@ -1,6 +1,7 @@
 /* Standard */
 html, body {
     margin: 0;
+    padding: 0;
     font-family: 'Nanum Gothic', sans-serif;
 }
 
@@ -55,8 +56,8 @@ hr {
 }
 
 .logo1 {
-    height: 150px;
-    width: 150px;
+    height: 75px;
+    width: 75px;
 }
 
 .logo2 {

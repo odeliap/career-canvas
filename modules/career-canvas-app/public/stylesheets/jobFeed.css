@@ -1,0 +1,189 @@
+/* Job Feed Pages */
+
+.add-job-page {
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
+}
+
+.add-job-button a, #final-save-job-button, #remove-job-description-button {
+    display: inline-block;
+    text-decoration: none;
+    color: #333; /* Change color to dark when background is transparent */
+    background: transparent; /* Make background transparent */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1.5em;
+    transition: background 0.3s;
+}
+
+.job-url-input button {
+    background-image: linear-gradient(to right, #FFB347, #FFCC33);
+    color: white;
+    border: none;
+    padding: 5px 10px; /* Smaller padding for a smaller button */
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.add-job-button a:hover, #final-save-job-button, #remove-job-description-button {
+    background-image: linear-gradient(to right, #FFCC33, #FFB347);
+}
+
+#final-save-job-button {
+    border: none;
+}
+
+#remove-job-description-button {
+    font-weight: 500;
+}
+
+.job-url-input {
+    padding: 20px 0;
+    border-top: 1px solid #e0e0e0;
+}
+
+.job-url-input div {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.job-url-input button:hover {
+    background-image: linear-gradient(to right, #FFCC33, #FFB347);
+}
+
+#job-post-url-form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#job-post-url-form {
+    width: 90%;
+}
+
+.job-tiles {
+    margin-top: 50px;
+    margin-bottom: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.job-tile {
+  background-color: #fff;
+  width: 210px;
+  height: 200px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f0f0f0;
+  font-size: 14px;
+  line-height: 20px;
+  border-radius: 15px;
+  position: relative;
+}
+
+.job-tile-tab {
+  background-image: linear-gradient(to right, #FFCC33, #FFB347); /* this is a similar color to Apple's highlight color */
+  color: #fff; /* white text */
+  padding: 5px;
+  width: 200px;
+  font-size: 10px;
+  text-align: center;
+  border-radius: 2px;
+  position: absolute;
+  top: -10px; /* this positions the tab at the top of the note */
+  left: 20px; /* this positions the tab to the left */
+}
+
+@media (max-width: 600px) {
+    .box {
+        flex: 0 1 100%;
+    }
+}
+
+#job-description-form {
+    font-size: 12px;
+}
+
+#job-description-form-first-row,
+#job-description-form-second-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-right: 40px;
+}
+
+#job-description-company,
+#job-description-title,
+#job-description-status,
+#job-description-interview-round,
+#job-description-notes {
+    flex: 1;
+    margin-right: 10px;
+}
+
+#job-description-company,
+#job-description-title {
+    width: 96%;
+    height: 20px;
+    font-size: 12px;
+}
+
+#job-description-notes {
+    width: 94%;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+#job-description-interview-round {
+    width: 40px;
+}
+
+#sort-by-form {
+    display: block;
+    margin-left: auto;
+    font-size: 14px;
+    border: none;
+}
+
+#job-posting-link {
+    color: #808080;
+}
+
+#cover-letter-button {
+    width: 94%;
+    height: 15px;
+    font-size: 14px;
+    background-image: linear-gradient(to right, #FFCC33, #FFB347);
+    color: #fff;
+    padding: 20px;
+    border: none;
+    border-radius: 5px;
+    display: block;
+    text-align: center;
+    margin: 50px auto;
+}
+
+#cover-letter-subheader {
+    margin-top: 50px;
+}
+
+#cover-letter-content {
+    width: 96%;
+    height: 475px; /* Adjust based on desired height */
+    resize: none; /* Prevents the user from resizing the textarea */
+    border: 1px solid #ccc;
+    padding: 2px 4px;
+    box-sizing: border-box;
+    overflow: auto; /* Hide the overflow to give input-feel */
+    white-space: pre-wrap; /* Enables text wrapping */
+    word-wrap: break-word;
+    font-family: inherit; /* Make it look like a standard input text */
+    font-size: inherit;
+}

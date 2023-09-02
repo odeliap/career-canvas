@@ -1,0 +1,105 @@
+/* Profile Pages */
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.left-panel {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-section {
+    width: 75%;
+    height: 96.5%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 20px;
+    background-color: white;
+}
+
+.top-part {
+    height: 33.333%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 20px 20px 10px; 20px;
+    background-color: white;
+}
+
+.bottom-part {
+    height: 66.667%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 10px 20px 10px; 20px;
+    background-color: white;
+}
+
+.settings-content {
+    padding: 20px;
+}
+
+.settings-sub-content {
+    font-size: 12px;
+}
+
+.settings-opts {
+    font-size: 14px;
+    padding: 10px 0;
+}
+
+.settings-opts:hover {
+    font-weight: bold;
+}
+
+.edit-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px 30px 30px 30px;
+}
+
+.edit-key {
+    font-weight: bold;
+    width: 25%; /* 1/5 of the width */
+    text-align: right;
+    padding-right: 30px;
+    margin-top: 20px;
+}
+
+.edit-value {
+    width: 75%; /* 4/5 of the width */
+    text-align: left;
+    padding-left; 30px;
+}
+
+.edit-value-field {
+    width: 70%;
+    height: 20px;
+}
+
+#edit-profile-header {
+    padding-bottom: 35px;
+}
+
+.profile-edit-submit-btn {
+    background: #26abff;
+    width: 76px;
+    height: 32px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 40px;
+}
+
+.settings-sidebar-opts {
+    display: grid;
+}

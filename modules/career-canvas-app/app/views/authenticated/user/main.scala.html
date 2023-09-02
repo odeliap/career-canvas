@@ -1,32 +1,50 @@
 @(title: String)(content: Html)
 
-@base(title) {
-    <div class="navigation-page">
-        @navigationHeader {
-            <div class="navbar">
-                <div class="profile-dropdown">
-                    <button class="profile-dropbtn">
-                        <img src="@routes.Assets.versioned("images/help-center/user.svg")" class="profile">
-                        Profile
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="profile-dropdown-content">
-                        <a href="@routes.ProfileController.editProfile()">Edit Profile</a>
-                        <a href="@routes.ProfileController.logout()">Log Out</a>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/jobFeed.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/profile.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/resume.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/logos/logo1.png")">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    </head>
+    <body>
+            <div class="intro">
+                <div class="header">
+                    <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
+                    <div class="navbar">
+                        <a class="navigation-el" href="@routes.HomeController.showHome()">Home</a>
+                        <a class="navigation-el" href="@routes.JobFeedController.showJobFeedHome()">Job Feed</a>
+                        <a class="navigation-el" href="@routes.JobStatisticsController.showJobStats()">Search Statistics</a>
+                        <div class="profile-dropdown">
+                            <button class="profile-dropbtn">
+                                Profile
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="profile-dropdown-content">
+                                <a href="@routes.ProfileController.editProfile()">Edit Profile</a>
+                                <a href="@routes.ProfileController.logout()">Log Out</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        } {
-            <li><a class="navigation-el" href="@routes.HomeController.showHome()">Home</a></li>
-            <li><a class="navigation-el" href="@routes.JobFeedController.showJobFeedHome()">Job Feed</a></li>
-            <li><a class="navigation-el" href="@routes.JobStatisticsController.showJobStats()">Search Statistics</a></li>
-        }
-        <div class="main-content">
-            <div class="input-content">
-                @* Content goes here *@
-                @content
+            <div class="content">
+                <div class="main-content">
+                    <div class="input-content">
+                        @* Content goes here *@
+                        @content
+                    </div>
+                    @footer()
+                </div>
             </div>
-            @footer()
-        </div>
-    </div>
-}
+        <script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
+    </body>
+</html>

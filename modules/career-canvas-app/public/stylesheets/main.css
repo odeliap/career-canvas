@@ -1,10 +1,15 @@
-/* Navbar container */
-.navbar {
-  overflow: hidden;
-  margin: 50px 50px 0 0;
+.header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    background: white;
 }
 
-/* Links inside the navbar */
+.navbar {
+  overflow: hidden;
+  margin: 10px 50px 0 0;
+}
+
 .navbar a {
   float: left;
   font-size: 16px;
@@ -13,18 +18,27 @@
   text-decoration: none;
 }
 
-/* The dropdown container */
+.navigation-el {
+    font-size: 10px;
+    padding: 10px;
+    border: none;
+}
+
+.navigation-el:hover, .profile-dropdown:hover .profile-dropbtn {
+    color: black;
+    font-weight: bold;
+}
+
 .profile-dropdown {
   float: left;
   overflow: hidden;
 }
 
-/* Dropdown button */
 .profile-dropdown .profile-dropbtn {
   font-size: 16px;
   border: none;
   outline: none;
-  padding: 14px 16px;
+  padding: 14px 15.5px;
   background-color: inherit;
   font-family: inherit; /* Important for vertical align on mobile phones */
   margin: 0; /* Important for vertical align on mobile phones */
@@ -36,22 +50,16 @@
   align-items: center;
 }
 
-/* Add a red background color to navbar links on hover */
-.navbar a:hover, .profile-dropdown:hover .profile-dropbtn {
-  background-color: #D3D3D3;
-}
-
-/* Dropdown content (hidden by default) */
 .profile-dropdown-content {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
   min-width: 113px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 10px;
   z-index: 1;
 }
 
-/* Links inside the dropdown */
 .profile-dropdown-content a {
   float: none;
   color: black;
@@ -61,59 +69,33 @@
   text-align: left;
 }
 
-/* Add a grey background color to dropdown links on hover */
 .profile-dropdown-content a:hover {
   background-color: #ddd;
 }
 
-/* Show the dropdown menu on hover */
 .profile-dropdown:hover .profile-dropdown-content {
   display: block;
 }
 
 /* Navigation Pages */
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    background: white;
-}
-
-.navigation-bar {
-    background: #ECECEC;
-    color: #2B2B2B;
-    height: 50px;
+.content {
+    background-color: #FAF5EF;
+    padding-top: 30px;
     margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    list-style-type: none;
 }
 
-.navigation-el {
-    text-transform: uppercase;
-    font-size: 10px;
-    padding: 10px;
-    border: none;
-    background: #ECECEC;
-}
-
-.navigation-el:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-}
-
-.main-content, #about {
-    margin: 50px auto;
+.main-content {
+    margin-right: auto;
+    margin-left: auto;
     width: 70%;
 }
 
-.input-content, #about {
+.input-content {
     padding-bottom: 20px;
     font-size: 16px;
     font-weight: 300;
+    margin-top: 20px;
 }
 
 .main-h2 {
@@ -126,507 +108,4 @@
     font-size: 25px;
     margin-bottom: 30px;
     font-weight: 600;
-}
-
-/* Help Center */
-
-#help-center-header {
-    font-size: 17px;
-    font-weight: 500;
-    padding: 3px 16px;
-    border-bottom: 1px solid #D4D4D4;
-    display: flex;
-    justify-content: left;
-}
-
-#help-center-icon {
-    width: 55px;
-    height: 55px;
-    padding-right: 6px;
-}
-
-.subheader {
-    color: #777777;
-}
-
-.split-body {
-    display: flex;
-    flex-direction: column;
-}
-
-.split-page-content {
-    width: 55%;
-    height: 90%;
-    overflow: auto;
-    position: absolute;
-    left: 400px;
-    top: 100px;
-    vertical-align: top;
-    color: #414141;
-}
-
-.sidebar {
-    height: 100%;
-    position: absolute;
-    left: 0;
-    padding-top: 15px;
-    padding-right: 20px;
-    background: white;
-    border-right: 1px solid #D4D4D4;
-}
-
-.subnav-item {
-    display: flex;
-    justify-content: left;
-}
-
-.subnav-btn {
-    padding: 15px;
-    font-size: 17px;
-    font-weight: 500;
-    display: block;
-    background: white;
-    border: none;
-}
-
-.subnav-content {
-    display: none;
-    position: absolute;
-    background: white;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    font-weight: 300;
-}
-
-.subnav-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.subnav-content a:hover {
-    background-color: #ECECEC;
-}
-
-.subnav:hover .subnav-content {
-    display: block;
-}
-
-.subnav:hover, .subnav:hover .subnav-btn {
-    background-color: #DEDEDE;
-}
-
-.mini-button {
-    color: #26abff;
-    font-size: 12px;
-    border: none;
-    background: white;
-    padding: 0 0 20px 0;
-}
-
-.mini-button:hover {
-    text-decoration: underline;
-}
-
-/* Job Feed Pages */
-
-.add-job-page {
-    max-width: 100%;
-    margin: 0 auto;
-    background-color: #FFFFFF;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
-}
-
-.add-job-button a, #final-save-job-button, #remove-job-description-button {
-    display: inline-block;
-    text-decoration: none;
-    color: #333; /* Change color to dark when background is transparent */
-    background: transparent; /* Make background transparent */
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 1.5em;
-    transition: background 0.3s;
-}
-
-.job-url-input button {
-    background-image: linear-gradient(to right, #FFB347, #FFCC33);
-    color: white;
-    border: none;
-    padding: 5px 10px; /* Smaller padding for a smaller button */
-    border-radius: 5px;
-    margin-top: 10px;
-    transition: background 0.3s;
-}
-
-.add-job-button a:hover, #final-save-job-button, #remove-job-description-button {
-    background-image: linear-gradient(to right, #FFCC33, #FFB347);
-}
-
-#final-save-job-button {
-    border: none;
-}
-
-#remove-job-description-button {
-    font-weight: 500;
-}
-
-.job-url-input {
-    padding: 20px 0;
-    border-top: 1px solid #e0e0e0;
-}
-
-.job-url-input div {
-    color: red;
-    margin-bottom: 10px;
-}
-
-.job-url-input button:hover {
-    background-image: linear-gradient(to right, #FFCC33, #FFB347);
-}
-
-#job-post-url-form input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-#job-post-url-form {
-    width: 90%;
-}
-
-.job-tiles {
-    margin-top: 50px;
-    margin-bottom: 100px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.job-tile {
-  background-color: #fff;
-  width: 210px;
-  height: 200px;
-  padding: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  border: 1px solid #f0f0f0;
-  font-size: 14px;
-  line-height: 20px;
-  border-radius: 15px;
-  position: relative;
-}
-
-.job-tile-tab {
-  background-image: linear-gradient(to right, #FFCC33, #FFB347); /* this is a similar color to Apple's highlight color */
-  color: #fff; /* white text */
-  padding: 5px;
-  width: 200px;
-  font-size: 10px;
-  text-align: center;
-  border-radius: 2px;
-  position: absolute;
-  top: -10px; /* this positions the tab at the top of the note */
-  left: 20px; /* this positions the tab to the left */
-}
-
-@media (max-width: 600px) {
-    .box {
-        flex: 0 1 100%;
-    }
-}
-
-#job-description-form {
-    font-size: 12px;
-}
-
-#job-description-form-first-row,
-#job-description-form-second-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    margin-right: 40px;
-}
-
-#job-description-company,
-#job-description-title,
-#job-description-status,
-#job-description-interview-round,
-#job-description-notes {
-    flex: 1;
-    margin-right: 10px;
-}
-
-#job-description-company,
-#job-description-title {
-    width: 96%;
-    height: 20px;
-    font-size: 12px;
-}
-
-#job-description-notes {
-    width: 94%;
-    height: 150px;
-    margin-bottom: 20px;
-}
-
-#job-description-interview-round {
-    width: 40px;
-}
-
-#sort-by-form {
-    display: block;
-    margin-left: auto;
-    font-size: 14px;
-    border: none;
-}
-
-#job-posting-link {
-    color: #808080;
-}
-
-#cover-letter-button {
-    width: 94%;
-    height: 15px;
-    font-size: 14px;
-    background-image: linear-gradient(to right, #FFCC33, #FFB347);
-    color: #fff;
-    padding: 20px;
-    border: none;
-    border-radius: 5px;
-    display: block;
-    text-align: center;
-    margin: 50px auto;
-}
-
-#cover-letter-subheader {
-    margin-top: 50px;
-}
-
-#cover-letter-content {
-    width: 96%;
-    height: 475px; /* Adjust based on desired height */
-    resize: none; /* Prevents the user from resizing the textarea */
-    border: 1px solid #ccc;
-    padding: 2px 4px;
-    box-sizing: border-box;
-    overflow: auto; /* Hide the overflow to give input-feel */
-    white-space: pre-wrap; /* Enables text wrapping */
-    word-wrap: break-word;
-    font-family: inherit; /* Make it look like a standard input text */
-    font-size: inherit;
-}
-
-/* Profile Pages */
-
-/* Main Container */
-.container {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    border: 1px solid #D3D3D3;
-}
-
-/* Left Side Panel */
-.left-panel {
-    width: 25%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Right Section */
-.right-section {
-    width: 75%;
-    height: 100%;
-    border-left: 1px solid #D3D3D3;
-}
-
-/* Top and Bottom parts of Left Panel */
-.top-part {
-    height: 33.333%;
-    border-bottom: 1px solid #D3D3D3;
-}
-
-.bottom-part {
-    height: 66.667%;
-}
-
-.settings-content {
-    padding: 20px;
-}
-
-.settings-sub-content {
-    font-size: 12px;
-}
-
-.settings-opts {
-    font-size: 14px;
-    padding: 10px 0;
-}
-
-.settings-opts:hover {
-    font-weight: bold;
-}
-
-.edit-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    padding: 5px 30px 30px 30px;
-}
-
-.edit-key {
-    font-weight: bold;
-    width: 25%; /* 1/5 of the width */
-    text-align: right;
-    padding-right: 30px;
-    margin-top: 20px;
-}
-
-.edit-value {
-    width: 75%; /* 4/5 of the width */
-    text-align: left;
-    padding-left; 30px;
-}
-
-.edit-value-field {
-    width: 70%;
-    height: 20px;
-}
-
-#edit-profile-header {
-    padding-bottom: 35px;
-}
-
-.profile-edit-submit-btn {
-    background: #26abff;
-    width: 76px;
-    height: 32px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 13px;
-    font-weight: bold;
-    margin-left: 40px;
-}
-
-.settings-sidebar-opts {
-    display: grid;
-}
-
-/* Resumes */
-
-/* Container for all resume tiles */
-.resume-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  margin: 2rem 0;
-}
-
-/* Individual resume tile styling */
-.resume-tile {
-  width: 80%;
-  max-width: 400px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  text-align: center;
-  transition: transform .3s ease, box-shadow .3s ease;
-}
-
-/* Hover effect */
-.resume-tile:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* Header and text inside the tile */
-.resume-tile h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.resume-tile p {
-  font-size: 1rem;
-  color: #666;
-  margin-bottom: 1rem;
-}
-
-/* Button styling */
-.resume-tile button, .resume-tile a {
-  padding: 0.5rem 1rem;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.resume-tile button:hover {
-  background-color: #0056b3;
-}
-
-#delete-resume-button {
-  background-color: transparent;  /* No background */
-  color: #000;                    /* Black text */
-  border: 1px solid #000;         /* Black border */
-  margin-top: 10px;
-  padding: 10px 20px;             /* Padding */
-  text-align: center;             /* Center text */
-  font-size: 8px;                /* Font size */
-  text-decoration: none;          /* No underline */
-  border-radius: 5px;             /* Slightly rounded corners */
-  transition: all 0.3s ease;      /* Transition for hover effect */
-}
-
-#delete-resume-button:hover {
-  background-color: #000;  /* Black background */
-  color: #fff;             /* White text */
-}
-
-#delete-resume-button:disabled {
-  background-color: transparent; /* No background */
-  color: #ccc;                    /* Gray text */
-  border: 1px solid #ccc;         /* Gray border */
-  cursor: not-allowed;            /* No-click cursor */
-}
-
-#view-resume-button {
-    font-size: 10px;
-}
-
-/* Apple-style Download Resume button */
-.download-resume-button {
-  background-color: #007aff;  /* Blue background */
-  color: #ffffff;  /* White text */
-  border: none;  /* Remove default borders */
-  border-radius: 12px;  /* Rounded corners */
-  padding: 10px 20px;  /* Padding around text */
-  font-size: 16px;  /* Text size */
-  text-align: center;  /* Center-align text */
-  cursor: pointer;  /* Hand cursor on hover */
-  transition: background-color 0.3s ease, transform 0.3s ease;  /* Transition effects */
-  margin-top: 20px;
-  width: 100%;
-}
-
-/* Hover effects */
-.download-resume-button:hover {
-  background-color: #0056d6;  /* Slightly darker blue on hover */
-}
-
-/* Click effects */
-.download-resume-button:active {
-  transform: scale(0.95);  /* Slightly reduce size when clicked */
 }

@@ -1,0 +1,101 @@
+/* Resumes */
+
+.resume-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.resume-tile {
+  width: 80%;
+  max-width: 400px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-align: center;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.resume-tile:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.resume-tile h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.resume-tile p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.resume-tile button, .resume-tile a {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.resume-tile button:hover {
+  background-color: #0056b3;
+}
+
+#delete-resume-button {
+  background-color: transparent;  /* No background */
+  color: #000;                    /* Black text */
+  border: 1px solid #000;         /* Black border */
+  margin-top: 10px;
+  padding: 10px 20px;             /* Padding */
+  text-align: center;             /* Center text */
+  font-size: 8px;                /* Font size */
+  text-decoration: none;          /* No underline */
+  border-radius: 5px;             /* Slightly rounded corners */
+  transition: all 0.3s ease;      /* Transition for hover effect */
+}
+
+#delete-resume-button:hover {
+  background-color: #000;  /* Black background */
+  color: #fff;             /* White text */
+}
+
+#delete-resume-button:disabled {
+  background-color: transparent; /* No background */
+  color: #ccc;                    /* Gray text */
+  border: 1px solid #ccc;         /* Gray border */
+  cursor: not-allowed;            /* No-click cursor */
+}
+
+#view-resume-button {
+    font-size: 10px;
+}
+
+.download-resume-button {
+  background-color: #007aff;  /* Blue background */
+  color: #ffffff;  /* White text */
+  border: none;  /* Remove default borders */
+  border-radius: 12px;  /* Rounded corners */
+  padding: 10px 20px;  /* Padding around text */
+  font-size: 16px;  /* Text size */
+  text-align: center;  /* Center-align text */
+  cursor: pointer;  /* Hand cursor on hover */
+  transition: background-color 0.3s ease, transform 0.3s ease;  /* Transition effects */
+  margin-top: 20px;
+  width: 100%;
+}
+
+.download-resume-button:hover {
+  background-color: #0056d6;  /* Slightly darker blue on hover */
+}
+
+.download-resume-button:active {
+  transform: scale(0.95);  /* Slightly reduce size when clicked */
+}
