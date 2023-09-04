@@ -10,10 +10,7 @@ GET     /users/doLogin              controllers.LandingController.processLoginAt
 GET     /users/signUp               controllers.LandingController.showSignUpForm()
 GET     /users/doSignUp             controllers.LandingController.processSignUpAttempt()
 
-# Home pages for authenticated users
-GET     /home                       controllers.HomeController.showHome()
-
-# pages for job feed
+# Pages for job feed
 GET     /feed                       controllers.JobFeedController.showJobFeedHome()
 GET     /feed/doAddJobPost          controllers.JobFeedController.processJobPost()
 GET     /feed/addJobDetails         controllers.JobFeedController.showAddJobDetailsForm(baseJobInfo: careercanvas.io.model.jobfeed.BaseJobInfo)
@@ -22,10 +19,10 @@ GET     /feed/removeJobDetails      controllers.JobFeedController.removeJobDetai
 GET     /feed/job                   controllers.JobFeedController.showJobView(jobInfo: careercanvas.io.model.jobfeed.JobInfo)
 GET     /feed/job/coverLetter       controllers.JobFeedController.generateCoverLetter(jobInfo: careercanvas.io.model.jobfeed.JobInfo)
 
-# pages for job statistics
+# Pages for job statistics
 GET     /jobStats                   controllers.JobStatisticsController.showJobStats()
 
-# pages for profile actions
+# Pages for profile actions
 GET     /users/editProfile          controllers.ProfileController.editProfile()
 GET     /users/doEditProfile        controllers.ProfileController.processEditProfileAttempt(userInfo: careercanvas.io.model.user.UserInfo)
 
@@ -36,7 +33,7 @@ GET     /resume/:version            controllers.ProfileController.viewResume(ver
 
 GET     /users/logout               controllers.ProfileController.logout()
 
-# pages for policies
+# Pages for policies
 GET     /helpCenter/termsOfUse      controllers.PolicyController.showTermsOfUse()
 GET     /helpCenter/privacyPolicy   controllers.PolicyController.showPrivacyPolicy()
 GET     /helpCenter/cookiesPolicy   controllers.PolicyController.showCookiesPolicy()
