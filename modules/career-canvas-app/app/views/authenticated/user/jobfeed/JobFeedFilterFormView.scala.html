@@ -37,11 +37,13 @@ jobInfos: Seq[JobInfo]
                 </div>
                 <div class="metadata-fields">
                     <div class="metadata">
+                        <div class="metadata-tag" style="background-color: @utils.ColorUtils.jobStatusToColor(jobInfo.status);"></div>
                         <img src="@routes.Assets.versioned("images/jobfeed/tile/status/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
                         <p class="meta-title">Status:</p>
                         <p class="meta-content">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</p>
                     </div>
                     <div class="metadata">
+                        <div class="metadata-tag" style="background-color: @utils.ColorUtils.localDateTimeToColor(jobInfo.lastUpdate.toLocalDateTime);"></div>
                         <img src="@routes.Assets.versioned("images/jobfeed.tile/calendar.png")" class="metadata-icon">
                         <p class="meta-title">Last Update:</p>
                         <p class="meta-content">@jobInfo.lastUpdate.toLocalDateTime.toLocalDate.toString</p>
