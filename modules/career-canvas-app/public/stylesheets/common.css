@@ -75,6 +75,17 @@ li {
     text-decoration: underline;
 }
 
+/* Toggle Button */
+.toggle-button {
+    cursor: pointer;
+    user-select: none;
+}
+
+.collapsible-content {
+    display: block;
+    overflow: hidden;
+}
+
 /* Flash Messages */
 .success-flash {
     color: green;

@@ -2,8 +2,32 @@
 
 @BaseJobInformationView(jobInfo) {
     <div id="cover-letter">
-        <h3 id="cover-letter-subheader">Cover Letter</h3>
-        <textarea id="cover-letter-content">@coverLetter.content</textarea>
-        <a id="save-cover-letter-button" href="#">Save</a>
+        <div id="cover-letter-header">
+            <h3 id="cover-letter-subheader">Cover Letter</h3>
+            <div class="toggle-button active">
+                <span class="caret">&#9660;</span>
+            </div>
+        </div>
+        <div class="collapsible-content">
+            <textarea id="cover-letter-content">@coverLetter.content</textarea>
+            <a id="save-cover-letter-button" href="#">Save</a>
+        </div>
     </div>
+    <script>
+        const toggleButton = document.querySelector('.toggle-button');
+        const collapsibleContent = document.querySelector('.collapsible-content');
+        const caret = document.querySelector('.caret');
+
+        toggleButton.addEventListener('click', function() {
+            this.classList.toggle('active');
+
+            if (collapsibleContent.style.display === 'none' || collapsibleContent.style.display === '') {
+                collapsibleContent.style.display = 'block';
+                caret.innerHTML = '&#9660;'; // down-pointing caret
+            } else {
+                collapsibleContent.style.display = 'none';
+                caret.innerHTML = '&#9654;'; // right-pointing caret
+            }
+        });
+    </script>
 }

@@ -330,6 +330,12 @@
     padding: 20px;
 }
 
+#cover-letter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 #cover-letter-subheader {
     margin: 20px;
     font-size: 24px;
@@ -350,4 +356,3 @@
     border-radius: 5px;
     border: 1px solid #D3D3D3;
 }
-
