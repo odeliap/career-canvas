@@ -7,14 +7,14 @@ import play.api.mvc._
 class PolicyController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
   def showTermsOfUse(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.help.center.termsOfUse())
+    Ok(views.html.help.center.HelpCenterTermsOfUseView())
   }
 
   def showPrivacyPolicy(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.help.center.privacyPolicy())
+    Ok(views.html.help.center.HelpCenterPrivacyPolicyView())
   }
 
   def showCookiesPolicy(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.help.center.cookiesPolicy())
+    Ok(views.html.help.center.HelpCenterCookiesPolicyView())
   }
 }

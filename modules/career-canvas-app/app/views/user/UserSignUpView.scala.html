@@ -1,18 +1,18 @@
 @(
-form: Form[careercanvas.io.model.user.BaseUser],
+form: Form[careercanvas.io.model.user.User],
 postUrl: Call
 )(implicit request: MessagesRequestHeader)
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <title>Sign Up | Career Canvas</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/user/loginSignUp.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">
-    </head>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">    </head>
     <body>
         <div class="user-login-signup">
             <img src="@routes.Assets.versioned("images/logos/logo2.png")" class="logo2">
-            <p class="slogan">Simplify the job search.</p>
+            <p class="slogan">Sign up to simplify the job search.</p>
             <hr class="login-signup-div">
             <div class="user-login-signup-form">
                 @request.flash.data.map{ case (name, value) =>
@@ -27,11 +27,11 @@ postUrl: Call
 
                 @* Global errors are not tied to any particular form field *@
                 @if(form.hasGlobalErrors) {
-                @form.globalErrors.map { error: FormError =>
-                <div>
-                    Error: @error.key: @error.message
-                </div>
-                }
+                    @form.globalErrors.map { error: FormError =>
+                        <div>
+                            Error: @error.key: @error.message
+                        </div>
+                    }
                 }
 
                 @helper.form(postUrl, 'class -> "user-login-signup-form-fields") {
@@ -39,33 +39,41 @@ postUrl: Call
                 @helper.CSRF.formField
 
                 @helper.inputText(
-                form("username"),
-                '_label -> "",
-                'placeholder -> "Email",
-                'class -> "username",
-                'size -> 60,
-                '_showConstraints -> false
+                    form("fullName"),
+                    '_label -> "",
+                    'placeholder -> "Full name",
+                    'class -> "fullName",
+                    'size -> 60,
+                    '_showConstraints -> false
+                )
+
+                @helper.inputText(
+                    form("username"),
+                    '_label -> "",
+                    'placeholder -> "Email",
+                    'class -> "username",
+                    'size -> 60,
+                    '_showConstraints -> false
                 )
 
                 @helper.inputPassword(
-                form("password"),
-                '_label -> "",
-                'placeholder -> "Password",
-                'class -> "password",
-                'size -> 60,
-                '_showConstraints -> false
+                    form("password"),
+                    '_label -> "",
+                    'placeholder -> "Password",
+                    'class -> "password",
+                    'size -> 60,
+                    '_showConstraints -> false
                 )
 
-                <button class="login-signup-btn">Login</button>
+                <button class="login-signup-btn">Sign up</button>
                 }
 
             </div>
             <hr class="login-signup-div">
-            <a href="" class="forgot-password">Forgot Password?</a>
             <p class="terms-note">By signing up, you agree to our <a href="@routes.PolicyController.showTermsOfUse()">Terms</a>, <a href="@routes.PolicyController.showPrivacyPolicy()">Privacy Policy</a> and <a href="@routes.PolicyController.showCookiesPolicy">Cookies Policy</a>.</p>
         </div>
         <div class="switch-up">
-            <p class="switch-up-txt">Don't have an account? <a href="@routes.LandingController.showSignUpForm()" class="switch-up-btn">Sign up</a></p>
+            <p class="switch-up-txt">Have an account? <a href="@routes.LandingController.showLoginForm()" class="switch-up-btn">Log in</a></p>
         </div>
     </body>
 </html>

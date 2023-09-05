@@ -1,5 +1,6 @@
 /* Help Center */
 
+/* Header */
 #help-center-header {
     font-size: 17px;
     font-weight: 500;
@@ -7,6 +8,7 @@
     border-bottom: 1px solid #D4D4D4;
     display: flex;
     justify-content: left;
+    background-color: white;
 }
 
 #help-center-icon {
@@ -19,11 +21,14 @@
     color: #777777;
 }
 
+/* Body Layout */
 .split-body {
     display: flex;
     flex-direction: column;
+    background-color: white;
 }
 
+/* Page Content */
 .split-page-content {
     width: 55%;
     height: 90%;
@@ -35,6 +40,7 @@
     color: #414141;
 }
 
+/* Sidebar */
 .sidebar {
     height: 100%;
     position: absolute;
@@ -45,6 +51,7 @@
     border-right: 1px solid #D4D4D4;
 }
 
+/* Subnav */
 .subnav-item {
     display: flex;
     justify-content: left;
@@ -84,16 +91,18 @@
     display: block;
 }
 
-.subnav:hover, .subnav:hover .subnav-btn {
-    background-color: #DEDEDE;
-}
-
+/* Mini Button */
 .mini-button {
     color: #26abff;
     font-size: 12px;
     border: none;
-    background: white;
+    background-color: inherit;
     padding: 0 0 20px 0;
+}
+
+/* Hover Effects */
+.subnav:hover, .subnav:hover .subnav-btn {
+    background-color: #DEDEDE;
 }
 
 .mini-button:hover {

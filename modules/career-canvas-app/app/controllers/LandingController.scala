@@ -45,21 +45,21 @@ class LandingController @Inject()(
   private val signUpUrl = routes.LandingController.processSignUpAttempt()
 
   def showWelcomePage(): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.landing.welcomePage(loginForm, loginSubmitUrl))
+    Ok(views.html.landing.WelcomeLandingView(loginForm, loginSubmitUrl))
   }
 
   def showSignUpForm: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.user.signUp(signUpForm, signUpUrl))
+    Ok(views.html.user.UserSignUpView(signUpForm, signUpUrl))
   }
 
   def showLoginForm: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
-    Ok(views.html.user.userLogin(loginForm, loginSubmitUrl))
+    Ok(views.html.user.UserLoginView(loginForm, loginSubmitUrl))
   }
 
   def processSignUpAttempt: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[User] =>
       // form validation/binding failed...
-      BadRequest(views.html.user.signUp(formWithErrors, loginSubmitUrl))
+      BadRequest(views.html.user.UserSignUpView(formWithErrors, loginSubmitUrl))
     }
     val successFunction = { user: User =>
       userService.attemptUserCreation(user) match {
@@ -82,7 +82,7 @@ class LandingController @Inject()(
   def processLoginAttempt: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[BaseUser] =>
       // form validation/binding failed...
-      BadRequest(views.html.user.userLogin(formWithErrors, loginSubmitUrl))
+      BadRequest(views.html.user.UserLoginView(formWithErrors, loginSubmitUrl))
     }
     val successFunction = { user: BaseUser =>
       // form validation/binding succeeded ...

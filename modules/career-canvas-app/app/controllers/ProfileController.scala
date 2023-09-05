@@ -40,13 +40,13 @@ class ProfileController @Inject()(
   def editProfile(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = request.session.data(Global.SESSION_USER_ID)
     val userInfo = profileService.getUserInfo(userId)
-    Ok(views.html.authenticated.user.profile.editProfile(userInfo, editProfileForm, editProfileUrl(userInfo)))
+    Ok(views.html.authenticated.user.profile.ProfileEditFormView(userInfo, editProfileForm, editProfileUrl(userInfo)))
   }
 
   def processEditProfileAttempt(userInfo: UserInfo): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[EditProfileForm] =>
       // form validation/binding failed...
-      BadRequest(views.html.authenticated.user.profile.editProfile(userInfo, formWithErrors, editProfileUrl(userInfo)))
+      BadRequest(views.html.authenticated.user.profile.ProfileEditFormView(userInfo, formWithErrors, editProfileUrl(userInfo)))
     }
     val successFunction = { editProfileForm: EditProfileForm =>
       val userId = request.session.data(Global.SESSION_USER_ID)
@@ -65,7 +65,7 @@ class ProfileController @Inject()(
   def showResumes(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = request.session.data(Global.SESSION_USER_ID)
     val resumes = profileService.getResumes(userId)
-    Ok(views.html.authenticated.user.profile.resumes(resumes))
+    Ok(views.html.authenticated.user.profile.ResumeListView(resumes))
   }
 
   def uploadResume(): Action[MultipartFormData[Files.TemporaryFile]] = Action(parse.multipartFormData) { request =>
@@ -96,7 +96,7 @@ class ProfileController @Inject()(
     val userId = request.session.data(Global.SESSION_USER_ID)
     val presignedUrl = profileService.getPresignedUrl(userId, version)
     val resumeTitle = s"Version $version"
-    Ok(views.html.authenticated.user.profile.resumeView(resumeTitle, presignedUrl))
+    Ok(views.html.authenticated.user.profile.IndividualResumeView(resumeTitle, presignedUrl))
   }
 
 

@@ -1,5 +1,6 @@
 /* Resumes */
 
+/* Stack */
 .resume-stack {
   display: flex;
   flex-direction: column;
@@ -8,6 +9,7 @@
   margin: 2rem 0;
 }
 
+/* Tile */
 .resume-tile {
   width: 80%;
   max-width: 400px;
@@ -36,7 +38,9 @@
   margin-bottom: 1rem;
 }
 
-.resume-tile button, .resume-tile a {
+/* Buttons in Tiles */
+.resume-tile button,
+.resume-tile a {
   padding: 0.5rem 1rem;
   background-color: #007bff;
   color: #fff;
@@ -49,6 +53,7 @@
   background-color: #0056b3;
 }
 
+/* Delete Button */
 #delete-resume-button {
   background-color: transparent;  /* No background */
   color: #000;                    /* Black text */
@@ -74,10 +79,12 @@
   cursor: not-allowed;            /* No-click cursor */
 }
 
+/* View Button */
 #view-resume-button {
     font-size: 10px;
 }
 
+/* Download Button */
 .download-resume-button {
   background-color: #007aff;  /* Blue background */
   color: #ffffff;  /* White text */

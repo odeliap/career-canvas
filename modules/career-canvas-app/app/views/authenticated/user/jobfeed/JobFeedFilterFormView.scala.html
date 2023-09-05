@@ -4,7 +4,7 @@ sortByForm: Form[model.forms.SortByForm],
 jobInfos: Seq[JobInfo]
 )(content: Html)(script: Html)(implicit request: MessagesRequestHeader)
 
-@authenticated.user.main("Job Feed") {
+@authenticated.user.AuthenticatedUserLayout("Feed | Career Canvas") {
     <div class="main-page">
         <div>
             @request.flash.data.map{ case (name, value) =>
@@ -34,12 +34,12 @@ jobInfos: Seq[JobInfo]
                 </div>
                 <div class="metadata-fields">
                     <div class="metadata">
-                        <img src="@routes.Assets.versioned("images/job-feed/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
+                        <img src="@routes.Assets.versioned("images/jobfeed/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
                         <p class="meta-title">Status:</p>
                         <p class="meta-content">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</p>
                     </div>
                     <div class="metadata">
-                        <img src="@routes.Assets.versioned("images/job-feed/calendar.png")" class="metadata-icon">
+                        <img src="@routes.Assets.versioned("images/jobfeed/calendar.png")" class="metadata-icon">
                         <p class="meta-title">Last Update:</p>
                         <p class="meta-content">@jobInfo.lastUpdate.toLocalDateTime.toLocalDate.toString</p>
                     </div>
@@ -47,7 +47,7 @@ jobInfos: Seq[JobInfo]
             </div>
             }
         </div>
-        @footer()
+        @FooterTemplate()
         <script>
             @script
         </script>

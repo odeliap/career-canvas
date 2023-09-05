@@ -1,21 +1,32 @@
 /* Login/Signup Pages */
 
-.user-login-signup {
+/* Container */
+.user-login-signup, .switch-up {
     position: absolute;
     left: 50%;
-    transform: translate(-50%, 15%);
-    padding: 50px 30px;
     width: 275px;
-    height: 470px;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     background-color: white;
+    padding: 50px 30px;
 }
 
+.user-login-signup {
+    transform: translate(-50%, 15%);
+    height: 470px;
+}
+
+.switch-up {
+    transform: translate(-50%, 1275%);
+    height: 50px;
+    margin-top: 30px;
+    padding: 0 30px;
+}
+
+/* Forms and Fields */
 .user-login-signup-form {
     margin-top: 30px;
-    text-align: center;
     font-size: 12px;
     color: red;
 }
@@ -24,76 +35,61 @@
     margin-left: -40px;
 }
 
-.login-signup-div {
-    border: 0.25px solid #D4D4D4;
-    width: 250px;
-    margin: auto;
-}
-
 .username, .password, .fullName {
     background-color: white;
     border-radius: 5px;
     border: 1px solid black;
-    margin-top: -5px;
-    margin-bottom: 12px;
+    margin: -5px 0 12px;
     width: 90%;
     height: 50px;
     font-size: 12px;
     text-indent: 10px;
 }
 
+.login-signup-div {
+    border: 0.25px solid #D4D4D4;
+    width: 250px;
+    margin: auto;
+}
+
+/* Buttons */
+.login-signup-btn, .switch-up-btn {
+    width: 250px;
+    height: 30px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
 .login-signup-btn {
     background: #26abff;
     margin: 10px 50px;
-    width: 250px;
-    height: 30px;
     border: none;
-    border-radius: 5px;
     color: white;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.forgot-password, .terms-note {
-    text-align: center;
-    font-size: 10px;
-    color: #808080;
-}
-
-.forgot-password {
-    position: fixed;
-    bottom: 50px;
-    left: 40px;
-    width: 75%;
-}
-
-.terms-note {
-    position: fixed;
-    bottom: 10px;
-    left: 40px;
-    width: 75%;
-}
-
-.switch-up {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 1275%);
-    padding: 0px 30px;
-    width: 275px;
-    height: 50px;
-    text-align: center;
-    margin-top: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    background-color: white;
-}
-
-.switch-up-txt {
-    font-size: 12px;
-    padding: 8px;
 }
 
 .switch-up-btn {
     color: #26abff;
-    font-weight: bold;
+}
+
+/* Text */
+.forgot-password, .terms-note, .switch-up-txt {
+    text-align: center;
+    font-size: 10px;
+}
+
+.forgot-password, .terms-note {
+    position: fixed;
+    bottom: 50px;
+    left: 40px;
+    width: 75%;
+    color: #808080;
+}
+
+.terms-note {
+    bottom: 10px;
+}
+
+.switch-up-txt {
+    padding: 8px;
 }

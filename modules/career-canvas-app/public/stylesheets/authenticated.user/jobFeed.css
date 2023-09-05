@@ -1,5 +1,6 @@
 /* Job Feed Pages */
 
+/* Page Layout */
 .add-job-page {
     max-width: 100%;
     margin: 0 auto;
@@ -7,64 +8,6 @@
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
-}
-
-.add-job-button a, #final-save-job-button, #remove-job-description-button {
-    display: inline-block;
-    text-decoration: none;
-    color: #333; /* Change color to dark when background is transparent */
-    background: transparent; /* Make background transparent */
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 1.5em;
-    transition: background 0.3s;
-}
-
-.job-url-input button {
-    background-image: linear-gradient(to right, #FFB347, #FFCC33);
-    color: white;
-    border: none;
-    padding: 5px 10px; /* Smaller padding for a smaller button */
-    border-radius: 5px;
-    margin-top: 10px;
-    transition: background 0.3s;
-}
-
-.add-job-button a:hover, #final-save-job-button, #remove-job-description-button {
-    background-image: linear-gradient(to right, #FFCC33, #FFB347);
-}
-
-#final-save-job-button {
-    border: none;
-}
-
-#remove-job-description-button {
-    font-weight: 500;
-}
-
-.job-url-input {
-    padding: 20px 0;
-    border-top: 1px solid #e0e0e0;
-}
-
-.job-url-input div {
-    color: red;
-    margin-bottom: 10px;
-}
-
-.job-url-input button:hover {
-    background-image: linear-gradient(to right, #FFCC33, #FFB347);
-}
-
-#job-post-url-form input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-#job-post-url-form {
-    width: 90%;
 }
 
 .job-tiles {
@@ -75,6 +18,30 @@
     justify-content: space-between;
 }
 
+/* Job URL Input */
+.job-url-input {
+    padding: 20px 0;
+    border-top: 1px solid #e0e0e0;
+}
+
+.job-url-input div {
+    color: red;
+    margin-bottom: 10px;
+}
+
+/* Job URL Form */
+#job-post-url-form {
+    width: 90%;
+}
+
+#job-post-url-form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Job Tiles */
 .job-tile {
   background-color: #fff;
   width: 210px;
@@ -92,6 +59,7 @@
     margin-bottom: 45px;
 }
 
+/* Job Metadata */
 .job-company {
     font-weight: bold;
     font-size: 16px;
@@ -101,10 +69,9 @@
     font-size: 13px;
 }
 
-.metadata-icon {
-    height: 13px;
-    width: 13px;
-    margin-right: 13px;
+.meta-title {
+    padding-right: 3px;
+    font-weight: bold;
 }
 
 .metadata {
@@ -115,17 +82,74 @@
     margin-bottom: -20px;
 }
 
-.meta-title {
-    padding-right: 3px;
-    font-weight: bold;
+.metadata-icon {
+    height: 13px;
+    width: 13px;
+    margin-right: 13px;
 }
 
+/* Buttons */
+
+.add-job-button a, #final-save-job-button, #remove-job-description-button {
+    display: inline-block;
+    text-decoration: none;
+    color: #333;
+    background: transparent;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1.5em;
+    transition: background 0.3s;
+}
+
+.job-url-input button {
+    background-image: linear-gradient(to right, #FFB347, #FFCC33);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.add-job-button a:hover, #final-save-job-button, #remove-job-description-button {
+    background-image: linear-gradient(to right, #FFCC33, #FFB347);
+}
+
+#final-save-job-button {
+    border: none;
+}
+
+#remove-job-description-button {
+    font-weight: 500;
+}
+
+#cover-letter-button {
+    width: 94%;
+    height: 15px;
+    font-size: 14px;
+    background-image: linear-gradient(to right, #FFCC33, #FFB347);
+    color: #fff;
+    padding: 20px;
+    border: none;
+    border-radius: 5px;
+    display: block;
+    text-align: center;
+    margin: 50px auto;
+}
+
+/* Hover Effects */
+.job-url-input button:hover {
+    background-image: linear-gradient(to right, #FFCC33, #FFB347);
+}
+
+/* Media Query */
 @media (max-width: 600px) {
     .box {
         flex: 0 1 100%;
     }
 }
 
+/* Forms */
 #job-description-form {
     font-size: 12px;
 }
@@ -175,20 +199,7 @@
     color: #808080;
 }
 
-#cover-letter-button {
-    width: 94%;
-    height: 15px;
-    font-size: 14px;
-    background-image: linear-gradient(to right, #FFCC33, #FFB347);
-    color: #fff;
-    padding: 20px;
-    border: none;
-    border-radius: 5px;
-    display: block;
-    text-align: center;
-    margin: 50px auto;
-}
-
+/* Cover Letter */
 #cover-letter-subheader {
     margin-top: 50px;
 }

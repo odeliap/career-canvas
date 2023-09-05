@@ -22,7 +22,7 @@ class JobStatisticsController @Inject()(
     val userId = request.session.data(Global.SESSION_USER_ID)
     val statusPercentages = jobStatisticsService.getStatusBreakdown(userId)
     val statusPercentagesHtml = new Html(Json.toJson(statusPercentages).toString())
-    Ok(views.html.authenticated.user.statistics.jobStats(statusPercentagesHtml))
+    Ok(views.html.authenticated.user.statistics.JobStatisticsView(statusPercentagesHtml))
   }
 
 }

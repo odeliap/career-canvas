@@ -2,7 +2,7 @@
 resumes: Seq[careercanvas.io.model.user.Resume]
 )(implicit request: MessagesRequestHeader)
 
-@baseProfileView("Resumes") {
+@UserProfileBaseView("Resumes | Career Canvas") {
     <h2>Upload Resume</h2>
     @helper.form(action = routes.ProfileController.uploadResume, Symbol("enctype") -> "multipart/form-data") {
         @helper.CSRF.formField

@@ -1,6 +1,6 @@
 @(jobInfo: careercanvas.io.model.jobfeed.JobInfo, coverLetter: careercanvas.io.model.jobfeed.CoverLetter)
 
-@baseJobView(jobInfo) {
+@BaseJobInformationView(jobInfo) {
     <h3 id="cover-letter-subheader">Cover Letter</h3>
     <textarea id="cover-letter-content">
         @coverLetter.content

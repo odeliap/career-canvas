@@ -1,9 +1,11 @@
+/* Header & Navbar */
+
 .header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    background: white;
-    border-bottom: 0.5px solid #d5d0ce;
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  background-color: white;
+  border-bottom: 0.5px solid #d5d0ce;
 }
 
 .navbar {
@@ -11,7 +13,8 @@
   margin: 10px 50px 0 0;
 }
 
-.navbar a {
+.navbar a,
+.profile-dropdown .profile-dropbtn {
   float: left;
   font-size: 16px;
   text-align: center;
@@ -19,36 +22,37 @@
   text-decoration: none;
 }
 
+/* Navigation Elements */
+
 .navigation-el {
-    font-size: 10px;
-    padding: 10px;
-    border: none;
+  font-size: 10px;
+  padding: 10px;
+  border: none;
 }
 
-.navigation-el:hover, .profile-dropdown:hover .profile-dropbtn {
-    color: black;
-    font-weight: bold;
+.navigation-el:hover,
+.profile-dropdown:hover .profile-dropbtn {
+  color: black;
+  font-weight: bold;
 }
+
+/* Profile Dropdown */
 
 .profile-dropdown {
   float: left;
   overflow: hidden;
 }
 
-.profile-dropdown .profile-dropbtn {
-  font-size: 16px;
-  border: none;
-  outline: none;
-  padding: 14px 15.5px;
-  background-color: inherit;
-  font-family: inherit; /* Important for vertical align on mobile phones */
-  margin: 0; /* Important for vertical align on mobile phones */
-}
-
 .profile-dropbtn {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: none;
+  outline: none;
+  padding: 14px 15.5px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
 }
 
 .profile-dropdown-content {
@@ -56,7 +60,7 @@
   position: absolute;
   background-color: #f9f9f9;
   min-width: 113px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   z-index: 1;
 }
@@ -78,38 +82,42 @@
   display: block;
 }
 
-/* Navigation Pages */
+/* Navigation Pages & Content */
 
 .content {
-    padding-top: 30px;
-    margin: 0;
+  padding-top: 30px;
+  margin: 0;
 }
 
 .main-content {
-    margin-right: auto;
-    margin-left: auto;
-    width: 70%;
+  margin: 0 auto;
+  width: 70%;
 }
 
 .input-content {
-    padding-bottom: 20px;
-    font-size: 16px;
-    font-weight: 300;
-    margin-top: 20px;
+  padding-bottom: 20px;
+  font-size: 16px;
+  font-weight: 300;
+  margin-top: 20px;
 }
 
 .main-page {
-    height: 100vh;
+  height: 100vh;
+}
+
+/* Headers */
+
+.main-h2,
+.main-h3 {
+  font-weight: 600;
 }
 
 .main-h2 {
-    font-size: 40px;
-    margin-bottom: 40px;
-    font-weight: 600;
+  font-size: 40px;
+  margin-bottom: 40px;
 }
 
 .main-h3 {
-    font-size: 25px;
-    margin-bottom: 30px;
-    font-weight: 600;
+  font-size: 25px;
+  margin-bottom: 30px;
 }

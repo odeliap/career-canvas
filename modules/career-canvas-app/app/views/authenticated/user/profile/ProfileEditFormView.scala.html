@@ -4,7 +4,7 @@
     putUrl: Call
 )(implicit request: MessagesRequestHeader)
 
-@baseProfileView("Edit profile") {
+@UserProfileBaseView("Edit Profile | Career Canvas") {
     <h2 id="edit-profile-header">Edit profile</h2>
     @request.flash.data.map{ case (name, value) =>
         @if(name.equals("error")) {
