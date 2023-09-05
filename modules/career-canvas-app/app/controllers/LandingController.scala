@@ -8,10 +8,12 @@ import play.api.data.Forms.{mapping, nonEmptyText}
 import javax.inject._
 import play.api.mvc._
 import service.UserService
+import utils.FormUtils
 
 @Singleton
 class LandingController @Inject()(
   cc: MessagesControllerComponents,
+  formUtils: FormUtils,
   userService: UserService
 ) extends MessagesAbstractController(cc) {
 
@@ -20,11 +22,11 @@ class LandingController @Inject()(
   val loginForm: Form[BaseUser] = Form (
     mapping(
       "username" -> nonEmptyText
-        .verifying("too few chars",  s => lengthIsGreaterThanNCharacters(s, 3))
-        .verifying("too many chars", s => lengthIsLessThanNCharacters(s, 320)),
+        .verifying("too few chars",  s => formUtils.lengthIsGreaterThanNCharacters(s, 3))
+        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 320)),
       "password" -> nonEmptyText
-        .verifying("too few chars",  s => lengthIsGreaterThanNCharacters(s, 10))
-        .verifying("too many chars", s => lengthIsLessThanNCharacters(s, 30)),
+        .verifying("too few chars",  s => formUtils.lengthIsGreaterThanNCharacters(s, 10))
+        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 30)),
     )(BaseUser.apply)(BaseUser.unapply)
   )
 
@@ -32,11 +34,11 @@ class LandingController @Inject()(
     mapping(
       "fullName" -> nonEmptyText,
       "username" -> nonEmptyText
-        .verifying("too few chars",  s => lengthIsGreaterThanNCharacters(s, 3))
-        .verifying("too many chars", s => lengthIsLessThanNCharacters(s, 320)),
+        .verifying("too few chars",  s => formUtils.lengthIsGreaterThanNCharacters(s, 3))
+        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 320)),
       "password" -> nonEmptyText
-        .verifying("too few chars",  s => lengthIsGreaterThanNCharacters(s, 10))
-        .verifying("too many chars", s => lengthIsLessThanNCharacters(s, 30)),
+        .verifying("too few chars",  s => formUtils.lengthIsGreaterThanNCharacters(s, 10))
+        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 30)),
     )(User.apply)(User.unapply)
   )
 
@@ -101,14 +103,6 @@ class LandingController @Inject()(
       errorFunction,
       successFunction
     )
-  }
-
-  private def lengthIsGreaterThanNCharacters(s: String, n: Int): Boolean = {
-    if (s.length > n) true else false
-  }
-
-  private def lengthIsLessThanNCharacters(s: String, n: Int): Boolean = {
-    if (s.length < n) true else false
   }
 
 }

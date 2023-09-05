@@ -10,11 +10,13 @@ import service.JobApplicationsService
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
+import utils.FormUtils
 
 import javax.inject.Inject
 
 class JobFeedController @Inject()(
   cc: MessagesControllerComponents,
+  formUtils: FormUtils,
   jobApplicationsService: JobApplicationsService,
   authenticatedUserAction: AuthenticatedUserAction,
   authenticatedUserMessagesAction: AuthenticatedUserMessagesAction,
@@ -32,16 +34,21 @@ class JobFeedController @Inject()(
   val jobPostForm: Form[JobPosting] = Form (
     mapping(
       "postUrl" -> nonEmptyText
+        .verifying("too few chars", s => formUtils.lengthIsGreaterThanNCharacters(s, 4))
+        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 300))
     )(JobPosting.apply)(JobPosting.unapply)
   )
 
   def jobDetailsForm(baseJobInfo: BaseJobInfo): Form[UserProvidedJobDetails] = Form(
     mapping(
-      "company" -> default(text, baseJobInfo.company),
-      "jobTitle" -> default(text, baseJobInfo.jobTitle),
+      "company" -> default(text, baseJobInfo.company)
+        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 40)),
+      "jobTitle" -> default(text, baseJobInfo.jobTitle)
+        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 35)),
       "status" -> text,
       "interviewRound" -> optional(number),
       "notes" -> optional(text)
+        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s.getOrElse(""), 1024)),
     )(UserProvidedJobDetails.apply)(UserProvidedJobDetails.unapply)
   )
 
@@ -126,6 +133,10 @@ class JobFeedController @Inject()(
     val fullName = request.session.data(Global.SESSION_USER_FULL_NAME)
     val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo, fullName)
     Ok(views.html.authenticated.user.jobfeed.CoverLetterDisplayView(jobInfo, coverLetter))
+  }
+
+  private def lengthIsLessThanNCharacters(s: String, n: Int): Boolean = {
+    if (s.length < n) true else false
   }
 
 }
