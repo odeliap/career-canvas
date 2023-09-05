@@ -1,6 +1,4 @@
-@(
-pageName: String
-)(content: Html)(implicit request: MessagesRequestHeader)
+@(pageName: String)(content: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.main(pageName) {
 <h2>Settings</h2>
@@ -9,9 +7,7 @@ pageName: String
         <div class="top-part">
             <div class="settings-content">
                 <h4>Accounts Center</h4>
-                <p class="settings-sub-content">
-                    Manage your account settings.
-                </p>
+                <p class="settings-sub-content">Manage your account settings.</p>
             </div>
         </div>
         <div class="bottom-part">
@@ -30,4 +26,5 @@ pageName: String
         </div>
     </div>
 </div>
+@footer()
 }

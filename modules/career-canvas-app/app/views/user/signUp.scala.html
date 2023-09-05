@@ -6,7 +6,7 @@ postUrl: Call
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/loginSignUp.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/user/loginSignUp.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">    </head>
     <body>
         <div class="user-login-signup">
@@ -40,7 +40,7 @@ postUrl: Call
                 @helper.inputText(
                     form("fullName"),
                     '_label -> "",
-                    'placeholder -> "full name",
+                    'placeholder -> "Full name",
                     'class -> "fullName",
                     'size -> 60,
                     '_showConstraints -> false
@@ -49,7 +49,7 @@ postUrl: Call
                 @helper.inputText(
                     form("username"),
                     '_label -> "",
-                    'placeholder -> "email",
+                    'placeholder -> "Email",
                     'class -> "username",
                     'size -> 60,
                     '_showConstraints -> false
@@ -58,7 +58,7 @@ postUrl: Call
                 @helper.inputPassword(
                     form("password"),
                     '_label -> "",
-                    'placeholder -> "password",
+                    'placeholder -> "Password",
                     'class -> "password",
                     'size -> 60,
                     '_showConstraints -> false

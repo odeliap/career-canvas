@@ -5,10 +5,10 @@
     <head>
         <meta charset="UTF-8">
         <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/jobFeed.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/profile.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/resume.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/authenticated.user/main.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/authenticated.user/jobFeed.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/authenticated.user/profile.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/authenticated.user/resume.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/logos/logo1.png")">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,7 +41,6 @@
                         @* Content goes here *@
                         @content
                     </div>
-                    @footer()
                 </div>
             </div>
     </body>

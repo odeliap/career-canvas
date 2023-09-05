@@ -78,7 +78,7 @@
 .job-tile {
   background-color: #fff;
   width: 210px;
-  height: 200px;
+  height: 170px;
   padding: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   border: 1px solid #f0f0f0;
@@ -88,17 +88,36 @@
   position: relative;
 }
 
-.job-tile-tab {
-  background-image: linear-gradient(to right, #FFCC33, #FFB347); /* this is a similar color to Apple's highlight color */
-  color: #fff; /* white text */
-  padding: 5px;
-  width: 200px;
-  font-size: 10px;
-  text-align: center;
-  border-radius: 2px;
-  position: absolute;
-  top: -10px; /* this positions the tab at the top of the note */
-  left: 20px; /* this positions the tab to the left */
+.job-tile-header {
+    margin-bottom: 45px;
+}
+
+.job-company {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.job-title {
+    font-size: 13px;
+}
+
+.metadata-icon {
+    height: 13px;
+    width: 13px;
+    margin-right: 13px;
+}
+
+.metadata {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    font-size: 10px;
+    margin-bottom: -20px;
+}
+
+.meta-title {
+    padding-right: 3px;
+    font-weight: bold;
 }
 
 @media (max-width: 600px) {

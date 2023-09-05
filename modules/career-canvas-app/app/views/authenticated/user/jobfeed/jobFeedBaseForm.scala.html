@@ -28,21 +28,26 @@ jobInfos: Seq[JobInfo]
         <div class="job-tiles">
             @jobInfos.map { jobInfo =>
             <div class="job-tile">
-                <a href="@routes.JobFeedController.showJobView(jobInfo)" class="job-tile-tab">@jobInfo.jobTitle</a>
-                <p>Company: @jobInfo.company</p>
-                <p>Status: @jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</p>
-                @if(jobInfo.interviewRound.nonEmpty) {
-                @if(!jobInfo.interviewRound.get.equals(0)) {
-                <p>Interview Round: @jobInfo.interviewRound</p>
-                }
-                }
-                @if(jobInfo.appSubmissionDate.nonEmpty) {
-                <p>App Submission Date: @jobInfo.status</p>
-                }
-                <p>Last Update: @jobInfo.lastUpdate</p>
+                <div class="job-tile-header">
+                    <a href="@routes.JobFeedController.showJobView(jobInfo)" class="job-company">@jobInfo.company</a>
+                    <p class="job-title">@jobInfo.jobTitle</p>
+                </div>
+                <div class="metadata-fields">
+                    <div class="metadata">
+                        <img src="@routes.Assets.versioned("images/job-feed/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
+                        <p class="meta-title">Status:</p>
+                        <p class="meta-content">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</p>
+                    </div>
+                    <div class="metadata">
+                        <img src="@routes.Assets.versioned("images/job-feed/calendar.png")" class="metadata-icon">
+                        <p class="meta-title">Last Update:</p>
+                        <p class="meta-content">@jobInfo.lastUpdate.toLocalDateTime.toLocalDate.toString</p>
+                    </div>
+                </div>
             </div>
             }
         </div>
+        @footer()
         <script>
             @script
         </script>

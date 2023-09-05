@@ -10,7 +10,8 @@
 
 .content {
     display: flex;
-    margin: 30px auto 50px auto;
+    padding: 30px auto 50px auto;
+    background-color: white;
 }
 
 .content-left {
@@ -111,7 +112,8 @@
 #welcome-img {
     right: 0;
     width: 45%;
-    margin: 15px auto;
+    height: 45%;
+    margin: 100px 30px 15px 10px;
 }
 
 .header-buttons {
@@ -154,7 +156,7 @@
 
 .section, #router {
     text-align: left;
-    padding: 70px 30px;
+    padding: 50px 30px;
     font-weight: lighter;
     display: flex;
     justify-content: space-between;
@@ -178,6 +180,11 @@
     background-color: #D6D4D2;
 }
 
+.content-gap {
+    height: 5vh;
+    background-color: white;
+}
+
 #section-2, #section-5 {
     background-color: white;
 }
@@ -193,7 +200,7 @@
 .section-title {
     font-size: 38px;
     color: #333333;
-    padding: 30px 0;
+    padding: 0 0 30px 0;
 }
 
 .section-info {
