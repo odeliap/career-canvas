@@ -1,5 +1,31 @@
 /* Job Feed Pages */
 
+/* Sort Container */
+#sort-by-form {
+  display: flex;
+  justify-content: center;
+  align-items: right;
+  margin: 20px 0px -10px auto;
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#sort-by-form:hover {
+  background-color: #cccccc;
+}
+
+/* Search Button */
+#search-tiles-icon {
+    width: 25px;
+    height: 25px;
+}
+
 /* Page Layout */
 .add-job-page {
     max-width: 100%;
@@ -8,6 +34,12 @@
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
+}
+
+.add-job-page-top-elements {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .job-tiles {
@@ -22,11 +54,6 @@
 .job-url-input {
     padding: 20px 0;
     border-top: 1px solid #e0e0e0;
-}
-
-.job-url-input div {
-    color: red;
-    margin-bottom: 10px;
 }
 
 /* Job URL Form */
@@ -53,6 +80,7 @@
   line-height: 20px;
   border-radius: 15px;
   position: relative;
+  margin-bottom: 40px;
 }
 
 .job-tile-header {
@@ -63,6 +91,8 @@
 .job-company {
     font-weight: bold;
     font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
 .job-title {
@@ -138,6 +168,10 @@
 }
 
 /* Hover Effects */
+.job-company:hover {
+    text-decoration: underline;
+}
+
 .job-url-input button:hover {
     background-image: linear-gradient(to right, #FFCC33, #FFB347);
 }

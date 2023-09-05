@@ -7,8 +7,10 @@ jobInfos: Seq[careercanvas.io.model.jobfeed.JobInfo]
 
 @JobFeedFilterFormView(sortByForm, jobInfos) {
 <div class="add-job-page">
-    <div class="add-job-button">
-        <a href="#" id="add-job" class="add-job">+</a>
+    <div class="add-job-page-top-elements">
+        <div class="add-job-button">
+            <a href="#" id="add-job">+</a>
+        </div>
     </div>
     <div class="job-url-input" style="display: none;">
         @if(form.hasGlobalErrors) {

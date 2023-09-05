@@ -18,15 +18,32 @@
     <body>
             <div class="intro">
                 <div class="header">
-                    <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
+                    <div class="header-left">
+                        <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
+                        <form id="search" action="#">
+                            <input type="text" class="search-container" id="searchBox" placeholder="Search by title or company" onkeypress="handle" />
+                        </form>
+                    </div>
                     <div class="navbar">
-                        <a class="navigation-el" href="@routes.JobFeedController.showJobFeedHome()">Job Feed</a>
-                        <a class="navigation-el" href="@routes.JobStatisticsController.showJobStats()">Search Statistics</a>
+                        <a class="navigation-el" href="@routes.JobFeedController.showJobFeedHome()">
+                            <img src="@routes.Assets.versioned("images/jobfeed.navbar/job.png")" class="navigation-el-icon">
+                            <p class="navigation-el-name">Job Feed</p>
+                        </a>
+                        <a class="navigation-el" href="@routes.JobStatisticsController.showJobStats()">
+                            <img src="@routes.Assets.versioned("images/jobfeed.navbar/statistics.png")" class="navigation-el-icon">
+                            <p class="navigation-el-name">Search Statistics</p>
+                        </a>
                         <div class="profile-dropdown">
-                            <button class="profile-dropbtn">
-                                Profile
-                                <i class="fa fa-caret-down"></i>
-                            </button>
+                            <div class="profile-element">
+                                <div class="vertical-line"></div>
+                                <button class="profile-dropbtn">
+                                    <div class="profile-dropbtn-content">
+                                        <img src="@routes.Assets.versioned("images/jobfeed.navbar/profile.png")" class="navigation-el-icon">
+                                        <p class="navigation-el-name">Profile</p>
+                                    </div>
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                            </div>
                             <div class="profile-dropdown-content">
                                 <a href="@routes.ProfileController.editProfile()">Edit Profile</a>
                                 <a href="@routes.ProfileController.logout()">Log Out</a>
@@ -43,5 +60,12 @@
                     </div>
                 </div>
             </div>
+            <script>
+                function handle(e) {
+                    if(e.key === "Enter"){
+                        alert("Enter was just pressed.");
+                    }
+                }
+            </script>
     </body>
 </html>
