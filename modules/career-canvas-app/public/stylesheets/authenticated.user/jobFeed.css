@@ -1,6 +1,7 @@
 /* Job Feed Pages */
 
 /* Sort Container */
+
 #sort-by-form {
   display: flex;
   justify-content: center;
@@ -20,26 +21,31 @@
   background-color: #cccccc;
 }
 
+/* Sort By Form */
+
+#sort-by-form {
+    display: block;
+    margin-left: auto;
+    font-size: 14px;
+    border: none;
+}
+
 /* Search Button */
+
 #search-tiles-icon {
     width: 25px;
     height: 25px;
 }
 
 /* Page Layout */
+
 .add-job-page {
     max-width: 100%;
     margin: 0 auto;
     background-color: #FFFFFF;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
-}
-
-.add-job-page-top-elements {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border: 1px solid #D3D3D3;
 }
 
 .job-tiles {
@@ -51,11 +57,13 @@
 }
 
 /* Job URL Input */
+
 .job-url-input {
-    padding: 20px 0;
+    padding: 16px 0 0 0;
 }
 
 /* Job URL Form */
+
 #job-post-url-form {
     width: 90%;
 }
@@ -67,17 +75,70 @@
     border-radius: 5px;
 }
 
+/* Job Details Form */
+
+.job-details-form-section-title {
+    font-weight: bold;
+    font-size: 10px;
+    color: black;
+    text-indent: 25px;
+}
+
+#job-description-form {
+    font-size: 12px;
+}
+
+#job-description-form-first-row,
+#job-description-form-second-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-right: 40px;
+}
+
+#job-description-company,
+#job-description-title,
+#job-description-status,
+#job-description-interview-round,
+#job-description-notes {
+    flex: 1;
+    margin-right: 10px;
+}
+
+#job-description-form input[type="text"] {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+#job-description-company,
+#job-description-title {
+    width: 96%;
+    height: 20px;
+    font-size: 12px;
+}
+
+#job-description-notes {
+    width: 96%;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+#job-description-interview-round {
+    width: 40px;
+}
+
 /* Job Tiles */
+
 .job-tile {
   background-color: #fff;
   width: 210px;
   height: 170px;
   padding: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  border: 1px solid #f0f0f0;
+  border-radius: 15px;
+  border: 1px solid #D3D3D3;
   font-size: 14px;
   line-height: 20px;
-  border-radius: 15px;
   position: relative;
   margin-bottom: 40px;
 }
@@ -87,6 +148,7 @@
 }
 
 /* Job Metadata */
+
 .job-company {
     font-weight: bold;
     font-size: 16px;
@@ -128,27 +190,29 @@
 
 #job-view-intro {
     background: white;
-    border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid #D3D3D3;
     padding: 20px;
     width: 96%;
     margin-bottom: 20px;
 }
 
+#job-view-content {
+    margin: 20px;
+}
+
 .job-view-title,
 .job-view-subtitle {
     padding: 0 0 10px 0;
+    font-weight: bold;
 }
 
 .job-view-title {
-    font-size: 32px;
-    font-weight: bold;
+    font-size: 26px;
 }
 
 .job-view-subtitle {
     font-size: 20px;
-    color: #808080;
 }
 
 .job-view-blank-space {
@@ -167,16 +231,11 @@
     padding-right: 10px;
 }
 
-.job-view-metadata-content {
-
-}
-
 /* Buttons */
 
 .add-job-button a, #final-save-job-button, #remove-job-description-button {
     display: inline-block;
     text-decoration: none;
-    color: #333;
     background: transparent;
     padding: 5px 10px;
     border-radius: 5px;
@@ -184,8 +243,17 @@
     transition: background 0.3s;
 }
 
+#final-save-job-button, #remove-job-description-button {
+    background-color: #0077B5;
+    color: white;
+}
+
+#final-add-job-button {
+    border: none;
+}
+
 .job-url-input button {
-    background-image: linear-gradient(to right, #73A5C6, #BCD2E8);
+    background-color: #0077B5;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -194,116 +262,92 @@
     transition: background 0.3s;
 }
 
-.add-job-button a:hover, #final-save-job-button, #remove-job-description-button {
-    background-image: linear-gradient(to right, #73A5C6, #BCD2E8);
-}
-
-#final-save-job-button {
-    border: none;
-}
-
 #remove-job-description-button {
     font-weight: 500;
 }
 
-#cover-letter-button, #save-cover-letter-button {
-    width: 96%;
+#cover-letter-button,
+#save-cover-letter-button {
     height: 25px;
-    font-size: 14px;
-    background-image: linear-gradient(to right, #73A5C6, #BCD2E8);
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #0077B5;
     color: #fff;
     padding: 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 30px;
     margin: auto auto auto 0;
     display: inline-flex;
     justify-content: center;
     align-items: center;
 }
 
+#cover-letter-button {
+    width: 96%;
+}
+
+#save-cover-letter-button {
+    width: 90%;
+    margin: 20px;
+}
+
 /* Hover Effects */
+
 .job-company:hover {
     text-decoration: underline;
 }
 
-.job-url-input button:hover {
-    background-image: linear-gradient(to right, #73A5C6, #BCD2E8);
+.job-url-input button:hover,
+.add-job-button a:hover,
+#final-save-job-button:hover,
+#remove-job-description-button:hover,
+#cover-letter-button:hover,
+#save-cover-letter-button:hover {
+    background-color: #2E5984;
+    font-weight: bold;
 }
 
 .job-view-subtitle:hover {
-    color: #5A5A5A;
+    color: #187bcd;
+    border-bottom: 1px solid #187bcd;
 }
 
 /* Media Query */
+
 @media (max-width: 600px) {
     .box {
         flex: 0 1 100%;
     }
 }
 
-/* Forms */
-#job-description-form {
-    font-size: 12px;
-}
-
-#job-description-form-first-row,
-#job-description-form-second-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    margin-right: 40px;
-}
-
-#job-description-company,
-#job-description-title,
-#job-description-status,
-#job-description-interview-round,
-#job-description-notes {
-    flex: 1;
-    margin-right: 10px;
-}
-
-#job-description-company,
-#job-description-title {
-    width: 96%;
-    height: 20px;
-    font-size: 12px;
-}
-
-#job-description-notes {
-    width: 96%;
-    height: 150px;
-    margin-bottom: 20px;
-}
-
-#job-description-interview-round {
-    width: 40px;
-}
-
-#sort-by-form {
-    display: block;
-    margin-left: auto;
-    font-size: 14px;
-    border: none;
-}
-
 /* Cover Letter */
+
+#cover-letter {
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #D3D3D3;
+    width: 96%;
+    padding: 20px;
+}
+
 #cover-letter-subheader {
-    margin-top: 50px;
+    margin: 20px;
     font-size: 24px;
     font-weight: bold;
 }
 
 #cover-letter-content {
-    width: 96%;
+    width: 90%;
+    margin: 20px;
     height: 475px;
+    padding: 20px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: inherit;
+    font-size: inherit;
+    background-color: #e9eff6;
     border-radius: 5px;
     border: 1px solid #D3D3D3;
-    padding: 20px;
-    overflow: auto; /* Hide the overflow to give input-feel */
-    white-space: pre-wrap; /* Enables text wrapping */
-    word-wrap: break-word;
-    font-family: inherit; /* Make it look like a standard input text */
-    font-size: inherit;
 }
 

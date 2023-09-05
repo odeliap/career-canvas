@@ -3,27 +3,32 @@ resumes: Seq[careercanvas.io.model.user.Resume]
 )(implicit request: MessagesRequestHeader)
 
 @UserProfileBaseView("Resumes | Career Canvas") {
-    <h2>Upload Resume</h2>
-    @helper.form(action = routes.ProfileController.uploadResume, Symbol("enctype") -> "multipart/form-data") {
-        @helper.CSRF.formField
-        <input type="file" name="resume">
-        <p>
-            <input type="submit">
-        </p>
-    }
+    <div class="form-container">
+        <h2 class="form-header">Upload Resume</h2>
+        @helper.form(action = routes.ProfileController.uploadResume, Symbol("enctype") -> "multipart/form-data") {
+            @helper.CSRF.formField
+            <div class="input-container">
+                <input type="file" name="resume" class="file-input">
+            </div>
+            <p class="submit-container">
+                <input type="submit" value="Upload" class="submit-button">
+            </p>
+        }
+    </div>
     <h2>My Resumes</h2>
     <div class="resume-stack">
         @resumes.map { resume =>
         <div class="resume-tile">
+            <form action="@routes.ProfileController.deleteResume(resume.version)" method="POST" id="delete-resume-form">
+                @helper.CSRF.formField
+                <button type="submit" id="delete-resume-button">
+                    <img src="@routes.Assets.versioned("images/profile.resumes/trash.png")" class="trash-icon">
+                </button>
+            </form>
             <h3>Version @resume.version</h3>
             <p>Name: @resume.name</p>
             <p>Upload Date: @resume.uploadDate.toString.split("\\.")(0)</p>
             <a href="@routes.ProfileController.viewResume(resume.version)" id="view-resume-button">View</a>
-
-            <form action="@routes.ProfileController.deleteResume(resume.version)" method="POST" id="delete-resume-form">
-                @helper.CSRF.formField
-                <button type="submit" id="delete-resume-button">Delete Resume</button>
-            </form>
         </div>
         }
     </div>

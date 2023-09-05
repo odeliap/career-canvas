@@ -7,11 +7,7 @@ jobInfos: Seq[careercanvas.io.model.jobfeed.JobInfo]
 
 @JobFeedFilterFormView(sortByForm, jobInfos) {
 <div class="add-job-page">
-    <div class="add-job-page-top-elements">
-        <div class="add-job-button">
-            <a href="#" id="add-job">+</a>
-        </div>
-    </div>
+    <div class="add-job-button"><a href="#" id="add-job">+</a></div>
     <div class="job-url-input" style="display: none;">
         @if(form.hasGlobalErrors) {
             @form.globalErrors.map { error: FormError =>
@@ -43,7 +39,7 @@ jobInfos: Seq[careercanvas.io.model.jobfeed.JobInfo]
         var jobUrlInputDiv = document.querySelector(".job-url-input");
         if (jobUrlInputDiv.style.display === "none") {
             jobUrlInputDiv.style.display = "block";
-            this.style.backgroundImage = 'linear-gradient(to right, #73A5C6, #BCD2E8)';
+            this.style.backgroundColor = '#0077B5';
             this.style.color = 'white';
         } else {
             jobUrlInputDiv.style.display = "none";

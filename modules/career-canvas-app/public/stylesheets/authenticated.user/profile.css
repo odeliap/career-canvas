@@ -1,5 +1,10 @@
 /* Profile Pages */
 
+/* Page Title */
+#settings-title {
+    margin-left: 25px;
+}
+
 /* Container */
 .container {
   display: flex;
@@ -21,8 +26,8 @@
 .right-section {
   width: 75%;
   height: 96.5%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  border: 1px solid #D3D3D3;
   margin: 20px;
   background-color: white;
 }
@@ -30,8 +35,8 @@
 /* Top Part */
 .top-part {
   height: 33.333%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  border: 1px solid #D3D3D3;
   margin: 20px 20px 10px;
   background-color: white;
 }
@@ -39,8 +44,8 @@
 /* Bottom Part */
 .bottom-part {
   height: 66.667%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+    border-radius: 10px;
+  border: 1px solid #D3D3D3;
   margin: 10px 20px 10px;
   background-color: white;
 }
@@ -89,6 +94,12 @@
 .edit-value-field {
   width: 70%;
   height: 20px;
+}
+
+#edit-profile-form-fields input[type="text"] {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px;
 }
 
 /* Headers and Buttons */

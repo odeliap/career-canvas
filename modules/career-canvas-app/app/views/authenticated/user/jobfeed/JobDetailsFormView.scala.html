@@ -28,69 +28,84 @@ baseJobInfo: careercanvas.io.model.jobfeed.BaseJobInfo
             @helper.CSRF.formField
 
             <div id="job-description-form-first-row">
+                <div class="job-details-form-section">
+                    <div class="job-details-form-section-title">Company</div>
+                    @if(baseJobInfo.company.nonEmpty) {
+                        @helper.inputText(
+                            form("company"),
+                            '_label -> "",
+                            'placeholder -> baseJobInfo.company,
+                            'id -> "job-description-company",
+                            'size -> 60,
+                            '_showConstraints -> false
+                        )
+                    } else {
+                        @helper.inputText(
+                            form("company"),
+                            '_label -> "",
+                            'id -> "job-description-company",
+                            'size -> 60,
+                            '_showConstraints -> false
+                        )
+                    }
+                </div>
 
-                @if(baseJobInfo.company.nonEmpty) {
-                @helper.inputText(
-                form("company"),
-                '_label -> "Company",
-                'placeholder -> baseJobInfo.company,
-                'id -> "job-description-company",
-                'size -> 60,
-                '_showConstraints -> false
-                )
-                } else {
-                @helper.inputText(
-                form("company"),
-                '_label -> "Company",
-                'id -> "job-description-company",
-                'size -> 60,
-                '_showConstraints -> false
-                )
-                }
-
-                @if(baseJobInfo.company.nonEmpty) {
-                @helper.inputText(
-                form("jobTitle"),
-                '_label -> "Job Title",
-                'placeholder -> baseJobInfo.jobTitle,
-                'id -> "job-description-title",
-                'size -> 60,
-                '_showConstraints -> false
-                )
-                } else {
-                @helper.inputText(
-                form("jobTitle"),
-                '_label -> "Job Title",
-                'id -> "job-description-title",
-                'size -> 60,
-                '_showConstraints -> false
-                )
-                }
+                <div class="job-details-form-section">
+                    <div class="job-details-form-section-title">Job Title</div>
+                    @if(baseJobInfo.company.nonEmpty) {
+                        @helper.inputText(
+                            form("jobTitle"),
+                            '_label -> "",
+                            'placeholder -> baseJobInfo.jobTitle,
+                            'id -> "job-description-title",
+                            'size -> 60,
+                            '_showConstraints -> false
+                        )
+                    } else {
+                        @helper.inputText(
+                            form("jobTitle"),
+                            '_label -> "",
+                            'id -> "job-description-title",
+                            'size -> 60,
+                            '_showConstraints -> false
+                        )
+                    }
+                </div>
             </div>
 
             <div id="job-description-form-second-row">
-                @helper.inputRadioGroup(
-                form("status"),
-                options = Seq("NotSubmitted" -> "NotSubmitted", "Submitted" -> "Submitted", "InterviewScheduled" -> "InterviewScheduled", "Interviewed" -> "Interviewed", "OfferMade" -> "OfferMade", "Rejected" -> "Rejected"),
-                '_label -> "Status",
-                'id -> "job-description-status",
-                'size -> 60
-                )
+                <div class="job-details-form-section">
+                    <div class="job-details-form-section-title">Status</div>
+                    @helper.inputRadioGroup(
+                        form("status"),
+                        options = Seq("NotSubmitted" -> "Not Submitted", "Submitted" -> "Submitted", "Interview Scheduled" -> "InterviewScheduled", "Interviewed" -> "Interviewed", "OfferMade" -> "Offer Made", "Rejected" -> "Rejected"),
+                        '_label -> "",
+                        'id -> "job-description-status",
+                        'size -> 60
+                    )
+                </div>
 
-                @helper.inputText(
-                form("interviewRound"),
-                '_label -> "Interview Round",
-                'id -> "job-description-interview-round",
-                'size -> 60
-                )
+                <div class="job-details-form-section">
+                    <div class="job-details-form-section-title">Interview Round</div>
+                    @helper.inputText(
+                        form("interviewRound"),
+                        '_label -> "",
+                        'id -> "job-description-interview-round",
+                        'size -> 60,
+                        '_showConstraints -> false
+                    )
+                </div>
             </div>
 
-            @helper.inputText(
-            form("notes"),
-            '_label -> "Notes",
-            'id -> "job-description-notes",
-            'size -> 60
-            )
+            <div class="job-details-form-section">
+                <div class="job-details-form-section-title">Notes</div>
+                @helper.inputText(
+                    form("notes"),
+                    '_label -> "",
+                    'id -> "job-description-notes",
+                    'size -> 60,
+                )
+            </div>
 
             <button id="final-save-job-button">Save</button>
             <a href="@routes.JobFeedController.removeJobDetails()" id="remove-job-description-button">Discard</a>
@@ -103,7 +118,7 @@ baseJobInfo: careercanvas.io.model.jobfeed.BaseJobInfo
     var jobDescriptionInputDiv = document.querySelector(".job-description-input");
     if (jobDescriptionInputDiv.style.display === "none") {
     jobDescriptionInputDiv.style.display = "block";
-    this.style.backgroundImage = 'linear-gradient(to right, #FFB347, #FFCC33)';
+    this.style.backgroundColor = '#0077B5';
     this.style.color = 'white';
     } else {
     jobDescriptionInputDiv.style.display = "none";

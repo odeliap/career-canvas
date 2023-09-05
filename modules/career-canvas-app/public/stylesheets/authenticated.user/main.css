@@ -174,3 +174,11 @@
   font-size: 25px;
   margin-bottom: 30px;
 }
+
+/* Icons */
+
+.link-icon {
+    padding: 10px;
+    width: 15px;
+    height: 15px;
+}

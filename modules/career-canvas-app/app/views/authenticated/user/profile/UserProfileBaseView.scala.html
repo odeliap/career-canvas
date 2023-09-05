@@ -1,7 +1,7 @@
 @(pageName: String)(content: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.AuthenticatedUserLayout(pageName) {
-<h2>Settings</h2>
+<h2 id="settings-title">Settings</h2>
 <div class="container">
     <div class="left-panel">
         <div class="top-part">

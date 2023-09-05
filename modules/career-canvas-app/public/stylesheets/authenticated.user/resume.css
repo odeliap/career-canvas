@@ -1,5 +1,33 @@
 /* Resumes */
 
+/* Resume Upload */
+.form-container {
+  width: 50%;
+}
+
+.input-container {
+  margin-bottom: 16px;
+}
+
+.file-input {
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.submit-container {
+  margin-top: 16px;
+}
+
+.submit-button {
+  background-color: #0073b1;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+}
+
 /* Stack */
 .resume-stack {
   display: flex;
@@ -17,7 +45,7 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
+  padding: 40px;
   text-align: center;
   transition: transform .3s ease, box-shadow .3s ease;
 }
@@ -54,34 +82,33 @@
 }
 
 /* Delete Button */
+.trash-icon {
+    width: 15px;
+    height: 15px;
+}
+
 #delete-resume-button {
-  background-color: transparent;  /* No background */
-  color: #000;                    /* Black text */
-  border: 1px solid #000;         /* Black border */
-  margin-top: 10px;
-  padding: 10px 20px;             /* Padding */
-  text-align: center;             /* Center text */
-  font-size: 8px;                /* Font size */
-  text-decoration: none;          /* No underline */
-  border-radius: 5px;             /* Slightly rounded corners */
-  transition: all 0.3s ease;      /* Transition for hover effect */
+  background-color: transparent;
+  color: #5A5A5A;
+  transition: all 0.3s ease;
+  margin-left: 350px;
 }
 
 #delete-resume-button:hover {
-  background-color: #000;  /* Black background */
-  color: #fff;             /* White text */
+  color: black;
 }
 
 #delete-resume-button:disabled {
-  background-color: transparent; /* No background */
-  color: #ccc;                    /* Gray text */
-  border: 1px solid #ccc;         /* Gray border */
-  cursor: not-allowed;            /* No-click cursor */
+  background-color: transparent;
+  color: #ccc;
+  border: 1px solid #ccc;
+  cursor: not-allowed;
 }
 
 /* View Button */
 #view-resume-button {
     font-size: 10px;
+    background-color: #0073b1;
 }
 
 /* Download Button */
