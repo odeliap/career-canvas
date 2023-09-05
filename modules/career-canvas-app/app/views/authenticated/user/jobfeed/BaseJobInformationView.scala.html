@@ -2,41 +2,51 @@
 
 @authenticated.user.AuthenticatedUserLayout(s"${jobInfo.company}: ${jobInfo.jobTitle}") {
     <div class="main-page">
-        <div id="job-view-intro">
-            <div id="job-view-content">
-                <div class="job-view-title">@jobInfo.company</div>
-                <a href="@jobInfo.postUrl" target="_blank" class="job-view-subtitle">@jobInfo.jobTitle</a>
-                <div class="job-view-blank-space"></div>
-                <div class="job-view-metadata">
-                    <div class="job-view-metadata-title">Application Status: </div>
-                    <div class="job-view-metadata-content">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</div>
+        <div class="job-view-container">
+            <div class="job-view-left-section"></div>
+            <div class="job-view-middle-panel">
+                <div class="job-view-top-part">
+                    <div id="job-view-intro">
+                        <div id="job-view-content">
+                            <div class="job-view-title">@jobInfo.company</div>
+                            <a href="@jobInfo.postUrl" target="_blank" class="job-view-subtitle">@jobInfo.jobTitle</a>
+                            <div class="job-view-blank-space"></div>
+                            <div class="job-view-metadata">
+                                <div class="job-view-metadata-title">Application Status: </div>
+                                <div class="job-view-metadata-content">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</div>
+                            </div>
+                            @if(jobInfo.appSubmissionDate.nonEmpty) {
+                            <div class="job-view-metadata">
+                                <div class="job-view-metadata-title">Application Submitted:</div>
+                                <div class="job-view-metadata-content">@jobInfo.appSubmissionDate.get</div>
+                            </div>
+                            }
+                            @if(jobInfo.interviewRound.nonEmpty) {
+                            <div class="job-view-metadata">
+                                <div class="job-view-metadata-title">Interview Round: </div>
+                                <div class="job-view-metadata-content">@jobInfo.interviewRound.get</div>
+                            </div>
+                            }
+                            <div class="job-view-metadata">
+                                <div class="job-view-metadata-title">Last Updated: </div>
+                                <div class="job-view-metadata-content">@jobInfo.lastUpdate</div>
+                            </div>
+                            @if(jobInfo.notes.nonEmpty) {
+                            @if(jobInfo.notes.get != ""){
+                            <div class="job-view-metadata">
+                                <div class="job-view-metadata-title">Notes: </div>
+                                <div class="job-view-metadata-content">@jobInfo.notes.get</div>
+                            </div>
+                            }
+                            }
+                        </div>
+                    </div>
                 </div>
-                @if(jobInfo.appSubmissionDate.nonEmpty) {
-                <div class="job-view-metadata">
-                    <div class="job-view-metadata-title">Application Submitted:</div>
-                    <div class="job-view-metadata-content">@jobInfo.appSubmissionDate.get</div>
+                <div class="job-view-bottom-part">
+                    @content
                 </div>
-                }
-                @if(jobInfo.interviewRound.nonEmpty) {
-                <div class="job-view-metadata">
-                    <div class="job-view-metadata-title">Interview Round: </div>
-                    <div class="job-view-metadata-content">@jobInfo.interviewRound.get</div>
-                </div>
-                }
-                <div class="job-view-metadata">
-                    <div class="job-view-metadata-title">Last Updated: </div>
-                    <div class="job-view-metadata-content">@jobInfo.lastUpdate</div>
-                </div>
-                @if(jobInfo.notes.nonEmpty) {
-                @if(jobInfo.notes.get != ""){
-                <div class="job-view-metadata">
-                    <div class="job-view-metadata-title">Notes: </div>
-                    <div class="job-view-metadata-content">@jobInfo.notes.get</div>
-                </div>
-                }
-                }
             </div>
+            <div class="job-view-right-section"></div>
         </div>
-        @content
     </div>
 }
