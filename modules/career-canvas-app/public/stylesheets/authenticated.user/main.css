@@ -3,6 +3,7 @@
     justify-content: space-between;
     font-size: 10px;
     background: white;
+    border-bottom: 0.5px solid #d5d0ce;
 }
 
 .navbar {
@@ -80,7 +81,6 @@
 /* Navigation Pages */
 
 .content {
-    background-color: #FAF5EF;
     padding-top: 30px;
     margin: 0;
 }
@@ -100,7 +100,6 @@
 
 .main-page {
     height: 100vh;
-    background-color: #FAF5EF;
 }
 
 .main-h2 {
