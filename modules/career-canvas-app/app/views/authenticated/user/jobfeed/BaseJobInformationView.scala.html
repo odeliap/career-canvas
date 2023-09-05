@@ -3,17 +3,37 @@
 @authenticated.user.AuthenticatedUserLayout(s"${jobInfo.company}: ${jobInfo.jobTitle}") {
     <div class="main-page">
         <div id="job-view-intro">
-            <h2>@jobInfo.company - @jobInfo.jobTitle</h2>
-            <a href="@jobInfo.postUrl" target="_blank" id="job-posting-link">See job posting</a>
-            <p>Application Status: @jobInfo.status</p>
+            <div class="job-view-title">@jobInfo.company</div>
+            <a href="@jobInfo.postUrl" target="_blank" class="job-view-subtitle">@jobInfo.jobTitle</a>
+            <div class="job-view-blank-space"></div>
+            <div class="job-view-metadata">
+                <div class="job-view-metadata-title">Application Status: </div>
+                <div class="job-view-metadata-content">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</div>
+            </div>
             @if(jobInfo.appSubmissionDate.nonEmpty) {
-            <p>Application Submitted: @jobInfo.appSubmissionDate.get</p>
+                <div class="job-view-metadata">
+                    <div class="job-view-metadata-title">Application Submitted:</div>
+                    <div class="job-view-metadata-content">@jobInfo.appSubmissionDate.get</div>
+                </div>
             }
             @if(jobInfo.interviewRound.nonEmpty) {
-            <p>Interview Round: @jobInfo.interviewRound.get</p>
+                <div class="job-view-metadata">
+                    <div class="job-view-metadata-title">Interview Round: </div>
+                    <div class="job-view-metadata-content">@jobInfo.interviewRound.get</div>
+                </div>
             }
-            <p>Last Updated: @jobInfo.lastUpdate</p>
-            <p>Notes: @jobInfo.notes</p>
+            <div class="job-view-metadata">
+                <div class="job-view-metadata-title">Last Updated: </div>
+                <div class="job-view-metadata-content">@jobInfo.lastUpdate</div>
+            </div>
+            @if(jobInfo.notes.nonEmpty) {
+                @if(jobInfo.notes.get != ""){
+                    <div class="job-view-metadata">
+                        <div class="job-view-metadata-title">Notes: </div>
+                        <div class="job-view-metadata-content">@jobInfo.notes.get</div>
+                    </div>
+                }
+            }
         </div>
         @content
     </div>

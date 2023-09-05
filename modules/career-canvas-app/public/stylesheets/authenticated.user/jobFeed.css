@@ -124,6 +124,43 @@
     margin-right: 13px;
 }
 
+/* Individual Job View */
+
+.job-view-title,
+.job-view-subtitle {
+    padding: 0 0 10px 0;
+}
+
+.job-view-title {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.job-view-subtitle {
+    font-size: 20px;
+    color: #808080;
+}
+
+.job-view-blank-space {
+    height: 50px;
+}
+
+.job-view-metadata {
+    padding: 10px 0;
+    display: flex;
+    justify-content: left;
+    font-size: 16px;
+}
+
+.job-view-metadata-title {
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.job-view-metadata-content {
+
+}
+
 /* Buttons */
 
 .add-job-button a, #final-save-job-button, #remove-job-description-button {
@@ -182,6 +219,10 @@
     background-image: linear-gradient(to right, #73A5C6, #BCD2E8);
 }
 
+.job-view-subtitle:hover {
+    color: #5A5A5A;
+}
+
 /* Media Query */
 @media (max-width: 600px) {
     .box {
@@ -235,13 +276,11 @@
     border: none;
 }
 
-#job-posting-link {
-    color: #808080;
-}
-
 /* Cover Letter */
 #cover-letter-subheader {
     margin-top: 50px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 #cover-letter-content {
