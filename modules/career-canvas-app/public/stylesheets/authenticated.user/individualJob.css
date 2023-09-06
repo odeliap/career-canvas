@@ -1,0 +1,55 @@
+/* Individual Job View */
+
+#job-view-content {
+    margin: 15px 0;
+}
+
+.job-view-title,
+.job-view-subtitle {
+    padding: 0 0 10px 0;
+    font-weight: bold;
+}
+
+.job-view-title {
+    font-size: 26px;
+}
+
+.job-view-subtitle {
+    font-size: 20px;
+}
+
+.job-view-blank-space {
+    height: 50px;
+}
+
+.job-view-metadata {
+    padding: 10px 0;
+    display: flex;
+    justify-content: left;
+    font-size: 14px;
+}
+
+.job-view-metadata-title {
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+/* Files Navigation */
+
+.directory {
+    cursor: pointer;
+    user-select: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.toggle-btn {
+    margin-right: 10px;
+}
+
+.sub-directory {
+    margin-top: 5px;
+    margin-left: 20px;
+}

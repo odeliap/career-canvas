@@ -126,13 +126,13 @@ class JobFeedController @Inject()(
   }
 
   def showJobView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserAction { implicit request =>
-    Ok(views.html.authenticated.user.jobfeed.IndividualJobView(jobInfo))
+    Ok(views.html.authenticated.user.individualjob.IndividualJobView(jobInfo))
   }
 
   def generateCoverLetter(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserAction { implicit request =>
     val fullName = request.session.data(Global.SESSION_USER_FULL_NAME)
     val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo, fullName)
-    Ok(views.html.authenticated.user.jobfeed.CoverLetterDisplayView(jobInfo, coverLetter))
+    Ok(views.html.authenticated.user.individualjob.CoverLetterDisplayView(jobInfo, coverLetter))
   }
 
   private def lengthIsLessThanNCharacters(s: String, n: Int): Boolean = {

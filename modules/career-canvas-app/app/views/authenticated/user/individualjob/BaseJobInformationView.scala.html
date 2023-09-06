@@ -46,7 +46,45 @@
                     @content
                 </div>
             </div>
-            <div class="job-view-right-section"></div>
+            <div class="job-view-right-section">
+                <h4 id="files-directory-title">Files</h4>
+                <div class="directories">
+                    <div class="directory">
+                        <span class="toggle-btn">▶</span>Cover Letters
+                        <div class="sub-directory hidden">
+                            <div>Cover Letter 1</div>
+                            <div>Cover Letter 2</div>
+                        </div>
+                    </div>
+                    <div class="directory">
+                        <span class="toggle-btn">▶</span>Responses
+                        <div class="sub-directory hidden">
+                            <div>Response 1</div>
+                            <div>Response 2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const directories = document.querySelectorAll(".directory");
+
+            directories.forEach(directory => {
+                directory.addEventListener("click", function() {
+                    const toggleBtn = this.querySelector(".toggle-btn");
+                    const subDirectory = this.querySelector(".sub-directory");
+
+                    if (subDirectory.classList.contains("hidden")) {
+                        subDirectory.classList.remove("hidden");
+                        toggleBtn.textContent = "▼";
+                    } else {
+                        subDirectory.classList.add("hidden");
+                        toggleBtn.textContent = "▶";
+                    }
+                });
+            });
+        });
+    </script>
 }

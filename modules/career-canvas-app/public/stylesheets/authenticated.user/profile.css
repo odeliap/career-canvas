@@ -44,7 +44,7 @@
 /* Bottom Part */
 .bottom-part {
   height: 66.667%;
-    border-radius: 10px;
+  border-radius: 10px;
   border: 1px solid #D3D3D3;
   margin: 10px 20px 10px;
   background-color: white;
@@ -53,6 +53,7 @@
 /* Settings Content */
 .settings-content {
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .settings-sub-content {

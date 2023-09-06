@@ -15,26 +15,28 @@ resumes: Seq[careercanvas.io.model.user.Resume]
             </p>
         }
     </div>
-    <h2>My Resumes</h2>
+    <h2 class="form-header">My Resumes</h2>
     <div class="resume-stack">
         @resumes.map { resume =>
         <div class="resume-tile">
-            <form action="@routes.ProfileController.deleteResume(resume.version)" method="POST" id="delete-resume-form">
-                @helper.CSRF.formField
-                <button type="submit" id="delete-resume-button">
-                    <img src="@routes.Assets.versioned("images/profile.resumes/trash.png")" class="trash-icon">
-                </button>
-            </form>
-            <h3>Version @resume.version</h3>
-            <p>Name: @resume.name</p>
-            <p>Upload Date: @resume.uploadDate.toString.split("\\.")(0)</p>
+            <div class="resume-tile-header">
+                <h3>Version @resume.version</h3>
+                <form action="@routes.ProfileController.deleteResume(resume.version)" method="POST" id="delete-resume-form">
+                    @helper.CSRF.formField
+                    <button type="submit" class="delete-resume-button">
+                        <img src="@routes.Assets.versioned("images/profile.resumes/trash.png")" class="trash-icon">
+                    </button>
+                </form>
+            </div>
+            <p class="resume-name">Name: @resume.name</p>
+            <p class="resume-upload-date">Upload Date: @resume.uploadDate.toString.split("\\.")(0)</p>
             <a href="@routes.ProfileController.viewResume(resume.version)" id="view-resume-button">View</a>
         </div>
         }
     </div>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        var deleteButtons = document.querySelectorAll('#delete-resume-button');
+        var deleteButtons = document.querySelectorAll('.delete-resume-button');
 
         deleteButtons.forEach(function(button) {
           button.addEventListener('click', function(event) {

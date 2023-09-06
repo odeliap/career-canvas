@@ -1,5 +1,10 @@
 /* Resumes */
 
+/* Titles */
+.form-header {
+    padding: 20px 0 10px 0;
+}
+
 /* Resume Upload */
 .form-container {
   width: 50%;
@@ -30,24 +35,28 @@
 
 /* Stack */
 .resume-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  margin: 2rem 0;
+  font-family: Arial, sans-serif;
+  background-color: #f3f6f8;
 }
 
 /* Tile */
 .resume-tile {
-  width: 80%;
-  max-width: 400px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 40px;
-  text-align: center;
-  transition: transform .3s ease, box-shadow .3s ease;
+  background-color: #ffffff;
+  border: 1px solid #e1e4e8;
+  border-radius: 4px;
+  padding: 20px 20px 50px 20px;
+  margin-bottom: 16px;
+}
+
+.resume-tile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h3 {
+  color: #333333;
+  font-weight: 600;
 }
 
 .resume-tile:hover {
@@ -60,63 +69,53 @@
   margin-bottom: 0.5rem;
 }
 
-.resume-tile p {
-  font-size: 1rem;
-  color: #666;
-  margin-bottom: 1rem;
+.resume-name,
+.resume-upload-date {
+  color: #333333;
+  font-size: 14px;
 }
 
 /* Buttons in Tiles */
 .resume-tile button,
 .resume-tile a {
   padding: 0.5rem 1rem;
-  background-color: #007bff;
-  color: #fff;
+  color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.resume-tile button:hover {
-  background-color: #0056b3;
+.resume-tile button {
+  background-color: transparent;
+}
+
+.resume-tile a {
+  background-color: #0073b1;
+}
+
+.resume-tile a:hover {
+  background-color: #2E5984;
 }
 
 /* Delete Button */
 .trash-icon {
-    width: 15px;
-    height: 15px;
+  width: 18px;
+  height: 18px;
 }
 
-#delete-resume-button {
-  background-color: transparent;
-  color: #5A5A5A;
-  transition: all 0.3s ease;
-  margin-left: 350px;
-}
-
-#delete-resume-button:hover {
-  color: black;
-}
-
-#delete-resume-button:disabled {
-  background-color: transparent;
-  color: #ccc;
-  border: 1px solid #ccc;
-  cursor: not-allowed;
-}
-
-/* View Button */
-#view-resume-button {
-    font-size: 10px;
-    background-color: #0073b1;
+/* Stored Resume */
+.stored-resume {
+    box-sizing: border-box;
+    height: 500px;
+    width: 100%;
 }
 
 /* Download Button */
 .download-resume-button {
-  background-color: #007aff;  /* Blue background */
+  background-color: #0073b1;  /* Blue background */
   color: #ffffff;  /* White text */
   border: none;  /* Remove default borders */
-  border-radius: 12px;  /* Rounded corners */
+  border-radius: 15px;  /* Rounded corners */
   padding: 10px 20px;  /* Padding around text */
   font-size: 16px;  /* Text size */
   text-align: center;  /* Center-align text */
