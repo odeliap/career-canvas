@@ -2,7 +2,7 @@ package careercanvas.io.dao.impl
 
 import careercanvas.io.JobApplicationsDao
 import careercanvas.io.dao.components.JobStatusesComponent
-import careercanvas.io.model.feed.{JobInfo, UpdateJobInfo}
+import careercanvas.io.model.job.{JobInfo, UpdateJobInfo}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 

@@ -2,6 +2,7 @@
 
 create type job_status as enum('NotSubmitted', 'Submitted', 'InterviewScheduled', 'Interviewed', 'OfferMade', 'Rejected');
 create type connection_closeness as enum('Stranger', 'Acquaintance', 'Friend', 'CloseFriend', 'FamilyMember');
+create type application_file as enum('Cover Letter', 'Response');
 
 create table if not exists user_info (
     id                  serial                  primary key,
@@ -68,6 +69,17 @@ create table resumes (
     upload_date         timestamp
 );
 
+create table job_application_files (
+    user_id             serial                 not null references user_info(id),
+    job_id              serial                 not null references job_statuses(job_id),
+    file_id             serial,
+    name                varchar(255)           not null,
+    file_type           application_file       not null,
+    bucket              varchar(120)           not null,
+    prefix              varchar(320)           not null,
+    upload_date         timestamp
+);
+
 
 -- !Downs
 
@@ -77,8 +89,10 @@ drop table if exists user_info;
 drop table if exists calendar_event;
 drop table if exists job_status_breakdown;
 drop table if exists resumes;
+drop table if exists job_application_files;
 
 drop type if exists job_status;
 drop type if exists connection_closeness;
+drop type if exists application_file;
 
 drop sequence if exists event_seq;

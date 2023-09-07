@@ -1,6 +1,6 @@
 package careercanvas.io
 
-import careercanvas.io.model.feed.{JobInfo, UpdateJobInfo}
+import careercanvas.io.model.job.{JobInfo, UpdateJobInfo}
 
 import scala.concurrent.Future
 

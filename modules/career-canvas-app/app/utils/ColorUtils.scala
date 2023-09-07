@@ -1,6 +1,6 @@
 package utils
 
-import careercanvas.io.model.feed.JobStatus
+import careercanvas.io.model.job.JobStatus
 
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit

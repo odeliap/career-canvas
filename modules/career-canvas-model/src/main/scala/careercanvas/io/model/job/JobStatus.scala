@@ -1,4 +1,4 @@
-package careercanvas.io.model.feed
+package careercanvas.io.model.job
 
 import careercanvas.io.model.EnumEntry
 

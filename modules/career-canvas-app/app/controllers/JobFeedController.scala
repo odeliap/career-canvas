@@ -2,7 +2,7 @@ package controllers
 
 import authentication.{AuthenticatedUserAction, AuthenticatedUserMessagesAction}
 import careercanvas.io.converter.Converters
-import careercanvas.io.model.feed.{BaseJobInfo, JobInfo, JobPosting, SortKey, UserProvidedJobDetails}
+import careercanvas.io.model.job.{BaseJobInfo, JobInfo, JobPosting, SortKey, UserProvidedJobDetails}
 import careercanvas.io.processor.BaseJobInfoResolver
 import model.Global
 import model.forms.SortByForm

@@ -1,6 +1,6 @@
 package careercanvas.io.model.metrics
 
-import careercanvas.io.model.feed.JobStatus
+import careercanvas.io.model.job.JobStatus
 
 case class StatusPercentage(
                              userId: Long,

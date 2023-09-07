@@ -1,6 +1,6 @@
 package careercanvas.io.processor
 
-import careercanvas.io.model.feed.BaseJobInfo
+import careercanvas.io.model.job.BaseJobInfo
 import careercanvas.io.scraper.Scraper
 import careercanvas.io.util.AwaitResult
 

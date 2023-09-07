@@ -2,7 +2,7 @@ package careercanvas.io.processor
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import careercanvas.io.model.feed.{CoverLetter, JobInfo}
+import careercanvas.io.model.job.{CoverLetter, JobInfo}
 import careercanvas.io.scraper.Scraper
 import careercanvas.io.util.AwaitResult
 import io.cequence.openaiscala.service.{OpenAIService, OpenAIServiceFactory}
