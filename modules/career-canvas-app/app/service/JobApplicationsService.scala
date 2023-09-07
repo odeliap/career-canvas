@@ -1,6 +1,6 @@
 package service
 
-import careercanvas.io.JobApplicationsDao
+import careercanvas.io.{JobApplicationFilesDao, JobApplicationsDao}
 import careercanvas.io.model.job._
 import careercanvas.io.processor.CoverLetterWriter
 import careercanvas.io.util.AwaitResult
@@ -10,6 +10,7 @@ import scala.concurrent.ExecutionContext
 
 class JobApplicationsService @Inject() (
   jobApplicationsDao: JobApplicationsDao,
+  jobApplicationFilesDao: JobApplicationFilesDao,
   coverLetterWriter: CoverLetterWriter
 )(implicit ec: ExecutionContext)
   extends AwaitResult {
@@ -31,6 +32,20 @@ class JobApplicationsService @Inject() (
 
   def getJobs(userId: String): Seq[JobInfo] = {
     jobApplicationsDao.getJobs(userId.toLong).waitForResult
+  }
+
+  def getCoverLetters(userId: String, jobId: Long): Seq[ApplicationFile] = {
+    jobApplicationFilesDao
+      .getFilesByJob(userId.toLong, jobId)
+      .waitForResult
+      .filter(_.fileType.equals(ApplicationFileType.CoverLetter))
+  }
+
+  def getResponses(userId: String, jobId: Long): Seq[ApplicationFile] = {
+    jobApplicationFilesDao
+      .getFilesByJob(userId.toLong, jobId)
+      .waitForResult
+      .filter(_.fileType.equals(ApplicationFileType.Response))
   }
 
   def generateCoverLetter(jobInfo: JobInfo, name: String): CoverLetter = {

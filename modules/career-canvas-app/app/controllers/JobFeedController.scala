@@ -2,7 +2,7 @@ package controllers
 
 import authentication.{AuthenticatedUserAction, AuthenticatedUserMessagesAction}
 import careercanvas.io.converter.Converters
-import careercanvas.io.model.job.{BaseJobInfo, JobInfo, JobPosting, SortKey, UserProvidedJobDetails}
+import careercanvas.io.model.job._
 import careercanvas.io.processor.BaseJobInfoResolver
 import model.Global
 import model.forms.SortByForm
@@ -126,17 +126,19 @@ class JobFeedController @Inject()(
   }
 
   def showJobView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserAction { implicit request =>
-    Ok(views.html.authenticated.user.job.IndividualJobView(jobInfo))
+    val userId = request.session.data(Global.SESSION_USER_ID)
+    val coverLetters = jobApplicationsService.getCoverLetters(userId, jobInfo.jobId)
+    val responses = jobApplicationsService.getResponses(userId, jobInfo.jobId)
+    Ok(views.html.authenticated.user.job.IndividualJobView(jobInfo, coverLetters, responses))
   }
 
   def generateCoverLetter(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserAction { implicit request =>
+    val userId = request.session.data(Global.SESSION_USER_ID)
     val fullName = request.session.data(Global.SESSION_USER_FULL_NAME)
     val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo, fullName)
-    Ok(views.html.authenticated.user.job.CoverLetterDisplayView(jobInfo, coverLetter))
-  }
-
-  private def lengthIsLessThanNCharacters(s: String, n: Int): Boolean = {
-    if (s.length < n) true else false
+    val coverLetters = jobApplicationsService.getCoverLetters(userId, jobInfo.jobId)
+    val responses = jobApplicationsService.getResponses(userId, jobInfo.jobId)
+    Ok(views.html.authenticated.user.job.CoverLetterDisplayView(jobInfo, coverLetters, responses, coverLetter))
   }
 
 }

@@ -1,5 +1,7 @@
 @(
-jobInfo: careercanvas.io.model.job.JobInfo
+jobInfo: careercanvas.io.model.job.JobInfo,
+coverLetters: Seq[careercanvas.io.model.job.ApplicationFile],
+responses: Seq[careercanvas.io.model.job.ApplicationFile]
 )(content: Html)
 
 @authenticated.user.AuthenticatedUserLayout(s"${jobInfo.company}: ${jobInfo.jobTitle}") {
@@ -54,15 +56,17 @@ jobInfo: careercanvas.io.model.job.JobInfo
                     <div class="directory">
                         <span class="toggle-btn">▶</span>Cover Letters
                         <div class="sub-directory hidden">
-                            <div>Cover Letter 1</div>
-                            <div>Cover Letter 2</div>
+                            @coverLetters.map { coverLetter =>
+                                <div>@coverLetter.name</div>
+                            }
                         </div>
                     </div>
                     <div class="directory">
                         <span class="toggle-btn">▶</span>Responses
                         <div class="sub-directory hidden">
-                            <div>Response 1</div>
-                            <div>Response 2</div>
+                            @responses.map { response =>
+                                <div>@response.name</div>
+                            }
                         </div>
                     </div>
                 </div>

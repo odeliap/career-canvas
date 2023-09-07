@@ -1,9 +1,11 @@
 @(
 jobInfo: careercanvas.io.model.job.JobInfo,
-coverLetter: careercanvas.io.model.job.CoverLetter
+coverLetters: Seq[careercanvas.io.model.job.ApplicationFile],
+responses: Seq[careercanvas.io.model.job.ApplicationFile],
+newCoverLetter: careercanvas.io.model.job.CoverLetter
 )
 
-@BaseJobInformationView(jobInfo) {
+@BaseJobInformationView(jobInfo, coverLetters, responses) {
     <div id="cover-letter">
         <div id="cover-letter-header">
             <h3 id="cover-letter-subheader">Cover Letter</h3>
@@ -12,7 +14,7 @@ coverLetter: careercanvas.io.model.job.CoverLetter
             </div>
         </div>
         <div class="collapsible-content">
-            <textarea id="cover-letter-content">@coverLetter.content</textarea>
+            <textarea id="cover-letter-content">@newCoverLetter.content</textarea>
             <a id="save-cover-letter-button" href="#">Save</a>
         </div>
     </div>
