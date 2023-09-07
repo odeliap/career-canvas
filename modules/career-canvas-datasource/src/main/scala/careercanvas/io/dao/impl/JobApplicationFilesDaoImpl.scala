@@ -1,7 +1,7 @@
 package careercanvas.io.dao.impl
 
 import careercanvas.io.dao.components.JobApplicationFilesComponent
-import careercanvas.io.ApplicationFilesDao
+import careercanvas.io.JobApplicationFilesDao
 import careercanvas.io.model.job.ApplicationFile
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
@@ -15,10 +15,10 @@ import scala.concurrent.{ExecutionContext, Future}
  * information. All the validation for calling these methods
  * should happen downstream.
  */
-class ApplicationFilesDaoImpl @Inject() (
+class JobApplicationFilesDaoImpl @Inject()(
   protected val dbConfigProvider: DatabaseConfigProvider
-) (implicit ec: ExecutionContext)
-  extends ApplicationFilesDao
+)(implicit ec: ExecutionContext)
+  extends JobApplicationFilesDao
     with JobApplicationFilesComponent
     with HasDatabaseConfigProvider[JdbcProfile] {
 

@@ -4,7 +4,7 @@ import careercanvas.io.model.job.ApplicationFile
 
 import scala.concurrent.Future
 
-trait ApplicationFilesDao {
+trait JobApplicationFilesDao {
 
   def add(applicationFile: ApplicationFile): Future[Long]
 

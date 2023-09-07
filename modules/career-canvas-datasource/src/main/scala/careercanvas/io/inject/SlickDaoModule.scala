@@ -17,7 +17,7 @@ class SlickDaoModule() extends AbstractModule {
     bind(classOf[ConnectionsDao]).to(classOf[ConnectionsDaoImpl]).in(Scopes.SINGLETON)
     bind(classOf[CalendarEventsDao]).to(classOf[CalendarEventsDaoImpl]).in(Scopes.SINGLETON)
     bind(classOf[ResumeDao]).to(classOf[ResumeDaoImpl]).in(Scopes.SINGLETON)
-    bind(classOf[ApplicationFilesDao]).to(classOf[ApplicationFilesDaoImpl]).in(Scopes.SINGLETON)
+    bind(classOf[JobApplicationFilesDao]).to(classOf[JobApplicationFilesDaoImpl]).in(Scopes.SINGLETON)
   }
 
 }
