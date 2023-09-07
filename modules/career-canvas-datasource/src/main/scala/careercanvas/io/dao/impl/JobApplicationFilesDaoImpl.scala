@@ -30,6 +30,13 @@ class JobApplicationFilesDaoImpl @Inject()(
     db.run(insertQuery)
   }
 
+  override def getFilesByJob(userId: Long, jobId: Long): Future[Seq[ApplicationFile]] = {
+    val query = ApplicationFileQuery
+      .filter(row => row.userId === userId && row.jobId === jobId)
+
+    db.run(query.result)
+  }
+
   override def delete(fileId: Long): Future[Unit] = {
     val deleteQuery = ApplicationFileQuery
       .filter(_.fileId === fileId)
