@@ -75,6 +75,10 @@ h3 {
   font-size: 14px;
 }
 
+.resume-upload-date {
+  padding-bottom: 20px;
+}
+
 /* Buttons in Tiles */
 .resume-tile button,
 .resume-tile a {

@@ -1,4 +1,4 @@
-package careercanvas.io.model.jobfeed
+package careercanvas.io.model.feed
 
 case class JobPosting(
                        postUrl: String

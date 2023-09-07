@@ -1,6 +1,6 @@
 package careercanvas.io.dao.components
 
-import careercanvas.io.model.jobfeed.JobStatus
+import careercanvas.io.model.feed.JobStatus
 import careercanvas.io.model.metrics.StatusPercentage
 import slick.lifted.ProvenShape
 

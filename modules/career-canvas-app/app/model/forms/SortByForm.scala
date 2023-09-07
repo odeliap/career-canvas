@@ -1,5 +1,5 @@
 package model.forms
 
-import careercanvas.io.model.jobfeed.SortKey
+import careercanvas.io.model.feed.SortKey
 
 case class SortByForm(sortKey: SortKey)

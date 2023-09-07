@@ -1,8 +1,8 @@
 @(
 sortByForm: Form[model.forms.SortByForm],
-form: Form[careercanvas.io.model.jobfeed.JobPosting],
+form: Form[careercanvas.io.model.feed.JobPosting],
 getPostInfoUrl: Call,
-jobInfos: Seq[careercanvas.io.model.jobfeed.JobInfo]
+jobInfos: Seq[careercanvas.io.model.feed.JobInfo]
 )(implicit request: MessagesRequestHeader)
 
 @JobFeedFilterFormView(sortByForm, jobInfos) {
