@@ -2,7 +2,7 @@
 
 /* Page Title */
 #settings-title {
-    margin-left: 25px;
+  margin-left: 25px;
 }
 
 /* Container */
@@ -122,4 +122,17 @@
 
 .settings-sidebar-opts {
   display: grid;
+}
+
+/* Screen Sizing */
+@media only screen and (max-width: 650px) {
+    #settings-accounts-center-title, .settings-opts {
+        margin-left: -5px;
+        font-size: 12px;
+    }
+
+    .settings-sub-content {
+        margin-left: -5px;
+        font-size: 8px;
+    }
 }
