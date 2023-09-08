@@ -65,15 +65,25 @@
 /* Job URL Form */
 
 #job-post-url-form {
-    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
 #job-post-url-form input[type="text"] {
-    width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    margin-right: 50px;
 }
+
+#final-add-job-button {
+    align-self: flex-start;
+    margin-top: 10px;
+}
+
 
 /* Job Details Form */
 
@@ -201,11 +211,6 @@
 #final-save-job-button, #remove-job-description-button {
     background-color: #0077B5;
     color: white;
-}
-
-#final-add-job-button {
-    border: none;
-    margin-top: 18px;
 }
 
 .job-url-input button {
