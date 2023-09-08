@@ -15,7 +15,7 @@ trait JobApplicationFilesComponent {
 
     def userId: Rep[Long] = column[Long]("user_id")
     def jobId: Rep[Long] = column[Long]("job_id")
-    def fileId: Rep[Long] = column[Long]("file_id")
+    def fileId: Rep[Long] = column[Long]("file_id", O.AutoInc)
     def name: Rep[String] = column[String]("name")
     def fileType: Rep[ApplicationFileType] = column[ApplicationFileType]("file_type")
     def bucket: Rep[String] = column[String]("bucket")
