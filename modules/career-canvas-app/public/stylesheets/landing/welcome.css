@@ -192,7 +192,7 @@
 .or-container {
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: flex-start;
     margin-left: 10px;
     margin-top: 30px;
 }
@@ -248,4 +248,51 @@
 
 .header-sign-in:hover {
     background-color: #ecf5ff;
+}
+
+/* Screen Resizing */
+
+/* Responsive styles for smaller screens */
+@media only screen and (max-width: 664px) {
+    .content {
+        display: block;
+    }
+
+    .content-left {
+        margin-bottom: -80px;
+    }
+
+    .slogan {
+        width: 400px;
+    }
+
+    .username, .password {
+        width: 400px;
+        height: 50px;
+    }
+
+    .login-button, #join-now-button {
+        width: 405px;
+    }
+
+    .or-container {
+        justify-content: center;
+        width: 405px;
+    }
+
+    .split-line {
+        width: 200px;
+        height: 1px;
+        background-color: grey;
+    }
+
+    .or-text {
+        font-size: 14px;
+        margin: 0 15px;
+    }
+
+    #welcome-img {
+        visibility: hidden;
+        height: 0px;
+    }
 }
