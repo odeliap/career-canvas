@@ -28,9 +28,16 @@ jobInfos: Seq[JobInfo]
             'id -> "sort-by-form"
         )
 
+        <div id="starred-view-btn-container">
+            <button id="toggle-starred-view">
+                <img src="@routes.Assets.versioned("images/feed.tile/star.png")" class="toggle-star-icon">
+                Starred
+            </button>
+        </div>
+
         <div class="job-tiles">
             @jobInfos.map { jobInfo =>
-            <div class="job-tile">
+            <div class="job-tile" data-starred="@jobInfo.starred.toString.toLowerCase()">
                 <div class="job-tile-header">
                     <div class="job-tile-subheader">
                         <a href="@routes.JobFeedController.showJobView(jobInfo)" class="job-company">@jobInfo.company</a>
@@ -64,6 +71,25 @@ jobInfos: Seq[JobInfo]
         @FooterTemplate()
         <script>
             @script
+            const toggleButton = document.getElementById("toggle-starred-view");
+            let showingStarred = false;
+            toggleButton.addEventListener("click", function() {
+                const tiles = document.querySelectorAll(".job-tile");
+                tiles.forEach(tile => {
+                    if (showingStarred) {
+                        tile.style.display = '';
+                    } else if (tile.getAttribute("data-starred") !== "true") {
+                        tile.style.display = 'none';
+                    }
+                });
+
+                showingStarred = !showingStarred;
+                if (showingStarred) {
+                    toggleButton.innerHTML = 'Show All';
+                } else {
+                    toggleButton.innerHTML = '<img src="@routes.Assets.versioned("images/feed.tile/star.png")" alt="Star Icon" class="toggle-star-icon";" /> Starred';
+                }
+            });
         </script>
     </div>
 }

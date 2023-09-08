@@ -248,6 +248,40 @@
     font-weight: 500;
 }
 
+/* Starred View Button */
+
+#starred-view-btn-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#toggle-starred-view {
+    background-color: white;
+    border: 2px solid #ECECEC;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+#toggle-starred-view:hover {
+    background-color: #ECECEC;
+}
+
+#toggle-starred-view:active {
+    opacity: 0.9;
+}
+
+.toggle-star-icon {
+    height: 15px;
+    width: 15px;
+    margin-right: 10px;
+}
+
 /* Hover Effects */
 
 .job-company:hover {
