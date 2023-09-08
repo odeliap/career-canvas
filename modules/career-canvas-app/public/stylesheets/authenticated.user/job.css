@@ -11,22 +11,22 @@
 }
 
 .job-view-title {
-    font-size: 26px;
+    font-size: 3.2vw;
 }
 
 .job-view-subtitle {
-    font-size: 20px;
+    font-size: 2.6vw;
 }
 
 .job-view-blank-space {
-    height: 50px;
+    height: 3.6vw;
 }
 
 .job-view-metadata {
     padding: 10px 0;
     display: flex;
     justify-content: left;
-    font-size: 14px;
+    font-size: 1.6vw;
 }
 
 .job-view-metadata-title {
@@ -41,15 +41,53 @@
     user-select: none;
 }
 
-.hidden {
-    display: none;
+.directory-header {
+    display: flex;
+    justify-content: flex-start;
 }
 
-.toggle-btn {
-    margin-right: 10px;
+.directory-title {
+    font-size: 1.6vw;
+}
+
+.sub-directory {
+    font-size: 1.4vw;
+    text-indent: 28px;
+}
+
+.hidden {
+    display: none;
 }
 
 .sub-directory {
     margin-top: 5px;
     padding-left: 20px;
+}
+
+/* Screen Scaling */
+
+@media screen and (min-width: 900px) {
+    .job-view-title {
+        font-size: 30px;
+    }
+
+    .job-view-subtitle {
+        font-size: 24px;
+    }
+
+    .job-view-blank-space {
+        height: 36px;
+    }
+
+    .job-view-metadata {
+        font-size: 14px;
+    }
+
+    .directory-title {
+        font-size: 14px;
+    }
+
+    .sub-directory {
+        font-size: 12px;
+    }
 }

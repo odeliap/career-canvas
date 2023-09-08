@@ -147,10 +147,10 @@ class JobFeedController @Inject()(
     val jobId = (request.body \ "jobId").as[Long]
     val name = (request.body \ "name").as[String]
     val responses = (request.body \ "responses").as[Seq[ApplicationFile]]
-    val coverLetters = jobApplicationsService.getCoverLetters(userId, jobId)
     val coverLetter = (request.body \ "coverLetter").as[String]
     jobApplicationsService.saveCoverLetter(userId, jobId, name, coverLetter)
     val jobInfo = jobApplicationsService.getJobById(userId, jobId)
+    val coverLetters = jobApplicationsService.getCoverLetters(userId, jobId)
     Ok(views.html.authenticated.user.job.IndividualJobView(jobInfo, coverLetters, responses))
   }
 

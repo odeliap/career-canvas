@@ -18,7 +18,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     </head>
     <body>
-            <div class="intro">
+            <div class="header-container">
                 <div class="header">
                     <div class="header-left">
                         <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
@@ -35,20 +35,22 @@
                             <img src="@routes.Assets.versioned("images/feed.navbar/statistics.png")" class="navigation-el-icon">
                             <p class="navigation-el-name">Search Statistics</p>
                         </a>
-                        <div class="profile-dropdown">
-                            <div class="profile-element">
-                                <div class="vertical-line"></div>
-                                <button class="profile-dropbtn">
-                                    <div class="profile-dropbtn-content">
-                                        <img src="@routes.Assets.versioned("images/feed.navbar/profile.png")" class="navigation-el-icon">
-                                        <p class="navigation-el-name">Profile</p>
-                                    </div>
-                                    <i class="fa fa-caret-down"></i>
-                                </button>
-                            </div>
-                            <div class="profile-dropdown-content">
-                                <a href="@routes.ProfileController.editProfile()">Edit Profile</a>
-                                <a href="@routes.ProfileController.logout()">Log Out</a>
+                        <div class="profile-dropdown-container">
+                            <div class="profile-dropdown">
+                                <div class="profile-element">
+                                    <div class="vertical-line"></div>
+                                    <button class="profile-dropbtn">
+                                        <div class="profile-dropbtn-content">
+                                            <img src="@routes.Assets.versioned("images/feed.navbar/profile.png")" class="navigation-el-icon">
+                                            <p class="navigation-el-name">Profile</p>
+                                        </div>
+                                        <i class="fa fa-caret-down"></i>
+                                    </button>
+                                </div>
+                                <div class="profile-dropdown-content">
+                                    <a href="@routes.ProfileController.editProfile()">Edit Profile</a>
+                                    <a href="@routes.ProfileController.logout()">Log Out</a>
+                                </div>
                             </div>
                         </div>
                     </div>

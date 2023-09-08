@@ -5,10 +5,10 @@
     font-size: 17px;
     font-weight: 500;
     padding: 3px 16px;
-    border-bottom: 1px solid #D4D4D4;
     display: flex;
     justify-content: left;
     background-color: white;
+    border-bottom: 1px solid #D4D4D4;
 }
 
 #help-center-icon {
@@ -24,31 +24,26 @@
 /* Body Layout */
 .split-body {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-start;
     background-color: white;
 }
 
 /* Page Content */
 .split-page-content {
-    width: 55%;
+    width: 70%;
     height: 90%;
     overflow: auto;
-    position: absolute;
-    left: 400px;
-    top: 100px;
-    vertical-align: top;
     color: #414141;
+    padding: 20px 40px;
+    border-left: 1px solid #D4D4D4;
 }
 
 /* Sidebar */
 .sidebar {
-    height: 100%;
-    position: absolute;
-    left: 0;
+    width: 30%;
     padding-top: 15px;
     padding-right: 20px;
     background: white;
-    border-right: 1px solid #D4D4D4;
 }
 
 /* Subnav */

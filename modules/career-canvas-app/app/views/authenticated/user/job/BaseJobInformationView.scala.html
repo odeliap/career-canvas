@@ -54,7 +54,10 @@ responses: Seq[careercanvas.io.model.job.ApplicationFile]
                 <h4 id="files-directory-title">Files</h4>
                 <div class="directories">
                     <div class="directory">
-                        <span class="toggle-btn">▶</span>Cover Letters
+                        <div class="directory-header">
+                            <span class="toggle-btn">▶</span>
+                            <div class="directory-title">Cover Letters</div>
+                        </div>
                         <div class="sub-directory hidden">
                             @coverLetters.map { coverLetter =>
                                 <div>@coverLetter.name</div>
@@ -62,7 +65,10 @@ responses: Seq[careercanvas.io.model.job.ApplicationFile]
                         </div>
                     </div>
                     <div class="directory">
-                        <span class="toggle-btn">▶</span>Responses
+                        <div class="directory-header">
+                            <span class="toggle-btn">▶</span>
+                            <div class="directory-title">Responses</div>
+                        </div>
                         <div class="sub-directory hidden">
                             @responses.map { response =>
                                 <div>@response.name</div>
