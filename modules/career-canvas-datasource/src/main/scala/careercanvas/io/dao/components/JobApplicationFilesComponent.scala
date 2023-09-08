@@ -31,7 +31,7 @@ trait JobApplicationFilesComponent {
       bucket,
       prefix,
       uploadDate
-    ) <> (ApplicationFile.tupled, ApplicationFile.unapply)
+    ) <> ((ApplicationFile.apply _).tupled, ApplicationFile.unapply)
   }
 
 }

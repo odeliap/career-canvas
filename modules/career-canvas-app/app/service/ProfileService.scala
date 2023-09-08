@@ -8,8 +8,9 @@ import careercanvas.io.util.AwaitResult
 import model.forms.EditProfileForm
 import play.api.libs.Files
 import play.api.mvc.MultipartFormData
+import utils.StringUtils
 
-import java.nio.file.{ Files => NioFiles, Paths }
+import java.nio.file.{Paths, Files => NioFiles}
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -19,7 +20,8 @@ import scala.concurrent.ExecutionContext
 class ProfileService @Inject()(
   userDao: UserDao,
   resumeDao: ResumeDao,
-  storageService: StorageService
+  storageService: StorageService,
+  stringUtils: StringUtils
 )(implicit ec: ExecutionContext)
   extends AwaitResult
     with Converters {
@@ -68,10 +70,7 @@ class ProfileService @Inject()(
       case i  => (originalFileName.substring(0, i), originalFileName.substring(i))
     }
 
-    val sanitizedBaseName = name
-      .filter(c => c.isLetterOrDigit || c == '_')
-      .toLowerCase
-      .replace('_', '-')
+    val sanitizedBaseName = stringUtils.sanitizeName(name)
 
     s"$sanitizedBaseName$extension"
   }

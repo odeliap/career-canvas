@@ -52,6 +52,13 @@ class JobApplicationsDaoImpl @Inject() (
     db.run(removeJobQuery).map(_ => ())
   }
 
+  override def getJobById(userId: Long, jobId: Long): Future[JobInfo] = {
+    val query = JobStatusesQuery
+      .filter(row => row.userId === userId && row.jobId === jobId)
+
+    db.run(query.result.head)
+  }
+
   override def getJobs(userId: Long): Future[Seq[JobInfo]] = {
     val getJobsQuery = JobStatusesQuery
       .filter(_.userId === userId)

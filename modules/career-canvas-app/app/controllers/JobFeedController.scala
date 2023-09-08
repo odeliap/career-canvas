@@ -10,6 +10,7 @@ import service.JobApplicationsService
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
+import play.api.libs.json.JsValue
 import utils.FormUtils
 
 import javax.inject.Inject
@@ -140,5 +141,18 @@ class JobFeedController @Inject()(
     val responses = jobApplicationsService.getResponses(userId, jobInfo.jobId)
     Ok(views.html.authenticated.user.job.CoverLetterDisplayView(jobInfo, coverLetters, responses, coverLetter))
   }
+
+  def saveCoverLetter(): Action[JsValue] = authenticatedUserAction(parse.json) { implicit request =>
+    val userId = request.session.data(Global.SESSION_USER_ID)
+    val jobId = (request.body \ "jobId").as[Long]
+    val name = (request.body \ "name").as[String]
+    val responses = (request.body \ "responses").as[Seq[ApplicationFile]]
+    val coverLetters = jobApplicationsService.getCoverLetters(userId, jobId)
+    val coverLetter = (request.body \ "coverLetter").as[String]
+    jobApplicationsService.saveCoverLetter(userId, jobId, name, coverLetter)
+    val jobInfo = jobApplicationsService.getJobById(userId, jobId)
+    Ok(views.html.authenticated.user.job.IndividualJobView(jobInfo, coverLetters, responses))
+  }
+
 
 }

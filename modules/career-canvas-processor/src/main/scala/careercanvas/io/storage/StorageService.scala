@@ -12,4 +12,5 @@ trait StorageService {
 
   def generateSignedUrl(bucket: String, key: String): String
 
+  def saveStringToTempFileAndUpload(content: String, bucketName: String, key: String): Unit
 }

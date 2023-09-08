@@ -18,6 +18,7 @@ GET     /feed/saveJob               controllers.JobFeedController.saveJob()
 GET     /feed/removeJobDetails      controllers.JobFeedController.removeJobDetails()
 GET     /feed/job                   controllers.JobFeedController.showJobView(jobInfo: careercanvas.io.model.job.JobInfo)
 GET     /feed/job/coverLetter       controllers.JobFeedController.generateCoverLetter(jobInfo: careercanvas.io.model.job.JobInfo)
+POST    /feed/job/saveCoverLetter   controllers.JobFeedController.saveCoverLetter()
 
 # Pages for job statistics
 GET     /jobStats                   controllers.JobStatisticsController.showJobStats()
@@ -28,7 +29,7 @@ GET     /users/doEditProfile        controllers.ProfileController.processEditPro
 
 GET     /users/showResumes          controllers.ProfileController.showResumes()
 POST    /users/uploadResume         controllers.ProfileController.uploadResume()
-POST    /resumes/:version           controllers.ProfileController.deleteResume(version: Int)
+DELETE  /resumes/:version           controllers.ProfileController.deleteResume(version: Int)
 GET     /resume/:version            controllers.ProfileController.viewResume(version: Int)
 
 GET     /users/logout               controllers.ProfileController.logout()

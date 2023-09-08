@@ -8,6 +8,7 @@ import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.presigner.S3Presigner
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
 
+import java.nio.file.{Files, Paths}
 import java.time.Duration
 
 class S3StorageService(s3Client: S3Client, presigner: S3Presigner) extends StorageService {
@@ -48,6 +49,20 @@ class S3StorageService(s3Client: S3Client, presigner: S3Presigner) extends Stora
     val presignedGetObjectRequest = presigner.presignGetObject(getObjectPresignRequest)
     val presignedUrl = presignedGetObjectRequest.url()
     presignedUrl.toString
+  }
+
+  override def saveStringToTempFileAndUpload(content: String, bucketName: String, key: String): Unit = {
+    val tempFile = Files.createTempFile("prefix", ".txt")
+    Files.write(tempFile, content.getBytes)
+
+    try {
+      s3Client.putObject(
+        PutObjectRequest.builder().bucket(bucketName).key(key).build(),
+        tempFile
+      )
+    } finally {
+      Files.deleteIfExists(tempFile)
+    }
   }
 
 }

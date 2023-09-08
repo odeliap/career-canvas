@@ -2,7 +2,7 @@
 
 create type job_status as enum('NotSubmitted', 'Submitted', 'InterviewScheduled', 'Interviewed', 'OfferMade', 'Rejected');
 create type connection_closeness as enum('Stranger', 'Acquaintance', 'Friend', 'CloseFriend', 'FamilyMember');
-create type application_file as enum('Cover Letter', 'Response');
+create type application_file as enum('CoverLetter', 'Response');
 
 create table if not exists user_info (
     id                  serial                  primary key,
