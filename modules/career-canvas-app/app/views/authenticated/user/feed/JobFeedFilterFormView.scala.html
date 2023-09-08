@@ -32,7 +32,12 @@ jobInfos: Seq[JobInfo]
             @jobInfos.map { jobInfo =>
             <div class="job-tile">
                 <div class="job-tile-header">
-                    <a href="@routes.JobFeedController.showJobView(jobInfo)" class="job-company">@jobInfo.company</a>
+                    <div class="job-tile-subheader">
+                        <a href="@routes.JobFeedController.showJobView(jobInfo)" class="job-company">@jobInfo.company</a>
+                        <a href="#">
+                            <img src="@routes.Assets.versioned("images/feed.tile/star.png")" class="star-icon">
+                        </a>
+                    </div>
                     <p class="job-title">@jobInfo.jobTitle</p>
                 </div>
                 <div class="metadata-fields">

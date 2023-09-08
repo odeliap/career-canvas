@@ -164,6 +164,11 @@
     margin-bottom: 45px;
 }
 
+.job-tile-subheader {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Job Metadata */
 
 .job-company {
@@ -201,6 +206,11 @@
     height: 13px;
     width: 13px;
     margin-right: 13px;
+}
+
+.star-icon {
+    height: 18px;
+    width: 18px;
 }
 
 /* Buttons */
@@ -251,6 +261,10 @@
 .job-view-subtitle:hover {
     color: #187bcd;
     border-bottom: 1px solid #187bcd;
+}
+
+.star-icon:hover {
+    background-color: #FFFBC8;
 }
 
 /* Media Query */
