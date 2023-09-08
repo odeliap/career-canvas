@@ -5,7 +5,7 @@ getPostInfoUrl: Call,
 jobInfos: Seq[careercanvas.io.model.job.JobInfo]
 )(implicit request: MessagesRequestHeader)
 
-@JobFeedFilterFormView(sortByForm, jobInfos) {
+@BaseJobTilesView(sortByForm, jobInfos) {
 <div class="add-job-page">
     <div class="add-job-button"><a href="#" id="add-job">+</a></div>
     <div class="job-url-input" style="display: none;">

@@ -6,7 +6,7 @@ jobInfos: Seq[careercanvas.io.model.job.JobInfo],
 baseJobInfo: careercanvas.io.model.job.BaseJobInfo
 )(implicit request: MessagesRequestHeader)
 
-@JobFeedFilterFormView(sortByForm, jobInfos) {
+@BaseJobTilesView(sortByForm, jobInfos) {
 <div class="main-page">
     <div class="add-job-page">
         <div class="add-job-button">

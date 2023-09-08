@@ -16,7 +16,8 @@ case class JobInfo(
   appSubmissionDate: Option[Timestamp],
   lastUpdate: Timestamp = Timestamp.from(Instant.now()),
   interviewRound: Option[Int] = Option(0),
-  notes: Option[String] = None
+  notes: Option[String] = None,
+  starred: Boolean = false
 ) {
 
   def patch(updateJobInfo: UpdateJobInfo): JobInfo = {
@@ -24,7 +25,8 @@ case class JobInfo(
       status = updateJobInfo.status.getOrElse(this.status),
       appSubmissionDate = updateJobInfo.appSubmissionDate.orElse(this.appSubmissionDate),
       interviewRound = updateJobInfo.interviewRound.orElse(this.interviewRound),
-      notes = updateJobInfo.notes.orElse(this.notes)
+      notes = updateJobInfo.notes.orElse(this.notes),
+      starred = updateJobInfo.starred.getOrElse(this.starred)
     )
   }
 
@@ -60,8 +62,9 @@ object JobInfo {
           }
         )
         val notes = params.get("notes").map(_.head)
+        val starred = params.get("starred").map(_.head).exists(_.toBoolean)
 
-        Right(JobInfo(userId, jobId, company, jobTitle, postUrl, status, appSubmissionDate, lastUpdate, interviewRound, notes))
+        Right(JobInfo(userId, jobId, company, jobTitle, postUrl, status, appSubmissionDate, lastUpdate, interviewRound, notes, starred))
       }.getOrElse(Left("Unable to bind JobInfo"))
     }
 
@@ -71,7 +74,7 @@ object JobInfo {
       val interviewRound = jobInfo.interviewRound.map(_.toString).getOrElse("")
       val notes = jobInfo.notes.getOrElse("")
 
-      s"userId=${jobInfo.userId}&jobId=${jobInfo.jobId}&company=${jobInfo.company}&jobTitle=${jobInfo.jobTitle}&postUrl=${jobInfo.postUrl}&status=${jobInfo.status}&appSubmissionDate=$appSubmissionDate&lastUpdate=$lastUpdate&interviewRound=$interviewRound&notes=$notes"
+      s"userId=${jobInfo.userId}&jobId=${jobInfo.jobId}&company=${jobInfo.company}&jobTitle=${jobInfo.jobTitle}&postUrl=${jobInfo.postUrl}&status=${jobInfo.status}&appSubmissionDate=$appSubmissionDate&lastUpdate=$lastUpdate&interviewRound=$interviewRound&notes=$notes&starred=${jobInfo.starred}"
     }
   }
 }

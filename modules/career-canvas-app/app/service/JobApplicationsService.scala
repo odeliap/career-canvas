@@ -36,6 +36,12 @@ class JobApplicationsService @Inject() (
     jobApplicationsDao.addJob(jobInfo).waitForResult
   }
 
+  def starJob(userId: String, jobId: Long): Unit = {
+    val starred = getJobById(userId, jobId).starred
+    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId, None, None, None, None, Option(!starred))
+    jobApplicationsDao.updateJobStatus(updateJobInfo)
+  }
+
   def getJobById(userId: String, jobId: Long): JobInfo = {
     jobApplicationsDao.getJobById(userId.toLong, jobId).waitForResult
   }

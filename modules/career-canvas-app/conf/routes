@@ -19,6 +19,7 @@ GET     /feed/removeJobDetails      controllers.JobFeedController.removeJobDetai
 GET     /feed/job                   controllers.JobFeedController.showJobView(jobInfo: careercanvas.io.model.job.JobInfo)
 GET     /feed/job/coverLetter       controllers.JobFeedController.generateCoverLetter(jobInfo: careercanvas.io.model.job.JobInfo)
 POST    /feed/job/saveCoverLetter   controllers.JobFeedController.saveCoverLetter()
+GET     /feed/job/star              controllers.JobFeedController.starJob(jobId: Long)
 
 # Pages for job statistics
 GET     /jobStats                   controllers.JobStatisticsController.showJobStats()

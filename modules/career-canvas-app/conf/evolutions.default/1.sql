@@ -25,7 +25,8 @@ create table if not exists job_statuses (
     app_submission_date timestamp               null,
     last_update         timestamp,
     interview_round     int                     null,
-    notes               varchar(1024)           null
+    notes               varchar(1024)           null,
+    starred             boolean                 default false
 );
 
 create table if not exists connections (

@@ -213,6 +213,10 @@
     width: 18px;
 }
 
+.starred {
+    background-color: #FFFBC8;
+}
+
 /* Buttons */
 
 .add-job-button a, #final-save-job-button, #remove-job-description-button {

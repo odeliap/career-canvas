@@ -34,8 +34,12 @@ jobInfos: Seq[JobInfo]
                 <div class="job-tile-header">
                     <div class="job-tile-subheader">
                         <a href="@routes.JobFeedController.showJobView(jobInfo)" class="job-company">@jobInfo.company</a>
-                        <a href="#">
-                            <img src="@routes.Assets.versioned("images/feed.tile/star.png")" class="star-icon">
+                        <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
+                            @if(jobInfo.starred) {
+                                <img src="@routes.Assets.versioned("images/feed.tile/star.png")" class="star-icon starred">
+                            } else {
+                                <img src="@routes.Assets.versioned("images/feed.tile/star.png")" class="star-icon">
+                            }
                         </a>
                     </div>
                     <p class="job-title">@jobInfo.jobTitle</p>

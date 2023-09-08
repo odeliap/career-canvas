@@ -57,14 +57,14 @@ class JobFeedController @Inject()(
   private val saveJobUrl = routes.JobFeedController.saveJob()
 
   def showJobFeedHome(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userId = request.session.data(Global.SESSION_USER_ID)
-    val userJobs = jobApplicationsService.getJobs(userId)
+    val userId = retrieveUserId(request)
+    val userJobs = retrieveUserJobs(userId)
     Ok(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm, jobPostForm, getPostInfoUrl, userJobs))
   }
 
   def processJobPost(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userId = request.session.data(Global.SESSION_USER_ID)
-    val userJobs = jobApplicationsService.getJobs(userId)
+    val userId = retrieveUserId(request)
+    val userJobs = retrieveUserJobs(userId)
 
     val errorFunction = { formWithErrors: Form[JobPosting] =>
       BadRequest(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm, formWithErrors, getPostInfoUrl, userJobs))
@@ -83,16 +83,16 @@ class JobFeedController @Inject()(
   }
 
   def showAddJobDetailsForm(baseJobInfo: BaseJobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userId = request.session.data(Global.SESSION_USER_ID)
-    val userJobs = jobApplicationsService.getJobs(userId)
+    val userId = retrieveUserId(request)
+    val userJobs = retrieveUserJobs(userId)
 
     Ok(views.html.authenticated.user.feed.JobDetailsFormView(sortByForm, jobDetailsForm(baseJobInfo), saveJobUrl, userJobs, baseJobInfo))
       .withSession(request.session + ("company" -> baseJobInfo.company) + ("jobTitle" -> baseJobInfo.jobTitle) + ("postUrl" -> baseJobInfo.postUrl))
   }
 
   def saveJob(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userId = request.session.data(Global.SESSION_USER_ID)
-    val userJobs = jobApplicationsService.getJobs(userId)
+    val userId = retrieveUserId(request)
+    val userJobs = retrieveUserJobs(userId)
 
     val baseJobInfo = BaseJobInfo(
       request.session.data("company"),
@@ -106,7 +106,7 @@ class JobFeedController @Inject()(
         .withSession(request.session + ("company" -> baseJobInfo.company) + ("jobTitle" -> baseJobInfo.jobTitle) + ("postUrl" -> baseJobInfo.postUrl))
     }
     val successFunction = { data: UserProvidedJobDetails =>
-      val userId = request.session.data(Global.SESSION_USER_ID)
+      val userId = retrieveUserId(request)
       jobApplicationsService.createJob(data, baseJobInfo.postUrl, userId)
       Redirect(routes.JobFeedController.showJobFeedHome())
         .flashing("success" -> "Job frame added")
@@ -120,22 +120,22 @@ class JobFeedController @Inject()(
   }
 
   def removeJobDetails(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userId = request.session.data(Global.SESSION_USER_ID)
-    val userJobs = jobApplicationsService.getJobs(userId)
+    val userId = retrieveUserId(request)
+    val userJobs = retrieveUserJobs(userId)
     Ok(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm, jobPostForm, getPostInfoUrl, userJobs))
       .withSession(request.session -- Seq("company", "jobTitle", "postUrl"))
   }
 
   def showJobView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserAction { implicit request =>
-    val userId = request.session.data(Global.SESSION_USER_ID)
+    val userId = retrieveUserId(request)
     val coverLetters = jobApplicationsService.getCoverLetters(userId, jobInfo.jobId)
     val responses = jobApplicationsService.getResponses(userId, jobInfo.jobId)
     Ok(views.html.authenticated.user.job.IndividualJobView(jobInfo, coverLetters, responses))
   }
 
   def generateCoverLetter(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserAction { implicit request =>
-    val userId = request.session.data(Global.SESSION_USER_ID)
-    val fullName = request.session.data(Global.SESSION_USER_FULL_NAME)
+    val userId = retrieveUserId(request)
+    val fullName = retrieveUserName(request)
     val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo, fullName)
     val coverLetters = jobApplicationsService.getCoverLetters(userId, jobInfo.jobId)
     val responses = jobApplicationsService.getResponses(userId, jobInfo.jobId)
@@ -143,7 +143,7 @@ class JobFeedController @Inject()(
   }
 
   def saveCoverLetter(): Action[JsValue] = authenticatedUserAction(parse.json) { implicit request =>
-    val userId = request.session.data(Global.SESSION_USER_ID)
+    val userId = retrieveUserId(request)
     val jobId = (request.body \ "jobId").as[Long]
     val name = (request.body \ "name").as[String]
     val responses = (request.body \ "responses").as[Seq[ApplicationFile]]
@@ -154,5 +154,14 @@ class JobFeedController @Inject()(
     Ok(views.html.authenticated.user.job.IndividualJobView(jobInfo, coverLetters, responses))
   }
 
+  def starJob(jobId: Long): Action[AnyContent] = authenticatedUserAction { implicit request =>
+    val userId = retrieveUserId(request)
+    jobApplicationsService.starJob(userId, jobId)
+    Redirect(routes.JobFeedController.showJobFeedHome())
+  }
+
+  private def retrieveUserId(request: RequestHeader): String = request.session.data(Global.SESSION_USER_ID)
+  private def retrieveUserName(request: RequestHeader): String = request.session.data(Global.SESSION_USER_FULL_NAME)
+  private def retrieveUserJobs(userId: String): Seq[JobInfo] = jobApplicationsService.getJobs(userId)
 
 }
