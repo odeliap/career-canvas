@@ -20,19 +20,21 @@ jobInfos: Seq[JobInfo]
 
         @content
 
-        @helper.select(
+        <div id="job-tiles-view-options">
+            @helper.select(
             sortByForm("sortKey"),
             options = SortKey.values.map(sortKey => sortKey.toString -> s"Sort By ${sortKey.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")}"),
             '_label -> "",
             '_default -> "Sort By Date Created",
             'id -> "sort-by-form"
-        )
+            )
 
-        <div id="starred-view-btn-container">
-            <button id="toggle-starred-view">
-                <img src="@routes.Assets.versioned("images/feed.tile/star.png")" class="toggle-star-icon">
-                Starred
-            </button>
+            <div id="starred-view-btn-container">
+                <button id="toggle-starred-view">
+                    <img src="@routes.Assets.versioned("images/feed.tile/star.png")" class="toggle-star-icon">
+                    Starred
+                </button>
+            </div>
         </div>
 
         <div class="job-tiles">
