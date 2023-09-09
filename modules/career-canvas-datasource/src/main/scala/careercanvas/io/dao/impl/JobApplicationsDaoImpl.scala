@@ -63,9 +63,9 @@ class JobApplicationsDaoImpl @Inject() (
     val baseQuery = JobStatusesQuery.filter(_.userId === userId)
 
     val sortedQuery = sortKey match {
-      case SortKey.Company => baseQuery.sortBy(_.company.asc) // TODO: fix this sorting, coming out weird
+      case SortKey.Company => baseQuery.sortBy(_.company.asc)
       case SortKey.JobTitle => baseQuery.sortBy(_.jobTitle.asc)
-      case SortKey.Status => baseQuery // TODO: fix sorting for status
+      case SortKey.Status => baseQuery.sortBy(_.status.toString.asColumnOf[String].asc)
       case SortKey.ApplicationSubmissionDate => baseQuery.sortBy(_.appSubmissionDate.asc)
       case SortKey.LastUpdate => baseQuery.sortBy(_.lastUpdate.asc)
     }
