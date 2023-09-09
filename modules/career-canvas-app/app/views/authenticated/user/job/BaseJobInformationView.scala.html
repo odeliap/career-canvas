@@ -2,7 +2,7 @@
 jobInfo: careercanvas.io.model.job.JobInfo,
 coverLetters: Seq[careercanvas.io.model.job.ApplicationFile],
 responses: Seq[careercanvas.io.model.job.ApplicationFile]
-)(content: Html)
+)(content: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.AuthenticatedUserLayout(s"${jobInfo.company}: ${jobInfo.jobTitle}") {
     <div class="main-page">
@@ -12,7 +12,15 @@ responses: Seq[careercanvas.io.model.job.ApplicationFile]
                 <div class="job-view-top-part">
                     <div id="job-view-intro">
                         <div id="job-view-content">
-                            <div class="job-view-title">@jobInfo.company</div>
+                            <div class="job-view-content-header">
+                                <div class="job-view-title">@jobInfo.company</div>
+                                <form action="@routes.JobFeedController.deleteJob(jobInfo.jobId)" method="POST" id="delete-job-form">
+                                    @helper.CSRF.formField
+                                    <button type="submit" class="delete-job-button">
+                                        <img src="@routes.Assets.versioned("images/job/trash.png")" class="delete-job-icon">
+                                    </button>
+                                </form>
+                            </div>
                             <a href="@jobInfo.postUrl" target="_blank" class="job-view-subtitle">@jobInfo.jobTitle</a>
                             <div class="job-view-blank-space"></div>
                             <div class="job-view-metadata">
@@ -98,5 +106,21 @@ responses: Seq[careercanvas.io.model.job.ApplicationFile]
                 });
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+        var deleteButtons = document.querySelectorAll('.delete-job-button');
+
+        deleteButtons.forEach(function(button) {
+          button.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            var isConfirmed = window.confirm('Are you sure you want to delete this job?');
+
+            if (isConfirmed) {
+              event.target.closest('#delete-job-form').submit();
+            }
+          });
+        });
+      });
     </script>
 }

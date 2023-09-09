@@ -36,6 +36,10 @@ class JobApplicationsService @Inject() (
     jobApplicationsDao.addJob(jobInfo).waitForResult
   }
 
+  def deleteJob(userId: String, jobId: Long): Unit = {
+    jobApplicationsDao.removeJob(userId.toLong, jobId)
+  }
+
   def starJob(userId: String, jobId: Long): Unit = {
     val starred = getJobById(userId, jobId).starred
     val updateJobInfo = UpdateJobInfo(userId.toLong, jobId, None, None, None, None, Option(!starred))

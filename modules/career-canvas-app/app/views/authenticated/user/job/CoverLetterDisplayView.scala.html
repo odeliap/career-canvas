@@ -5,7 +5,7 @@ jobInfo: careercanvas.io.model.job.JobInfo,
 coverLetters: Seq[careercanvas.io.model.job.ApplicationFile],
 responses: Seq[careercanvas.io.model.job.ApplicationFile],
 newCoverLetter: careercanvas.io.model.job.CoverLetter
-)(implicit request: play.api.mvc.RequestHeader)
+)(implicit request: MessagesRequestHeader)
 
 @BaseJobInformationView(jobInfo, coverLetters, responses) {
     <div id="cover-letter">

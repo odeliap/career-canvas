@@ -4,6 +4,11 @@
     margin: 15px 0;
 }
 
+.job-view-content-header {
+    display: flex;
+    justify-content: space-between;
+}
+
 .job-view-title,
 .job-view-subtitle {
     padding: 0 0 10px 0;
@@ -32,6 +37,18 @@
 .job-view-metadata-title {
     font-weight: bold;
     padding-right: 10px;
+}
+
+/* Delete Button */
+
+.delete-job-button {
+    background-color: white;
+    border: none;
+}
+
+.delete-job-icon {
+  width: 18px;
+  height: 18px;
 }
 
 /* Files Navigation */

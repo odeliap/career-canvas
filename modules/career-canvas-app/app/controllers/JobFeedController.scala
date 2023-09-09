@@ -126,14 +126,20 @@ class JobFeedController @Inject()(
       .withSession(request.session -- Seq("company", "jobTitle", "postUrl"))
   }
 
-  def showJobView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserAction { implicit request =>
+  def deleteJob(jobId: Long): Action[AnyContent] = authenticatedUserAction { implicit request =>
+    val userId = retrieveUserId(request)
+    jobApplicationsService.deleteJob(userId, jobId)
+    Redirect(routes.JobFeedController.showJobFeedHome())
+  }
+
+  def showJobView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = retrieveUserId(request)
     val coverLetters = jobApplicationsService.getCoverLetters(userId, jobInfo.jobId)
     val responses = jobApplicationsService.getResponses(userId, jobInfo.jobId)
     Ok(views.html.authenticated.user.job.IndividualJobView(jobInfo, coverLetters, responses))
   }
 
-  def generateCoverLetter(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserAction { implicit request =>
+  def generateCoverLetter(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = retrieveUserId(request)
     val fullName = retrieveUserName(request)
     val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo, fullName)
@@ -142,7 +148,7 @@ class JobFeedController @Inject()(
     Ok(views.html.authenticated.user.job.CoverLetterDisplayView(jobInfo, coverLetters, responses, coverLetter))
   }
 
-  def saveCoverLetter(): Action[JsValue] = authenticatedUserAction(parse.json) { implicit request =>
+  def saveCoverLetter(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
     val userId = retrieveUserId(request)
     val jobId = (request.body \ "jobId").as[Long]
     val name = (request.body \ "name").as[String]
