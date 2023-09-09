@@ -8,8 +8,7 @@ totalRejections: Int
 
 @authenticated.user.AuthenticatedUserLayout("Statistics | Career Canvas") {
     <div class="main-page statistics-view">
-        <div id="status-percentages-container"></div>
-        <div class="content-gap"></div>
+        <div class="status-percentages-container"></div>
         <div class="section" id="section-1">
             <div class="subsection">
                 <div class="section-title">Total Applications</div>
@@ -43,7 +42,7 @@ totalRejections: Int
                 <div class="section-info"></div>
             </div>
             <div class="subsection">
-                @searchDuration
+                @searchDuration days
             </div>
         </div>
         <script src="http://code.highcharts.com/highcharts.js"></script>
