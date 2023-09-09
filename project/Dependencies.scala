@@ -30,6 +30,10 @@ object Dependencies {
       val s3Version = "2.19.30"
     }
 
+    object mail {
+      val sendGridVersion = "4.7.1"
+    }
+
     object standard {
       val betterFilesVersion = "3.9.1"
     }
@@ -70,6 +74,11 @@ object Dependencies {
     object aws {
       import versions.aws._
       val s3 = "software.amazon.awssdk" % "s3" % s3Version
+    }
+
+    object mail {
+      import versions.mail._
+      val sendGrid = "com.sendgrid" % "sendgrid-java" % sendGridVersion
     }
 
     object standard {

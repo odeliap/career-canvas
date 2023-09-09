@@ -1,7 +1,9 @@
 package controllers
 
+import careercanvas.io.email.EmailService
 import careercanvas.io.model.user.{BaseUser, User, UserPublicLoginInfo}
 import model.Global
+import model.forms.SetNewPasswordForm
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
 
@@ -14,7 +16,8 @@ import utils.FormUtils
 class LandingController @Inject()(
   cc: MessagesControllerComponents,
   formUtils: FormUtils,
-  userService: UserService
+  userService: UserService,
+  emailService: EmailService
 ) extends MessagesAbstractController(cc) {
 
   private val logger = play.api.Logger(this.getClass)
@@ -49,11 +52,21 @@ class LandingController @Inject()(
     )(UserPublicLoginInfo.apply)(UserPublicLoginInfo.unapply)
   )
 
+  val setNewPasswordForm: Form[SetNewPasswordForm] = Form (
+    mapping(
+      "newPassword" -> nonEmptyText
+        .verifying("too few chars", s => formUtils.lengthIsGreaterThanNCharacters(s, 10))
+        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 30)),
+      "confirmNewPassword" -> nonEmptyText
+        .verifying("too few chars", s => formUtils.lengthIsGreaterThanNCharacters(s, 10))
+        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 30))
+    )(SetNewPasswordForm.apply)(SetNewPasswordForm.unapply)
+  )
+
   private val loginSubmitUrl = routes.LandingController.processLoginAttempt()
-
   private val signUpUrl = routes.LandingController.processSignUpAttempt()
-
-  private val forgotPasswordUrl = routes.LandingController.forgotPassword()
+  private val forgotPasswordUrl = routes.LandingController.doResetPasswordProcessing()
+  private def setNewPasswordSubmitUrl(id: String, token: String) = routes.LandingController.doSetNewPassword(id, token)
 
   def showWelcomePage(): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     Ok(views.html.landing.WelcomeLandingView(loginForm, loginSubmitUrl))
@@ -118,16 +131,50 @@ class LandingController @Inject()(
     Ok(views.html.user.ForgotPasswordView(forgotPasswordForm, forgotPasswordUrl))
   }
 
-  def doForgotPasswordProcessing(): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
+  def doResetPasswordProcessing(): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[UserPublicLoginInfo] =>
       BadRequest(views.html.user.ForgotPasswordView(formWithErrors, forgotPasswordUrl))
     }
     val successFunction = { userPublicLoginInfo: UserPublicLoginInfo =>
-      // TODO: send reset password link to email
-      Redirect(routes.LandingController.forgotPassword())
-        .flashing("success" -> "Sent reset password link.")
+      if (!userService.checkValidEmail(Option(userPublicLoginInfo.email))) {
+        // TODO: fixme!
+        //val resetLink = "http://localhost"
+        //emailService.sendResetEmail(userPublicLoginInfo.email, resetLink)
+        Redirect(routes.LandingController.forgotPassword())
+          .flashing("success" -> "Sent reset password link. Please check your email.")
+      } else {
+        Redirect(routes.LandingController.forgotPassword())
+          .flashing("error" -> "Email does not exist in our records.")
+      }
     }
     val formValidationResult: Form[UserPublicLoginInfo] = forgotPasswordForm.bindFromRequest
+    formValidationResult.fold(
+      errorFunction,
+      successFunction
+    )
+  }
+
+  // TODO: FIXME!
+  def setNewPassword(userId: String, token: String): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
+    Ok(views.html.user.ResetPasswordView(setNewPasswordForm, setNewPasswordSubmitUrl(userId, token)))
+  }
+
+  // TODO: FIXME!
+  def doSetNewPassword(userId: String, token: String): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
+    val errorFunction = { formWithErrors: Form[SetNewPasswordForm] =>
+      BadRequest(views.html.user.ResetPasswordView(formWithErrors, setNewPasswordSubmitUrl(userId, token)))
+    }
+    val successFunction = { setNewPasswordInfo: SetNewPasswordForm =>
+      if (setNewPasswordInfo.newPassword == setNewPasswordInfo.confirmNewPassword) {
+        userService.updateUserPassword(userId, setNewPasswordInfo.newPassword)
+        Redirect(routes.LandingController.setNewPassword(userId, token))
+          .flashing("success" -> "Updated password. Please log in.")
+      } else {
+        Redirect(routes.LandingController.setNewPassword(userId, token))
+          .flashing("error" -> "Passwords do not match.")
+      }
+    }
+    val formValidationResult: Form[SetNewPasswordForm] = setNewPasswordForm.bindFromRequest
     formValidationResult.fold(
       errorFunction,
       successFunction

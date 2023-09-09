@@ -40,8 +40,8 @@ class UserService @Inject()(
     }.waitForResult
   }
 
-  def updateUserPassword(id: Long, newPassword: String): Unit = {
-    userDao.update(UpdateUserInfo(id = id, password = Option(newPassword))).waitForResult
+  def updateUserPassword(id: String, newPassword: String): Unit = {
+    userDao.update(UpdateUserInfo(id = id.toLong, password = Option(newPassword))).waitForResult
   }
 
   def checkValidEmail(email: Option[String]): Boolean = {

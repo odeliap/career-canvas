@@ -10,7 +10,9 @@ GET     /users/doLogin              controllers.LandingController.processLoginAt
 GET     /users/signUp               controllers.LandingController.showSignUpForm()
 GET     /users/doSignUp             controllers.LandingController.processSignUpAttempt()
 GET     /users/forgotPassword       controllers.LandingController.forgotPassword()
-GET     /users/doForgotPassword     controllers.LandingController.doForgotPasswordProcessing()
+GET     /users/reset                controllers.LandingController.doResetPasswordProcessing()
+GET     /users/setNewPassword:id:token      controllers.LandingController.setNewPassword(id: String, token: String)
+GET     /users/doSetNewPassword:id:token    controllers.LandingController.doSetNewPassword(id: String, token: String)
 
 # Pages for job feed
 GET     /feed                       controllers.JobFeedController.showJobFeedHome()
