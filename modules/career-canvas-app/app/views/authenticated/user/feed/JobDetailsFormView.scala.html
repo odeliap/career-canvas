@@ -3,10 +3,11 @@ sortByForm: Form[model.forms.SortByForm],
 form: Form[careercanvas.io.model.job.UserProvidedJobDetails],
 saveJobUrl: Call,
 jobInfos: Seq[careercanvas.io.model.job.JobInfo],
+hasNext: Boolean,
 baseJobInfo: careercanvas.io.model.job.BaseJobInfo
 )(implicit request: MessagesRequestHeader)
 
-@BaseJobTilesView(sortByForm, jobInfos) {
+@BaseJobTilesView(sortByForm, jobInfos, hasNext) {
 <div class="main-page">
     <div class="add-job-page">
         <div class="add-job-button">

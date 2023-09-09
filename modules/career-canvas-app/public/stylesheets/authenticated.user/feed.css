@@ -259,6 +259,32 @@
     font-weight: 500;
 }
 
+/* Load More Button */
+
+#load-more-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -100px;
+}
+
+#load-more-button {
+    background-color: white;
+    border: 2px solid #ECECEC;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    margin: 13px 0 0 20px;
+    font-size: 20px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+#load-more-button:hover {
+    background-color: #ECECEC;
+}
+
 /* Starred View Button */
 
 #starred-view-btn-container {

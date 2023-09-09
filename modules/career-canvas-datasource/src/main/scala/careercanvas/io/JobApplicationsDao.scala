@@ -1,6 +1,6 @@
 package careercanvas.io
 
-import careercanvas.io.model.job.{JobInfo, SortKey, UpdateJobInfo}
+import careercanvas.io.model.job._
 
 import scala.concurrent.Future
 
@@ -14,6 +14,6 @@ trait JobApplicationsDao {
 
   def getJobById(userId: Long, jobId: Long): Future[JobInfo]
 
-  def getJobs(userId: Long, sortKey: SortKey): Future[Seq[JobInfo]]
+  def getJobs(userId: Long, offset: Int, limit: Int, sortKey: SortKey): Future[JobsResult]
 
 }

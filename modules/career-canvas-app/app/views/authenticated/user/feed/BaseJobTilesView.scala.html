@@ -1,7 +1,8 @@
 @import careercanvas.io.model.job._
 @(
 sortByForm: Form[model.forms.SortByForm],
-jobInfos: Seq[JobInfo]
+jobInfos: Seq[JobInfo],
+hasNext: Boolean
 )(content: Html)(script: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.AuthenticatedUserLayout("Feed | Career Canvas") {
@@ -74,6 +75,11 @@ jobInfos: Seq[JobInfo]
             </div>
             }
         </div>
+        @if(hasNext) {
+            <div id="load-more-button-container">
+                <a href="#" id="load-more-button">Load More</a>
+            </div>
+        }
         @FooterTemplate()
         <script>
             @script

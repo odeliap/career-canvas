@@ -46,8 +46,10 @@ class JobApplicationsService @Inject() (
     jobApplicationsDao.getJobById(userId.toLong, jobId).waitForResult
   }
 
-  def getJobs(userId: String, sortKey: SortKey = SortKey.Company): Seq[JobInfo] = {
-    jobApplicationsDao.getJobs(userId.toLong, sortKey).waitForResult
+  def getJobs(userId: String, sortKey: SortKey, page: Int = 1): JobsResult = {
+    val limit = 30
+    val offset = (page - 1) * limit
+    jobApplicationsDao.getJobs(userId.toLong, offset, limit, sortKey).waitForResult
   }
 
   def getCoverLetters(userId: String, jobId: Long): Seq[ApplicationFile] = {

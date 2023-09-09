@@ -2,7 +2,7 @@ package careercanvas.io.dao.impl
 
 import careercanvas.io.JobApplicationsDao
 import careercanvas.io.dao.components.JobStatusesComponent
-import careercanvas.io.model.job.{JobInfo, SortKey, UpdateJobInfo}
+import careercanvas.io.model.job.{JobInfo, JobsResult, SortKey, UpdateJobInfo}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 
@@ -59,7 +59,7 @@ class JobApplicationsDaoImpl @Inject() (
     db.run(query.result.head)
   }
 
-  override def getJobs(userId: Long, sortKey: SortKey): Future[Seq[JobInfo]] = {
+  override def getJobs(userId: Long, offset: Int, limit: Int, sortKey: SortKey): Future[JobsResult] = {
     val baseQuery = JobStatusesQuery.filter(_.userId === userId)
 
     val sortedQuery = sortKey match {
@@ -70,7 +70,15 @@ class JobApplicationsDaoImpl @Inject() (
       case SortKey.LastUpdate => baseQuery.sortBy(_.lastUpdate.asc)
     }
 
-    db.run(sortedQuery.result)
+    val finalQuery = sortedQuery
+      .drop(offset)
+      .take(limit + 1)
+
+    db.run(finalQuery.result).map { result =>
+      val jobs = result.dropRight(1)
+      val hasNext = result.size > limit
+      JobsResult(jobs, hasNext)
+    }
   }
 
 }
