@@ -19,4 +19,5 @@ object JobStatus {
       .find(status => status.toString.equalsIgnoreCase(input))
       .getOrElse(throw new IllegalArgumentException("Input string does not match any JobStatus enum"))
   }
+
 }

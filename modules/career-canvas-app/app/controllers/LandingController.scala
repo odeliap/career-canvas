@@ -1,6 +1,6 @@
 package controllers
 
-import careercanvas.io.model.user.{BaseUser, User}
+import careercanvas.io.model.user.{BaseUser, User, UserPublicLoginInfo}
 import model.Global
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText}
@@ -42,9 +42,18 @@ class LandingController @Inject()(
     )(User.apply)(User.unapply)
   )
 
+  val forgotPasswordForm: Form[UserPublicLoginInfo] = Form (
+    mapping(
+      "email" -> nonEmptyText
+        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 320))
+    )(UserPublicLoginInfo.apply)(UserPublicLoginInfo.unapply)
+  )
+
   private val loginSubmitUrl = routes.LandingController.processLoginAttempt()
 
   private val signUpUrl = routes.LandingController.processSignUpAttempt()
+
+  private val forgotPasswordUrl = routes.LandingController.forgotPassword()
 
   def showWelcomePage(): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     Ok(views.html.landing.WelcomeLandingView(loginForm, loginSubmitUrl))
@@ -99,6 +108,26 @@ class LandingController @Inject()(
       }
     }
     val formValidationResult: Form[BaseUser] = loginForm.bindFromRequest
+    formValidationResult.fold(
+      errorFunction,
+      successFunction
+    )
+  }
+
+  def forgotPassword: Action[AnyContent] = Action { implicit request =>
+    Ok(views.html.user.ForgotPasswordView(forgotPasswordForm, forgotPasswordUrl))
+  }
+
+  def doForgotPasswordProcessing(): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
+    val errorFunction = { formWithErrors: Form[UserPublicLoginInfo] =>
+      BadRequest(views.html.user.ForgotPasswordView(formWithErrors, forgotPasswordUrl))
+    }
+    val successFunction = { userPublicLoginInfo: UserPublicLoginInfo =>
+      // TODO: send reset password link to email
+      Redirect(routes.LandingController.forgotPassword())
+        .flashing("success" -> "Sent reset password link.")
+    }
+    val formValidationResult: Form[UserPublicLoginInfo] = forgotPasswordForm.bindFromRequest
     formValidationResult.fold(
       errorFunction,
       successFunction

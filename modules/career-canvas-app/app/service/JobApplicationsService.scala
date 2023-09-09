@@ -46,8 +46,8 @@ class JobApplicationsService @Inject() (
     jobApplicationsDao.getJobById(userId.toLong, jobId).waitForResult
   }
 
-  def getJobs(userId: String): Seq[JobInfo] = {
-    jobApplicationsDao.getJobs(userId.toLong).waitForResult
+  def getJobs(userId: String, sortKey: SortKey = SortKey.ApplicationSubmissionDate): Seq[JobInfo] = {
+    jobApplicationsDao.getJobs(userId.toLong, sortKey).waitForResult
   }
 
   def getCoverLetters(userId: String, jobId: Long): Seq[ApplicationFile] = {

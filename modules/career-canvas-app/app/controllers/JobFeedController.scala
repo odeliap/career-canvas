@@ -160,6 +160,20 @@ class JobFeedController @Inject()(
     Redirect(routes.JobFeedController.showJobFeedHome())
   }
 
+  def sortJobs() : Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
+    val userId = retrieveUserId(request)
+    sortByForm.bindFromRequest.fold(
+      formWithErrors => {
+        val userJobs = retrieveUserJobs(userId)
+        BadRequest(views.html.authenticated.user.feed.JobFeedDashboardView(formWithErrors, jobPostForm, getPostInfoUrl, userJobs))
+      },
+      sortFormData => {
+        val sortedJobInfos = jobApplicationsService.getJobs(userId, sortFormData.sortKey)
+        Ok(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm.fill(sortFormData), jobPostForm, getPostInfoUrl, sortedJobInfos))
+      }
+    )
+  }
+
   private def retrieveUserId(request: RequestHeader): String = request.session.data(Global.SESSION_USER_ID)
   private def retrieveUserName(request: RequestHeader): String = request.session.data(Global.SESSION_USER_FULL_NAME)
   private def retrieveUserJobs(userId: String): Seq[JobInfo] = jobApplicationsService.getJobs(userId)

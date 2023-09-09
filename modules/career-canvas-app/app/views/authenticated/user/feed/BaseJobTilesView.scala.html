@@ -21,13 +21,17 @@ jobInfos: Seq[JobInfo]
         @content
 
         <div id="job-tiles-view-options">
-            @helper.select(
-            sortByForm("sortKey"),
-            options = SortKey.values.map(sortKey => sortKey.toString -> s"Sort By ${sortKey.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")}"),
-            '_label -> "",
-            '_default -> "Sort By Date Created",
-            'id -> "sort-by-form"
-            )
+            <form id="sortForm" action="@routes.JobFeedController.sortJobs()" method="get">
+                @helper.CSRF.formField
+
+                @helper.select(
+                sortByForm("sortKey"),
+                options = SortKey.values.map(sortKey => sortKey.toString -> s"Sort By ${sortKey.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")}"),
+                '_label -> "",
+                'id -> "sort-by-form"
+                )
+                <input type="submit" style="display: none;" id="submitSortForm">
+            </form>
 
             <div id="starred-view-btn-container">
                 <button id="toggle-starred-view">
@@ -91,6 +95,10 @@ jobInfos: Seq[JobInfo]
                 } else {
                     toggleButton.innerHTML = '<img src="@routes.Assets.versioned("images/feed.tile/star.png")" alt="Star Icon" class="toggle-star-icon";" /> Starred';
                 }
+            });
+
+            document.getElementById("sort-by-form").addEventListener("change", function() {
+                document.getElementById("sortForm").submit();
             });
         </script>
     </div>

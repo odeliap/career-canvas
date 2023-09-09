@@ -160,7 +160,6 @@
   padding: 20px;
   border-radius: 15px;
   border: 1px solid #D3D3D3;
-  font-size: 14px;
   line-height: 20px;
   position: relative;
   margin-bottom: 40px;
@@ -173,6 +172,12 @@
 .job-tile-subheader {
     display: flex;
     justify-content: space-between;
+}
+
+@media only screen and (max-width: 594px) {
+    .job-tile {
+        width: 450px;
+    }
 }
 
 /* Job Metadata */

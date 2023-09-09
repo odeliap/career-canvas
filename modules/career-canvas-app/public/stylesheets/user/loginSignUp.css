@@ -25,17 +25,17 @@
 }
 
 /* Forms and Fields */
-.user-login-signup-form {
+.user-login-signup-form, .forgot-password-form {
     margin-top: 30px;
     font-size: 12px;
     color: red;
 }
 
-.user-login-signup-form-fields {
+.user-login-signup-form-fields, .forgot-password-form-fields {
     margin-left: -40px;
 }
 
-.username, .password, .fullName {
+.username, .password, .fullName, .email {
     background-color: white;
     border-radius: 5px;
     border: 1px solid black;
@@ -53,7 +53,7 @@
 }
 
 /* Buttons */
-.login-signup-btn, .switch-up-btn {
+.login-signup-btn, .send-reset-password-link-button, .switch-up-btn {
     width: 250px;
     height: 30px;
     border-radius: 5px;
@@ -61,7 +61,7 @@
     font-size: 13px;
 }
 
-.login-signup-btn {
+.login-signup-btn, .send-reset-password-link-button {
     background: #26abff;
     margin: 10px 50px;
     border: none;
@@ -73,12 +73,12 @@
 }
 
 /* Text */
-.forgot-password, .terms-note, .switch-up-txt {
+.forgot-password, .log-in, .login-in, .terms-note, .switch-up-txt {
     text-align: center;
     font-size: 10px;
 }
 
-.forgot-password, .terms-note {
+.forgot-password, .log-in, .log-in, .terms-note {
     position: fixed;
     bottom: 50px;
     left: 40px;
