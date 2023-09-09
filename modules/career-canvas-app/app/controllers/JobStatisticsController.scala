@@ -20,9 +20,10 @@ class JobStatisticsController @Inject()(
 
   def showJobStats(): Action[AnyContent] = authenticatedUserAction { implicit request: Request[AnyContent] =>
     val userId = request.session.data(Global.SESSION_USER_ID)
-    val statusPercentages = jobStatisticsService.getStatusBreakdown(userId)
+    val metrics = jobStatisticsService.getMetrics(userId)
+    val statusPercentages = jobStatisticsService.cleanStatusBreakdown(metrics.statusPercentages)
     val statusPercentagesHtml = new Html(Json.toJson(statusPercentages).toString())
-    Ok(views.html.authenticated.user.statistics.JobStatisticsView(statusPercentagesHtml))
+    Ok(views.html.authenticated.user.statistics.JobStatisticsView(statusPercentagesHtml, metrics.searchDuration, metrics.totalApplications, metrics.totalOffers, metrics.totalRejections))
   }
 
 }

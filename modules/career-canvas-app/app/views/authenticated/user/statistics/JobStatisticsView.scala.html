@@ -1,13 +1,56 @@
-@(statusPercentages: Html)
+@(
+statusPercentages: Html,
+searchDuration: Long,
+totalApplications: Int,
+totalOffers: Int,
+totalRejections: Int
+)
 
 @authenticated.user.AuthenticatedUserLayout("Statistics | Career Canvas") {
-    <div class="main-page">
-        <div id="container" style="width:100%; height:400px;"></div>
+    <div class="main-page statistics-view">
+        <div id="status-percentages-container"></div>
+        <div class="content-gap"></div>
+        <div class="section" id="section-1">
+            <div class="subsection">
+                <div class="section-title">Total Applications</div>
+                <div class="section-info"></div>
+            </div>
+            <div class="subsection">
+                @totalApplications
+            </div>
+        </div>
+        <div class="section" id="section-2">
+            <div class="subsection">
+                <div class="section-title">Applications to Offers</div>
+                <div class="section-info"></div>
+            </div>
+            <div class="subsection">
+                @totalApplications : @totalOffers
+            </div>
+        </div>
+        <div class="section" id="section-3">
+            <div class="subsection">
+                <div class="section-title">Applications to Rejections</div>
+                <div class="section-info"></div>
+            </div>
+            <div class="subsection">
+                @totalApplications : @totalRejections
+            </div>
+        </div>
+        <div class="section" id="section-4">
+            <div class="subsection">
+                <div class="section-title">Job Search Duration</div>
+                <div class="section-info"></div>
+            </div>
+            <div class="subsection">
+                @searchDuration
+            </div>
+        </div>
         <script src="http://code.highcharts.com/highcharts.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                var statusPercentages = @statusPercentages;
-                const data = Array.from(statusPercentages);
+                var percentages = @statusPercentages;
+                const data = Array.from(percentages);
                 var series = [];
                 for(n in data) {
                     series.push({
@@ -16,7 +59,7 @@
                     })
                 };
                 if (series.length !== 0) {
-                    const chart = Highcharts.chart('container', {
+                    const chart = Highcharts.chart('status-percentages-container', {
                         chart: {
                             plotBackgroundColor: null,
                             plotBorderWidth: null,

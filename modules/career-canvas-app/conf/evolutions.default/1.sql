@@ -55,12 +55,6 @@ create table calendar_event (
 
 create sequence event_seq;
 
-create table job_status_breakdown (
-    user_id             integer,
-    status              job_status,
-    percentage          numeric
-);
-
 create table resumes (
     user_id             serial                 not null references user_info(id),
     version             serial,
@@ -88,7 +82,6 @@ drop table if exists connections;
 drop table if exists job_statuses;
 drop table if exists user_info;
 drop table if exists calendar_event;
-drop table if exists job_status_breakdown;
 drop table if exists resumes;
 drop table if exists job_application_files;
 

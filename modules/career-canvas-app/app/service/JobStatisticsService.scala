@@ -1,6 +1,7 @@
 package service
 
 import careercanvas.io.JobStatisticsDao
+import careercanvas.io.model.metrics.{MetricsDao, StatusPercentage}
 import careercanvas.io.util.AwaitResult
 
 import javax.inject.Inject
@@ -11,10 +12,14 @@ class JobStatisticsService @Inject() (
 )(implicit ec: ExecutionContext)
   extends AwaitResult {
 
-  def getStatusBreakdown(userId: String): Seq[(String, Long)] = {
+  def getMetrics(userId: String): MetricsDao = {
     jobStatisticsDao
-      .getStatusPercentages(userId.toLong)
+      .calculateMetrics(userId.toLong)
       .waitForResult
+  }
+
+  def cleanStatusBreakdown(statusPercentages: Seq[StatusPercentage]): Seq[(String, Double)] = {
+    statusPercentages
       .map(statusPercentage => (
         statusPercentage.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2"),
         statusPercentage.percentage)

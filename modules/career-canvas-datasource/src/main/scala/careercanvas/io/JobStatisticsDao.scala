@@ -1,11 +1,11 @@
 package careercanvas.io
 
-import careercanvas.io.model.metrics.StatusPercentage
+import careercanvas.io.model.metrics.MetricsDao
 
 import scala.concurrent.Future
 
 trait JobStatisticsDao {
 
-  def getStatusPercentages(userId: Long): Future[Seq[StatusPercentage]]
+  def calculateMetrics(userId: Long): Future[MetricsDao]
 
 }
