@@ -2,14 +2,17 @@
 
 /* Container */
 .user-login-signup, .switch-up {
-    position: absolute;
-    left: 50%;
-    width: 275px;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     background-color: white;
     padding: 50px 30px;
+}
+
+.user-login-signup, .switch-up {
+    position: absolute;
+    left: 50%;
+    width: 275px;
 }
 
 .user-login-signup {
@@ -22,6 +25,36 @@
     height: 50px;
     margin-top: 30px;
     padding: 0 30px;
+}
+
+.forgot-password-page {
+    background-color: white;
+}
+
+.forgot-password-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.forgot-password-content {
+    width: 400px;
+    height: 350px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.forgot-password-header {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    margin: 0 50px 150px 0;
+}
+
+.blank-space {
+    height: 30px;
 }
 
 /* Forms and Fields */
@@ -38,12 +71,22 @@
 .username, .password, .fullName, .email {
     background-color: white;
     border-radius: 5px;
-    border: 1px solid black;
     margin: -5px 0 12px;
     width: 90%;
     height: 50px;
-    font-size: 12px;
     text-indent: 10px;
+}
+
+.username, .password, .fullName {
+    font-size: 12px;
+    border: 1px solid black;
+}
+
+.email {
+    font-size: 18px;
+    border: 1px solid #707070;
+    color: #707070;
+    margin-top: 10px;
 }
 
 .login-signup-div {
@@ -53,7 +96,7 @@
 }
 
 /* Buttons */
-.login-signup-btn, .send-reset-password-link-button, .switch-up-btn {
+.login-signup-btn, .switch-up-btn {
     width: 250px;
     height: 30px;
     border-radius: 5px;
@@ -61,11 +104,31 @@
     font-size: 13px;
 }
 
-.login-signup-btn, .send-reset-password-link-button {
+.login-signup-btn, .reset-password-button {
     background: #26abff;
-    margin: 10px 50px;
     border: none;
     color: white;
+}
+
+.login-signup-btn {
+    margin: 10px 50px;
+}
+
+.reset-password-button {
+    width: 370px;
+    margin-right: -40px;
+    margin-bottom: 15px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.back-button {
+    color: #808080;
+    font-weight: bold;
+    font-size: 15px;
 }
 
 .switch-up-btn {
@@ -73,12 +136,24 @@
 }
 
 /* Text */
-.forgot-password, .log-in, .login-in, .terms-note, .switch-up-txt {
+#forgot-password-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-left: -90px;
+    margin-bottom: -5px;
+}
+
+#forgot-password-subtitle {
+    font-size: 14px;
+    margin-left: -150px;
+}
+
+.forgot-password, .terms-note, .switch-up-txt {
     text-align: center;
     font-size: 10px;
 }
 
-.forgot-password, .log-in, .log-in, .terms-note {
+.forgot-password, .terms-note {
     position: fixed;
     bottom: 50px;
     left: 40px;
