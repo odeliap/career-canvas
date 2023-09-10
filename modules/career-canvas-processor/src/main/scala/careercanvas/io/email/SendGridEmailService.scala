@@ -3,6 +3,7 @@ package careercanvas.io.email
 import com.sendgrid._
 import com.sendgrid.helpers.mail.Mail
 import com.sendgrid.helpers.mail.objects.{Content, Email}
+import play.api.Logger
 
 import javax.inject.Inject
 
@@ -11,13 +12,15 @@ class SendGridEmailService @Inject()(
   apiKey: String
 ) extends EmailService {
 
+  val logger: Logger = Logger(getClass)
+
   override def sendResetEmail(to: String, resetLink: String): Unit = {
     val sg = new SendGrid(apiKey)
 
-    val from = new Email(email)   // Replace with your email or alias
-    val subject = "Reset Your Password"
+    val from = new Email(email)
+    val subject = "Password Reset Request"
     val toEmail = new Email(to)
-    val content = new Content("text/plain", s"Click on this link to reset your password: $resetLink")
+    val content = new Content("text/plain", s"Click the link to reset your password: $resetLink")
     val mail = new Mail(from, subject, toEmail, content)
 
     val request = new Request()
@@ -26,9 +29,7 @@ class SendGridEmailService @Inject()(
       request.setEndpoint("mail/send")
       request.setBody(mail.build())
       val response = sg.api(request)
-      println(response.getStatusCode)
-      println(response.getBody)
-      println(response.getHeaders)
+      logger.info(s"Reset link response status code: ${response.getStatusCode}, body: ${response.getBody}, and headers: ${response.getHeaders}")
     } catch {
       case e: Exception => e.printStackTrace()
     }

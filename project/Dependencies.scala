@@ -32,6 +32,7 @@ object Dependencies {
 
     object mail {
       val sendGridVersion = "4.7.1"
+      val javaXVersion = "1.6.2"
     }
 
     object standard {
@@ -79,6 +80,7 @@ object Dependencies {
     object mail {
       import versions.mail._
       val sendGrid = "com.sendgrid" % "sendgrid-java" % sendGridVersion
+      val javaXSun = "com.sun.mail" % "javax.mail" % javaXVersion
     }
 
     object standard {
