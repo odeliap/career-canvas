@@ -6,7 +6,6 @@ import careercanvas.io.model.job.ApplicationFile
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 
-import java.sql.Timestamp
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -19,8 +18,8 @@ class JobApplicationFilesDaoImpl @Inject()(
   protected val dbConfigProvider: DatabaseConfigProvider
 )(implicit ec: ExecutionContext)
   extends JobApplicationFilesDao
-    with JobApplicationFilesComponent
-    with HasDatabaseConfigProvider[JdbcProfile] {
+  with JobApplicationFilesComponent
+  with HasDatabaseConfigProvider[JdbcProfile] {
 
   import careercanvas.io.dao.profile.CareerCanvasSlickProfile.api._
 

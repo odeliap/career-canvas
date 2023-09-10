@@ -9,10 +9,14 @@ GET     /users/login                controllers.LandingController.showLoginForm(
 GET     /users/doLogin              controllers.LandingController.processLoginAttempt()
 GET     /users/signUp               controllers.LandingController.showSignUpForm()
 GET     /users/doSignUp             controllers.LandingController.processSignUpAttempt()
-GET     /users/forgotPassword       controllers.LandingController.forgotPassword()
-GET     /users/reset                controllers.LandingController.doResetPasswordProcessing()
-GET     /users/setNewPassword:id:token      controllers.LandingController.setNewPassword(id: String, token: String)
-GET     /users/doSetNewPassword:id:token    controllers.LandingController.doSetNewPassword(id: String, token: String)
+
+# Forgot password processing
+GET     /forgotPassword                          controllers.LandingController.forgotPassword()
+GET     /forgotPassword/reset                    controllers.LandingController.doResetPasswordProcessing()
+GET     /forgotPassword/verifyResetCode/:email   controllers.LandingController.verifyResetCode(email: String)
+GET     /forgotPassword/doVerifyResetCode/:email controllers.LandingController.doVerifyResetCode(email: String)
+GET     /forgotPassword/setNewPassword/:email    controllers.LandingController.setNewPassword(email: String)
+GET     /forgotPassword/doSetNewPassword/:email  controllers.LandingController.doSetNewPassword(email: String)
 
 # Pages for job feed
 GET     /feed                       controllers.JobFeedController.showJobFeedHome()

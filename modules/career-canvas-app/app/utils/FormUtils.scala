@@ -13,4 +13,8 @@ class FormUtils {
     if (s.length < n) true else false
   }
 
+  def lengthIsEqualToNCharacters(s: String, n: Int): Boolean = {
+    if (s.length == n) true else false
+  }
+
 }

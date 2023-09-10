@@ -27,13 +27,13 @@ class GmailEmailService(user: String, password: String) extends EmailService {
     }
   })
 
-  override def sendResetEmail(to: String, resetLink: String): Unit = {
+  override def sendResetCode(to: String, resetCode: String): Unit = {
     try {
       val message = new MimeMessage(session)
       message.setFrom(new InternetAddress(user))
       message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to).asInstanceOf[Array[javax.mail.Address]])
       message.setSubject("Password Reset Request")
-      message.setText(s"Click the link to reset your password: $resetLink")
+      message.setText(resetPasswordEmailText(resetCode))
 
       javax.mail.Transport.send(message)
       logger.info(s"Sent reset link to $to successfully!")

@@ -14,13 +14,13 @@ class SendGridEmailService @Inject()(
 
   val logger: Logger = Logger(getClass)
 
-  override def sendResetEmail(to: String, resetLink: String): Unit = {
+  override def sendResetCode(to: String, resetCode: String): Unit = {
     val sg = new SendGrid(apiKey)
 
     val from = new Email(email)
     val subject = "Password Reset Request"
     val toEmail = new Email(to)
-    val content = new Content("text/plain", s"Click the link to reset your password: $resetLink")
+    val content = new Content("text/plain", resetPasswordEmailText(resetCode))
     val mail = new Mail(from, subject, toEmail, content)
 
     val request = new Request()

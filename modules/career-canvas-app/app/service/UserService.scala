@@ -6,10 +6,10 @@ import careercanvas.io.model.user.{BaseUser, UpdateUserInfo, User}
 import careercanvas.io.util.AwaitResult
 
 import java.time.OffsetDateTime
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
-@javax.inject.Singleton
+@Singleton
 class UserService @Inject()(
   userDao: UserDao
 )(implicit ec: ExecutionContext)
@@ -38,10 +38,6 @@ class UserService @Inject()(
       case false =>
         userDao.addUser(user).map(Option(_))
     }.waitForResult
-  }
-
-  def updateUserPassword(id: String, newPassword: String): Unit = {
-    userDao.update(UpdateUserInfo(id = id.toLong, password = Option(newPassword))).waitForResult
   }
 
   def checkValidEmail(email: Option[String]): Boolean = {

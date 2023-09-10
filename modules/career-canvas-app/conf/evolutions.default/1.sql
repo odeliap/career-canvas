@@ -1,7 +1,6 @@
 -- !Ups
 
 create type job_status as enum('NotSubmitted', 'Submitted', 'InterviewScheduled', 'Interviewed', 'OfferMade', 'Rejected');
-create type connection_closeness as enum('Stranger', 'Acquaintance', 'Friend', 'CloseFriend', 'FamilyMember');
 create type application_file as enum('CoverLetter', 'Response');
 
 create table if not exists user_info (
@@ -29,32 +28,6 @@ create table if not exists job_statuses (
     starred             boolean                 default false
 );
 
-create table if not exists connections (
-    user_id             serial                  not null references user_info(id),
-    connection_id       serial                  not null,
-    first_name          varchar(255)            not null,
-    last_name           varchar(255)            not null,
-    company             varchar(255)            not null,
-    job_title           varchar(255)            not null,
-    email               varchar(255)            not null,
-    phone_number        varchar(20)             null,
-    proximity           connection_closeness    not null,
-    last_contacted      timestamp               null,
-    notes               varchar(1024)           null
-);
-
-create table calendar_event (
-    user_id             serial                  not null references user_info(id),
-    event_id            serial,
-    title               varchar(255),
-    all_day             boolean,
-    start_timestamp     timestamp,
-    end_timestamp       timestamp,
-    ends_same_day       boolean
-);
-
-create sequence event_seq;
-
 create table resumes (
     user_id             serial                 not null references user_info(id),
     version             serial,
@@ -75,18 +48,20 @@ create table job_application_files (
     upload_date         timestamp
 );
 
+create table user_reset_codes (
+    user_id             serial                 not null references user_info(id),
+    code                varchar(6)             not null,
+    expiration_time     timestamp
+);
+
 
 -- !Downs
 
-drop table if exists connections;
 drop table if exists job_statuses;
 drop table if exists user_info;
-drop table if exists calendar_event;
 drop table if exists resumes;
 drop table if exists job_application_files;
+drop table if exists user_reset_codes;
 
 drop type if exists job_status;
-drop type if exists connection_closeness;
 drop type if exists application_file;
-
-drop sequence if exists event_seq;
