@@ -151,7 +151,8 @@
   box-sizing: border-box;
   padding: 20px;
   overflow: hidden;
-  height: 200px;
+  position: relative;
+  height: 275px;
   background-color: #fff;
   border-radius: 15px;
   border: 1px solid #D3D3D3;
@@ -186,14 +187,14 @@
 
 /* Job Metadata */
 
-.job-company {
+.job-title {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
-.job-title {
+.job-company {
     font-size: 13px;
 }
 
@@ -207,7 +208,6 @@
     justify-content: left;
     align-items: center;
     font-size: 10px;
-    margin-bottom: -5px;
 }
 
 .metadata-tag {
@@ -261,6 +261,17 @@
 
 #remove-job-description-button {
     font-weight: 500;
+}
+
+.view-job-button {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #DEDEDE;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
 }
 
 /* Load More Button */
@@ -327,8 +338,8 @@
 
 /* Hover Effects */
 
-.job-company:hover {
-    text-decoration: underline;
+.job-tile:hover {
+    border: 1px solid #3A3B3C;
 }
 
 .job-url-input button:hover,

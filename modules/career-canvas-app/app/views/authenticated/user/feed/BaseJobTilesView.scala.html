@@ -47,7 +47,7 @@ hasNext: Boolean
             <div class="job-tile" data-starred="@jobInfo.starred.toString.toLowerCase()">
                 <div class="job-tile-header">
                     <div class="job-tile-subheader">
-                        <a href="@routes.JobFeedController.showJobView(jobInfo)" class="job-company">@jobInfo.company</a>
+                        <div class="job-title">@jobInfo.jobTitle</div>
                         <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
                             @if(jobInfo.starred) {
                                 <img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" class="star-icon starred">
@@ -56,7 +56,7 @@ hasNext: Boolean
                             }
                         </a>
                     </div>
-                    <p class="job-title">@jobInfo.jobTitle</p>
+                    <p class="job-company">@@ @jobInfo.company</p>
                 </div>
                 <div class="metadata-fields">
                     <div class="metadata">
@@ -72,6 +72,7 @@ hasNext: Boolean
                         <p class="meta-content">@jobInfo.lastUpdate.toLocalDateTime.toLocalDate.toString</p>
                     </div>
                 </div>
+                <a href="@routes.JobFeedController.showJobView(jobInfo)" class="view-job-button">View Job</a>
             </div>
             }
         </div>
