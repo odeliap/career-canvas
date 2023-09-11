@@ -8,7 +8,7 @@ totalRejections: Int
 
 @authenticated.user.AuthenticatedUserLayout("Statistics | Career Canvas") {
     <div class="main-page statistics-view">
-        <div class="status-percentages-container"></div>
+        <div id='status-percentages-container'></div>
         <div class="section" id="section-1">
             <div class="subsection">
                 <div class="section-title">Total Applications</div>
@@ -45,25 +45,28 @@ totalRejections: Int
                 @searchDuration days
             </div>
         </div>
-        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var percentages = @statusPercentages;
-                const data = Array.from(percentages);
-                var series = [];
-                for(n in data) {
-                    series.push({
-                        name: data[n][0],
-                        y: data[n][1]
-                    })
-                };
-                if (series.length !== 0) {
+                document.addEventListener('DOMContentLoaded', function () {
+                    var percentages = @statusPercentages;
+                    const data = Array.from(percentages);
+                    var series = [];
+                    for(n in data) {
+                        series.push({
+                            name: data[n][0],
+                            y: data[n][1]
+                        })
+                    };
                     const chart = Highcharts.chart('status-percentages-container', {
+                        credits: {
+                            enabled: false
+                        },
                         chart: {
                             plotBackgroundColor: null,
                             plotBorderWidth: null,
                             plotShadow: false,
-                            type: 'pie'
+                            type: 'pie',
+                            backgroundColor: '#f5f3f3'
                         },
                         title: {
                             text: 'Job Status Breakdown',
@@ -89,11 +92,10 @@ totalRejections: Int
                         },
                         series: [{
                             name: 'Status',
-                            colorByPoint: true,
+                            colors: ['#BCD2E8', '#91BAD6', '#73A5C6', '#528AAE', '#2E5984', '#1E3F66'],
                             data: series
                         }]
                     });
-                }
             });
         </script>
         @FooterTemplate()
