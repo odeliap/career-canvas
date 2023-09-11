@@ -1,6 +1,6 @@
 package careercanvas.io.module
 
-import careercanvas.io.email.{EmailService, GmailEmailService, SendGridEmailService}
+import careercanvas.io.email.{EmailService, GmailEmailService}
 import careercanvas.io.storage.{S3StorageService, StorageService}
 import com.google.inject.{AbstractModule, Provides}
 import com.typesafe.config.{Config, ConfigFactory}
@@ -34,14 +34,6 @@ class CareerCanvasAppModule extends AbstractModule {
       .build()
 
     new S3StorageService(s3Client, presigner)
-  }
-
-  @Provides
-  def sendGridEmailService(): SendGridEmailService = {
-    val email = config.getString("mail.sendgrid.email")
-    val apiKey = config.getString("mail.sendgrid.api.key")
-
-    new SendGridEmailService(email, apiKey)
   }
 
   @Provides

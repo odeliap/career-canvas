@@ -24,7 +24,7 @@ resumes: Seq[careercanvas.io.model.user.Resume]
                 <form action="@routes.ProfileController.deleteResume(resume.version)" method="POST" id="delete-resume-form">
                     @helper.CSRF.formField
                     <button type="submit" class="delete-resume-button">
-                        <img src="@routes.Assets.versioned("images/profile.resumes/trash.png")" class="trash-icon">
+                        <img src="@routes.Assets.versioned("images/profile/resumes/trash.png")" class="trash-icon">
                     </button>
                 </form>
             </div>

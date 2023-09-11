@@ -36,7 +36,7 @@ hasNext: Boolean
 
             <div id="starred-view-btn-container">
                 <button id="toggle-starred-view">
-                    <img src="@routes.Assets.versioned("images/feed.tile/star.png")" class="toggle-star-icon">
+                    <img src="@routes.Assets.versioned("images/feed/tile/star.png")" class="toggle-star-icon">
                     Starred
                 </button>
             </div>
@@ -50,9 +50,9 @@ hasNext: Boolean
                         <a href="@routes.JobFeedController.showJobView(jobInfo)" class="job-company">@jobInfo.company</a>
                         <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
                             @if(jobInfo.starred) {
-                                <img src="@routes.Assets.versioned("images/feed.tile/star.png")" class="star-icon starred">
+                                <img src="@routes.Assets.versioned("images/feed/tile/star.png")" class="star-icon starred">
                             } else {
-                                <img src="@routes.Assets.versioned("images/feed.tile/star.png")" class="star-icon">
+                                <img src="@routes.Assets.versioned("images/feed/tile/star.png")" class="star-icon">
                             }
                         </a>
                     </div>
@@ -61,13 +61,13 @@ hasNext: Boolean
                 <div class="metadata-fields">
                     <div class="metadata">
                         <div class="metadata-tag" style="background-color: @utils.ColorUtils.jobStatusToColor(jobInfo.status);"></div>
-                        <img src="@routes.Assets.versioned("images/feed.tile.status/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
+                        <img src="@routes.Assets.versioned("images/feed/tile/status/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
                         <p class="meta-title">Status:</p>
                         <p class="meta-content">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</p>
                     </div>
                     <div class="metadata">
                         <div class="metadata-tag" style="background-color: @utils.ColorUtils.localDateTimeToColor(jobInfo.lastUpdate.toLocalDateTime);"></div>
-                        <img src="@routes.Assets.versioned("images/feed.tile/calendar.png")" class="metadata-icon">
+                        <img src="@routes.Assets.versioned("images/feed/tile/calendar.png")" class="metadata-icon">
                         <p class="meta-title">Last Update:</p>
                         <p class="meta-content">@jobInfo.lastUpdate.toLocalDateTime.toLocalDate.toString</p>
                     </div>
@@ -99,7 +99,7 @@ hasNext: Boolean
                 if (showingStarred) {
                     toggleButton.innerHTML = 'Show All';
                 } else {
-                    toggleButton.innerHTML = '<img src="@routes.Assets.versioned("images/feed.tile/star.png")" alt="Star Icon" class="toggle-star-icon";" /> Starred';
+                    toggleButton.innerHTML = '<img src="@routes.Assets.versioned("images/feed/tile/star.png")" alt="Star Icon" class="toggle-star-icon";" /> Starred';
                 }
             });
 
