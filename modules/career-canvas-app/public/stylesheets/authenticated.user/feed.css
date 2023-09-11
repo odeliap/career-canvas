@@ -49,24 +49,18 @@
 }
 
 .job-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(100% - 10px), 1fr));
+    gap: 10px;
+    width: 100%;
     margin-top: 20px;
     margin-bottom: 100px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
 }
 
 #job-tiles-view-options {
     display: flex;
     justify-content: flex-end;
     margin: 5px 0 25px 0;
-}
-
-/* Responsive styles for smaller screens */
-@media only screen and (max-width: 594px) {
-    .job-tiles {
-        justify-content: center;
-    }
 }
 
 /* Job URL Input */
@@ -154,15 +148,13 @@
 /* Job Tiles */
 
 .job-tile {
-  background-color: #fff;
-  width: 210px;
-  height: 170px;
+  box-sizing: border-box;
   padding: 20px;
+  overflow: hidden;
+  height: 200px;
+  background-color: #fff;
   border-radius: 15px;
   border: 1px solid #D3D3D3;
-  line-height: 20px;
-  position: relative;
-  margin-bottom: 40px;
 }
 
 .job-tile-header {
@@ -174,9 +166,21 @@
     justify-content: space-between;
 }
 
-@media only screen and (max-width: 594px) {
-    .job-tile {
-        width: 450px;
+@media screen and (min-width: 600px) {
+    .job-tiles {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .job-tiles {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .job-tiles {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -203,7 +207,7 @@
     justify-content: left;
     align-items: center;
     font-size: 10px;
-    margin-bottom: -20px;
+    margin-bottom: -5px;
 }
 
 .metadata-tag {
