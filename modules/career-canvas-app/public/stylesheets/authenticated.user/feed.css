@@ -229,7 +229,7 @@
 }
 
 .starred {
-    background-color: #FFFBC8;
+    background-color: #E5F3FD;
 }
 
 /* Buttons */
@@ -312,7 +312,7 @@
 }
 
 #toggle-starred-view:hover {
-    background-color: #ECECEC;
+    background-color: #E5F3FD;
 }
 
 #toggle-starred-view:active {
@@ -345,7 +345,7 @@
 }
 
 .star-icon:hover {
-    background-color: #FFFBC8;
+    background-color: #E5F3FD;
 }
 
 /* Media Query */

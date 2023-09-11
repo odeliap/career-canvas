@@ -36,7 +36,7 @@ hasNext: Boolean
 
             <div id="starred-view-btn-container">
                 <button id="toggle-starred-view">
-                    <img src="@routes.Assets.versioned("images/feed/tile/star.png")" class="toggle-star-icon">
+                    <img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" class="toggle-star-icon">
                     Starred
                 </button>
             </div>
@@ -50,9 +50,9 @@ hasNext: Boolean
                         <a href="@routes.JobFeedController.showJobView(jobInfo)" class="job-company">@jobInfo.company</a>
                         <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
                             @if(jobInfo.starred) {
-                                <img src="@routes.Assets.versioned("images/feed/tile/star.png")" class="star-icon starred">
+                                <img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" class="star-icon starred">
                             } else {
-                                <img src="@routes.Assets.versioned("images/feed/tile/star.png")" class="star-icon">
+                                <img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" class="star-icon">
                             }
                         </a>
                     </div>
@@ -99,7 +99,7 @@ hasNext: Boolean
                 if (showingStarred) {
                     toggleButton.innerHTML = 'Show All';
                 } else {
-                    toggleButton.innerHTML = '<img src="@routes.Assets.versioned("images/feed/tile/star.png")" alt="Star Icon" class="toggle-star-icon";" /> Starred';
+                    toggleButton.innerHTML = '<img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" alt="Star Icon" class="toggle-star-icon";" /> Starred';
                 }
             });
 
