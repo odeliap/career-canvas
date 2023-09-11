@@ -9,6 +9,8 @@ Make necessary exports:
 - `OPENAI_SCALA_CLIENT_ORG_ID`
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
+- `GMAIL_CLIENT_USER`
+- `GMAIL_CLIENT_PASSWORD`
 
 Create the docker image with:
 

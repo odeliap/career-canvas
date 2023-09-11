@@ -22,8 +22,9 @@ class ForgotPasswordService @Inject()(
   extends AwaitResult
   with Converters {
 
-  def updateUserPassword(id: String, newPassword: String): Unit = {
-    userDao.update(UpdateUserInfo(id = id.toLong, password = Option(newPassword))).waitForResult
+  def updateUserPassword(email: String, newPassword: String): Unit = {
+    val userId = userDao.getUserIdFromEmail(email).waitForResult.get
+    userDao.update(UpdateUserInfo(id = userId, password = Option(newPassword))).waitForResult
   }
 
   def verifyResetCode(email: String, code: String): Boolean = {

@@ -50,6 +50,13 @@ class UserDaoImpl @Inject() (
     db.run(userExistsQuery.result)
   }
 
+  override def getUser(userId: Long): Future[Option[UserInfo]] = {
+    val userQuery = UserInfoQuery
+      .filter(_.id === userId)
+
+    db.run(userQuery.result.headOption)
+  }
+
   override def getUserId(user: BaseUser): Future[Option[Long]]  = {
     val userIdQuery = UserInfoQuery
       .filter(row => row.email === user.email && row.password === user.password)
@@ -58,11 +65,12 @@ class UserDaoImpl @Inject() (
     db.run(userIdQuery.result.headOption)
   }
 
-  override def getUser(userId: Long): Future[Option[UserInfo]] = {
-    val userQuery = UserInfoQuery
-      .filter(_.id === userId)
+  override def getUserIdFromEmail(email: String): Future[Option[Long]] = {
+    val userIdQuery = UserInfoQuery
+      .filter(_.email === email)
+      .map(_.id)
 
-    db.run(userQuery.result.headOption)
+    db.run(userIdQuery.result.headOption)
   }
 
   override def update(updateUser: UpdateUserInfo): Future[Unit] = {

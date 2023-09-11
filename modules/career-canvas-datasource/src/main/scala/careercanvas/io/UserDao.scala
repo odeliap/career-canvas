@@ -10,9 +10,11 @@ trait UserDao {
 
   def checkUserExists(email: String): Future[Boolean]
 
+  def getUser(userId: Long): Future[Option[UserInfo]]
+
   def getUserId(user: BaseUser): Future[Option[Long]]
 
-  def getUser(userId: Long): Future[Option[UserInfo]]
+  def getUserIdFromEmail(email: String): Future[Option[Long]]
 
   def update(updateUser: UpdateUserInfo): Future[Unit]
 
