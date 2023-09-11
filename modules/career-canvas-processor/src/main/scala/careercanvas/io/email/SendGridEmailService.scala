@@ -20,7 +20,7 @@ class SendGridEmailService @Inject()(
     val from = new Email(email)
     val subject = "Password Reset Request"
     val toEmail = new Email(to)
-    val content = new Content("text/plain", resetPasswordEmailText(resetCode))
+    val content = new Content("text/html", resetPasswordEmailHtml(resetCode))
     val mail = new Mail(from, subject, toEmail, content)
 
     val request = new Request()

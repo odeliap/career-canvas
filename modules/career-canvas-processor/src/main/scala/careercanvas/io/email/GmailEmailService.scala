@@ -33,7 +33,7 @@ class GmailEmailService(user: String, password: String) extends EmailService {
       message.setFrom(new InternetAddress(user))
       message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to).asInstanceOf[Array[javax.mail.Address]])
       message.setSubject("Password Reset Request")
-      message.setText(resetPasswordEmailText(resetCode))
+      message.setContent(resetPasswordEmailHtml(resetCode), "text/html")
 
       javax.mail.Transport.send(message)
       logger.info(s"Sent reset link to $to successfully!")
