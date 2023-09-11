@@ -31,19 +31,30 @@
     background-color: white;
 }
 
-.forgot-password-container {
+.forgot-password-container,
+.reset-code-container,
+.set-new-password-container {
     display: flex;
     justify-content: center;
     align-items: flex-start;
 }
 
-.forgot-password-content {
+.forgot-password-content,
+.reset-code-content,
+.set-new-password-content {
     width: 400px;
-    height: 350px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    text-align: center;
+    text-align: left;
+}
+
+.forgot-password-content {
+    height: 350px;
+}
+
+.reset-code-content, .set-new-password-content {
+    height: 425px;
 }
 
 .forgot-password-header {
@@ -58,17 +69,29 @@
 }
 
 /* Forms and Fields */
-.user-login-signup-form, .forgot-password-form {
+.user-login-signup-form,
+.forgot-password-form,
+.reset-code-form,
+.set-new-password-form {
     margin-top: 30px;
     font-size: 12px;
     color: red;
 }
 
-.user-login-signup-form-fields, .forgot-password-form-fields {
+.user-login-signup-form-fields,
+.forgot-password-form-fields,
+.reset-code-form-fields,
+.set-new-password-form-fields {
     margin-left: -40px;
 }
 
-.username, .password, .fullName, .email {
+.username,
+.password,
+.fullName,
+.email,
+.code,
+.new-password,
+.confirm-new-password {
     background-color: white;
     border-radius: 5px;
     margin: -5px 0 12px;
@@ -82,11 +105,15 @@
     border: 1px solid black;
 }
 
-.email {
+.email, .code, .new-password, .confirm-new-password {
     font-size: 18px;
     border: 1px solid #707070;
     color: #707070;
     margin-top: 10px;
+}
+
+.email, .code, .new-password, .confirm-new-password {
+    margin-left: 18px;
 }
 
 .login-signup-div {
@@ -104,7 +131,10 @@
     font-size: 13px;
 }
 
-.login-signup-btn, .reset-password-button {
+.login-signup-btn,
+.reset-password-button,
+.code-submit-button,
+.set-new-password-submit-button {
     background: #26abff;
     border: none;
     color: white;
@@ -114,9 +144,11 @@
     margin: 10px 50px;
 }
 
-.reset-password-button {
+.reset-password-button,
+.code-submit-button,
+.set-new-password-submit-button {
     width: 370px;
-    margin-right: -40px;
+    margin-left: 54px;
     margin-bottom: 15px;
     padding-bottom: 20px;
     padding-top: 20px;
@@ -125,10 +157,21 @@
     font-size: 15px;
 }
 
+.resend-code-button {
+    color: #26abff;
+    font-weight: bold;
+    font-size: 14px;
+    display: block;
+    margin-top: -10px;
+    margin-bottom: 30px;
+    margin-left: 60px;
+}
+
 .back-button {
     color: #808080;
     font-weight: bold;
     font-size: 15px;
+    margin-left: 20px;
 }
 
 .switch-up-btn {
@@ -136,16 +179,44 @@
 }
 
 /* Text */
+#forgot-password-title, #reset-code-title, #set-new-password-title {
+    font-weight: bold;
+}
+
 #forgot-password-title {
     font-size: 32px;
-    font-weight: bold;
-    margin-left: -90px;
+    margin-left: 20px;
     margin-bottom: -5px;
 }
 
-#forgot-password-subtitle {
+#reset-code-title, #set-new-password-title {
+    font-size: 22px;
+    margin-left: 20px;
+    margin-bottom: -5px;
+    padding-bottom: 20px;
+}
+
+#set-new-password-title {
+    margin-top: 40px;
+}
+
+#forgot-password-subtitle,
+#reset-code-subtitle,
+#set-new-password-subtitle {
     font-size: 14px;
-    margin-left: -150px;
+}
+
+#forgot-password-subtitle {
+    margin-left: 20px;
+}
+
+#reset-code-subtitle, #set-new-password-subtitle {
+    margin-left: 20px;
+}
+
+#reset-code-email {
+    margin-top: 3px;
+    font-weight: bold;
 }
 
 .forgot-password, .terms-note, .switch-up-txt {
@@ -167,4 +238,10 @@
 
 .switch-up-txt {
     padding: 8px;
+}
+
+.spam-folder-reminder {
+    font-size: 14px;
+    color: #808080;
+    margin-left: 20px;
 }

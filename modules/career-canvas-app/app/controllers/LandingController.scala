@@ -156,12 +156,12 @@ class LandingController @Inject()(
   }
 
   def verifyResetCode(email: String): Action[AnyContent] = Action { implicit request =>
-    Ok(views.html.user.VerifyResetCodeView(resetCodeForm, verifyResetCodeUrl(email)))
+    Ok(views.html.user.VerifyResetCodeView(email, resetCodeForm, verifyResetCodeUrl(email)))
   }
 
   def doVerifyResetCode(email: String): Action[AnyContent] = Action { implicit  request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[ResetCodeForm] =>
-      BadRequest(views.html.user.VerifyResetCodeView(formWithErrors, verifyResetCodeUrl(email)))
+      BadRequest(views.html.user.VerifyResetCodeView(email, formWithErrors, verifyResetCodeUrl(email)))
     }
     val successFunction = { resetCodeForm: ResetCodeForm =>
       if (forgotPasswordService.verifyResetCode(email, resetCodeForm.code)) {
@@ -178,12 +178,10 @@ class LandingController @Inject()(
     )
   }
 
-  // TODO: FIXME!
   def setNewPassword(email: String): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     Ok(views.html.user.ResetPasswordView(setNewPasswordForm, setNewPasswordSubmitUrl(email)))
   }
 
-  // TODO: FIXME!
   def doSetNewPassword(email: String): Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { formWithErrors: Form[SetNewPasswordForm] =>
       BadRequest(views.html.user.ResetPasswordView(formWithErrors, setNewPasswordSubmitUrl(email)))
