@@ -241,7 +241,7 @@
     color: #187bcd;
 }
 
-.join-now-button:hover, .header-join:hover, .username:hover, .password:hover {
+#join-now-button:hover, .header-join:hover, .username:hover, .password:hover {
     background-color: #F5F5F5;
 }
 
