@@ -5,17 +5,26 @@ jobInfo: careercanvas.io.model.job.JobInfo,
 responses: Seq[careercanvas.io.model.job.ApplicationFile]
 )(implicit request: MessagesRequestHeader)
 
-<button class="response-add-question-btn" onclick="addQuestion()">+</button>
+<div class="response-header">
+    <h1>Responses</h1>
+</div>
+<div class="responses">
+    <section class="response-content">
+        <button class="response-add-question-btn" onclick="addQuestion()">+</button>
 
-<div id="questionsContainer"></div>
+        <div id="questionsContainer"></div>
 
-<div id="loading-popup" class="loading-popup">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Loading...</div>
+        <button class="loading-button" id="loadingBtn" style="display:none;">Loading...</button>
+    </section>
 </div>
 
 <script>
         let questionCount = 0;
+
+        function adjustHeight(textarea) {
+            textarea.style.height = "auto";
+            textarea.style.height = textarea.scrollHeight + "px";
+        }
 
         function addQuestion() {
             if (questionCount < 10) {
@@ -30,14 +39,14 @@ responses: Seq[careercanvas.io.model.job.ApplicationFile]
                     <button class="response-delete-btn" onclick="deleteQuestion(${questionCount})">Delete ×</button>
                     <input class="response-question-input" type="text" placeholder="Enter Question ${questionCount}" id="question${questionCount}">
                     <button class="response-button" onclick="submitQuestion(${questionCount})">Submit</button>
-                    <button class="response-button save-response-button" onclick="saveResponseWithPrompt(${questionCount})">Save</button>
                     <textarea class="response-hidden" id="answer${questionCount}"></textarea>
+                    <button class="response-button save-response-button" onclick="saveResponseWithPrompt(${questionCount})">Save</button>
                 `;
 
                 // Append the question area to the container
                 document.getElementById('questionsContainer').appendChild(questionDiv);
             } else {
-                alert("Maximum of 10 questions reached!");
+                alert("Maximum of 10 questions reached. Delete responses to add new ones.");
             }
         }
 
@@ -47,31 +56,20 @@ responses: Seq[careercanvas.io.model.job.ApplicationFile]
             questionCount--;
         }
 
-        function showLoadingPopup() {
-            const loadingPopup = document.getElementById('loading-popup');
-            loadingPopup.style.display = 'flex';
-        }
-
-        function hideLoadingPopup() {
-            const loadingPopup = document.getElementById('loading-popup');
-            loadingPopup.style.display = 'none';
-        }
-
         function submitQuestion(id) {
             const questionInput = document.getElementById(`question${id}`);
+
             if (questionInput.value.trim() !== "") {
-                showLoadingPopup();
-
                 const questionInput = document.getElementById(`question${id}`);
-
                 const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
-
                 const payload = {
                     jobInfo: jobInfoJson,
                     question: questionInput.value
                 };
-
                 console.log(JSON.stringify(payload));
+
+                // Display the loading button
+                document.getElementById('loadingBtn').style.display = 'block';
 
                 fetch("@routes.IndividualJobController.generateResponse()", {
                     method: 'POST',
@@ -83,6 +81,9 @@ responses: Seq[careercanvas.io.model.job.ApplicationFile]
                     redirect: 'follow'
                 })
                 .then(response => {
+                    // Hide the loading button regardless of the fetch result
+                    document.getElementById('loadingBtn').style.display = 'none';
+
                     if (response.ok) {
                         return response.json();
                     } else {
@@ -96,12 +97,14 @@ responses: Seq[careercanvas.io.model.job.ApplicationFile]
                         answerDiv.innerHTML = data.content;
                         answerDiv.classList.remove('response-hidden');
 
-                        hideLoadingPopup();
+                        const textarea = document.getElementById(`answer${id}`);
+                        adjustHeight(textarea);
                     }
                 })
                 .catch(error => {
+                    // Hide the loading button in case of an error
+                    document.getElementById('loadingBtn').style.display = 'none';
                     console.error("Error fetching response:", error);
-                    hideLoadingPopup();
                 });
             } else {
                 alert("Please enter a valid question");
