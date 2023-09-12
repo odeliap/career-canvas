@@ -1,0 +1,11 @@
+@(
+jobInfo: careercanvas.io.model.job.JobInfo
+)(implicit request: MessagesRequestHeader)
+
+@BaseJobInformationView(jobInfo) {
+    <div class="individual-job-header">
+        <p class="individual-job-view-company">@jobInfo.company</p>
+        <a href="@jobInfo.postUrl" class="apply-button">Apply Now</a>
+    </div>
+    <p class="individual-job-view-title">@jobInfo.jobTitle</p>
+}

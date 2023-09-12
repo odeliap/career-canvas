@@ -1,110 +1,95 @@
-/* Individual Job View */
+/* Individual Job Pages */
 
-#job-view-content {
-    margin: 15px 0;
+.base-job-info-page {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    font-family: Helvetica, sans-serif;
 }
 
-.job-view-content-header {
+.page-container {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    background-color: white;
+    width: 250px;
+    height: 100vh;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 10px;
+}
+
+.sidebar li a {
+    text-decoration: none;
+    color: #333333;
+    display: block;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.sidebar li a:hover {
+    background-color: #dddddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#back-to-feed-button {
+    padding: 10px 10px 10px 0;
+    font-weight: bold;
+}
+
+.input {
+    flex: 1;
+    margin: 20px 80px;
+}
+
+/* Overview Page */
+
+.individual-job-header {
     display: flex;
     justify-content: space-between;
 }
 
-.job-view-title,
-.job-view-subtitle {
-    padding: 0 0 10px 0;
-    font-weight: bold;
-}
-
-.job-view-title {
-    font-size: 3.2vw;
-}
-
-.job-view-subtitle {
-    font-size: 2.6vw;
-}
-
-.job-view-blank-space {
-    height: 3.6vw;
-}
-
-.job-view-metadata {
-    padding: 10px 0;
-    display: flex;
-    justify-content: left;
-    font-size: 1.6vw;
-}
-
-.job-view-metadata-title {
-    font-weight: bold;
-    padding-right: 10px;
-}
-
-/* Delete Button */
-
-.delete-job-button {
-    background-color: white;
+.apply-button {
+    background-color: #007BFF;
+    color: #fff;
     border: none;
-}
-
-.delete-job-icon {
-  width: 18px;
-  height: 18px;
-}
-
-/* Files Navigation */
-
-.directory {
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
-    user-select: none;
+    border-radius: 5px;
+    margin-top: 25px;
+    height: 10%;
+    width: 100px;
+    text-align: center;
+    vertical-align: center;
 }
 
-.directory-header {
-    display: flex;
-    justify-content: flex-start;
+.apply-button:hover {
+    background-color: #0056b3;
 }
 
-.directory-title {
-    font-size: 1.6vw;
+.individual-job-view-company {
+    font-size: 28px;
+    font-weight: bold;
+    font-family: Arial;
+    letter-spacing: -1.5px;
 }
 
-.sub-directory {
-    font-size: 1.4vw;
-    text-indent: 28px;
-}
-
-.hidden {
-    display: none;
-}
-
-.sub-directory {
-    margin-top: 5px;
-    padding-left: 20px;
-}
-
-/* Screen Scaling */
-
-@media screen and (min-width: 900px) {
-    .job-view-title {
-        font-size: 30px;
-    }
-
-    .job-view-subtitle {
-        font-size: 24px;
-    }
-
-    .job-view-blank-space {
-        height: 36px;
-    }
-
-    .job-view-metadata {
-        font-size: 14px;
-    }
-
-    .directory-title {
-        font-size: 14px;
-    }
-
-    .sub-directory {
-        font-size: 12px;
-    }
+.individual-job-view-title {
+    font-weight: bold;
+    font-size: 32px;
+    color: #333333;
+    margin-top: 10px;
 }

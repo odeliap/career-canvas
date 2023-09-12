@@ -1,5 +1,8 @@
 package careercanvas.io.model.job
 
+import play.api.libs.json._
+import play.api.libs.json.Reads
+import play.api.libs.functional.syntax._
 import play.api.mvc.QueryStringBindable
 
 import java.sql.Timestamp
@@ -34,38 +37,82 @@ case class JobInfo(
 
 object JobInfo {
 
+  implicit val timestampReads: Reads[Timestamp] = Reads { json =>
+    json.validate[String].map(str => {
+      Timestamp.from(ZonedDateTime.parse(str).toInstant)
+    })
+  }
+
+  implicit val timestampWrites: Writes[Timestamp] = Writes { ts =>
+    JsString(ts.toInstant.atZone(ZoneId.systemDefault()).toString)
+  }
+
+  implicit val jobInfoWrites: Writes[JobInfo] = (
+    (JsPath \ "userId").write[Long] and
+      (JsPath \ "jobId").write[Long] and
+      (JsPath \ "company").write[String] and
+      (JsPath \ "jobTitle").write[String] and
+      (JsPath \ "postUrl").write[String] and
+      (JsPath \ "status").write[JobStatus] and  // Need implicit Writes[JobStatus]
+      (JsPath \ "appSubmissionDate").writeNullable[Timestamp] and  // Need implicit Writes[Timestamp]
+      (JsPath \ "lastUpdate").write[Timestamp] and  // Need implicit Writes[Timestamp]
+      (JsPath \ "interviewRound").writeNullable[Int] and
+      (JsPath \ "notes").writeNullable[String] and
+      (JsPath \ "starred").write[Boolean]
+    )(unlift(JobInfo.unapply))
+
+  implicit val jobInfoReads: Reads[JobInfo] = (
+    (__ \ "userId").read[Long] and
+      (__ \ "jobId").read[Long] and
+      (__ \ "company").read[String] and
+      (__ \ "jobTitle").read[String] and
+      (__ \ "postUrl").read[String] and
+      (__ \ "status").read[JobStatus] and // Assuming JobStatus is an Enumeration
+      (__ \ "appSubmissionDate").readNullable[Timestamp] and
+      (__ \ "lastUpdate").read[Timestamp] and
+      (__ \ "interviewRound").readNullable[Int] and
+      (__ \ "notes").readNullable[String] and
+      (__ \ "starred").read[Boolean]
+    )(JobInfo.apply _)
+
   implicit object bindable extends QueryStringBindable[JobInfo] {
 
-    override def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, JobInfo]] = Option {
-      Try {
-        val userId = params("userId").head.toLong
-        val jobId = params("jobId").head.toLong
-        val company = params("company").head
-        val jobTitle = params("jobTitle").head
-        val postUrl = params("postUrl").head
-        val status = JobStatus.stringToEnum(params("status").head)
-        val appSubmissionDate = params.get("appSubmissionDate").flatMap(seq =>
-          if(seq.nonEmpty && seq.head.nonEmpty) {
-            Some(Timestamp.from(ZonedDateTime.parse(seq.head).toInstant))
-          } else {
-            None
-          }
-        )
-        val lastUpdate = params.get("lastUpdate").map(_.head).map { dateStr =>
-          Timestamp.from(ZonedDateTime.parse(dateStr).toInstant)
-        }.getOrElse(Timestamp.from(Instant.now()))
-        val interviewRound = params.get("interviewRound").flatMap(seq =>
-          if (seq.nonEmpty && seq.head.nonEmpty) {
-            Some(seq.head.toInt)
-          } else {
-            None
-          }
-        )
-        val notes = params.get("notes").map(_.head)
-        val starred = params.get("starred").map(_.head).exists(_.toBoolean)
+    override def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, JobInfo]] = {
+      Option {
+        Try {
+          val userId = params.get("userId").flatMap(_.headOption).map(_.toLong).getOrElse(throw new Exception("Missing userId"))
+          val jobId = params.get("jobId").flatMap(_.headOption).map(_.toLong).getOrElse(throw new Exception("Missing jobId"))
+          val company = params.get("company").flatMap(_.headOption).getOrElse(throw new Exception("Missing company"))
+          val jobTitle = params.get("jobTitle").flatMap(_.headOption).getOrElse(throw new Exception("Missing jobTitle"))
+          val postUrl = params.get("postUrl").flatMap(_.headOption).getOrElse(throw new Exception("Missing postUrl"))
+          val status = params.get("status").flatMap(_.headOption).map(JobStatus.stringToEnum).getOrElse(throw new Exception("Missing status"))
 
-        Right(JobInfo(userId, jobId, company, jobTitle, postUrl, status, appSubmissionDate, lastUpdate, interviewRound, notes, starred))
-      }.getOrElse(Left("Unable to bind JobInfo"))
+          val appSubmissionDate = params.get("appSubmissionDate").flatMap(_.headOption).flatMap { dateStr =>
+            if(dateStr.nonEmpty) {
+              Some(Timestamp.from(ZonedDateTime.parse(dateStr).toInstant))
+            } else {
+              None
+            }
+          }
+
+          val lastUpdate = params.get("lastUpdate").flatMap(_.headOption).map { dateStr =>
+            Timestamp.from(ZonedDateTime.parse(dateStr).toInstant)
+          }.getOrElse(Timestamp.from(Instant.now()))
+
+          val interviewRound = params.get("interviewRound").flatMap(_.headOption).flatMap { roundStr =>
+            if(roundStr.nonEmpty) {
+              Some(roundStr.toInt)
+            } else {
+              None
+            }
+          }
+
+          val notes = params.get("notes").flatMap(_.headOption)
+          val starred = params.get("starred").flatMap(_.headOption).exists(_.toBoolean)
+
+          Right(JobInfo(userId, jobId, company, jobTitle, postUrl, status, appSubmissionDate, lastUpdate, interviewRound, notes, starred))
+        }.getOrElse(Left("Unable to bind JobInfo"))
+      }
     }
 
     override def unbind(key: String, jobInfo: JobInfo): String = {

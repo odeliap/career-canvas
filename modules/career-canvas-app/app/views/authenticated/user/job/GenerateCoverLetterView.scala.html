@@ -1,0 +1,206 @@
+@import play.api.libs.json._
+@import play.filters.csrf.CSRF
+@(
+jobInfo: careercanvas.io.model.job.JobInfo
+)(implicit request: MessagesRequestHeader)
+
+@BaseJobInformationView(jobInfo) {
+<div class="cover-letter-header">
+    <h1>Generate Cover Letter</h1>
+</div>
+<div class="cover-letter">
+    <section class="cover-letter-content">
+        <div class="if-generated-cover-letter">
+            <label for="adjust-buttons">Improve:</label>
+            <div id="adjust-buttons">
+                @careercanvas.io.model.job.ResponseImprovement.values.map { improvement =>
+                <button class="custom-button" id="@improvement.toString" onclick="toggleButton(this)">@improvement.toString.split("(?=[A-Z])").mkString(" ")</button>
+                }
+            </div>
+            <div class="custom-input">
+                <label for="custom-text">Custom Improvement Request:</label>
+                <textarea id="custom-text" placeholder="Enter your custom text here"></textarea>
+            </div>
+        </div>
+        <div class="if-not-generated-cover-letter">
+            <a href="javascript:void(0);" id="generate-button" onclick="generateCoverLetter()">Generate Cover Letter</a>
+        </div>
+        <div class="if-generated-cover-letter">
+            <a href="javascript:void(0);" id="improve-button" onclick="improveCoverLetter()">Improve Cover Letter</a>
+        </div>
+        <div id="loading-popup" class="loading-popup">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading...</div>
+        </div>
+    </section>
+    <section class="output">
+        <h2>Generated Cover Letter</h2>
+        <div id="generated-letter"></div>
+    </section>
+    <div class="if-generated-cover-letter">
+    <a id="save-cover-letter-button" href="javascript:void(0);" onclick="saveCoverLetterWithPrompt();">Save</a>
+    </div>
+</div>
+<script>
+    const jobInfoJson = @Html(Json.toJson(jobInfo).toString);
+</script>
+<script>
+    window.onload = function() {
+        displayConditionalDiv();
+    };
+
+    const selectedImprovements = new Set();
+
+    function toggleButton(button) {
+        const improvementName = button.id;
+        if (selectedImprovements.has(improvementName)) {
+            selectedImprovements.delete(improvementName);
+            button.style.backgroundColor = ""; // Reset button color
+        } else {
+            selectedImprovements.add(improvementName);
+            button.style.backgroundColor = "#357ABD";
+        }
+    }
+
+    function clearImprovementsBackground() {
+        for (const improvement of selectedImprovements) {
+            const improvementButton = document.getElementById(improvement);
+            improvementButton.style.backgroundColor = "";
+        }
+        selectedImprovements.clear();
+        const customText = document.getElementById('custom-text');
+        customText.value = "";
+    }
+
+    function isDivEmpty(divId) {
+        var divElement = document.getElementById(divId);
+        if (divElement && divElement.innerHTML.trim() !== "") {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function displayConditionalDiv() {
+        var generatedDivs = document.querySelectorAll('.if-generated-cover-letter');
+        var notGeneratedDivs = document.querySelectorAll('.if-not-generated-cover-letter');
+        if (isDivEmpty('generated-letter')) {
+            generatedDivs.forEach(function(element) {
+                element.style.display = 'none';
+            });
+            notGeneratedDivs.forEach(function(element) {
+                element.style.display = 'block';
+            });
+        } else {
+            generatedDivs.forEach(function(element) {
+                element.style.display = 'block';
+            });
+            notGeneratedDivs.forEach(function(element) {
+                element.style.display = 'none';
+            });
+        }
+    }
+
+    function showLoadingPopup() {
+        const loadingPopup = document.getElementById('loading-popup');
+        loadingPopup.style.display = 'flex';
+    }
+
+    function hideLoadingPopup() {
+        const loadingPopup = document.getElementById('loading-popup');
+        loadingPopup.style.display = 'none';
+    }
+
+    function generateCoverLetter() {
+        showLoadingPopup();
+
+        const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
+
+        const payload = {
+            jobInfo: jobInfoJson
+        };
+
+        console.log(JSON.stringify(payload));
+
+        fetch("@routes.IndividualJobController.generateCoverLetter()", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Csrf-Token': csrfToken
+            },
+            body: JSON.stringify(payload),
+            redirect: 'follow'
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                console.error("Failed to generate cover letter.");
+                return response.text().then(text => console.error(text));
+            }
+        })
+        .then(data => {
+            if (data && data.content) {
+                const generatedLetterDiv = document.getElementById('generated-letter');
+                generatedLetterDiv.innerHTML = data.content;
+
+                displayConditionalDiv();
+                hideLoadingPopup();
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching cover letter improvement:", error);
+            hideLoadingPopup();
+        });
+    }
+
+    function improveCoverLetter() {
+        showLoadingPopup();
+
+        const content = document.getElementById("generated-letter").innerHTML;
+        const customImprovement = document.getElementById('custom-text').value;
+        const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
+
+        const payload = {
+            jobInfo: jobInfoJson,
+            improvements: Array.from(selectedImprovements),
+            customImprovement: customImprovement,
+            response: content
+        };
+
+        console.log(JSON.stringify(payload));
+
+        fetch("@routes.IndividualJobController.generateResponseImprovement()", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Csrf-Token': csrfToken
+            },
+            body: JSON.stringify(payload),
+            redirect: 'follow'
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                console.error("Failed to generate cover letter improvement.");
+                return response.text().then(text => console.error(text));
+            }
+        })
+        .then(data => {
+            if (data && data.content) {
+                const generatedLetterDiv = document.getElementById('generated-letter');
+                generatedLetterDiv.innerHTML = data.content;
+
+                clearImprovementsBackground();
+                displayConditionalDiv();
+                hideLoadingPopup();
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching cover letter improvement:", error);
+            hideLoadingPopup();
+        });
+    }
+    </script>
+}

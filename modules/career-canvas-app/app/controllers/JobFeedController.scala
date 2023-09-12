@@ -10,7 +10,6 @@ import service.JobApplicationsService
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
-import play.api.libs.json.JsValue
 import utils.FormUtils
 
 import javax.inject.Inject
@@ -124,40 +123,6 @@ class JobFeedController @Inject()(
     val userJobs = retrieveUserJobs(userId)
     Ok(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm, jobPostForm, getPostInfoUrl, userJobs.jobs, userJobs.hasNext))
       .withSession(request.session -- Seq("company", "jobTitle", "postUrl"))
-  }
-
-  def deleteJob(jobId: Long): Action[AnyContent] = authenticatedUserAction { implicit request =>
-    val userId = retrieveUserId(request)
-    jobApplicationsService.deleteJob(userId, jobId)
-    Redirect(routes.JobFeedController.showJobFeedHome())
-  }
-
-  def showJobView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userId = retrieveUserId(request)
-    val coverLetters = jobApplicationsService.getCoverLetters(userId, jobInfo.jobId)
-    val responses = jobApplicationsService.getResponses(userId, jobInfo.jobId)
-    Ok(views.html.authenticated.user.job.IndividualJobView(jobInfo, coverLetters, responses))
-  }
-
-  def generateCoverLetter(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userId = retrieveUserId(request)
-    val fullName = retrieveUserName(request)
-    val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo, fullName)
-    val coverLetters = jobApplicationsService.getCoverLetters(userId, jobInfo.jobId)
-    val responses = jobApplicationsService.getResponses(userId, jobInfo.jobId)
-    Ok(views.html.authenticated.user.job.CoverLetterDisplayView(jobInfo, coverLetters, responses, coverLetter))
-  }
-
-  def saveCoverLetter(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
-    val userId = retrieveUserId(request)
-    val jobId = (request.body \ "jobId").as[Long]
-    val name = (request.body \ "name").as[String]
-    val responses = (request.body \ "responses").as[Seq[ApplicationFile]]
-    val coverLetter = (request.body \ "coverLetter").as[String]
-    jobApplicationsService.saveCoverLetter(userId, jobId, name, coverLetter)
-    val jobInfo = jobApplicationsService.getJobById(userId, jobId)
-    val coverLetters = jobApplicationsService.getCoverLetters(userId, jobId)
-    Ok(views.html.authenticated.user.job.IndividualJobView(jobInfo, coverLetters, responses))
   }
 
   def starJob(jobId: Long): Action[AnyContent] = authenticatedUserAction { implicit request =>

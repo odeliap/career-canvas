@@ -2,7 +2,7 @@ package service
 
 import careercanvas.io.{JobApplicationFilesDao, JobApplicationsDao}
 import careercanvas.io.model.job._
-import careercanvas.io.processor.CoverLetterWriter
+import careercanvas.io.processor.JobResponseWriter
 import careercanvas.io.storage.StorageService
 import careercanvas.io.util.AwaitResult
 import utils.StringUtils
@@ -15,7 +15,7 @@ import scala.concurrent.ExecutionContext
 class JobApplicationsService @Inject() (
   jobApplicationsDao: JobApplicationsDao,
   jobApplicationFilesDao: JobApplicationFilesDao,
-  coverLetterWriter: CoverLetterWriter,
+  jobResponseWriter: JobResponseWriter,
   storageService: StorageService,
   stringUtils: StringUtils
 )(implicit ec: ExecutionContext)
@@ -70,7 +70,7 @@ class JobApplicationsService @Inject() (
       .filter(_.fileType.equals(ApplicationFileType.Response))
   }
 
-  def saveCoverLetter(userId: String, jobId: Long, name: String, content: String): Unit = {
+  def saveFile(userId: String, jobId: Long, name: String, content: String, applicationFileType: ApplicationFileType): Unit = {
     val bucket = "career-canvas-application-files"
     val sanitizedName = stringUtils.sanitizeName(name)
     val prefix = s"$userId/$jobId/$sanitizedName"
@@ -80,7 +80,7 @@ class JobApplicationsService @Inject() (
       jobId,
       0L,
       name,
-      ApplicationFileType.CoverLetter,
+      applicationFileType,
       bucket,
       prefix,
       Timestamp.valueOf(LocalDateTime.now())
@@ -90,8 +90,16 @@ class JobApplicationsService @Inject() (
       .waitForResult
   }
 
-  def generateCoverLetter(jobInfo: JobInfo, name: String): CoverLetter = {
-    coverLetterWriter.generateCoverLetter(jobInfo, name)
+  def generateCoverLetter(jobInfo: JobInfo, name: String): Response = {
+    jobResponseWriter.generateCoverLetter(jobInfo, name)
+  }
+
+  def generateResponse(jobInfo: JobInfo, name: String, question: String): Response = {
+    jobResponseWriter.generateResponse(jobInfo, name, question)
+  }
+
+  def improveResponse(response: String, improvements: Seq[ResponseImprovement], customImprovement: String): Response = {
+    jobResponseWriter.improveResponse(response, improvements, customImprovement)
   }
 
 }

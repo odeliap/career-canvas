@@ -1,126 +1,22 @@
 @(
-jobInfo: careercanvas.io.model.job.JobInfo,
-coverLetters: Seq[careercanvas.io.model.job.ApplicationFile],
-responses: Seq[careercanvas.io.model.job.ApplicationFile]
+jobInfo: careercanvas.io.model.job.JobInfo
 )(content: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.AuthenticatedUserLayout(s"${jobInfo.company}: ${jobInfo.jobTitle}") {
-    <div class="main-page">
-        <div class="job-view-container">
-            <div class="job-view-left-section"></div>
-            <div class="job-view-middle-panel">
-                <div class="job-view-top-part">
-                    <div id="job-view-intro">
-                        <div id="job-view-content">
-                            <div class="job-view-content-header">
-                                <div class="job-view-title">@jobInfo.company</div>
-                                <form action="@routes.JobFeedController.deleteJob(jobInfo.jobId)" method="POST" id="delete-job-form">
-                                    @helper.CSRF.formField
-                                    <button type="submit" class="delete-job-button">
-                                        <img src="@routes.Assets.versioned("images/job/trash.png")" class="delete-job-icon">
-                                    </button>
-                                </form>
-                            </div>
-                            <a href="@jobInfo.postUrl" target="_blank" class="job-view-subtitle">@jobInfo.jobTitle</a>
-                            <div class="job-view-blank-space"></div>
-                            <div class="job-view-metadata">
-                                <div class="job-view-metadata-title">Application Status: </div>
-                                <div class="job-view-metadata-content">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</div>
-                            </div>
-                            @if(jobInfo.appSubmissionDate.nonEmpty) {
-                            <div class="job-view-metadata">
-                                <div class="job-view-metadata-title">Application Submitted:</div>
-                                <div class="job-view-metadata-content">@jobInfo.appSubmissionDate.get</div>
-                            </div>
-                            }
-                            @if(jobInfo.interviewRound.nonEmpty) {
-                            <div class="job-view-metadata">
-                                <div class="job-view-metadata-title">Interview Round: </div>
-                                <div class="job-view-metadata-content">@jobInfo.interviewRound.get</div>
-                            </div>
-                            }
-                            <div class="job-view-metadata">
-                                <div class="job-view-metadata-title">Last Updated: </div>
-                                <div class="job-view-metadata-content">@jobInfo.lastUpdate</div>
-                            </div>
-                            @if(jobInfo.notes.nonEmpty) {
-                            @if(jobInfo.notes.get != ""){
-                            <div class="job-view-metadata">
-                                <div class="job-view-metadata-title">Notes: </div>
-                                <div class="job-view-metadata-content">@jobInfo.notes.get</div>
-                            </div>
-                            }
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div class="job-view-bottom-part">
-                    @content
-                </div>
+    <div class="base-job-info-page">
+        <div class="page-container">
+            <div class="sidebar">
+                <ul>
+                    <li><a href="@routes.IndividualJobController.showJobView(jobInfo)">Overview</a></li>
+                    <li><a href="@routes.IndividualJobController.showGenerateCoverLetter(jobInfo)">Generate Cover Letter</a></li>
+                    <li><a href="@routes.IndividualJobController.showGenerateResponse(jobInfo)">Generate Response</a></li>
+                    <li><a href="@routes.IndividualJobController.showFiles(jobInfo)">Files</a></li>
+                    <li><a href="@routes.JobFeedController.showJobFeedHome()" id="back-to-feed-button">Back to Feed</a></li>
+                </ul>
             </div>
-            <div class="job-view-right-section">
-                <h4 id="files-directory-title">Files</h4>
-                <div class="directories">
-                    <div class="directory">
-                        <div class="directory-header">
-                            <span class="toggle-btn">▶</span>
-                            <div class="directory-title">Cover Letters</div>
-                        </div>
-                        <div class="sub-directory hidden">
-                            @coverLetters.map { coverLetter =>
-                                <div>@coverLetter.name</div>
-                            }
-                        </div>
-                    </div>
-                    <div class="directory">
-                        <div class="directory-header">
-                            <span class="toggle-btn">▶</span>
-                            <div class="directory-title">Responses</div>
-                        </div>
-                        <div class="sub-directory hidden">
-                            @responses.map { response =>
-                                <div>@response.name</div>
-                            }
-                        </div>
-                    </div>
-                </div>
+            <div class="input">
+                @content
             </div>
         </div>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const directories = document.querySelectorAll(".directory");
-
-            directories.forEach(directory => {
-                directory.addEventListener("click", function() {
-                    const toggleBtn = this.querySelector(".toggle-btn");
-                    const subDirectory = this.querySelector(".sub-directory");
-
-                    if (subDirectory.classList.contains("hidden")) {
-                        subDirectory.classList.remove("hidden");
-                        toggleBtn.textContent = "▼";
-                    } else {
-                        subDirectory.classList.add("hidden");
-                        toggleBtn.textContent = "▶";
-                    }
-                });
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-        var deleteButtons = document.querySelectorAll('.delete-job-button');
-
-        deleteButtons.forEach(function(button) {
-          button.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            var isConfirmed = window.confirm('Are you sure you want to delete this job?');
-
-            if (isConfirmed) {
-              event.target.closest('#delete-job-form').submit();
-            }
-          });
-        });
-      });
-    </script>
 }

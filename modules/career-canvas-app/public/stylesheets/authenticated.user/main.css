@@ -196,24 +196,25 @@ body {
 /* Navigation Pages & Content */
 
 .content {
-  padding-top: 5px;
   margin: 0;
 }
 
 .main-content {
   margin: 0 auto;
-  width: 85%;
+  width: 100%;
 }
 
 .input-content {
   padding-bottom: 20px;
   font-size: 16px;
   font-weight: 300;
-  margin-top: 20px;
 }
 
 .main-page {
   height: 100vh;
+  margin: 20px auto;
+  padding-top: 5px;
+  width: 85%;
 }
 
 /* Headers */
