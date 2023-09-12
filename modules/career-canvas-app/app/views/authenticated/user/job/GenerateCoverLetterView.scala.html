@@ -35,7 +35,7 @@ jobInfo: careercanvas.io.model.job.JobInfo
     </section>
     <section class="output">
         <h2>Generated Cover Letter</h2>
-        <div id="generated-letter"></div>
+        <textarea id="generated-letter"></textarea>
     </section>
     <div class="if-generated-cover-letter">
     <a id="save-cover-letter-button" href="javascript:void(0);" onclick="saveCoverLetterWithPrompt();">Save</a>
@@ -49,7 +49,23 @@ jobInfo: careercanvas.io.model.job.JobInfo
         displayConditionalDiv();
     };
 
+    window.addEventListener("DOMContentLoaded", function() {
+        const textarea = document.getElementById("generated-letter");
+        adjustHeight(textarea);
+    });
+
     const selectedImprovements = new Set();
+
+    document.addEventListener("input", function(event) {
+        if (event.target.tagName.toLowerCase() === "textarea") {
+            adjustHeight(event.target);
+        }
+    });
+
+    function adjustHeight(textarea) {
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+    }
 
     function toggleButton(button) {
         const improvementName = button.id;
@@ -144,6 +160,8 @@ jobInfo: careercanvas.io.model.job.JobInfo
                 const generatedLetterDiv = document.getElementById('generated-letter');
                 generatedLetterDiv.innerHTML = data.content;
 
+                const textarea = document.getElementById("generated-letter");
+                adjustHeight(textarea);
                 displayConditionalDiv();
                 hideLoadingPopup();
             }
@@ -192,6 +210,8 @@ jobInfo: careercanvas.io.model.job.JobInfo
                 const generatedLetterDiv = document.getElementById('generated-letter');
                 generatedLetterDiv.innerHTML = data.content;
 
+                const textarea = document.getElementById("generated-letter");
+                adjustHeight(textarea);
                 clearImprovementsBackground();
                 displayConditionalDiv();
                 hideLoadingPopup();

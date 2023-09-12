@@ -96,3 +96,21 @@
     color: #333333;
     margin-top: 10px;
 }
+
+.individual-job-view-location {
+    font-weight: bold;
+}
+
+.individual-job-view-salary {
+    display: inline-block;
+    max-width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+    color: #2e4a9e;
+    background-color: #BDD5E7;
+    font-weight: bold;
+}
+
+.individual-job-view-company-description {
+    margin-bottom: 20px;
+}

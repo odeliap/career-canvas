@@ -1,5 +1,6 @@
 @(
-jobInfo: careercanvas.io.model.job.JobInfo
+jobInfo: careercanvas.io.model.job.JobInfo,
+jobMetadata: careercanvas.io.model.job.JobMetadata
 )(implicit request: MessagesRequestHeader)
 
 @BaseJobInformationView(jobInfo) {
@@ -8,4 +9,15 @@ jobInfo: careercanvas.io.model.job.JobInfo
         <a href="@jobInfo.postUrl" class="apply-button">Apply Now</a>
     </div>
     <p class="individual-job-view-title">@jobInfo.jobTitle</p>
+    <p class="individual-job-view-location">@jobMetadata.location</p>
+    <div class="individual-job-view-salary">@jobMetadata.salary Annually</div>
+    <div class="individual-job-view-company-description">
+        <h3>Company Description</h3>
+        <div>@jobMetadata.companyDescription</div>
+    </div>
+    <hr>
+    <div class="individual-job-view-job-description">
+        <h3>Job Description</h3>
+        <div>@jobMetadata.jobDescription</div>
+    </div>
 }

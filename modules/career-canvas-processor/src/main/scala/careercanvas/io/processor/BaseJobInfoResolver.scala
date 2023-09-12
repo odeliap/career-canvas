@@ -3,13 +3,15 @@ package careercanvas.io.processor
 import careercanvas.io.model.job.BaseJobInfo
 import careercanvas.io.scraper.Scraper
 import careercanvas.io.util.AwaitResult
+import careercanvas.io.utils.StringUtils
 
 import javax.inject.{Inject, Singleton}
 
 @Singleton
 class BaseJobInfoResolver @Inject()(
   scraper: Scraper,
-  openAiConnector: OpenAiConnector
+  openAiConnector: OpenAiConnector,
+  stringUtils: StringUtils
 ) extends AwaitResult {
 
   def resolve(pageUrl: String): BaseJobInfo = {
@@ -21,7 +23,7 @@ class BaseJobInfoResolver @Inject()(
 
   private def completionToBaseJobInfo(completion: String, pageUrl: String): BaseJobInfo = {
     val args = completion.split("//////")
-    val company = args(0)
+    val company = stringUtils.removeLeadingNewlinesAndSpaces(args(0))
     val jobTitle = args(1)
     BaseJobInfo(company, jobTitle, pageUrl)
   }
