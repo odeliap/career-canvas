@@ -6,12 +6,10 @@ jobInfo: careercanvas.io.model.job.JobInfo
     <div class="base-job-info-page">
         <div class="page-container">
             <div class="sidebar">
+                <a href="@routes.JobFeedController.showJobFeedHome()" id="back-to-feed-button">Back to Feed</a>
                 <ul>
                     <li><a href="@routes.IndividualJobController.showJobView(jobInfo)">Overview</a></li>
-                    <li><a href="@routes.IndividualJobController.showGenerateCoverLetter(jobInfo)">Generate Cover Letter</a></li>
-                    <li><a href="@routes.IndividualJobController.showGenerateResponse(jobInfo)">Generate Response</a></li>
-                    <li><a href="@routes.IndividualJobController.showFiles(jobInfo)">Files</a></li>
-                    <li><a href="@routes.JobFeedController.showJobFeedHome()" id="back-to-feed-button">Back to Feed</a></li>
+                    <li><a href="@routes.IndividualJobController.showDocumentsView(jobInfo)">Documents</a></li>
                 </ul>
             </div>
             <div class="input">

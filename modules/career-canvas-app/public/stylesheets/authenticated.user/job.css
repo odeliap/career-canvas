@@ -26,10 +26,11 @@
 .sidebar ul {
     list-style-type: none;
     padding: 0;
+    padding-top: 5px;
 }
 
 .sidebar li {
-    padding: 10px;
+    padding: 10px 10px 0 10px;
 }
 
 .sidebar li a {
@@ -47,13 +48,20 @@
 }
 
 #back-to-feed-button {
-    padding: 10px 10px 10px 0;
+    padding: 10px;
+    font-size: 14px;
     font-weight: bold;
 }
 
 .input {
     flex: 1;
     margin: 20px 80px;
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        flex: 0 0 150px;
+    }
 }
 
 /* Overview Page */
@@ -113,4 +121,36 @@
 
 .individual-job-view-company-description {
     margin-bottom: 20px;
+}
+
+/* Documents Toggle Page */
+
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 0;
+}
+
+.toggle-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    outline: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.toggle-button:hover {
+    color: #555;
+}
+
+.toggle-button.active {
+    text-decoration: underline;
+}
+
+.view-content {
+    margin-top: 20px;
+    font-size: 18px;
 }

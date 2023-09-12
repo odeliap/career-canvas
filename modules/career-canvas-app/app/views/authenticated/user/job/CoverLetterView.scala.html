@@ -1,16 +1,16 @@
 @import play.api.libs.json._
 @import play.filters.csrf.CSRF
 @(
-jobInfo: careercanvas.io.model.job.JobInfo
+jobInfo: careercanvas.io.model.job.JobInfo,
+coverLetters: Seq[careercanvas.io.model.job.ApplicationFile]
 )(implicit request: MessagesRequestHeader)
 
-@BaseJobInformationView(jobInfo) {
 <div class="cover-letter-header">
     <h1>Generate Cover Letter</h1>
 </div>
 <div class="cover-letter">
     <section class="cover-letter-content">
-        <div class="if-generated-cover-letter">
+        <div class="if-generated">
             <label for="adjust-buttons">Improve:</label>
             <div id="adjust-buttons">
                 @careercanvas.io.model.job.ResponseImprovement.values.map { improvement =>
@@ -22,10 +22,10 @@ jobInfo: careercanvas.io.model.job.JobInfo
                 <textarea id="custom-text" placeholder="Enter your custom text here"></textarea>
             </div>
         </div>
-        <div class="if-not-generated-cover-letter">
-            <a href="javascript:void(0);" id="generate-button" onclick="generateCoverLetter()">Generate Cover Letter</a>
+        <div class="if-not-generated">
+            <a href="javascript:void(0);" id="generate-cover-letter-button" onclick="generateCoverLetter()">Generate Cover Letter</a>
         </div>
-        <div class="if-generated-cover-letter">
+        <div class="if-generated">
             <a href="javascript:void(0);" id="improve-button" onclick="improveCoverLetter()">Improve Cover Letter</a>
         </div>
         <div id="loading-popup" class="loading-popup">
@@ -37,7 +37,7 @@ jobInfo: careercanvas.io.model.job.JobInfo
         <h2>Generated Cover Letter</h2>
         <textarea id="generated-letter"></textarea>
     </section>
-    <div class="if-generated-cover-letter">
+    <div class="if-generated">
     <a id="save-cover-letter-button" href="javascript:void(0);" onclick="saveCoverLetterWithPrompt();">Save</a>
     </div>
 </div>
@@ -98,8 +98,8 @@ jobInfo: careercanvas.io.model.job.JobInfo
     }
 
     function displayConditionalDiv() {
-        var generatedDivs = document.querySelectorAll('.if-generated-cover-letter');
-        var notGeneratedDivs = document.querySelectorAll('.if-not-generated-cover-letter');
+        var generatedDivs = document.querySelectorAll('.if-generated');
+        var notGeneratedDivs = document.querySelectorAll('.if-not-generated');
         if (isDivEmpty('generated-letter')) {
             generatedDivs.forEach(function(element) {
                 element.style.display = 'none';
@@ -167,7 +167,7 @@ jobInfo: careercanvas.io.model.job.JobInfo
             }
         })
         .catch(error => {
-            console.error("Error fetching cover letter improvement:", error);
+            console.error("Error fetching cover letter:", error);
             hideLoadingPopup();
         });
     }
@@ -222,5 +222,38 @@ jobInfo: careercanvas.io.model.job.JobInfo
             hideLoadingPopup();
         });
     }
+
+    function saveCoverLetterWithPrompt() {
+        const name = prompt("Please enter a name to save:");
+        const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
+        if (name) {
+            const coverLetterContent = document.getElementById('generated-letter').innerHTML;
+
+            const payload = {
+                jobId: @jobInfo.jobId,
+                name: name,
+                coverLetter: coverLetterContent
+            };
+
+            fetch("@routes.IndividualJobController.saveCoverLetter()", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Csrf-Token': csrfToken
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.documentElement.innerHTML = data;
+                const flashMessage = "Cover Letter Saved.";
+                alert(flashMessage);
+            })
+            .catch(error => {
+                console.error('There was an error with the request:', error);
+                alert('Something went wrong when saving the cover letter.');
+            });
+        }
+    }
     </script>
-}

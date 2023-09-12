@@ -121,7 +121,9 @@ body {
 .navigation-el:hover,
 .profile-dropdown:hover .profile-dropbtn {
   color: black;
-  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-skip: ink;
+  text-underline-offset: 15px;
 }
 
 .navigation-el-name {

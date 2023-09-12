@@ -56,18 +56,10 @@ class JobApplicationsService @Inject() (
     jobApplicationsDao.getJobs(userId.toLong, offset, limit, sortKey).waitForResult
   }
 
-  def getCoverLetters(userId: String, jobId: Long): Seq[ApplicationFile] = {
+  def getApplicationsFiles(userId: String, jobId: Long): Seq[ApplicationFile] = {
     jobApplicationFilesDao
       .getFilesByJob(userId.toLong, jobId)
       .waitForResult
-      .filter(_.fileType.equals(ApplicationFileType.CoverLetter))
-  }
-
-  def getResponses(userId: String, jobId: Long): Seq[ApplicationFile] = {
-    jobApplicationFilesDao
-      .getFilesByJob(userId.toLong, jobId)
-      .waitForResult
-      .filter(_.fileType.equals(ApplicationFileType.Response))
   }
 
   def saveFile(userId: String, jobId: Long, name: String, content: String, applicationFileType: ApplicationFileType): Unit = {

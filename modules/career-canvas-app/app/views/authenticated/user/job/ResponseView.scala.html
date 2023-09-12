@@ -1,0 +1,150 @@
+@import play.api.libs.json._
+@import play.filters.csrf.CSRF
+@(
+jobInfo: careercanvas.io.model.job.JobInfo,
+responses: Seq[careercanvas.io.model.job.ApplicationFile]
+)(implicit request: MessagesRequestHeader)
+
+<button class="response-add-question-btn" onclick="addQuestion()">+</button>
+
+<div id="questionsContainer"></div>
+
+<div id="loading-popup" class="loading-popup">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading...</div>
+</div>
+
+<script>
+        let questionCount = 0;
+
+        function addQuestion() {
+            if (questionCount < 10) {
+                questionCount++;
+
+                // Create question input area
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('response-question-wrapper');
+                questionDiv.id = `questionWrapper${questionCount}`;
+
+                questionDiv.innerHTML = `
+                    <button class="response-delete-btn" onclick="deleteQuestion(${questionCount})">Delete ×</button>
+                    <input class="response-question-input" type="text" placeholder="Enter Question ${questionCount}" id="question${questionCount}">
+                    <button class="response-button" onclick="submitQuestion(${questionCount})">Submit</button>
+                    <button class="response-button save-response-button" onclick="saveResponseWithPrompt(${questionCount})">Save</button>
+                    <textarea class="response-hidden" id="answer${questionCount}"></textarea>
+                `;
+
+                // Append the question area to the container
+                document.getElementById('questionsContainer').appendChild(questionDiv);
+            } else {
+                alert("Maximum of 10 questions reached!");
+            }
+        }
+
+        function deleteQuestion(id) {
+            const questionWrapper = document.getElementById(`questionWrapper${id}`);
+            document.getElementById('questionsContainer').removeChild(questionWrapper);
+            questionCount--;
+        }
+
+        function showLoadingPopup() {
+            const loadingPopup = document.getElementById('loading-popup');
+            loadingPopup.style.display = 'flex';
+        }
+
+        function hideLoadingPopup() {
+            const loadingPopup = document.getElementById('loading-popup');
+            loadingPopup.style.display = 'none';
+        }
+
+        function submitQuestion(id) {
+            const questionInput = document.getElementById(`question${id}`);
+            if (questionInput.value.trim() !== "") {
+                showLoadingPopup();
+
+                const questionInput = document.getElementById(`question${id}`);
+
+                const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
+
+                const payload = {
+                    jobInfo: jobInfoJson,
+                    question: questionInput.value
+                };
+
+                console.log(JSON.stringify(payload));
+
+                fetch("@routes.IndividualJobController.generateResponse()", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Csrf-Token': csrfToken
+                    },
+                    body: JSON.stringify(payload),
+                    redirect: 'follow'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        console.error("Failed to generate response.");
+                        return response.text().then(text => console.error(text));
+                    }
+                })
+                .then(data => {
+                    if (data && data.content) {
+                        const answerDiv = document.getElementById(`answer${id}`);
+                        answerDiv.innerHTML = data.content;
+                        answerDiv.classList.remove('response-hidden');
+
+                        hideLoadingPopup();
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching response:", error);
+                    hideLoadingPopup();
+                });
+            } else {
+                alert("Please enter a valid question");
+            }
+        }
+
+        function saveResponseWithPrompt(id) {
+            const questionInput = document.getElementById(`question${id}`);
+            const answerInput = document.getElementById(`answer${id}`);
+            if (questionInput.value.trim() !== "" && answerInput.value.trim() !== "") {
+                const name = prompt("Please enter a name to save:");
+                const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
+                if (name) {
+                    const responseContent = document.getElementById('answer${questionCount}').innerHTML;
+
+                    const payload = {
+                        jobId: @jobInfo.jobId,
+                        name: name,
+                        response: responseContent
+                    };
+
+                    fetch("@routes.IndividualJobController.saveResponse()", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Csrf-Token': csrfToken
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify(payload)
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        document.documentElement.innerHTML = data;
+                        const flashMessage = "Response Saved.";
+                        alert(flashMessage);
+                    })
+                    .catch(error => {
+                        console.error('There was an error with the request:', error);
+                        alert('Something went wrong when saving the response.');
+                    });
+                }
+            } else {
+                alert("Please enter a valid question and wait for the response before saving");
+            }
+        }
+</script>

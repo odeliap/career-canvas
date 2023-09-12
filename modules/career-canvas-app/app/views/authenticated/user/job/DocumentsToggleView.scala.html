@@ -1,0 +1,36 @@
+@import play.api.libs.json._
+@import play.filters.csrf.CSRF
+@(
+jobInfo: careercanvas.io.model.job.JobInfo,
+files: Seq[careercanvas.io.model.job.ApplicationFile]
+)(implicit request: MessagesRequestHeader)
+
+@BaseJobInformationView(jobInfo) {
+    <div class="toggle-container">
+        <button class="toggle-button active" onclick="toggleView('view1')">Cover Letters</button>
+        <button class="toggle-button" onclick="toggleView('view2')">Responses</button>
+    </div>
+    <div class="view-content" id="view1">@CoverLetterView(jobInfo, files)</div>
+    <div class="view-content" id="view2" style="display: none;">@ResponseView(jobInfo, files)</div>
+    <script>
+        function toggleView(viewId) {
+            const views = document.querySelectorAll('.view-content');
+            const buttons = document.querySelectorAll('.toggle-button');
+
+            views.forEach(view => {
+                view.style.display = 'none';
+            });
+
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            document.getElementById(viewId).style.display = 'block';
+            if(viewId === 'view1') {
+                buttons[0].classList.add('active');
+            } else {
+                buttons[1].classList.add('active');
+            }
+        }
+    </script>
+}

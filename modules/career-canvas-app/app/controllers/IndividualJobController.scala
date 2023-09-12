@@ -34,12 +34,10 @@ class IndividualJobController @Inject()(
     Redirect(routes.JobFeedController.showJobFeedHome())
   }
 
-  def showGenerateCoverLetter(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit  request: MessagesRequest[AnyContent] =>
-    Ok(views.html.authenticated.user.job.GenerateCoverLetterView(jobInfo))
-  }
-
-  def showGenerateResponse(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit  request: MessagesRequest[AnyContent] =>
-    Ok(views.html.authenticated.user.job.GenerateResponseView(jobInfo))
+  def showDocumentsView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
+    val userId = retrieveUserId(request)
+    val applicationFiles = jobApplicationsService.getApplicationsFiles(userId, jobInfo.jobId)
+    Ok(views.html.authenticated.user.job.DocumentsToggleView(jobInfo, applicationFiles))
   }
 
   def generateCoverLetter(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
@@ -91,8 +89,7 @@ class IndividualJobController @Inject()(
     val coverLetter = (request.body \ "coverLetter").as[String]
     jobApplicationsService.saveFile(userId, jobId, name, coverLetter, ApplicationFileType.CoverLetter)
     val jobInfo = jobApplicationsService.getJobById(userId, jobId)
-    Redirect(routes.IndividualJobController.showJobView(jobInfo))
-      .flashing("success" -> "Cover letter saved.")
+    Redirect(routes.IndividualJobController.showDocumentsView(jobInfo))
   }
 
   def saveResponse(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
@@ -102,15 +99,7 @@ class IndividualJobController @Inject()(
     val response = (request.body \ "response").as[String]
     jobApplicationsService.saveFile(userId, jobId, name, response, ApplicationFileType.Response)
     val jobInfo = jobApplicationsService.getJobById(userId, jobId)
-    Redirect(routes.IndividualJobController.showJobView(jobInfo))
-      .flashing("success" -> "Response saved.")
-  }
-
-  def showFiles(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userId = retrieveUserId(request)
-    val coverLetters = jobApplicationsService.getCoverLetters(userId, jobInfo.jobId)
-    val responses = jobApplicationsService.getResponses(userId, jobInfo.jobId)
-    Ok(views.html.authenticated.user.job.JobFilesView(jobInfo, coverLetters, responses))
+    Redirect(routes.IndividualJobController.showDocumentsView(jobInfo))
   }
 
   private def retrieveUserId(request: RequestHeader): String = request.session.data(Global.SESSION_USER_ID)

@@ -8,7 +8,7 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/authenticated.user/main.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/authenticated.user/feed.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/authenticated.user/job.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/authenticated.user/coverLetter.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/authenticated.user/responses.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/authenticated.user/statistics.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/authenticated.user/profile.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/authenticated.user/resume.css")">
@@ -22,7 +22,7 @@
             <div class="header-container">
                 <div class="header">
                     <div class="header-left">
-                        <img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1">
+                        <a href="@routes.JobFeedController.showJobFeedHome()"><img src="@routes.Assets.versioned("images/logos/logo1.png")" class="logo1"></a>
                         <form id="search" action="#">
                             <input type="text" class="search-container" id="searchBox" placeholder="Search by title or company" onkeypress="handle" />
                         </form>
@@ -34,7 +34,7 @@
                         </a>
                         <a class="navigation-el" href="@routes.JobStatisticsController.showJobStats()">
                             <img src="@routes.Assets.versioned("images/feed/navbar/statistics.png")" class="navigation-el-icon">
-                            <p class="navigation-el-name">Search Statistics</p>
+                            <p class="navigation-el-name">Statistics</p>
                         </a>
                         <div class="profile-dropdown-container">
                             <div class="profile-dropdown">
