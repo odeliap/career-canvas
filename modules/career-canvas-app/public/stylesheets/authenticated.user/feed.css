@@ -18,7 +18,7 @@
     border: 1px solid #D3D3D3;
 }
 
-.job-tiles {
+#job-tiles {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(calc(100% - 10px), 1fr));
     gap: 10px;
@@ -138,19 +138,19 @@
 }
 
 @media screen and (min-width: 600px) {
-    .job-tiles {
+    #job-tiles {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media screen and (min-width: 900px) {
-    .job-tiles {
+    #job-tiles {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media screen and (min-width: 1200px) {
-    .job-tiles {
+    #job-tiles {
         grid-template-columns: repeat(4, 1fr);
     }
 }

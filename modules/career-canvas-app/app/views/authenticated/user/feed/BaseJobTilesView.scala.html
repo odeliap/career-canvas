@@ -1,4 +1,5 @@
 @import careercanvas.io.model.job._
+@import java.sql.Timestamp
 @(
 jobInfos: Seq[JobInfo]
 )(content: Html)(script: Html)(implicit request: MessagesRequestHeader)
@@ -19,11 +20,29 @@ jobInfos: Seq[JobInfo]
 
     @content
 
-    @SearchFilters(jobInfos)
+    <div>
+        <label for="lastUpdate">Last Update:</label>
+        <select id="lastUpdate">
+            <option value="24">Last 24 hours</option>
+            <option value="72">Last 3 days</option>
+            <option value="168">Last 7 days</option>
+        </select>
 
-    <div class="job-tiles">
+        <label for="company">Company:</label>
+        <select id="company">
+            <option value="">All Companies</option>
+            @for(company <- jobInfos.map(_.company).distinct) {
+            <option value="@company">@company</option>
+            }
+        </select>
+
+        <label>Show Starred:</label>
+        <input type="checkbox" id="showStarred">
+    </div>
+
+    <div id="job-tiles">
         @jobInfos.map { jobInfo =>
-        <div class="job-tile" data-starred="@jobInfo.starred.toString.toLowerCase()">
+        <div class="job-tile" data-company="@jobInfo.company" data-lastupdate="@jobInfo.lastUpdate.getTime" data-starred="@jobInfo.starred.toString.toLowerCase()">
             <div class="job-tile-header">
                 <div class="job-tile-subheader">
                     <div class="job-company">@jobInfo.company</div>
@@ -57,171 +76,125 @@ jobInfos: Seq[JobInfo]
     </div>
 
     <div class="pagination">
-        <a id="prevPage" href="#"><img src="@routes.Assets.versioned("images/feed/pagination/previous.png")" class="pagination-arrow"></a>
-        <div id="pageNumbersContainer">
-            <!-- Page numbers will be generated dynamically here -->
-        </div>
-        <a id="nextPage" href="#"><img src="@routes.Assets.versioned("images/feed/pagination/next.png")" class="pagination-arrow"></a>
+        <button id="prevPage">Previous</button>
+        <div id="pageNumbersContainer"></div>
+        <button id="nextPage">Next</button>
     </div>
 
     @FooterTemplate()
     <script>
-        const jobTiles = document.querySelectorAll(".job-tile");
-        const prevPageLink = document.getElementById("prevPage");
-        const nextPageLink = document.getElementById("nextPage");
-        const pageNumbersContainer = document.getElementById("pageNumbersContainer");
-        const jobsPerPage = 30; // Set the number of jobs per page here
-
-        const toggleStarredViewButton = document.getElementById("toggle-starred-view");
-        let showOnlyStarred = false;
-
+        document.addEventListener('DOMContentLoaded', function() {
+        const jobsGrid = document.getElementById("job-tiles");
+        const jobCards = jobsGrid.querySelectorAll(".job-tile");
+        const lastUpdateFilter = document.getElementById("lastUpdate");
+        const companyFilter = document.getElementById("company");
+        const showStarredCheckbox = document.getElementById("showStarred");
+        const ITEMS_PER_PAGE = 2;
         let currentPage = 1;
+        let maxPage = 1;
 
-        function updatePagination() {
-            const totalPages = Math.ceil(jobTiles.length / jobsPerPage);
-            prevPageLink.disabled = currentPage === 1;
-            nextPageLink.disabled = currentPage === totalPages;
-            pageNumbersContainer.innerHTML = '';
-
-            if (totalPages > 1) {
-                for (let page = 1; page <= totalPages; page++) {
-                    const pageNumber = document.createElement("a");
-                    pageNumber.href = "#";
-                    pageNumber.textContent = page;
-                    pageNumber.setAttribute("data-page", page);
-                    pageNumber.classList.add("pagination-item");
-                    if (page === currentPage) {
-                        pageNumber.classList.add("current");
-                    }
-                    pageNumber.addEventListener("click", () => {
-                        currentPage = page;
-                        updatePagination();
-                    });
-                    pageNumbersContainer.appendChild(pageNumber);
-
-                    if (page < totalPages) {
-                        const space = document.createTextNode(" ");
-                        pageNumbersContainer.appendChild(space);
-                    }
-                }
+        function filterRows(resetPage = true) {
+            if (resetPage) {
+                currentPage = 1;
             }
 
-            jobTiles.forEach((tile, index) => {
-                if (index >= (currentPage - 1) * jobsPerPage && index < currentPage * jobsPerPage) {
-                    tile.style.display = "";
-                } else {
-                    tile.style.display = "none";
+            const now = new Date().getTime();
+            const hours = parseFloat(lastUpdateFilter.value);
+            const timeLimit = now - hours * 60 * 60 * 1000; // convert hours to milliseconds
+            const selectedCompany = companyFilter.value;
+
+            let filteredItems = 0;
+
+            jobCards.forEach((card, index) => {
+                const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
+                const company = card.getAttribute("data-company");
+                const starred = card.getAttribute("data-starred") === "true";
+                const showStarredOnly = showStarredCheckbox.checked;
+
+                if (lastUpdate >= timeLimit &&
+                    (selectedCompany === "" || selectedCompany === company) &&
+                    (!showStarredOnly || starred)) {
+                    filteredItems++;
                 }
             });
+
+            maxPage = Math.ceil(filteredItems / ITEMS_PER_PAGE);
+
+            var displayCards = [];
+
+            jobCards.forEach((card, index) => {
+                const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
+                const company = card.getAttribute("data-company");
+                const starred = card.getAttribute("data-starred") === "true";
+                const showStarredOnly = showStarredCheckbox.checked;
+
+                if (lastUpdate >= timeLimit &&
+                    (selectedCompany === "" || selectedCompany === company) &&
+                    (!showStarredOnly || starred)) {
+
+                    displayCards.push(card);
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            displayCards.forEach((card, index) => {
+                if (index >= (currentPage - 1) * ITEMS_PER_PAGE && index < currentPage * ITEMS_PER_PAGE) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            updatePaginationDisplay();
         }
 
-        function updateStarredPagination() {
-            const starredJobTiles = [];
+        function updatePaginationDisplay() {
+            const pageNumbersContainer = document.getElementById('pageNumbersContainer');
+            pageNumbersContainer.innerHTML = ""; // Clear previous page numbers
 
-            jobTiles.forEach((jobTile) => {
-                const dataStarred = jobTile.getAttribute("data-starred");
-                if (dataStarred === "true") {
-                    starredJobTiles.push(jobTile);
+            for (let i = 1; i <= maxPage; i++) {
+                const pageElem = document.createElement("span");
+                pageElem.textContent = i;
+                pageElem.className = "page-number";
+
+                if (i === currentPage) {
+                    pageElem.classList.add("current");
                 }
-            });
 
-            const totalPages = Math.ceil(starredJobTiles.length / jobsPerPage);
-            prevPageLink.disabled = currentPage === 1;
-            nextPageLink.disabled = currentPage === totalPages;
-            pageNumbersContainer.innerHTML = '';
+                pageElem.addEventListener("click", function() {
+                    currentPage = i;
+                    filterRows();
+                });
 
-            if (totalPages > 1) {
-                for (let page = 1; page <= totalPages; page++) {
-                    const pageNumber = document.createElement("a");
-                    pageNumber.href = "#";
-                    pageNumber.textContent = page;
-                    pageNumber.setAttribute("data-page", page);
-                    pageNumber.classList.add("pagination-item");
-                    if (page === currentPage) {
-                        pageNumber.classList.add("current");
-                    }
-                    pageNumber.addEventListener("click", () => {
-                        currentPage = page;
-                        updateStarredPagination();
-                    });
-                    pageNumbersContainer.appendChild(pageNumber);
-
-                    if (page < totalPages) {
-                        const space = document.createTextNode(" ");
-                        pageNumbersContainer.appendChild(space);
-                    }
-                }
+                pageNumbersContainer.appendChild(pageElem);
             }
 
-            starredJobTiles.forEach((tile, index) => {
-                if (index >= (currentPage - 1) * jobsPerPage && index < currentPage * jobsPerPage) {
-                    tile.style.display = "";
-                } else {
-                    tile.style.display = "none";
-                }
-            });
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage >= maxPage;
         }
 
-        toggleStarredViewButton.addEventListener("click", () => {
-            currentPage = 1;
-            showOnlyStarred = !showOnlyStarred;
+        lastUpdateFilter.addEventListener("change", filterRows);
+        companyFilter.addEventListener("change", filterRows);
+        showStarredCheckbox.addEventListener("change", filterRows);
 
-            if (showOnlyStarred) {
-                toggleStarredViewButton.style.backgroundColor = "#D4D4D4";
-            } else {
-                toggleStarredViewButton.style.backgroundColor = "#FFFFFF";
-            }
-
-            jobTiles.forEach((tile) => {
-                const dataStarred = tile.getAttribute("data-starred");
-                const isStarred = (dataStarred === 'true');
-
-                if (showOnlyStarred) {
-                    if (isStarred) {
-                        tile.style.display = "";
-                    } else {
-                        tile.style.display = "none";
-                    }
-                } else {
-                    tile.style.display = ""; // display all tiles when not in starred-only view
-                }
-            });
-
-            if (showOnlyStarred) {
-                updateStarredPagination();
-            } else {
-                updatePagination();
-            }
-        });
-
-        prevPageLink.addEventListener("click", () => {
+        document.getElementById('prevPage').addEventListener("click", function() {
             if (currentPage > 1) {
                 currentPage--;
-                if (showOnlyStarred) {
-                    updatedStarredPagination();
-                } else {
-                    updatePagination();
-                }
+                filterRows(false);
             }
         });
 
-        nextPageLink.addEventListener("click", () => {
-            const totalPages = Math.ceil(jobTiles.length / jobsPerPage);
-            if (currentPage < totalPages) {
+        document.getElementById('nextPage').addEventListener("click", function() {
+            if (currentPage < maxPage) {
                 currentPage++;
-                if (showOnlyStarred) {
-                    updatedStarredPagination();
-                } else {
-                    updatePagination();
-                }
+                filterRows(false);
             }
         });
 
-        if (showOnlyStarred) {
-            updateStarredPagination();
-        } else {
-            updatePagination();
-        }
+        // Initial filter
+        filterRows();
+        });
     </script>
 </div>
 }
