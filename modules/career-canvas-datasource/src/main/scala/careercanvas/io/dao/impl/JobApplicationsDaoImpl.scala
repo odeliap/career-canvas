@@ -2,7 +2,7 @@ package careercanvas.io.dao.impl
 
 import careercanvas.io.JobApplicationsDao
 import careercanvas.io.dao.components.JobStatusesComponent
-import careercanvas.io.model.job.{JobInfo, JobsResult, SortKey, UpdateJobInfo}
+import careercanvas.io.model.job.{JobInfo, UpdateJobInfo}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 
@@ -59,29 +59,10 @@ class JobApplicationsDaoImpl @Inject() (
     db.run(query.result.head)
   }
 
-  override def getJobs(userId: Long, page: Int, limit: Int, sortKey: SortKey): Future[JobsResult] = {
+  override def getJobs(userId: Long): Future[Seq[JobInfo]] = {
     val baseQuery = JobStatusesQuery.filter(_.userId === userId)
 
-    val sortedQuery = sortKey match {
-      case SortKey.Company => baseQuery.sortBy(_.company.asc)
-      case SortKey.JobTitle => baseQuery.sortBy(_.jobTitle.asc)
-      case SortKey.Status => baseQuery.sortBy(_.status.toString.asColumnOf[String].asc)
-      case SortKey.ApplicationSubmissionDate => baseQuery.sortBy(_.appSubmissionDate.asc)
-      case SortKey.LastUpdate => baseQuery.sortBy(_.lastUpdate.asc)
-    }
-
-    val offset = (page - 1) * limit
-
-    val tx = for {
-      totalJobs <- baseQuery.length.result
-
-      jobs <- sortedQuery.drop(offset).take(limit).result
-    } yield (totalJobs, jobs)
-
-    db.run(tx.transactionally).map { case (totalJobs, jobs) =>
-      val totalPages =  (totalJobs + limit - 1) / limit
-      JobsResult(jobs, page, totalPages)
-    }
+    db.run(baseQuery.result)
   }
 
 }

@@ -50,7 +50,7 @@ class JobFeedController @Inject()(
 
   def showJobFeedHome(page: Int = 1): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = retrieveUserId(request)
-    val userJobs = retrieveUserJobs(userId, page)
+    val userJobs = retrieveUserJobs(userId)
     Ok(views.html.authenticated.user.feed.JobFeedDashboardView(jobPostForm, getPostInfoUrl, userJobs))
   }
 
@@ -125,6 +125,6 @@ class JobFeedController @Inject()(
   }
 
   private def retrieveUserId(request: RequestHeader): String = request.session.data(Global.SESSION_USER_ID)
-  private def retrieveUserJobs(userId: String, page: Int = 1, sortKey: SortKey = SortKey.Company): JobsResult = jobApplicationsService.getJobs(userId, page, sortKey)
+  private def retrieveUserJobs(userId: String): Seq[JobInfo] = jobApplicationsService.getJobs(userId)
 
 }

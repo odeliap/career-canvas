@@ -14,6 +14,6 @@ trait JobApplicationsDao {
 
   def getJobById(userId: Long, jobId: Long): Future[JobInfo]
 
-  def getJobs(userId: Long, offset: Int, limit: Int, sortKey: SortKey): Future[JobsResult]
+  def getJobs(userId: Long): Future[Seq[JobInfo]]
 
 }

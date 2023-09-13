@@ -1,11 +1,11 @@
 @(
 form: Form[careercanvas.io.model.job.UserProvidedJobDetails],
 saveJobUrl: Call,
-jobsResult: careercanvas.io.model.job.JobsResult,
+jobInfos: Seq[careercanvas.io.model.job.JobInfo],
 baseJobInfo: careercanvas.io.model.job.BaseJobInfo
 )(implicit request: MessagesRequestHeader)
 
-@BaseJobTilesView(jobsResult) {
+@BaseJobTilesView(jobInfos) {
 <div class="main-page">
     <div class="add-job-page">
         <div class="add-job-button">

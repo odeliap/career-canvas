@@ -58,9 +58,8 @@ class JobApplicationsService @Inject() (
     jobApplicationsDao.getJobById(userId.toLong, jobId).waitForResult
   }
 
-  def getJobs(userId: String, page: Int, sortKey: SortKey): JobsResult = {
-    val limit = 1
-    jobApplicationsDao.getJobs(userId.toLong, page, limit, sortKey).waitForResult
+  def getJobs(userId: String) = {
+    jobApplicationsDao.getJobs(userId.toLong).waitForResult
   }
 
   def getApplicationsFiles(userId: String, jobId: Long): Seq[ApplicationFile] = {

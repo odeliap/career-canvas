@@ -1,6 +1,6 @@
 @import careercanvas.io.model.job._
 @(
-jobsResult: JobsResult
+    jobInfos: Seq[JobInfo]
 )(content: Html)(script: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.AuthenticatedUserLayout("Feed | Career Canvas") {
@@ -29,7 +29,7 @@ jobsResult: JobsResult
         </div>
 
         <div class="job-tiles">
-            @jobsResult.jobs.map { jobInfo =>
+            @jobInfos.map { jobInfo =>
             <div class="job-tile" data-starred="@jobInfo.starred.toString.toLowerCase()">
                 <div class="job-tile-header">
                     <div class="job-tile-subheader">
@@ -62,23 +62,15 @@ jobsResult: JobsResult
             </div>
             }
         </div>
+
         <div class="pagination">
-            @if(jobsResult.currentPage > 1) {
-            <a href="@routes.JobFeedController.showJobFeedHome(jobsResult.currentPage - 1)" class="pagination-item"><img src="@routes.Assets.versioned("images/feed/pagination/previous.png")" class="pagination-arrow"></a>
-            }
-
-            @for(pageNum <- 1 to jobsResult.totalPages) {
-            @if(pageNum == jobsResult.currentPage) {
-            <div class="pagination-item current">@pageNum</div>
-            } else {
-            <a href="@routes.JobFeedController.showJobFeedHome(pageNum)" class="pagination-item">@pageNum</a>
-            }
-            }
-
-            @if(jobsResult.currentPage < jobsResult.totalPages) {
-            <a href="@routes.JobFeedController.showJobFeedHome(jobsResult.currentPage + 1)" class="pagination-item"><img src="@routes.Assets.versioned("images/feed/pagination/next.png")" class="pagination-arrow"></a>
-            }
+            <a id="prevPage" href="#"><img src="@routes.Assets.versioned("images/feed/pagination/previous.png")" class="pagination-arrow"></a>
+            <div id="pageNumbersContainer">
+                @* Page numbers will be generated dynamically here *@
+            </div>
+            <a id="nextPage" href="#"><img src="@routes.Assets.versioned("images/feed/pagination/next.png")" class="pagination-arrow"></a>
         </div>
+
         @FooterTemplate()
         <script>
             @script
@@ -101,6 +93,72 @@ jobsResult: JobsResult
                     toggleButton.innerHTML = '<img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" alt="Star Icon" class="toggle-star-icon";" /> Starred';
                 }
             });
+        </script>
+        <script>
+            @script
+            // JavaScript code for pagination
+            const jobTiles = document.querySelectorAll(".job-tile");
+            const prevPageLink = document.getElementById("prevPage");
+            const nextPageLink = document.getElementById("nextPage");
+            const pageNumbersContainer = document.getElementById("pageNumbersContainer");
+            const jobsPerPage = 1; // Set the number of jobs per page here
+
+            let currentPage = 1;
+
+            function updatePagination() {
+                const totalPages = Math.ceil(jobTiles.length / jobsPerPage);
+                prevPageLink.disabled = currentPage === 1;
+                nextPageLink.disabled = currentPage === totalPages;
+                pageNumbersContainer.innerHTML = '';
+
+                if (totalPages > 1) {
+                    for (let page = 1; page <= totalPages; page++) {
+                        const pageNumber = document.createElement("a");
+                        pageNumber.href = "#";
+                        pageNumber.textContent = page;
+                        pageNumber.setAttribute("data-page", page);
+                        pageNumber.classList.add("pagination-item");
+                        if (page === currentPage) {
+                            pageNumber.classList.add("current");
+                        }
+                        pageNumber.addEventListener("click", () => {
+                            currentPage = page;
+                            updatePagination();
+                        });
+                        pageNumbersContainer.appendChild(pageNumber);
+
+                        if (page < totalPages) {
+                            const space = document.createTextNode(" ");
+                            pageNumbersContainer.appendChild(space);
+                        }
+                    }
+                }
+
+                jobTiles.forEach((tile, index) => {
+                    if (index >= (currentPage - 1) * jobsPerPage && index < currentPage * jobsPerPage) {
+                        tile.style.display = "";
+                    } else {
+                        tile.style.display = "none";
+                    }
+                });
+            }
+
+            prevPageLink.addEventListener("click", () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePagination();
+                }
+            });
+
+            nextPageLink.addEventListener("click", () => {
+                const totalPages = Math.ceil(jobTiles.length / jobsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updatePagination();
+                }
+            });
+
+            updatePagination();
         </script>
         <script>
             const jobFeedNavUnderline = document.getElementById("job-feed-nav-underline");
