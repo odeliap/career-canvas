@@ -187,14 +187,14 @@
 
 /* Job Metadata */
 
-.job-title {
+.job-company {
     font-weight: bold;
     font-size: 15px;
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
-.job-company {
+.job-title {
     font-size: 13px;
 }
 
