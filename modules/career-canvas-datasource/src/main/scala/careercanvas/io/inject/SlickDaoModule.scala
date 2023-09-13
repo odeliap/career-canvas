@@ -13,6 +13,7 @@ class SlickDaoModule() extends AbstractModule {
   override def configure(): Unit = {
     bind(classOf[UserDao]).to(classOf[UserDaoImpl]).in(Scopes.SINGLETON)
     bind(classOf[JobApplicationsDao]).to(classOf[JobApplicationsDaoImpl]).in(Scopes.SINGLETON)
+    bind(classOf[JobMetadataDao]).to(classOf[JobMetadataDaoImpl]).in(Scopes.SINGLETON)
     bind(classOf[JobStatisticsDao]).to(classOf[JobStatisticsDaoImpl]).in(Scopes.SINGLETON)
     bind(classOf[ResumeDao]).to(classOf[ResumeDaoImpl]).in(Scopes.SINGLETON)
     bind(classOf[JobApplicationFilesDao]).to(classOf[JobApplicationFilesDaoImpl]).in(Scopes.SINGLETON)

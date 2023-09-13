@@ -75,7 +75,7 @@ class JobApplicationsDaoImpl @Inject() (
       .take(limit + 1)
 
     db.run(finalQuery.result).map { result =>
-      val jobs = result.dropRight(1)
+      val jobs = if (result.size > limit) result.dropRight(1) else result
       val hasNext = result.size > limit
       JobsResult(jobs, hasNext)
     }

@@ -12,25 +12,27 @@ class JobMetadataResolver @Inject()(
   openAiConnector: OpenAiConnector
 ) extends AwaitResult {
 
-  def resolve(pageUrl: String): JobMetadata = {
+  def resolve(jobId: Long, pageUrl: String): JobMetadata = {
     val content = scraper.getPageContent(pageUrl)
     val prompt = resolvePrompt(content)
     val completion = openAiConnector.complete(prompt)
-    completionToJobMetadata(completion)
+    completionToJobMetadata(jobId, completion)
   }
 
-  private def completionToJobMetadata(completion: String): JobMetadata = {
+  private def completionToJobMetadata(jobId: Long, completion: String): JobMetadata = {
     val args = completion.split("//////")
     val location = args(0)
     val salary = args(1)
     val jobDescription = args(2)
     val companyDescription = args(3)
-    JobMetadata(location, salary, jobDescription, companyDescription)
+    JobMetadata(jobId, location, salary, jobDescription, companyDescription)
   }
 
   private def resolvePrompt(content: String): String = {
     s"""Extract the job location, annual salary, job description, and company description from the following job post,
-       |formatting the result like <location>//////<annual salary>//////<job description>//////<company description> without any extra information:
+       |formatting the result like <location>//////<annual salary>//////<job description>//////<company description>
+       |without any extra information and keeping each field to less than 1024 characters long
+       |(if you cannot resolve one of these fields, keep the above formatting and in place of the result put "unresolved"):
        |$content
     """.stripMargin
   }

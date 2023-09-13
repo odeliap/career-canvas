@@ -146,7 +146,6 @@ class JobFeedController @Inject()(
   }
 
   private def retrieveUserId(request: RequestHeader): String = request.session.data(Global.SESSION_USER_ID)
-  private def retrieveUserName(request: RequestHeader): String = request.session.data(Global.SESSION_USER_FULL_NAME)
   private def retrieveUserJobs(userId: String, sortKey: SortKey = SortKey.Company): JobsResult = jobApplicationsService.getJobs(userId, sortKey)
 
 }

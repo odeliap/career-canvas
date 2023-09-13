@@ -28,6 +28,14 @@ create table if not exists job_statuses (
     starred             boolean                 default false
 );
 
+create table if not exists job_metadata (
+    job_id              serial                  not null references job_statuses(job_id),
+    location            varchar(1024)            not null,
+    salary              varchar(1024)            not null,
+    job_description     varchar(1024)           not null,
+    company_description varchar(1024)           not null
+);
+
 create table resumes (
     user_id             serial                 not null references user_info(id),
     version             serial,
@@ -57,8 +65,9 @@ create table user_reset_codes (
 
 -- !Downs
 
-drop table if exists job_statuses;
 drop table if exists user_info;
+drop table if exists job_statuses;
+drop table if exists job_metadata;
 drop table if exists resumes;
 drop table if exists job_application_files;
 drop table if exists user_reset_codes;

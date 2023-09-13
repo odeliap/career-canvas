@@ -1,8 +1,8 @@
 package service
 
-import careercanvas.io.{JobApplicationFilesDao, JobApplicationsDao}
+import careercanvas.io.{JobApplicationFilesDao, JobApplicationsDao, JobMetadataDao}
 import careercanvas.io.model.job._
-import careercanvas.io.processor.JobResponseWriter
+import careercanvas.io.processor.{JobMetadataResolver, JobResponseWriter}
 import careercanvas.io.storage.StorageService
 import careercanvas.io.util.AwaitResult
 import utils.StringUtils
@@ -15,13 +15,15 @@ import scala.concurrent.ExecutionContext
 class JobApplicationsService @Inject() (
   jobApplicationsDao: JobApplicationsDao,
   jobApplicationFilesDao: JobApplicationFilesDao,
+  jobMetadataDao: JobMetadataDao,
+  jobMetadataResolver: JobMetadataResolver,
   jobResponseWriter: JobResponseWriter,
   storageService: StorageService,
   stringUtils: StringUtils
 )(implicit ec: ExecutionContext)
   extends AwaitResult {
 
-  def createJob(data: UserProvidedJobDetails, postUrl: String, userId: String): Long = {
+  def createJob(data: UserProvidedJobDetails, postUrl: String, userId: String): Unit = {
     val jobInfo = JobInfo(
       jobId = 0L,
       userId = userId.toLong,
@@ -33,7 +35,13 @@ class JobApplicationsService @Inject() (
       interviewRound = data.interviewRound,
       notes = data.notes
     )
-    jobApplicationsDao.addJob(jobInfo).waitForResult
+    val jobId = jobApplicationsDao.addJob(jobInfo).waitForResult
+    val jobMetadata = jobMetadataResolver.resolve(jobId, postUrl)
+    jobMetadataDao.addJob(jobMetadata).waitForResult
+  }
+
+  def resolveJobMetadata(jobId: Long): JobMetadata = {
+    jobMetadataDao.getJobById(jobId).waitForResult
   }
 
   def deleteJob(userId: String, jobId: Long): Unit = {

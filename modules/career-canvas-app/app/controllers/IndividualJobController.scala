@@ -3,7 +3,6 @@ package controllers
 import authentication.{AuthenticatedUserAction, AuthenticatedUserMessagesAction}
 import careercanvas.io.converter.Converters
 import careercanvas.io.model.job._
-import careercanvas.io.processor.JobMetadataResolver
 import model.Global
 import service.JobApplicationsService
 import play.api.mvc._
@@ -14,7 +13,6 @@ import javax.inject.Inject
 class IndividualJobController @Inject()(
   cc: MessagesControllerComponents,
   jobApplicationsService: JobApplicationsService,
-  jobMetadataResolver: JobMetadataResolver,
   authenticatedUserAction: AuthenticatedUserAction,
   authenticatedUserMessagesAction: AuthenticatedUserMessagesAction,
 ) extends MessagesAbstractController(cc) with Converters {
@@ -24,7 +22,7 @@ class IndividualJobController @Inject()(
   implicit val optionStringReads: Reads[Option[String]] = Reads.optionWithNull[String]
 
   def showJobView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val jobMetadata = jobMetadataResolver.resolve(jobInfo.postUrl)
+    val jobMetadata = jobApplicationsService.resolveJobMetadata(jobInfo.jobId)
     Ok(views.html.authenticated.user.job.IndividualJobOverview(jobInfo, jobMetadata))
   }
 
