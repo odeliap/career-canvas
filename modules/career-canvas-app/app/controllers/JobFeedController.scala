@@ -55,10 +55,10 @@ class JobFeedController @Inject()(
   private val getPostInfoUrl = routes.JobFeedController.processJobPost()
   private val saveJobUrl = routes.JobFeedController.saveJob()
 
-  def showJobFeedHome(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
+  def showJobFeedHome(page: Int = 1): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = retrieveUserId(request)
-    val userJobs = retrieveUserJobs(userId)
-    Ok(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm, jobPostForm, getPostInfoUrl, userJobs.jobs, userJobs.hasNext))
+    val userJobs = retrieveUserJobs(userId, page)
+    Ok(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm, jobPostForm, getPostInfoUrl, userJobs))
   }
 
   def processJobPost(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
@@ -66,7 +66,7 @@ class JobFeedController @Inject()(
     val userJobs = retrieveUserJobs(userId)
 
     val errorFunction = { formWithErrors: Form[JobPosting] =>
-      BadRequest(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm, formWithErrors, getPostInfoUrl, userJobs.jobs, userJobs.hasNext))
+      BadRequest(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm, formWithErrors, getPostInfoUrl, userJobs))
     }
 
     val successFunction = { data: JobPosting =>
@@ -85,7 +85,7 @@ class JobFeedController @Inject()(
     val userId = retrieveUserId(request)
     val userJobs = retrieveUserJobs(userId)
 
-    Ok(views.html.authenticated.user.feed.JobDetailsFormView(sortByForm, jobDetailsForm(baseJobInfo), saveJobUrl, userJobs.jobs, userJobs.hasNext, baseJobInfo))
+    Ok(views.html.authenticated.user.feed.JobDetailsFormView(sortByForm, jobDetailsForm(baseJobInfo), saveJobUrl, userJobs, baseJobInfo))
       .withSession(request.session + ("company" -> baseJobInfo.company) + ("jobTitle" -> baseJobInfo.jobTitle) + ("postUrl" -> baseJobInfo.postUrl))
   }
 
@@ -100,14 +100,14 @@ class JobFeedController @Inject()(
     )
 
     val errorFunction = { formWithErrors: Form[UserProvidedJobDetails] =>
-      BadRequest(views.html.authenticated.user.feed.JobDetailsFormView(sortByForm, formWithErrors, saveJobUrl, userJobs.jobs, userJobs.hasNext, baseJobInfo))
+      BadRequest(views.html.authenticated.user.feed.JobDetailsFormView(sortByForm, formWithErrors, saveJobUrl, userJobs, baseJobInfo))
         .flashing("error" -> "Error creating job frame")
         .withSession(request.session + ("company" -> baseJobInfo.company) + ("jobTitle" -> baseJobInfo.jobTitle) + ("postUrl" -> baseJobInfo.postUrl))
     }
     val successFunction = { data: UserProvidedJobDetails =>
       val userId = retrieveUserId(request)
       jobApplicationsService.createJob(data, baseJobInfo.postUrl, userId)
-      Redirect(routes.JobFeedController.showJobFeedHome())
+      Redirect(routes.JobFeedController.showJobFeedHome(1))
         .flashing("success" -> "Job frame added")
     }
 
@@ -121,14 +121,14 @@ class JobFeedController @Inject()(
   def removeJobDetails(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = retrieveUserId(request)
     val userJobs = retrieveUserJobs(userId)
-    Ok(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm, jobPostForm, getPostInfoUrl, userJobs.jobs, userJobs.hasNext))
+    Ok(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm, jobPostForm, getPostInfoUrl, userJobs))
       .withSession(request.session -- Seq("company", "jobTitle", "postUrl"))
   }
 
   def starJob(jobId: Long): Action[AnyContent] = authenticatedUserAction { implicit request =>
     val userId = retrieveUserId(request)
     jobApplicationsService.starJob(userId, jobId)
-    Redirect(routes.JobFeedController.showJobFeedHome())
+    Redirect(routes.JobFeedController.showJobFeedHome(1))
   }
 
   def sortJobs() : Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
@@ -136,16 +136,16 @@ class JobFeedController @Inject()(
     sortByForm.bindFromRequest.fold(
       formWithErrors => {
         val userJobs = retrieveUserJobs(userId)
-        BadRequest(views.html.authenticated.user.feed.JobFeedDashboardView(formWithErrors, jobPostForm, getPostInfoUrl, userJobs.jobs, userJobs.hasNext))
+        BadRequest(views.html.authenticated.user.feed.JobFeedDashboardView(formWithErrors, jobPostForm, getPostInfoUrl, userJobs))
       },
       sortFormData => {
-        val userJobs = jobApplicationsService.getJobs(userId, sortFormData.sortKey)
-        Ok(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm.fill(sortFormData), jobPostForm, getPostInfoUrl, userJobs.jobs, userJobs.hasNext))
+        val userJobs = jobApplicationsService.getJobs(userId, 1, sortFormData.sortKey)
+        Ok(views.html.authenticated.user.feed.JobFeedDashboardView(sortByForm.fill(sortFormData), jobPostForm, getPostInfoUrl, userJobs))
       }
     )
   }
 
   private def retrieveUserId(request: RequestHeader): String = request.session.data(Global.SESSION_USER_ID)
-  private def retrieveUserJobs(userId: String, sortKey: SortKey = SortKey.Company): JobsResult = jobApplicationsService.getJobs(userId, sortKey)
+  private def retrieveUserJobs(userId: String, page: Int = 1, sortKey: SortKey = SortKey.Company): JobsResult = jobApplicationsService.getJobs(userId, page, sortKey)
 
 }

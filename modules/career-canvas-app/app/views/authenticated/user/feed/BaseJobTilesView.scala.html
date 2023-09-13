@@ -1,8 +1,7 @@
 @import careercanvas.io.model.job._
 @(
 sortByForm: Form[model.forms.SortByForm],
-jobInfos: Seq[JobInfo],
-hasNext: Boolean
+jobsResult: JobsResult
 )(content: Html)(script: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.AuthenticatedUserLayout("Feed | Career Canvas") {
@@ -43,7 +42,7 @@ hasNext: Boolean
         </div>
 
         <div class="job-tiles">
-            @jobInfos.map { jobInfo =>
+            @jobsResult.jobs.map { jobInfo =>
             <div class="job-tile" data-starred="@jobInfo.starred.toString.toLowerCase()">
                 <div class="job-tile-header">
                     <div class="job-tile-subheader">
@@ -76,11 +75,23 @@ hasNext: Boolean
             </div>
             }
         </div>
-        @if(hasNext) {
-            <div id="load-more-button-container">
-                <a href="#" id="load-more-button">Load More</a>
-            </div>
-        }
+        <div class="pagination">
+            @if(jobsResult.currentPage > 1) {
+            <a href="@routes.JobFeedController.showJobFeedHome(jobsResult.currentPage - 1)" class="pagination-item"><img src="@routes.Assets.versioned("images/feed/pagination/previous.png")" class="pagination-arrow"></a>
+            }
+
+            @for(pageNum <- 1 to jobsResult.totalPages) {
+            @if(pageNum == jobsResult.currentPage) {
+            <div class="pagination-item current">@pageNum</div>
+            } else {
+            <a href="@routes.JobFeedController.showJobFeedHome(pageNum)" class="pagination-item">@pageNum</a>
+            }
+            }
+
+            @if(jobsResult.currentPage < jobsResult.totalPages) {
+            <a href="@routes.JobFeedController.showJobFeedHome(jobsResult.currentPage + 1)" class="pagination-item"><img src="@routes.Assets.versioned("images/feed/pagination/next.png")" class="pagination-arrow"></a>
+            }
+        </div>
         @FooterTemplate()
         <script>
             @script

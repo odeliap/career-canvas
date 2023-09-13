@@ -59,7 +59,7 @@ class JobApplicationsDaoImpl @Inject() (
     db.run(query.result.head)
   }
 
-  override def getJobs(userId: Long, offset: Int, limit: Int, sortKey: SortKey): Future[JobsResult] = {
+  override def getJobs(userId: Long, page: Int, limit: Int, sortKey: SortKey): Future[JobsResult] = {
     val baseQuery = JobStatusesQuery.filter(_.userId === userId)
 
     val sortedQuery = sortKey match {
@@ -70,14 +70,17 @@ class JobApplicationsDaoImpl @Inject() (
       case SortKey.LastUpdate => baseQuery.sortBy(_.lastUpdate.asc)
     }
 
-    val finalQuery = sortedQuery
-      .drop(offset)
-      .take(limit + 1)
+    val offset = (page - 1) * limit
 
-    db.run(finalQuery.result).map { result =>
-      val jobs = if (result.size > limit) result.dropRight(1) else result
-      val hasNext = result.size > limit
-      JobsResult(jobs, hasNext)
+    val tx = for {
+      totalJobs <- baseQuery.length.result
+
+      jobs <- sortedQuery.drop(offset).take(limit).result
+    } yield (totalJobs, jobs)
+
+    db.run(tx.transactionally).map { case (totalJobs, jobs) =>
+      val totalPages =  (totalJobs + limit - 1) / limit
+      JobsResult(jobs, page, totalPages)
     }
   }
 

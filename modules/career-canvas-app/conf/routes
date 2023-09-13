@@ -19,7 +19,7 @@ GET     /forgotPassword/setNewPassword/:email    controllers.LandingController.s
 GET     /forgotPassword/doSetNewPassword/:email  controllers.LandingController.doSetNewPassword(email: String)
 
 # Pages for job feed
-GET     /feed                               controllers.JobFeedController.showJobFeedHome()
+GET     /feed                               controllers.JobFeedController.showJobFeedHome(page: Int)
 GET     /feed/doAddJobPost                  controllers.JobFeedController.processJobPost()
 GET     /feed/addJobDetails                 controllers.JobFeedController.showAddJobDetailsForm(baseJobInfo: careercanvas.io.model.job.BaseJobInfo)
 GET     /feed/saveJob                       controllers.JobFeedController.saveJob()
