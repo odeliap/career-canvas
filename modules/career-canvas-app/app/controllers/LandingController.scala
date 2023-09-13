@@ -117,7 +117,7 @@ class LandingController @Inject()(
       userService.lookupUser(user) match {
         case Some(userId) =>
           val fullName = userService.getUserName(userId).get
-          Redirect(routes.JobFeedController.showJobFeedHome(1))
+          Redirect(routes.JobFeedController.showJobFeedHome())
             .withSession(Global.SESSION_USER_ID -> userId.toString, Global.SESSION_USERNAME_KEY -> user.email, Global.SESSION_USER_FULL_NAME -> fullName)
         case None =>
           Redirect(routes.LandingController.showLoginForm())

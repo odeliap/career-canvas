@@ -29,7 +29,7 @@ class IndividualJobController @Inject()(
   def deleteJob(jobId: Long): Action[AnyContent] = authenticatedUserAction { implicit request =>
     val userId = retrieveUserId(request)
     jobApplicationsService.deleteJob(userId, jobId)
-    Redirect(routes.JobFeedController.showJobFeedHome(1))
+    Redirect(routes.JobFeedController.showJobFeedHome())
   }
 
   def showDocumentsView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>

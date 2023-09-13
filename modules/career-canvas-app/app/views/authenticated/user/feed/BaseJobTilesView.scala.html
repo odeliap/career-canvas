@@ -1,168 +1,227 @@
 @import careercanvas.io.model.job._
 @(
-    jobInfos: Seq[JobInfo]
+jobInfos: Seq[JobInfo]
 )(content: Html)(script: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.AuthenticatedUserLayout("Feed | Career Canvas") {
-    <div class="main-page">
-        <div>
-            @request.flash.data.map{ case (name, value) =>
-            @if(name.equals("error")) {
-            <div class="error-flash">@value</div>
-            } else if (name.equals("success")) {
-            <div class="success-flash">@value</div>
-            } else {
-            <div class="info-flash">@value</div>
-            }
-            }
-        </div>
+<div class="main-page">
+    <div>
+        @request.flash.data.map{ case (name, value) =>
+        @if(name.equals("error")) {
+        <div class="error-flash">@value</div>
+        } else if (name.equals("success")) {
+        <div class="success-flash">@value</div>
+        } else {
+        <div class="info-flash">@value</div>
+        }
+        }
+    </div>
 
-        @content
+    @content
 
-        <div id="job-tiles-view-options">
-            <div id="starred-view-btn-container">
-                <button id="toggle-starred-view">
-                    <img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" class="toggle-star-icon">
-                    Starred
-                </button>
-            </div>
-        </div>
+    @SearchFilters(jobInfos)
 
-        <div class="job-tiles">
-            @jobInfos.map { jobInfo =>
-            <div class="job-tile" data-starred="@jobInfo.starred.toString.toLowerCase()">
-                <div class="job-tile-header">
-                    <div class="job-tile-subheader">
-                        <div class="job-company">@jobInfo.company</div>
-                        <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
-                            @if(jobInfo.starred) {
-                                <img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" class="star-icon starred">
-                            } else {
-                                <img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" class="star-icon">
-                            }
-                        </a>
-                    </div>
-                    <p class="job-title">@jobInfo.jobTitle</p>
+    <div class="job-tiles">
+        @jobInfos.map { jobInfo =>
+        <div class="job-tile" data-starred="@jobInfo.starred.toString.toLowerCase()">
+            <div class="job-tile-header">
+                <div class="job-tile-subheader">
+                    <div class="job-company">@jobInfo.company</div>
+                    <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
+                        @if(jobInfo.starred) {
+                        <img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" class="star-icon starred">
+                        } else {
+                        <img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" class="star-icon">
+                        }
+                    </a>
                 </div>
-                <div class="metadata-fields">
-                    <div class="metadata">
-                        <div class="metadata-tag" style="background-color: @utils.ColorUtils.jobStatusToColor(jobInfo.status);"></div>
-                        <img src="@routes.Assets.versioned("images/feed/tile/status/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
-                        <p class="meta-title">Status:</p>
-                        <p class="meta-content">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</p>
-                    </div>
-                    <div class="metadata">
-                        <div class="metadata-tag" style="background-color: @utils.ColorUtils.localDateTimeToColor(jobInfo.lastUpdate.toLocalDateTime);"></div>
-                        <img src="@routes.Assets.versioned("images/feed/tile/calendar.png")" class="metadata-icon">
-                        <p class="meta-title">Last Update:</p>
-                        <p class="meta-content">@jobInfo.lastUpdate.toLocalDateTime.toLocalDate.toString</p>
-                    </div>
+                <p class="job-title">@jobInfo.jobTitle</p>
+            </div>
+            <div class="metadata-fields">
+                <div class="metadata">
+                    <div class="metadata-tag" style="background-color: @utils.ColorUtils.jobStatusToColor(jobInfo.status);"></div>
+                    <img src="@routes.Assets.versioned("images/feed/tile/status/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
+                    <p class="meta-title">Status:</p>
+                    <p class="meta-content">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</p>
                 </div>
-                <a href="@routes.IndividualJobController.showJobView(jobInfo)" class="view-job-button">View Job</a>
+                <div class="metadata">
+                    <div class="metadata-tag" style="background-color: @utils.ColorUtils.localDateTimeToColor(jobInfo.lastUpdate.toLocalDateTime);"></div>
+                    <img src="@routes.Assets.versioned("images/feed/tile/calendar.png")" class="metadata-icon">
+                    <p class="meta-title">Last Update:</p>
+                    <p class="meta-content">@jobInfo.lastUpdate.toLocalDateTime.toLocalDate.toString</p>
+                </div>
             </div>
-            }
+            <a href="@routes.IndividualJobController.showJobView(jobInfo)" class="view-job-button">View Job</a>
         </div>
+        }
+    </div>
 
-        <div class="pagination">
-            <a id="prevPage" href="#"><img src="@routes.Assets.versioned("images/feed/pagination/previous.png")" class="pagination-arrow"></a>
-            <div id="pageNumbersContainer">
-                @* Page numbers will be generated dynamically here *@
-            </div>
-            <a id="nextPage" href="#"><img src="@routes.Assets.versioned("images/feed/pagination/next.png")" class="pagination-arrow"></a>
+    <div class="pagination">
+        <a id="prevPage" href="#"><img src="@routes.Assets.versioned("images/feed/pagination/previous.png")" class="pagination-arrow"></a>
+        <div id="pageNumbersContainer">
+            <!-- Page numbers will be generated dynamically here -->
         </div>
+        <a id="nextPage" href="#"><img src="@routes.Assets.versioned("images/feed/pagination/next.png")" class="pagination-arrow"></a>
+    </div>
 
-        @FooterTemplate()
-        <script>
-            @script
-            const toggleButton = document.getElementById("toggle-starred-view");
-            let showingStarred = false;
-            toggleButton.addEventListener("click", function() {
-                const tiles = document.querySelectorAll(".job-tile");
-                tiles.forEach(tile => {
-                    if (showingStarred) {
-                        tile.style.display = '';
-                    } else if (tile.getAttribute("data-starred") !== "true") {
-                        tile.style.display = 'none';
+    @FooterTemplate()
+    <script>
+        const jobTiles = document.querySelectorAll(".job-tile");
+        const prevPageLink = document.getElementById("prevPage");
+        const nextPageLink = document.getElementById("nextPage");
+        const pageNumbersContainer = document.getElementById("pageNumbersContainer");
+        const jobsPerPage = 30; // Set the number of jobs per page here
+
+        const toggleStarredViewButton = document.getElementById("toggle-starred-view");
+        let showOnlyStarred = false;
+
+        let currentPage = 1;
+
+        function updatePagination() {
+            const totalPages = Math.ceil(jobTiles.length / jobsPerPage);
+            prevPageLink.disabled = currentPage === 1;
+            nextPageLink.disabled = currentPage === totalPages;
+            pageNumbersContainer.innerHTML = '';
+
+            if (totalPages > 1) {
+                for (let page = 1; page <= totalPages; page++) {
+                    const pageNumber = document.createElement("a");
+                    pageNumber.href = "#";
+                    pageNumber.textContent = page;
+                    pageNumber.setAttribute("data-page", page);
+                    pageNumber.classList.add("pagination-item");
+                    if (page === currentPage) {
+                        pageNumber.classList.add("current");
                     }
-                });
+                    pageNumber.addEventListener("click", () => {
+                        currentPage = page;
+                        updatePagination();
+                    });
+                    pageNumbersContainer.appendChild(pageNumber);
 
-                showingStarred = !showingStarred;
-                if (showingStarred) {
-                    toggleButton.innerHTML = 'Show All';
+                    if (page < totalPages) {
+                        const space = document.createTextNode(" ");
+                        pageNumbersContainer.appendChild(space);
+                    }
+                }
+            }
+
+            jobTiles.forEach((tile, index) => {
+                if (index >= (currentPage - 1) * jobsPerPage && index < currentPage * jobsPerPage) {
+                    tile.style.display = "";
                 } else {
-                    toggleButton.innerHTML = '<img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" alt="Star Icon" class="toggle-star-icon";" /> Starred';
+                    tile.style.display = "none";
                 }
             });
-        </script>
-        <script>
-            @script
-            // JavaScript code for pagination
-            const jobTiles = document.querySelectorAll(".job-tile");
-            const prevPageLink = document.getElementById("prevPage");
-            const nextPageLink = document.getElementById("nextPage");
-            const pageNumbersContainer = document.getElementById("pageNumbersContainer");
-            const jobsPerPage = 1; // Set the number of jobs per page here
+        }
 
-            let currentPage = 1;
+        function updateStarredPagination() {
+            const starredJobTiles = [];
 
-            function updatePagination() {
-                const totalPages = Math.ceil(jobTiles.length / jobsPerPage);
-                prevPageLink.disabled = currentPage === 1;
-                nextPageLink.disabled = currentPage === totalPages;
-                pageNumbersContainer.innerHTML = '';
+            jobTiles.forEach((jobTile) => {
+                const dataStarred = jobTile.getAttribute("data-starred");
+                if (dataStarred === "true") {
+                    starredJobTiles.push(jobTile);
+                }
+            });
 
-                if (totalPages > 1) {
-                    for (let page = 1; page <= totalPages; page++) {
-                        const pageNumber = document.createElement("a");
-                        pageNumber.href = "#";
-                        pageNumber.textContent = page;
-                        pageNumber.setAttribute("data-page", page);
-                        pageNumber.classList.add("pagination-item");
-                        if (page === currentPage) {
-                            pageNumber.classList.add("current");
-                        }
-                        pageNumber.addEventListener("click", () => {
-                            currentPage = page;
-                            updatePagination();
-                        });
-                        pageNumbersContainer.appendChild(pageNumber);
+            const totalPages = Math.ceil(starredJobTiles.length / jobsPerPage);
+            prevPageLink.disabled = currentPage === 1;
+            nextPageLink.disabled = currentPage === totalPages;
+            pageNumbersContainer.innerHTML = '';
 
-                        if (page < totalPages) {
-                            const space = document.createTextNode(" ");
-                            pageNumbersContainer.appendChild(space);
-                        }
+            if (totalPages > 1) {
+                for (let page = 1; page <= totalPages; page++) {
+                    const pageNumber = document.createElement("a");
+                    pageNumber.href = "#";
+                    pageNumber.textContent = page;
+                    pageNumber.setAttribute("data-page", page);
+                    pageNumber.classList.add("pagination-item");
+                    if (page === currentPage) {
+                        pageNumber.classList.add("current");
+                    }
+                    pageNumber.addEventListener("click", () => {
+                        currentPage = page;
+                        updateStarredPagination();
+                    });
+                    pageNumbersContainer.appendChild(pageNumber);
+
+                    if (page < totalPages) {
+                        const space = document.createTextNode(" ");
+                        pageNumbersContainer.appendChild(space);
                     }
                 }
+            }
 
-                jobTiles.forEach((tile, index) => {
-                    if (index >= (currentPage - 1) * jobsPerPage && index < currentPage * jobsPerPage) {
+            starredJobTiles.forEach((tile, index) => {
+                if (index >= (currentPage - 1) * jobsPerPage && index < currentPage * jobsPerPage) {
+                    tile.style.display = "";
+                } else {
+                    tile.style.display = "none";
+                }
+            });
+        }
+
+        toggleStarredViewButton.addEventListener("click", () => {
+            currentPage = 1;
+            showOnlyStarred = !showOnlyStarred;
+
+            if (showOnlyStarred) {
+                toggleStarredViewButton.style.backgroundColor = "#D4D4D4";
+            } else {
+                toggleStarredViewButton.style.backgroundColor = "#FFFFFF";
+            }
+
+            jobTiles.forEach((tile) => {
+                const dataStarred = tile.getAttribute("data-starred");
+                const isStarred = (dataStarred === 'true');
+
+                if (showOnlyStarred) {
+                    if (isStarred) {
                         tile.style.display = "";
                     } else {
                         tile.style.display = "none";
                     }
-                });
+                } else {
+                    tile.style.display = ""; // display all tiles when not in starred-only view
+                }
+            });
+
+            if (showOnlyStarred) {
+                updateStarredPagination();
+            } else {
+                updatePagination();
             }
+        });
 
-            prevPageLink.addEventListener("click", () => {
-                if (currentPage > 1) {
-                    currentPage--;
+        prevPageLink.addEventListener("click", () => {
+            if (currentPage > 1) {
+                currentPage--;
+                if (showOnlyStarred) {
+                    updatedStarredPagination();
+                } else {
                     updatePagination();
                 }
-            });
+            }
+        });
 
-            nextPageLink.addEventListener("click", () => {
-                const totalPages = Math.ceil(jobTiles.length / jobsPerPage);
-                if (currentPage < totalPages) {
-                    currentPage++;
+        nextPageLink.addEventListener("click", () => {
+            const totalPages = Math.ceil(jobTiles.length / jobsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                if (showOnlyStarred) {
+                    updatedStarredPagination();
+                } else {
                     updatePagination();
                 }
-            });
+            }
+        });
 
+        if (showOnlyStarred) {
+            updateStarredPagination();
+        } else {
             updatePagination();
-        </script>
-        <script>
-            const jobFeedNavUnderline = document.getElementById("job-feed-nav-underline");
-            jobFeedNavUnderline.style.display = "block";
-        </script>
-    </div>
+        }
+    </script>
+</div>
 }

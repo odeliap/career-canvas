@@ -48,7 +48,7 @@ class JobFeedController @Inject()(
   private val getPostInfoUrl = routes.JobFeedController.processJobPost()
   private val saveJobUrl = routes.JobFeedController.saveJob()
 
-  def showJobFeedHome(page: Int = 1): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
+  def showJobFeedHome(showStarredOnly: Boolean = false): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = retrieveUserId(request)
     val userJobs = retrieveUserJobs(userId)
     Ok(views.html.authenticated.user.feed.JobFeedDashboardView(jobPostForm, getPostInfoUrl, userJobs))
@@ -100,7 +100,7 @@ class JobFeedController @Inject()(
     val successFunction = { data: UserProvidedJobDetails =>
       val userId = retrieveUserId(request)
       jobApplicationsService.createJob(data, baseJobInfo.postUrl, userId)
-      Redirect(routes.JobFeedController.showJobFeedHome(1))
+      Redirect(routes.JobFeedController.showJobFeedHome())
         .flashing("success" -> "Job frame added")
     }
 
@@ -121,7 +121,7 @@ class JobFeedController @Inject()(
   def starJob(jobId: Long): Action[AnyContent] = authenticatedUserAction { implicit request =>
     val userId = retrieveUserId(request)
     jobApplicationsService.starJob(userId, jobId)
-    Redirect(routes.JobFeedController.showJobFeedHome(1))
+    Redirect(routes.JobFeedController.showJobFeedHome())
   }
 
   private def retrieveUserId(request: RequestHeader): String = request.session.data(Global.SESSION_USER_ID)
