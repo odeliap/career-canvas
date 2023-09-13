@@ -56,17 +56,28 @@
   box-sizing: border-box;
 }
 
+.settings-tabs {
+  box-sizing: border-box;
+}
+
 .settings-sub-content {
   font-size: 12px;
 }
 
 .settings-opts {
   font-size: 14px;
-  padding: 10px 0;
+  padding: 15px 30px;
 }
 
 .settings-opts:hover {
   font-weight: bold;
+  border-left: 2px solid #D3D3D3;
+  background-color: #F5F5F4;
+}
+
+.highlight-profile-sidebar {
+  font-weight: bold;
+  border-left: 2px solid black;
 }
 
 /* Edit Container */
@@ -127,12 +138,10 @@
 /* Screen Sizing */
 @media only screen and (max-width: 650px) {
     #settings-accounts-center-title, .settings-opts {
-        margin-left: -5px;
         font-size: 12px;
     }
 
     .settings-sub-content {
-        margin-left: -5px;
         font-size: 8px;
     }
 }

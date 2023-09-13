@@ -11,10 +11,10 @@
             </div>
         </div>
         <div class="bottom-part">
-            <div class="settings-content">
+            <div class="settings-tabs">
                 <div class="settings-sidebar-opts">
-                    <a href="@routes.ProfileController.editProfile()" class="settings-opts">Edit profile</a>
-                    <a href="@routes.ProfileController.showResumes()" class="settings-opts">Resumes</a>
+                    <a href="@routes.ProfileController.editProfile()" class="settings-opts" id="edit-profile-tab">Edit profile</a>
+                    <a href="@routes.ProfileController.showResumes()" class="settings-opts" id="resumes-tab">Resumes</a>
                 </div>
             </div>
         </div>
@@ -27,4 +27,8 @@
     </div>
 </div>
 @FooterTemplate()
+<script>
+    const profileNavUnderline = document.getElementById("profile-nav-underline");
+    profileNavUnderline.style.display = "block";
+</script>
 }
