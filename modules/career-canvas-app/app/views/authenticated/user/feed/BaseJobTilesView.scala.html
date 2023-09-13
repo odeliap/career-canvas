@@ -164,7 +164,7 @@ jobInfos: Seq[JobInfo]
 
                 pageElem.addEventListener("click", function() {
                     currentPage = i;
-                    filterRows();
+                    filterRows(false);
                 });
 
                 pageNumbersContainer.appendChild(pageElem);
