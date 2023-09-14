@@ -6,6 +6,7 @@ import careercanvas.io.util.AwaitResult
 import play.api.libs.json.{JsValue, Json}
 
 import javax.inject.{Inject, Singleton}
+import scala.annotation.tailrec
 
 @Singleton
 class BaseJobInfoResolver @Inject()(
@@ -13,16 +14,22 @@ class BaseJobInfoResolver @Inject()(
   openAiConnector: OpenAiConnector,
 ) extends AwaitResult {
 
-  def resolve(pageUrl: String, retries: Int = 3): BaseJobInfo = {
+  def resolve(pageUrl: String): BaseJobInfo = {
     val content = scraper.getPageContent(pageUrl)
-    val prompt = resolvePrompt(content)
+    val completion = fetchCompletionWithRetry(content)
+    completionToBaseJobInfo(completion, pageUrl)
+  }
+
+  @tailrec
+  private def fetchCompletionWithRetry(content: String, retries: Int = 3): String = {
+    val prompt = generatePrompt(content)
     val completion = openAiConnector.complete(prompt)
 
     val json = Json.parse(completion)
-    if (isResponseValid(json) || retries <= 0) {
-      completionToBaseJobInfo(completion, pageUrl)
+    if (isValidCompletion(json) || retries <= 0) {
+      completion
     } else {
-      resolve(content, retries - 1)
+      fetchCompletionWithRetry(content, retries - 1)
     }
   }
 
@@ -39,7 +46,7 @@ class BaseJobInfoResolver @Inject()(
     BaseJobInfo(pageUrl, company, jobTitle, jobType, location, salaryRange)
   }
 
-  private def resolvePrompt(content: String): String = {
+  private def generatePrompt(content: String): String = {
     s"""Based on the job post provided, extract the relevant information and return it in JSON format.
        |The expected JSON structure is:
        |{
@@ -57,7 +64,7 @@ class BaseJobInfoResolver @Inject()(
     """.stripMargin
   }
 
-  private def isResponseValid(json: JsValue): Boolean = {
+  private def isValidCompletion(json: JsValue): Boolean = {
     val fields = Seq("company", "jobTitle", "jobType", "location", "salaryRange")
     fields.forall(field => (json \ field).isDefined) &&
       JobType.values.map(_.toString).contains((json \ "jobType").asOpt[String].getOrElse(""))
