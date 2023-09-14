@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const jobCards = jobsGrid.querySelectorAll(".job-tile");
     const lastUpdateFilter = document.getElementById("lastUpdate");
     const companyFilter = document.getElementById("company");
+    const locationFilter = document.getElementById("location");
     const showStarredCheckbox = document.getElementById("showStarred");
     const ITEMS_PER_PAGE = 30;
     let currentPage = 1;
@@ -15,19 +16,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const now = new Date().getTime();
         const hours = parseFloat(lastUpdateFilter.value);
-        const timeLimit = now - hours * 60 * 60 * 1000; // convert hours to milliseconds
+        const timeLimit = now - hours * 60 * 60 * 1000;
         const selectedCompany = companyFilter.value;
+        const selectedLocation = locationFilter.value;
 
         let filteredItems = 0;
 
         jobCards.forEach((card, index) => {
             const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
             const company = card.getAttribute("data-company");
+            const location = card.getAttribute("data-location");
             const starred = card.getAttribute("data-starred") === "true";
             const showStarredOnly = showStarredCheckbox.checked;
 
             if (lastUpdate >= timeLimit &&
                 (selectedCompany === "" || selectedCompany === company) &&
+                (selectedLocation === "" || selectedLocation === location) &&
                 (!showStarredOnly || starred)) {
                 filteredItems++;
             }
@@ -40,11 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
         jobCards.forEach((card, index) => {
             const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
             const company = card.getAttribute("data-company");
+            const location = card.getAttribute("data-location");
             const starred = card.getAttribute("data-starred") === "true";
             const showStarredOnly = showStarredCheckbox.checked;
 
             if (lastUpdate >= timeLimit &&
                 (selectedCompany === "" || selectedCompany === company) &&
+                (selectedLocation === "" || selectedLocation === location) &&
                 (!showStarredOnly || starred)) {
 
                 displayCards.push(card);
@@ -66,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updatePaginationDisplay() {
         const pageNumbersContainer = document.getElementById('pageNumbersContainer');
-        pageNumbersContainer.innerHTML = ""; // Clear previous page numbers
+        pageNumbersContainer.innerHTML = "";
 
         for (let i = 1; i <= maxPage; i++) {
             const pageElem = document.createElement("span");
@@ -91,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     lastUpdateFilter.addEventListener("change", filterRows);
     companyFilter.addEventListener("change", filterRows);
+    locationFilter.addEventListener("change", filterRows);
     showStarredCheckbox.addEventListener("change", function() {
         filterRows();
         const checkboxLabel = document.getElementById('showStarredLabel');
@@ -116,6 +123,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Initial filter
     filterRows();
 });

@@ -34,10 +34,19 @@
             <select class="filter-param" id="company">
                 <optgroup label="Company">
                     <option value="" class="default-opt">All companies</option>
-                    @for(company <- jobInfos.map(_.company).distinct) {
-                    <option value="@company">@company</option>
+                    @for(company <- jobInfos.map(_.company.take(20)).distinct) {
+                        <option value="@company">@company</option>
+                    }
                 </optgroup>
-                }
+            </select>
+
+            <select class="filter-param" id="location">
+                <optgroup label="Location">
+                    <option value="" class="default-opt">All Locations</option>
+                    @for(location <- jobInfos.map(_.location.take(20)).distinct) {
+                        <option value="@location">@location</option>
+                    }
+                </optgroup>
             </select>
 
             <input type="checkbox" id="showStarred">
@@ -47,7 +56,7 @@
 
     <div id="job-tiles">
         @jobInfos.map { jobInfo =>
-        <div class="job-tile" data-company="@jobInfo.company" data-lastupdate="@jobInfo.lastUpdate.getTime" data-starred="@jobInfo.starred.toString.toLowerCase()">
+        <div class="job-tile" data-company="@jobInfo.company.take(20)" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@jobInfo.location.take(20)" data-starred="@jobInfo.starred.toString.toLowerCase()">
             <div class="job-tile-header">
                 <div class="job-tile-subheader">
                     <div class="job-company">@jobInfo.company</div>
