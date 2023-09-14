@@ -3,7 +3,7 @@ package careercanvas.io.processor
 import careercanvas.io.model.job.{BaseJobInfo, JobType}
 import careercanvas.io.scraper.Scraper
 import careercanvas.io.util.AwaitResult
-import careercanvas.io.utils.StringUtils
+import play.api.libs.json.{JsValue, Json}
 
 import javax.inject.{Inject, Singleton}
 
@@ -11,38 +11,56 @@ import javax.inject.{Inject, Singleton}
 class BaseJobInfoResolver @Inject()(
   scraper: Scraper,
   openAiConnector: OpenAiConnector,
-  stringUtils: StringUtils
 ) extends AwaitResult {
 
-  def resolve(pageUrl: String): BaseJobInfo = {
+  def resolve(pageUrl: String, retries: Int = 3): BaseJobInfo = {
     val content = scraper.getPageContent(pageUrl)
     val prompt = resolvePrompt(content)
     val completion = openAiConnector.complete(prompt)
-    completionToBaseJobInfo(completion, pageUrl)
+
+    val json = Json.parse(completion)
+    if (isResponseValid(json) || retries <= 0) {
+      completionToBaseJobInfo(completion, pageUrl)
+    } else {
+      resolve(content, retries - 1)
+    }
   }
 
   private def completionToBaseJobInfo(completion: String, pageUrl: String): BaseJobInfo = {
-    val args = completion.split("//////")
-    val company = stringUtils.removeLeadingNewlinesAndSpaces(args(0))
-    val jobTitle = args(1)
-    val jobType = JobType.stringToEnum(args(2))
-    val location = args(3)
-    val salaryRange = args(4)
+    val json = Json.parse(completion)
+
+    val company = (json \ "company").asOpt[String].getOrElse("Unable to resolve")
+    val jobTitle = (json \ "jobTitle").asOpt[String].getOrElse("Unable to resolve")
+    val jobTypeStr = (json \ "jobType").asOpt[String].getOrElse("Unknown")
+    val jobType = JobType.stringToEnum(jobTypeStr)
+    val location = (json \ "location").asOpt[String].getOrElse("Unable to resolve")
+    val salaryRange = (json \ "salaryRange").asOpt[String].getOrElse("Unable to resolve")
+
     BaseJobInfo(pageUrl, company, jobTitle, jobType, location, salaryRange)
   }
 
   private def resolvePrompt(content: String): String = {
-    s"""Extract the company name, job title, job type, location, and salary range from the following job post.
-       |Format the result like <company>//////<job-title>//////<job-type>//////<location>//////<salary-range>.
-       |Make the job type one of: FullTime, Contract, PartTime, Internship, and Temporary.
-       |and keep the other fields to less than 255 characters long each.
-       |Do not include anything other than this result in your response.
-       |If you cannot resolve one of these fields, keep the above formatting and in place of the result
-       |put the text "Unable to resolve".
+    s"""Based on the job post provided, extract the relevant information and return it in JSON format.
+       |The expected JSON structure is:
+       |{
+       |  "company": "Company Name",
+       |  "jobTitle": "Job Title",
+       |  "jobType": "Job Type (strictly use one of: FullTime, Contract, PartTime, Internship, Temporary)",
+       |  "location": "Location",
+       |  "salaryRange": "Salary Range"
+       |}
        |
-       |Here is the job posting:
+       |For fields you cannot determine, use the value "Unable to resolve", except for "jobType" which should be one of the mentioned types.
+       |
+       |Job Posting:
        |$content
     """.stripMargin
+  }
+
+  private def isResponseValid(json: JsValue): Boolean = {
+    val fields = Seq("company", "jobTitle", "jobType", "location", "salaryRange")
+    fields.forall(field => (json \ field).isDefined) &&
+      JobType.values.map(_.toString).contains((json \ "jobType").asOpt[String].getOrElse(""))
   }
 
 

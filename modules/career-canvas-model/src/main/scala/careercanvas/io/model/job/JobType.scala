@@ -12,7 +12,7 @@ object JobType {
   case object Internship extends JobType
   case object Temporary extends JobType
 
-  private val values = Seq(FullTime, Contract, PartTime, Internship, Temporary)
+  val values = Seq(FullTime, Contract, PartTime, Internship, Temporary)
 
   implicit val jobTypeReads: Reads[JobType] = Reads { json =>
     json.validate[String].map(stringToEnum)
