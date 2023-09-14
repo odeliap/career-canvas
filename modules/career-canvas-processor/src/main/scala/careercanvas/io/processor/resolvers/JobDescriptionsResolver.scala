@@ -14,38 +14,40 @@ class JobDescriptionsResolver @Inject()(
 ) extends CompletionResolver[JobDescriptions](openAiConnector)
   with AwaitResult {
 
-  override def resolve(pageUrl: String, jobId: Long): JobDescriptions = {
+  override def resolve(pageUrl: String): JobDescriptions = {
     val content = scraper.getPageContent(pageUrl)
     val completion = fetchCompletionWithRetry(content)
-    completionToJobDescriptions(jobId, completion)
+    completionToJobDescriptions(completion)
   }
 
-  private def completionToJobDescriptions(jobId: Long, completion: Option[String]): JobDescriptions = {
+  private def completionToJobDescriptions(completion: Option[String]): JobDescriptions = {
     completion match {
       case Some(completionStr) => val json = Json.parse(completionStr)
 
-        val jobDescription = (json \ "jobDescription").asOpt[String].getOrElse("Unable to resolve description")
-        val companyDescription = (json \ "companyDescription").asOpt[String].getOrElse("Unable to resolve description")
+        val about = (json \ "about").asOpt[String].getOrElse("Unable to resolve about")
+        val requirements = (json \ "requirements").asOpt[String].getOrElse("Unable to resolve requirements")
+        val techStack = (json \ "techStack").asOpt[String].getOrElse("Unable to resolve tech stack")
 
-        JobDescriptions(jobId, jobDescription, companyDescription)
-      case None => JobDescriptions(jobId, unresolvedDefaultStr, unresolvedDefaultStr)
+        JobDescriptions(0L, about, requirements, techStack)
+      case None => JobDescriptions(0L, "Unable to resolve about", "Unable to resolve requirements", "Unable to resolve tech stack")
     }
   }
 
   override def isValidCompletion(json: JsValue): Boolean = {
-    (json \ "jobDescription").isDefined && (json \ "companyDescription").isDefined
+    (json \ "about").isDefined && (json \ "requirements").isDefined && (json \ "techStack").isDefined
   }
 
   override def generatePrompt(content: String): String = {
-    s"""Extract the job description and company description from the following job post,
+    s"""Resolve an about field, the job requirements, and the technical stack from the following job post,
        |and return it in JSON format. The expected JSON structure is:
        |{
-       |  "jobDescription": "Job Description (max 1024 characters)",
-       |  "companyDescription": "Company Description (max 1024 characters)"
+       |  "about": "About Field (max 1024 characters)",
+       |  "requirements": "Job Requirements (max 1024 characters)"
+       |  "techStack": "Technical Stack (max 1024 characters)"
        |}
        |Do not return any HTML. Do not include anything other than this result in your response.
        |Do not append "Answer" to the start of your solution. Return only the JSON.
-       |If you cannot resolve one of these fields, use the value "Unable to resolve description".
+       |If you cannot resolve one of these fields, use the value "Unable to resolve".
        |
        |Job Posting:
        |$content

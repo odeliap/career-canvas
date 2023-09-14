@@ -2,6 +2,7 @@ package careercanvas.io.model.job
 
 case class JobDescriptions(
   jobId: Long,
-  jobDescription: String,
-  companyDescription: String
+  about: String,
+  requirements: String,
+  techStack: String
 ) extends CompletionResolvedInfo

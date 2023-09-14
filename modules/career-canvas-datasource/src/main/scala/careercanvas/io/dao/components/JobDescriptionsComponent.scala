@@ -11,14 +11,16 @@ trait JobDescriptionsComponent {
 
   class JobDescriptionsTable(tag: Tag) extends Table[JobDescriptions](tag, "job_descriptions") {
 
-    def jobId: Rep[Long] = column[Long]("job_id")
-    def jobDescription: Rep[String] = column[String]("job_description")
-    def companyDescription: Rep[String] = column[String]("company_description")
+    def jobId: Rep[Long] = column[Long]("job_id", O.AutoInc)
+    def about: Rep[String] = column[String]("about")
+    def requirements: Rep[String] = column[String]("requirements")
+    def techStack: Rep[String] = column[String]("tech_stack")
 
     def * : ProvenShape[JobDescriptions] = (
       jobId,
-      jobDescription,
-      companyDescription
+      about,
+      requirements,
+      techStack
     ) <> (JobDescriptions.tupled, JobDescriptions.unapply)
 
   }

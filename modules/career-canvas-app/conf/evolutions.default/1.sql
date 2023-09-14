@@ -15,9 +15,16 @@ create table if not exists user_info (
     website             varchar(255)
 );
 
+create table if not exists job_descriptions (
+    job_id              serial                  not null unique,
+    about               varchar(1024)           not null,
+    requirements        varchar(1024)           not null,
+    tech_stack          varchar(1024)           not null
+);
+
 create table if not exists job_statuses (
     user_id             serial                  not null references user_info(id),
-    job_id              serial                  not null unique,
+    job_id              serial                  not null references job_descriptions(job_id),
     posting_url         varchar(255)            not null,
     company             varchar(255)            not null,
     job_title           varchar(255)            not null,
@@ -32,12 +39,6 @@ create table if not exists job_statuses (
     starred             boolean                 default false
 );
 
-create table if not exists job_descriptions (
-    job_id              serial                  not null references job_statuses(job_id),
-    job_description     varchar(1024)           not null,
-    company_description varchar(1024)           not null
-);
-
 create table resumes (
     user_id             serial                 not null references user_info(id),
     version             serial,
@@ -49,7 +50,7 @@ create table resumes (
 
 create table job_application_files (
     user_id             serial                 not null references user_info(id),
-    job_id              serial                 not null references job_statuses(job_id),
+    job_id              serial                 not null references job_descriptions(job_id),
     file_id             serial,
     name                varchar(255)           not null,
     file_type           application_file       not null,
@@ -70,8 +71,8 @@ create table user_reset_codes (
 drop table if exists user_reset_codes;
 drop table if exists job_application_files;
 drop table if exists resumes;
-drop table if exists job_descriptions;
 drop table if exists job_statuses;
+drop table if exists job_descriptions;
 drop table if exists user_info;
 
 drop type if exists job_status;

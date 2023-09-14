@@ -23,10 +23,10 @@ class JobDescriptionsDaoImpl @Inject()(
 
   import profile.api._
 
-  override def addJob(jobDescriptions: JobDescriptions): Future[Unit] = {
-    val insertQuery = JobDescriptionsQuery += jobDescriptions
+  override def addJob(jobDescriptions: JobDescriptions): Future[Long] = {
+    val insertQuery = JobDescriptionsQuery returning JobDescriptionsQuery.map(_.jobId) += jobDescriptions
 
-    db.run(insertQuery).map(_ => ())
+    db.run(insertQuery)
   }
 
   override def removeJob(jobId: Long): Future[Unit] = {

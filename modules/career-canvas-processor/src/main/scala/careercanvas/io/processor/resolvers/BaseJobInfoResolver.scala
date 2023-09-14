@@ -15,7 +15,7 @@ class BaseJobInfoResolver @Inject()(
 ) extends CompletionResolver[BaseJobInfo](openAiConnector)
   with AwaitResult {
 
-  override def resolve(pageUrl: String, jobId: Long = 0L): BaseJobInfo = {
+  override def resolve(pageUrl: String): BaseJobInfo = {
     val content = scraper.getPageContent(pageUrl)
     val completion = fetchCompletionWithRetry(content)
     completionToBaseJobInfo(completion, pageUrl)
@@ -25,15 +25,22 @@ class BaseJobInfoResolver @Inject()(
     completion match {
       case Some(completionStr) =>
         val json = Json.parse(completionStr)
-        val company = (json \ "company").asOpt[String].getOrElse("Unable to resolve")
-        val jobTitle = (json \ "jobTitle").asOpt[String].getOrElse("Unable to resolve")
+        val company = (json \ "company").asOpt[String].getOrElse("Unable to resolve company")
+        val jobTitle = (json \ "jobTitle").asOpt[String].getOrElse("Unable to resolve job title")
         val jobTypeStr = (json \ "jobType").asOpt[String].getOrElse("Unknown")
         val jobType = JobType.stringToEnum(jobTypeStr)
-        val location = (json \ "location").asOpt[String].getOrElse("Unable to resolve")
-        val salaryRange = (json \ "salaryRange").asOpt[String].getOrElse("Unable to resolve")
+        val location = (json \ "location").asOpt[String].getOrElse("Unable to resolve location")
+        val salaryRange = (json \ "salaryRange").asOpt[String].getOrElse("Unable to resolve salary range")
 
         BaseJobInfo(pageUrl, company, jobTitle, jobType, location, salaryRange)
-      case None => BaseJobInfo(pageUrl, unresolvedDefaultStr, unresolvedDefaultStr, JobType.default, unresolvedDefaultStr, unresolvedDefaultStr)
+      case None => BaseJobInfo(
+        pageUrl,
+        "Unable to resolve company",
+        "Unable to resolve job title",
+        JobType.default,
+        "Unable to resolve location",
+        "Unable to resolve salary range"
+      )
     }
   }
 

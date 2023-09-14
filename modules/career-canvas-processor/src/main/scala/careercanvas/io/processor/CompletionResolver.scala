@@ -8,9 +8,7 @@ import scala.util.{Failure, Success, Try}
 
 abstract class CompletionResolver[T <: CompletionResolvedInfo](openAiConnector: OpenAiConnector) {
 
-  val unresolvedDefaultStr: String = "Unable to Resolve"
-
-  def resolve(pageUrl: String, jobId: Long = 0L): T
+  def resolve(pageUrl: String): T
 
   def generatePrompt(content: String): String
 

@@ -6,7 +6,7 @@ import scala.concurrent.Future
 
 trait JobDescriptionsDao {
 
-  def addJob(jobDescriptions: JobDescriptions): Future[Unit]
+  def addJob(jobDescriptions: JobDescriptions): Future[Long]
 
   def removeJob(jobId: Long): Future[Unit]
 

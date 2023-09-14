@@ -25,8 +25,10 @@ class JobApplicationsService @Inject() (
   extends AwaitResult {
 
   def createJob(data: UserProvidedJobDetails, postUrl: String, userId: String): Unit = {
+    val jobDescriptions = jobDescriptionsResolver.resolve(postUrl)
+    val jobId = jobDescriptionsDao.addJob(jobDescriptions).waitForResult
     val jobInfo = JobInfo(
-      jobId = 0L,
+      jobId = jobId,
       userId = userId.toLong,
       postUrl = postUrl,
       company = data.company,
@@ -39,9 +41,7 @@ class JobApplicationsService @Inject() (
       interviewRound = data.interviewRound,
       notes = data.notes
     )
-    val jobId = jobApplicationsDao.addJob(jobInfo).waitForResult
-    val jobDescriptions = jobDescriptionsResolver.resolve(postUrl, jobId)
-    jobDescriptionsDao.addJob(jobDescriptions).waitForResult
+    jobApplicationsDao.addJob(jobInfo).waitForResult
   }
 
   def resolveJobDescriptions(jobId: Long): JobDescriptions = {

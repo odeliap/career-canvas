@@ -11,14 +11,18 @@
     <p class="individual-job-view-title">@jobInfo.jobTitle</p>
     <p class="individual-job-view-location">@jobInfo.location</p>
     <div class="individual-job-view-salary">@jobInfo.salaryRange</div>
-    <div class="individual-job-view-company-description">
-        <h3>Company Description</h3>
-        <div>@jobDescriptions.companyDescription</div>
+    <div id="individual-job-view-about">
+        <h3>About</h3>
+        <div>@jobDescriptions.about</div>
     </div>
     <hr>
-    <div class="individual-job-view-job-description">
-        <h3>Job Description</h3>
-        <div>@jobDescriptions.jobDescription</div>
+    <div id="individual-job-view-requirements">
+        <h3>Requirements</h3>
+        <div>@jobDescriptions.requirements</div>
+    </div>
+    <div id="individual-job-view-tech-stack">
+        <h3>Tech Stack</h3>
+        <div>@jobDescriptions.techStack</div>
     </div>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/job/overviewTabHighlightSidebar.js")" type="text/javascript"></script>
 }
