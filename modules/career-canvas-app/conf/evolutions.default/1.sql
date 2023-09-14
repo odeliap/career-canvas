@@ -67,12 +67,12 @@ create table user_reset_codes (
 
 -- !Downs
 
-drop table if exists user_info;
-drop table if exists job_statuses;
-drop table if exists job_descriptions;
-drop table if exists resumes;
-drop table if exists job_application_files;
 drop table if exists user_reset_codes;
+drop table if exists job_application_files;
+drop table if exists resumes;
+drop table if exists job_descriptions;
+drop table if exists job_statuses;
+drop table if exists user_info;
 
 drop type if exists job_status;
 drop type if exists job_type;
