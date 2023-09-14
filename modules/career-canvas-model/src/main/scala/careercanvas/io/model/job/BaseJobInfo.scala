@@ -9,7 +9,7 @@ case class BaseJobInfo(
   jobType: JobType,
   location: String,
   salaryRange: String
-)
+) extends CompletionResolvedInfo
 
 object BaseJobInfo {
 

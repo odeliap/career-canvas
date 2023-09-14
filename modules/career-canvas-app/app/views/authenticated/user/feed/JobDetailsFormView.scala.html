@@ -100,7 +100,13 @@
                         <div class="job-details-form-section-title">Job Type</div>
                         @helper.inputRadioGroup(
                             form("jobType"),
-                            options = Seq("FullTime" -> "Full-Time", "Contract" -> "Contract", "PartTime" -> "Part-Time", "Internship" -> "Internship", "Temporary" -> "Temporary"),
+                            options = Seq(
+                                "FullTime" -> "Full-Time",
+                                "Contract" -> "Contract",
+                                "PartTime" -> "Part-Time",
+                                "Internship" -> "Internship",
+                                "Temporary" -> "Temporary"
+                            ),
                             '_label -> "",
                             'placeholder -> baseJobInfo.jobType,
                             'id -> "job-description-job-type",
@@ -170,5 +176,6 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/saveJob.js")" type="text/javascript"></script>
 }

@@ -4,4 +4,4 @@ case class JobDescriptions(
   jobId: Long,
   jobDescription: String,
   companyDescription: String
-)
+) extends CompletionResolvedInfo

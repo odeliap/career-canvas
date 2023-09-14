@@ -2,7 +2,8 @@ package service
 
 import careercanvas.io.{JobApplicationFilesDao, JobApplicationsDao, JobDescriptionsDao}
 import careercanvas.io.model.job._
-import careercanvas.io.processor.{JobDescriptionsResolver, JobResponseWriter}
+import careercanvas.io.processor.JobResponseWriter
+import careercanvas.io.processor.resolvers.JobDescriptionsResolver
 import careercanvas.io.storage.StorageService
 import careercanvas.io.util.AwaitResult
 import utils.StringUtils
@@ -13,13 +14,13 @@ import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
 class JobApplicationsService @Inject() (
-                                         jobApplicationsDao: JobApplicationsDao,
-                                         jobApplicationFilesDao: JobApplicationFilesDao,
-                                         jobDescriptionsDao: JobDescriptionsDao,
-                                         jobDescriptionsResolver: JobDescriptionsResolver,
-                                         jobResponseWriter: JobResponseWriter,
-                                         storageService: StorageService,
-                                         stringUtils: StringUtils
+  jobApplicationsDao: JobApplicationsDao,
+  jobApplicationFilesDao: JobApplicationFilesDao,
+  jobDescriptionsDao: JobDescriptionsDao,
+  jobDescriptionsResolver: JobDescriptionsResolver,
+  jobResponseWriter: JobResponseWriter,
+  storageService: StorageService,
+  stringUtils: StringUtils
 )(implicit ec: ExecutionContext)
   extends AwaitResult {
 
@@ -39,7 +40,7 @@ class JobApplicationsService @Inject() (
       notes = data.notes
     )
     val jobId = jobApplicationsDao.addJob(jobInfo).waitForResult
-    val jobDescriptions = jobDescriptionsResolver.resolve(jobId, postUrl)
+    val jobDescriptions = jobDescriptionsResolver.resolve(postUrl, jobId)
     jobDescriptionsDao.addJob(jobDescriptions).waitForResult
   }
 

@@ -3,7 +3,7 @@ package controllers
 import authentication.{AuthenticatedUserAction, AuthenticatedUserMessagesAction}
 import careercanvas.io.converter.Converters
 import careercanvas.io.model.job._
-import careercanvas.io.processor.BaseJobInfoResolver
+import careercanvas.io.processor.resolvers.BaseJobInfoResolver
 import model.Global
 import service.JobApplicationsService
 import play.api.mvc._
