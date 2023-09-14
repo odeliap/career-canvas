@@ -1,6 +1,6 @@
 package careercanvas.io.dao.components
 
-import careercanvas.io.model.job.{JobInfo, JobStatus}
+import careercanvas.io.model.job.{JobInfo, JobStatus, JobType}
 import slick.lifted.ProvenShape
 
 import java.sql.Timestamp
@@ -15,9 +15,12 @@ trait JobStatusesComponent {
 
     def userId: Rep[Long] = column[Long]("user_id")
     def jobId: Rep[Long] = column[Long]("job_id", O.AutoInc)
+    def postingUrl: Rep[String] = column[String]("posting_url")
     def company: Rep[String] = column[String]("company")
     def jobTitle: Rep[String] = column[String]("job_title")
-    def postingUrl: Rep[String] = column[String]("posting_url")
+    def jobType: Rep[JobType] = column[JobType]("jobtype")
+    def location: Rep[String] = column[String]("location")
+    def salaryRange: Rep[String] = column[String]("salary_range")
     def status: Rep[JobStatus] = column[JobStatus]("status")
     def appSubmissionDate: Rep[Option[Timestamp]] = column[Option[Timestamp]]("app_submission_date")
     def lastUpdate: Rep[Timestamp] = column[Timestamp]("last_update")
@@ -28,9 +31,12 @@ trait JobStatusesComponent {
     def * : ProvenShape[JobInfo] = (
       userId,
       jobId,
+      postingUrl,
       company,
       jobTitle,
-      postingUrl,
+      jobType,
+      location,
+      salaryRange,
       status,
       appSubmissionDate,
       lastUpdate,

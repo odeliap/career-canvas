@@ -1,9 +1,7 @@
 package careercanvas.io.model.job
 
-case class JobMetadata(
+case class JobDescriptions(
   jobId: Long,
-  location: String,
-  salary: String,
   jobDescription: String,
   companyDescription: String
 )

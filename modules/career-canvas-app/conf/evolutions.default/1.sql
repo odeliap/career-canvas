@@ -1,6 +1,7 @@
 -- !Ups
 
 create type job_status as enum('NotSubmitted', 'Submitted', 'InterviewScheduled', 'Interviewed', 'OfferMade', 'Rejected');
+create type job_type as enum('FullTime', 'Contact', 'PartTime', 'Internship', 'Temporary');
 create type application_file as enum('CoverLetter', 'Response');
 
 create table if not exists user_info (
@@ -17,9 +18,12 @@ create table if not exists user_info (
 create table if not exists job_statuses (
     user_id             serial                  not null references user_info(id),
     job_id              serial                  not null unique,
+    posting_url         varchar(255)            not null,
     company             varchar(255)            not null,
     job_title           varchar(255)            not null,
-    posting_url         varchar(255)            not null,
+    jobtype             job_type                not null,
+    location            varchar(255)            not null,
+    salary_range        varchar(255)            not null,
     status              job_status              not null,
     app_submission_date timestamp               null,
     last_update         timestamp,
@@ -28,10 +32,8 @@ create table if not exists job_statuses (
     starred             boolean                 default false
 );
 
-create table if not exists job_metadata (
+create table if not exists job_descriptions (
     job_id              serial                  not null references job_statuses(job_id),
-    location            varchar(1024)            not null,
-    salary              varchar(1024)            not null,
     job_description     varchar(1024)           not null,
     company_description varchar(1024)           not null
 );
@@ -67,10 +69,11 @@ create table user_reset_codes (
 
 drop table if exists user_info;
 drop table if exists job_statuses;
-drop table if exists job_metadata;
+drop table if exists job_descriptions;
 drop table if exists resumes;
 drop table if exists job_application_files;
 drop table if exists user_reset_codes;
 
 drop type if exists job_status;
+drop type if exists job_type;
 drop type if exists application_file;

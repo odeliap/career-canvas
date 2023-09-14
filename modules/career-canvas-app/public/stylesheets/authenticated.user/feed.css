@@ -76,7 +76,8 @@
 }
 
 #job-description-form-first-row,
-#job-description-form-second-row {
+#job-description-form-second-row,
+#job-description-form-third-row{
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
@@ -87,6 +88,9 @@
 #job-description-title,
 #job-description-status,
 #job-description-interview-round,
+#job-description-job-type,
+#job-description-location,
+#job-description-salary-range,
 #job-description-notes {
     flex: 1;
     margin-right: 10px;

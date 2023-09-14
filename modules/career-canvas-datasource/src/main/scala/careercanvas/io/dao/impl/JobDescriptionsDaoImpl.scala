@@ -1,8 +1,8 @@
 package careercanvas.io.dao.impl
 
-import careercanvas.io.JobMetadataDao
-import careercanvas.io.dao.components.JobMetadataComponent
-import careercanvas.io.model.job.JobMetadata
+import careercanvas.io.JobDescriptionsDao
+import careercanvas.io.dao.components.JobDescriptionsComponent
+import careercanvas.io.model.job.JobDescriptions
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 
@@ -14,31 +14,31 @@ import scala.concurrent.{ExecutionContext, Future}
  * information. All the validation for calling these methods
  * should happen downstream.
  */
-class JobMetadataDaoImpl @Inject() (
+class JobDescriptionsDaoImpl @Inject()(
   protected val dbConfigProvider: DatabaseConfigProvider
-) (implicit ec: ExecutionContext)
-  extends JobMetadataDao
-    with JobMetadataComponent
+)(implicit ec: ExecutionContext)
+  extends JobDescriptionsDao
+    with JobDescriptionsComponent
     with HasDatabaseConfigProvider[JdbcProfile] {
 
   import profile.api._
 
-  override def addJob(jobMetadata: JobMetadata): Future[Unit] = {
-    val insertQuery = JobMetadataQuery += jobMetadata
+  override def addJob(jobDescriptions: JobDescriptions): Future[Unit] = {
+    val insertQuery = JobDescriptionsQuery += jobDescriptions
 
     db.run(insertQuery).map(_ => ())
   }
 
   override def removeJob(jobId: Long): Future[Unit] = {
-    val removeJobQuery = JobMetadataQuery
+    val removeJobQuery = JobDescriptionsQuery
       .filter(_.jobId === jobId)
       .delete
 
     db.run(removeJobQuery).map(_ => ())
   }
 
-  override def getJobById(jobId: Long): Future[JobMetadata] = {
-    val query = JobMetadataQuery
+  override def getJobById(jobId: Long): Future[JobDescriptions] = {
+    val query = JobDescriptionsQuery
       .filter(_.jobId === jobId)
 
     db.run(query.result.head)

@@ -22,8 +22,8 @@ class IndividualJobController @Inject()(
   implicit val optionStringReads: Reads[Option[String]] = Reads.optionWithNull[String]
 
   def showJobView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val jobMetadata = jobApplicationsService.resolveJobMetadata(jobInfo.jobId)
-    Ok(views.html.authenticated.user.job.IndividualJobOverview(jobInfo, jobMetadata))
+    val jobDescriptions = jobApplicationsService.resolveJobDescriptions(jobInfo.jobId)
+    Ok(views.html.authenticated.user.job.IndividualJobOverview(jobInfo, jobDescriptions))
   }
 
   def deleteJob(jobId: Long): Action[AnyContent] = authenticatedUserAction { implicit request =>

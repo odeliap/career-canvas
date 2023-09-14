@@ -97,6 +97,64 @@ baseJobInfo: careercanvas.io.model.job.BaseJobInfo
             </div>
 
             <div class="job-details-form-section">
+                <div class="job-details-form-section-title">Job Type</div>
+                @helper.inputRadioGroup(
+                    form("jobType"),
+                    options = Seq("FullTime" -> "Full-Time", "Contract" -> "Contract", "PartTime" -> "Part-Time", "Internship" -> "Internship", "Temporary" -> "Temporary"),
+                    '_label -> "",
+                    'placeholder -> baseJobInfo.jobType,
+                    'id -> "job-description-job-type",
+                    'size -> 60
+                )
+            </div>
+
+            <div class="job-description-form-third-row">
+                <div class="job-details-form-section">
+                    <div class="job-details-form-section-title">Location</div>
+                    @if(baseJobInfo.location.nonEmpty) {
+                        @helper.inputText(
+                            form("location"),
+                            '_label -> "",
+                            'placeholder -> baseJobInfo.location,
+                            'id -> "job-description-location",
+                            'size -> 60,
+                            '_showConstraints -> false
+                        )
+                    } else {
+                        @helper.inputText(
+                            form("location"),
+                            '_label -> "",
+                            'id -> "job-description-location",
+                            'size -> 60,
+                            '_showConstraints -> false
+                        )
+                    }
+                </div>
+
+                <div class="job-details-form-section">
+                    <div class="job-details-form-section-title">Salary Range</div>
+                    @if(baseJobInfo.salaryRange.nonEmpty) {
+                        @helper.inputText(
+                            form("salaryRange"),
+                            '_label -> "",
+                            'placeholder -> baseJobInfo.salaryRange,
+                            'id -> "job-description-salary-range",
+                            'size -> 60,
+                            '_showConstraints -> false
+                        )
+                    } else {
+                        @helper.inputText(
+                            form("salaryRange"),
+                            '_label -> "",
+                            'id -> "job-description-salary-range",
+                            'size -> 60,
+                            '_showConstraints -> false
+                        )
+                    }
+                </div>
+            </div>
+
+            <div class="job-details-form-section">
                 <div class="job-details-form-section-title">Notes</div>
                 @helper.inputText(
                     form("notes"),
@@ -113,17 +171,17 @@ baseJobInfo: careercanvas.io.model.job.BaseJobInfo
     </div>
     } {
     document.getElementById("save-job").addEventListener("click", function(e) {
-    e.preventDefault();
-    var jobDescriptionInputDiv = document.querySelector(".job-description-input");
-    if (jobDescriptionInputDiv.style.display === "none") {
-    jobDescriptionInputDiv.style.display = "block";
-    this.style.backgroundColor = '#0077B5';
-    this.style.color = 'white';
-    } else {
-    jobDescriptionInputDiv.style.display = "none";
-    this.style.backgroundImage = 'transparent';
-    this.style.color = '#333';
-    }
+        e.preventDefault();
+        var jobDescriptionInputDiv = document.querySelector(".job-description-input");
+        if (jobDescriptionInputDiv.style.display === "none") {
+            jobDescriptionInputDiv.style.display = "block";
+            this.style.backgroundColor = '#0077B5';
+            this.style.color = 'white';
+        } else {
+            jobDescriptionInputDiv.style.display = "none";
+            this.style.backgroundImage = 'transparent';
+            this.style.color = '#333';
+        }
     });
 </div>
 }

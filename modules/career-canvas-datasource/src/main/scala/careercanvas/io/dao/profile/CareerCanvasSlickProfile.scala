@@ -1,7 +1,6 @@
 package careercanvas.io.dao.profile
 
-import careercanvas.io.model.connections.ConnectionCloseness
-import careercanvas.io.model.job.{ApplicationFileType, JobStatus}
+import careercanvas.io.model.job.{ApplicationFileType, JobStatus, JobType}
 import com.github.tminglei.slickpg._
 import slick.jdbc.{JdbcType, PostgresProfile}
 
@@ -24,11 +23,11 @@ trait CareerCanvasSlickProfile
       )
     }
 
-    implicit val connectionClosenessConverter: JdbcType[ConnectionCloseness] = {
-      createEnumJdbcType[ConnectionCloseness](
-        ConnectionCloseness.toString,
+    implicit val jobTypeConverter: JdbcType[JobType] = {
+      createEnumJdbcType[JobType](
+        JobType.toString,
         _.toString,
-        ConnectionCloseness.stringToEnum,
+        JobType.stringToEnum,
         quoteName = false
       )
     }

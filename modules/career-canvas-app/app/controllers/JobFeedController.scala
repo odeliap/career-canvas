@@ -38,6 +38,9 @@ class JobFeedController @Inject()(
         .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 40)),
       "jobTitle" -> default(text, baseJobInfo.jobTitle)
         .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 35)),
+      "jobType" -> default(text, baseJobInfo.jobType.toString),
+      "location" -> default(text, baseJobInfo.location),
+      "salaryRange" -> default(text, baseJobInfo.salaryRange),
       "status" -> text,
       "interviewRound" -> optional(number),
       "notes" -> optional(text)
@@ -79,7 +82,15 @@ class JobFeedController @Inject()(
     val userJobs = retrieveUserJobs(userId)
 
     Ok(views.html.authenticated.user.feed.JobDetailsFormView(jobDetailsForm(baseJobInfo), saveJobUrl, userJobs, baseJobInfo))
-      .withSession(request.session + ("company" -> baseJobInfo.company) + ("jobTitle" -> baseJobInfo.jobTitle) + ("postUrl" -> baseJobInfo.postUrl))
+      .withSession(
+        request.session +
+          ("company" -> baseJobInfo.company) +
+          ("jobTitle" -> baseJobInfo.jobTitle) +
+          ("postUrl" -> baseJobInfo.postUrl) +
+          ("jobType" -> baseJobInfo.jobType.toString) +
+          ("location" -> baseJobInfo.location) +
+          ("salaryRange" -> baseJobInfo.salaryRange)
+      )
   }
 
   def saveJob(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
@@ -87,9 +98,12 @@ class JobFeedController @Inject()(
     val userJobs = retrieveUserJobs(userId)
 
     val baseJobInfo = BaseJobInfo(
+      request.session.data("postUrl"),
       request.session.data("company"),
       request.session.data("jobTitle"),
-      request.session.data("postUrl")
+      JobType.stringToEnum(request.session.data("jobType")),
+      request.session.data("location"),
+      request.session.data("salaryRange")
     )
 
     val errorFunction = { formWithErrors: Form[UserProvidedJobDetails] =>

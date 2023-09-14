@@ -12,9 +12,12 @@ import scala.util.Try
 case class JobInfo(
   userId: Long,
   jobId: Long,
+  postUrl: String,
   company: String,
   jobTitle: String,
-  postUrl: String,
+  jobType: JobType,
+  location: String,
+  salaryRange: String,
   status: JobStatus,
   appSubmissionDate: Option[Timestamp],
   lastUpdate: Timestamp = Timestamp.from(Instant.now()),
@@ -50,9 +53,12 @@ object JobInfo {
   implicit val jobInfoWrites: Writes[JobInfo] = (
     (JsPath \ "userId").write[Long] and
       (JsPath \ "jobId").write[Long] and
+      (JsPath \ "postUrl").write[String] and
       (JsPath \ "company").write[String] and
       (JsPath \ "jobTitle").write[String] and
-      (JsPath \ "postUrl").write[String] and
+      (JsPath \ "jobType").write[JobType] and
+      (JsPath \ "location").write[String] and
+      (JsPath \ "salaryRange").write[String] and
       (JsPath \ "status").write[JobStatus] and  // Need implicit Writes[JobStatus]
       (JsPath \ "appSubmissionDate").writeNullable[Timestamp] and  // Need implicit Writes[Timestamp]
       (JsPath \ "lastUpdate").write[Timestamp] and  // Need implicit Writes[Timestamp]
@@ -64,9 +70,12 @@ object JobInfo {
   implicit val jobInfoReads: Reads[JobInfo] = (
     (__ \ "userId").read[Long] and
       (__ \ "jobId").read[Long] and
+      (__ \ "postUrl").read[String] and
       (__ \ "company").read[String] and
       (__ \ "jobTitle").read[String] and
-      (__ \ "postUrl").read[String] and
+      (__ \ "jobType").read[JobType] and
+      (__ \ "location").read[String] and
+      (__ \ "salaryRange").read[String] and
       (__ \ "status").read[JobStatus] and // Assuming JobStatus is an Enumeration
       (__ \ "appSubmissionDate").readNullable[Timestamp] and
       (__ \ "lastUpdate").read[Timestamp] and
@@ -82,9 +91,12 @@ object JobInfo {
         Try {
           val userId = params.get("userId").flatMap(_.headOption).map(_.toLong).getOrElse(throw new Exception("Missing userId"))
           val jobId = params.get("jobId").flatMap(_.headOption).map(_.toLong).getOrElse(throw new Exception("Missing jobId"))
+          val postUrl = params.get("postUrl").flatMap(_.headOption).getOrElse(throw new Exception("Missing postUrl"))
           val company = params.get("company").flatMap(_.headOption).getOrElse(throw new Exception("Missing company"))
           val jobTitle = params.get("jobTitle").flatMap(_.headOption).getOrElse(throw new Exception("Missing jobTitle"))
-          val postUrl = params.get("postUrl").flatMap(_.headOption).getOrElse(throw new Exception("Missing postUrl"))
+          val jobType = params.get("jobType").flatMap(_.headOption).map(JobType.stringToEnum).getOrElse(throw new Exception("Missing job type"))
+          val location = params.get("location").flatMap(_.headOption).getOrElse(throw new Exception("Missing location"))
+          val salaryRange = params.get("salaryRange").flatMap(_.headOption).getOrElse(throw new Exception("Missing salary range"))
           val status = params.get("status").flatMap(_.headOption).map(JobStatus.stringToEnum).getOrElse(throw new Exception("Missing status"))
 
           val appSubmissionDate = params.get("appSubmissionDate").flatMap(_.headOption).flatMap { dateStr =>
@@ -110,7 +122,7 @@ object JobInfo {
           val notes = params.get("notes").flatMap(_.headOption)
           val starred = params.get("starred").flatMap(_.headOption).exists(_.toBoolean)
 
-          Right(JobInfo(userId, jobId, company, jobTitle, postUrl, status, appSubmissionDate, lastUpdate, interviewRound, notes, starred))
+          Right(JobInfo(userId, jobId, postUrl, company, jobTitle, jobType, location, salaryRange, status, appSubmissionDate, lastUpdate, interviewRound, notes, starred))
         }.getOrElse(Left("Unable to bind JobInfo"))
       }
     }
@@ -121,7 +133,7 @@ object JobInfo {
       val interviewRound = jobInfo.interviewRound.map(_.toString).getOrElse("")
       val notes = jobInfo.notes.getOrElse("")
 
-      s"userId=${jobInfo.userId}&jobId=${jobInfo.jobId}&company=${jobInfo.company}&jobTitle=${jobInfo.jobTitle}&postUrl=${jobInfo.postUrl}&status=${jobInfo.status}&appSubmissionDate=$appSubmissionDate&lastUpdate=$lastUpdate&interviewRound=$interviewRound&notes=$notes&starred=${jobInfo.starred}"
+      s"userId=${jobInfo.userId}&jobId=${jobInfo.jobId}&postUrl=${jobInfo.postUrl}&company=${jobInfo.company}&jobTitle=${jobInfo.jobTitle}&jobType=${jobInfo.jobType}&location=${jobInfo.location}&salaryRange=${jobInfo.salaryRange}&status=${jobInfo.status}&appSubmissionDate=$appSubmissionDate&lastUpdate=$lastUpdate&interviewRound=$interviewRound&notes=$notes&starred=${jobInfo.starred}"
     }
   }
 }

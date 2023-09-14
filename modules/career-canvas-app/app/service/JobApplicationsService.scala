@@ -1,8 +1,8 @@
 package service
 
-import careercanvas.io.{JobApplicationFilesDao, JobApplicationsDao, JobMetadataDao}
+import careercanvas.io.{JobApplicationFilesDao, JobApplicationsDao, JobDescriptionsDao}
 import careercanvas.io.model.job._
-import careercanvas.io.processor.{JobMetadataResolver, JobResponseWriter}
+import careercanvas.io.processor.{JobDescriptionsResolver, JobResponseWriter}
 import careercanvas.io.storage.StorageService
 import careercanvas.io.util.AwaitResult
 import utils.StringUtils
@@ -13,13 +13,13 @@ import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
 class JobApplicationsService @Inject() (
-  jobApplicationsDao: JobApplicationsDao,
-  jobApplicationFilesDao: JobApplicationFilesDao,
-  jobMetadataDao: JobMetadataDao,
-  jobMetadataResolver: JobMetadataResolver,
-  jobResponseWriter: JobResponseWriter,
-  storageService: StorageService,
-  stringUtils: StringUtils
+                                         jobApplicationsDao: JobApplicationsDao,
+                                         jobApplicationFilesDao: JobApplicationFilesDao,
+                                         jobDescriptionsDao: JobDescriptionsDao,
+                                         jobDescriptionsResolver: JobDescriptionsResolver,
+                                         jobResponseWriter: JobResponseWriter,
+                                         storageService: StorageService,
+                                         stringUtils: StringUtils
 )(implicit ec: ExecutionContext)
   extends AwaitResult {
 
@@ -27,21 +27,24 @@ class JobApplicationsService @Inject() (
     val jobInfo = JobInfo(
       jobId = 0L,
       userId = userId.toLong,
+      postUrl = postUrl,
       company = data.company,
       jobTitle = data.jobTitle,
-      postUrl = postUrl,
+      jobType = JobType.stringToEnum(data.jobType),
+      location = data.location,
+      salaryRange = data.salaryRange,
       status = JobStatus.stringToEnum(data.status),
       appSubmissionDate = None,
       interviewRound = data.interviewRound,
       notes = data.notes
     )
     val jobId = jobApplicationsDao.addJob(jobInfo).waitForResult
-    val jobMetadata = jobMetadataResolver.resolve(jobId, postUrl)
-    jobMetadataDao.addJob(jobMetadata).waitForResult
+    val jobDescriptions = jobDescriptionsResolver.resolve(jobId, postUrl)
+    jobDescriptionsDao.addJob(jobDescriptions).waitForResult
   }
 
-  def resolveJobMetadata(jobId: Long): JobMetadata = {
-    jobMetadataDao.getJobById(jobId).waitForResult
+  def resolveJobDescriptions(jobId: Long): JobDescriptions = {
+    jobDescriptionsDao.getJobById(jobId).waitForResult
   }
 
   def deleteJob(userId: String, jobId: Long): Unit = {
@@ -58,7 +61,7 @@ class JobApplicationsService @Inject() (
     jobApplicationsDao.getJobById(userId.toLong, jobId).waitForResult
   }
 
-  def getJobs(userId: String) = {
+  def getJobs(userId: String): Seq[JobInfo] = {
     jobApplicationsDao.getJobs(userId.toLong).waitForResult
   }
 

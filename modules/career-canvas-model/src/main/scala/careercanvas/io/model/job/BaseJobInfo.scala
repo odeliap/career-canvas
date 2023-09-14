@@ -3,9 +3,12 @@ package careercanvas.io.model.job
 import play.api.mvc.QueryStringBindable
 
 case class BaseJobInfo(
+  postUrl: String,
   company: String,
   jobTitle: String,
-  postUrl: String
+  jobType: JobType,
+  location: String,
+  salaryRange: String
 )
 
 object BaseJobInfo {
@@ -14,13 +17,16 @@ object BaseJobInfo {
 
     override def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, BaseJobInfo]] = {
       for {
+        postUrl <- stringBinder.bind("postUrl", params)
         company <- stringBinder.bind("company", params)
         jobTitle <- stringBinder.bind("jobTitle", params)
-        postUrl <- stringBinder.bind("postUrl", params)
+        jobType <- stringBinder.bind("jobType", params)
+        location <- stringBinder.bind("location", params)
+        salaryRange <- stringBinder.bind("salaryRange", params)
       } yield {
-        (company, jobTitle, postUrl) match {
-          case (Right(company), Right(jobTitle), Right(postUrl)) =>
-            Right(BaseJobInfo(company, jobTitle, postUrl))
+        (postUrl, company, jobTitle, jobType, location, salaryRange) match {
+          case (Right(postUrl), Right(company), Right(jobTitle), Right(jobType), Right(location), Right(salaryRange)) =>
+            Right(BaseJobInfo(postUrl, company, jobTitle, JobType.stringToEnum(jobType), location, salaryRange))
           case _ =>
             Left("Unable to bind a BaseJobInfo")
         }
@@ -28,9 +34,12 @@ object BaseJobInfo {
     }
 
     override def unbind(key: String, baseJobInfo: BaseJobInfo): String = {
-      stringBinder.unbind("company", baseJobInfo.company) + "&" +
+      stringBinder.unbind("postUrl", baseJobInfo.postUrl) + "&" +
+        stringBinder.unbind("company", baseJobInfo.company) + "&" +
         stringBinder.unbind("jobTitle", baseJobInfo.jobTitle) + "&" +
-        stringBinder.unbind("postUrl", baseJobInfo.postUrl)
+        stringBinder.unbind("jobType", baseJobInfo.jobType.toString) + "&" +
+        stringBinder.unbind("location", baseJobInfo.location) + "&" +
+        stringBinder.unbind("salaryRange", baseJobInfo.salaryRange)
     }
   }
 
