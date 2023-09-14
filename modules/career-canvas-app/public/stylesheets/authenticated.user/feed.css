@@ -253,10 +253,23 @@
     align-items: center;
 }
 
-.filter-param {
+select {
+    font-family: Arial, sans-serif;
     font-size: 12px;
-    font-weight: 600;
-    margin-left: 20px;
+    font-weight: bold;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #333;
+    appearance: none;
+    background-image: url('/assets/images/feed/search/downarrow.png');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    padding-right: 30px;
+    transition: background-color 0.3s ease;
 }
 
 #showStarredLabel {
@@ -308,7 +321,7 @@
     color: #808080;
 }
 
-.pagination-item {
+.page-number {
     margin: 0 5px;
     padding: 5px 10px;
     height: 16px;
@@ -319,17 +332,22 @@
     transition: background-color 0.2s;
 }
 
-.pagination-item.current {
+.page-number.current {
     background-color: #7C8BDD;
     color: white;
 }
 
-.pagination-item:hover {
+.page-number:hover {
     background-color: #dddddd;
 }
 
+#prevPage, #nextPage {
+    border: none;
+    background-color: inherit;
+}
+
 .pagination-arrow {
-    margin-top: -4px;
+    margin-top: -8px;
     height: 30px;
     width: 30px;
 }

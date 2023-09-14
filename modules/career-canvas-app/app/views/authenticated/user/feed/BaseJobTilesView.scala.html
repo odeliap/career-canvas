@@ -22,19 +22,21 @@ jobInfos: Seq[JobInfo]
 
     <div id="job-search-container">
         <div>
-            <label class="filter-param" for="lastUpdate">Last Update:</label>
             <select class="filter-param" id="lastUpdate">
-                <option value="876600">All time</option>
-                <option value="168">Last 7 days</option>
-                <option value="72">Last 3 days</option>
-                <option value="24">Last 24 hours</option>
+                <optgroup label="Last Update">
+                    <option value="876600" class="default-opt">All time</option>
+                    <option value="168">Last 7 days</option>
+                    <option value="72">Last 3 days</option>
+                    <option value="24">Last 24 hours</option>
+                </optgroup>
             </select>
 
-            <label class="filter-param" for="company">Company:</label>
             <select class="filter-param" id="company">
-                <option value="">All Companies</option>
-                @for(company <- jobInfos.map(_.company).distinct) {
-                <option value="@company">@company</option>
+                <optgroup label="Company">
+                    <option value="" class="default-opt">All companies</option>
+                    @for(company <- jobInfos.map(_.company).distinct) {
+                    <option value="@company">@company</option>
+                </optgroup>
                 }
             </select>
 
@@ -79,9 +81,9 @@ jobInfos: Seq[JobInfo]
     </div>
 
     <div class="pagination">
-        <button id="prevPage">Previous</button>
+        <button id="prevPage"><img src="@routes.Assets.versioned("images/feed/pagination/previous.png")" class="pagination-arrow"></button>
         <div id="pageNumbersContainer"></div>
-        <button id="nextPage">Next</button>
+        <button id="nextPage"><img src="@routes.Assets.versioned("images/feed/pagination/next.png")" class="pagination-arrow"></button>
     </div>
 
     @FooterTemplate()
