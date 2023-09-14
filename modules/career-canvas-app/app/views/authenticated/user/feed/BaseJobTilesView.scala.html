@@ -72,7 +72,22 @@ jobInfos: Seq[JobInfo]
                     <div class="metadata-tag" style="background-color: @utils.ColorUtils.localDateTimeToColor(jobInfo.lastUpdate.toLocalDateTime);"></div>
                     <img src="@routes.Assets.versioned("images/feed/tile/calendar.png")" class="metadata-icon">
                     <p class="meta-title">Last Update:</p>
-                    <p class="meta-content">@jobInfo.lastUpdate.toLocalDateTime.toLocalDate.toString</p>
+                    <p class="meta-content">
+                        @{
+                        val now = java.time.LocalDateTime.now()
+                        val lastUpdate = jobInfo.lastUpdate.toLocalDateTime
+                        val duration = java.time.Duration.between(lastUpdate, now)
+
+                        val formattedTime =
+                        if (duration.toHours < 24) {
+                        s"${duration.toHours} hours"
+                        } else {
+                        s"${duration.toDays} days"
+                        }
+
+                        formattedTime + " ago"
+                        }
+                    </p>
                 </div>
             </div>
             <a href="@routes.IndividualJobController.showJobView(jobInfo)" class="view-job-button">View Job</a>
