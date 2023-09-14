@@ -1,6 +1,5 @@
-/* Help Center */
-
 /* Header */
+
 #help-center-header {
     font-size: 17px;
     font-weight: 500;
@@ -11,34 +10,12 @@
     border-bottom: 1px solid #D4D4D4;
 }
 
-#help-center-icon {
-    width: 55px;
-    height: 55px;
-    padding-right: 6px;
-}
-
 .subheader {
     color: #777777;
 }
 
-/* Body Layout */
-.split-body {
-    display: flex;
-    justify-content: flex-start;
-    background-color: white;
-}
-
-/* Page Content */
-.split-page-content {
-    width: 70%;
-    height: 90%;
-    overflow: auto;
-    color: #414141;
-    padding: 20px 40px;
-    border-left: 1px solid #D4D4D4;
-}
-
 /* Sidebar */
+
 .sidebar {
     width: 30%;
     padding-top: 15px;
@@ -47,6 +24,7 @@
 }
 
 /* Subnav */
+
 .subnav-item {
     display: flex;
     justify-content: left;
@@ -86,8 +64,28 @@
     display: block;
 }
 
-/* Mini Button */
-.mini-button {
+/* Body Layout */
+
+.split-body {
+    display: flex;
+    justify-content: flex-start;
+    background-color: white;
+}
+
+/* Content */
+
+.split-page-content {
+    width: 70%;
+    height: 90%;
+    overflow: auto;
+    color: #414141;
+    padding: 20px 40px;
+    border-left: 1px solid #D4D4D4;
+}
+
+/* Mini Terms Button */
+
+.mini-terms-button {
     color: #26abff;
     font-size: 12px;
     border: none;
@@ -96,10 +94,19 @@
 }
 
 /* Hover Effects */
+
 .subnav:hover, .subnav:hover .subnav-btn {
     background-color: #DEDEDE;
 }
 
 .mini-button:hover {
     text-decoration: underline;
+}
+
+/* Icons */
+
+#help-center-icon {
+    width: 55px;
+    height: 55px;
+    padding-right: 6px;
 }

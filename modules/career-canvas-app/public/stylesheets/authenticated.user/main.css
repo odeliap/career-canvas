@@ -1,10 +1,12 @@
-/* Header & Navbar */
+/* General */
 
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
+
+/* Header & Navbar */
 
 .header-container {
     display: flex;
@@ -13,51 +15,10 @@ body {
 
 .header {
     display: flex;
-}
-
-.content {
-    flex-grow: 1;
-    overflow-y: auto;
-}
-
-/* Responsive styles for smaller screens */
-@media only screen and (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .navbar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        background-color: white;
-        border-top: 0.5px solid #d5d0ce;
-        padding: 10px 0 0 0;
-    }
-
-    .profile-dropdown {
-        position: relative;
-    }
-
-    .profile-dropdown-content {
-        position: absolute;
-        bottom: 100%;
-        right: 0;
-        z-index: 2000;
-        background-color: white;
-        border: 1px solid #ccc;
-        width: 200px;
-    }
-}
-
-.header {
-  justify-content: space-between;
-  font-size: 10px;
-  background-color: white;
-  border-bottom: 0.5px solid #d5d0ce;
+    justify-content: space-between;
+    font-size: 10px;
+    background-color: white;
+    border-bottom: 0.5px solid #d5d0ce;
 }
 
 .header-left {
@@ -150,8 +111,21 @@ body {
   margin-bottom: -3px;
 }
 
-.logo1 {
-  margin: auto auto auto 10px;
+/* Headers */
+
+.main-h2,
+.main-h3 {
+  font-weight: 600;
+}
+
+.main-h2 {
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+.main-h3 {
+  font-size: 25px;
+  margin-bottom: 30px;
 }
 
 /* Profile Dropdown */
@@ -210,10 +184,12 @@ body {
   display: block;
 }
 
-/* Navigation Pages & Content */
+/* Content */
 
 .content {
-  margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+    margin: 0;
 }
 
 .main-content {
@@ -234,21 +210,10 @@ body {
   width: 85%;
 }
 
-/* Headers */
+/* Logos */
 
-.main-h2,
-.main-h3 {
-  font-weight: 600;
-}
-
-.main-h2 {
-  font-size: 40px;
-  margin-bottom: 40px;
-}
-
-.main-h3 {
-  font-size: 25px;
-  margin-bottom: 30px;
+.logo1 {
+  margin: auto auto auto 10px;
 }
 
 /* Icons */
@@ -257,4 +222,37 @@ body {
     padding: 10px;
     width: 15px;
     height: 15px;
+}
+
+/* Screen Resizing */
+@media only screen and (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: white;
+        border-top: 0.5px solid #d5d0ce;
+        padding: 10px 0 0 0;
+    }
+
+    .profile-dropdown {
+        position: relative;
+    }
+
+    .profile-dropdown-content {
+        position: absolute;
+        bottom: 100%;
+        right: 0;
+        z-index: 2000;
+        background-color: white;
+        border: 1px solid #ccc;
+        width: 200px;
+    }
 }

@@ -1,9 +1,3 @@
-/* Job Application Statistics */
-
-#status-percentages-container {
-    margin: 50px auto;
-}
-
 /* Layout */
 
 .content {
@@ -14,6 +8,10 @@
 .statistics-view {
     padding: none;
     margin: none;
+}
+
+#status-percentages-container {
+    margin: 50px auto;
 }
 
 /* Sections */

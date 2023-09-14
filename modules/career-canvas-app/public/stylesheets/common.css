@@ -1,4 +1,5 @@
 /* Reset and Basic Layout */
+
 html, body {
     margin: 0;
     padding: 0;
@@ -16,6 +17,7 @@ hr {
 }
 
 /* Typography */
+
 h1, h2, h3, h4 {
     font-weight: 550;
     color: #242526;
@@ -31,6 +33,7 @@ li {
 }
 
 /* Header and Footer */
+
 .intro {
     position: sticky;
     top: 0;
@@ -48,6 +51,7 @@ li {
 }
 
 /* Icons and Logos */
+
 .profile, .icon {
     padding-right: 10px;
     height: 25px;
@@ -71,11 +75,13 @@ li {
 }
 
 /* Buttons */
+
 .login-signup-btn:hover, .profile-edit-submit-btn:hover {
     text-decoration: underline;
 }
 
 /* Toggle Button */
+
 .toggle-button {
     cursor: pointer;
     user-select: none;
@@ -86,6 +92,7 @@ li {
 }
 
 /* Flash Messages */
+
 .success-flash {
     color: green;
 }

@@ -1,4 +1,4 @@
-/* Individual Job Pages */
+/* Individual Job Pages Layout */
 
 .base-job-info-page {
     display: flex;
@@ -55,12 +55,6 @@
 .input {
     flex: 1;
     margin: 20px 80px;
-}
-
-@media screen and (max-width: 768px) {
-    .sidebar {
-        flex: 0 0 150px;
-    }
 }
 
 /* Overview Page */
@@ -152,4 +146,12 @@
 .view-content {
     margin-top: 20px;
     font-size: 18px;
+}
+
+/* Screen Resizing */
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        flex: 0 0 150px;
+    }
 }

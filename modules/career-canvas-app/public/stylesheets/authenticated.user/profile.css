@@ -1,11 +1,11 @@
-/* Profile Pages */
-
 /* Page Title */
+
 #settings-title {
   margin-left: 25px;
 }
 
 /* Container */
+
 .container {
   display: flex;
   width: 100%;
@@ -15,6 +15,7 @@
 }
 
 /* Left Panel */
+
 .left-panel {
   width: 25%;
   height: 880px;
@@ -23,6 +24,7 @@
 }
 
 /* Right Section */
+
 .right-section {
   width: 75%;
   height: 850px;
@@ -33,6 +35,7 @@
 }
 
 /* Top Part */
+
 .top-part {
   height: 33.333%;
   border-radius: 10px;
@@ -42,6 +45,7 @@
 }
 
 /* Bottom Part */
+
 .bottom-part {
   height: 66.667%;
   border-radius: 10px;
@@ -51,6 +55,7 @@
 }
 
 /* Settings Content */
+
 .settings-content {
   padding: 20px;
   box-sizing: border-box;
@@ -81,6 +86,7 @@
 }
 
 /* Edit Container */
+
 .edit-container {
   display: flex;
   flex-direction: row;
@@ -115,6 +121,7 @@
 }
 
 /* Headers and Buttons */
+
 #edit-profile-header {
   padding-bottom: 35px;
 }
@@ -136,6 +143,7 @@
 }
 
 /* Screen Sizing */
+
 @media only screen and (max-width: 650px) {
     #settings-accounts-center-title, .settings-opts {
         font-size: 12px;

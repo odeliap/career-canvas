@@ -1,11 +1,11 @@
-/* Resumes */
-
 /* Titles */
+
 .form-header {
     padding: 20px 0 10px 0;
 }
 
 /* Resume Upload */
+
 .form-container {
   width: 50%;
 }
@@ -34,12 +34,14 @@
 }
 
 /* Stack */
+
 .resume-stack {
   font-family: Arial, sans-serif;
   background-color: #f3f6f8;
 }
 
 /* Tile */
+
 .resume-tile {
   background-color: #ffffff;
   border: 1px solid #e1e4e8;
@@ -80,6 +82,7 @@ h3 {
 }
 
 /* Buttons in Tiles */
+
 .resume-tile button,
 .resume-tile a {
   padding: 0.5rem 1rem;
@@ -101,13 +104,8 @@ h3 {
   background-color: #2E5984;
 }
 
-/* Delete Button */
-.trash-icon {
-  width: 18px;
-  height: 18px;
-}
-
 /* Stored Resume */
+
 .stored-resume {
     box-sizing: border-box;
     height: 500px;
@@ -115,6 +113,7 @@ h3 {
 }
 
 /* Download Button */
+
 .download-resume-button {
   background-color: #0073b1;  /* Blue background */
   color: #ffffff;  /* White text */
@@ -135,4 +134,11 @@ h3 {
 
 .download-resume-button:active {
   transform: scale(0.95);  /* Slightly reduce size when clicked */
+}
+
+/* Delete Button */
+
+.trash-icon {
+  width: 18px;
+  height: 18px;
 }

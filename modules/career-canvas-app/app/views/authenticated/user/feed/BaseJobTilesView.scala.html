@@ -53,9 +53,9 @@
                     <div class="job-company">@jobInfo.company</div>
                     <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
                         @if(jobInfo.starred) {
-                        <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/filledbookmark.png")" class="star-icon">
+                        <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/filledbookmark.png")" class="bookmark-icon">
                         } else {
-                        <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/bookmark.png")" class="star-icon">
+                        <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/bookmark.png")" class="bookmark-icon">
                         }
                     </a>
                 </div>

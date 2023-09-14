@@ -1,6 +1,5 @@
-/* Login/Signup Pages */
-
 /* Container */
+
 .user-login-signup, .switch-up {
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -69,6 +68,7 @@
 }
 
 /* Forms and Fields */
+
 .user-login-signup-form,
 .forgot-password-form,
 .reset-code-form,
@@ -129,6 +129,7 @@
 }
 
 /* Buttons */
+
 .login-signup-btn, .switch-up-btn {
     width: 254px;
     height: 30px;
@@ -185,6 +186,7 @@
 }
 
 /* Text */
+
 #forgot-password-title, #reset-code-title, #set-new-password-title {
     font-weight: bold;
 }
