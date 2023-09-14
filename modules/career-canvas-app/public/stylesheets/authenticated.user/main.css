@@ -50,23 +50,6 @@ body {
     margin: -6px 0 0 0;
 }
 
-/* Search Container */
-
-#search, .search-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #e9eff6;
-  border: none;
-  border-radius: 3px;
-  padding: 2px 2px 2px 2px;
-  margin: auto auto;
-  height: 30px;
-  width: 250px;
-  font-size: 13px;
-  text-indent: 10px;
-}
-
 /* Navigation Elements */
 
 .navigation-el {

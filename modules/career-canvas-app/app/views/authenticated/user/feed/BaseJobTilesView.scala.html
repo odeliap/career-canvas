@@ -21,6 +21,10 @@
     @content
 
     <div id="job-search-container">
+        <form id="search" action="#">
+            <input type="text" class="search-container" id="searchBox" placeholder="Search by title or company" onkeypress="handle" />
+        </form>
+
         <div>
             <select class="filter-param" id="lastUpdate">
                 <optgroup label="Last Update">
@@ -34,7 +38,7 @@
             <select class="filter-param" id="company">
                 <optgroup label="Company">
                     <option value="" class="default-opt">All companies</option>
-                    @for(company <- jobInfos.map(_.company.take(20)).distinct) {
+                    @for(company <- jobInfos.map(info => "^[a-zA-Z0-9 ]*".r.findFirstIn(info.company).getOrElse("")).distinct) {
                         <option value="@company">@company</option>
                     }
                 </optgroup>
@@ -43,7 +47,7 @@
             <select class="filter-param" id="location">
                 <optgroup label="Location">
                     <option value="" class="default-opt">All Locations</option>
-                    @for(location <- jobInfos.map(_.location.take(20)).distinct) {
+                    @for(location <- jobInfos.map(info => "^[a-zA-Z0-9 ]*".r.findFirstIn(info.location).getOrElse("")).distinct) {
                         <option value="@location">@location</option>
                     }
                 </optgroup>
@@ -56,10 +60,10 @@
 
     <div id="job-tiles">
         @jobInfos.map { jobInfo =>
-        <div class="job-tile" data-company="@jobInfo.company.take(20)" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@jobInfo.location.take(20)" data-starred="@jobInfo.starred.toString.toLowerCase()">
+        <div class="job-tile" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
             <div class="job-tile-header">
                 <div class="job-tile-subheader">
-                    <div class="job-company">@jobInfo.company</div>
+                    <div class="job-company">@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}</div>
                     <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
                         @if(jobInfo.starred) {
                         <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/filledbookmark.png")" class="bookmark-icon">
@@ -119,5 +123,6 @@
     @FooterTemplate()
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFilters.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFeedNavigationUnderline.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/search.js")" type="text/javascript"></script>
 </div>
 }
