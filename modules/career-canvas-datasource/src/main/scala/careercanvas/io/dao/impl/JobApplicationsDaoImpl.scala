@@ -60,7 +60,7 @@ class JobApplicationsDaoImpl @Inject() (
   }
 
   override def getJobs(userId: Long): Future[Seq[JobInfo]] = {
-    val baseQuery = JobStatusesQuery.filter(_.userId === userId)
+    val baseQuery = JobStatusesQuery.filter(_.userId === userId).sortBy(_.lastUpdate.desc)
 
     db.run(baseQuery.result)
   }

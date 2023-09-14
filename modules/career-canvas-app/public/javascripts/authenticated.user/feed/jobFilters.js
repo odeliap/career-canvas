@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const checkboxLabel = document.getElementById('showStarredLabel');
 
         if (this.checked) {
-            checkboxLabel.style.backgroundImage = 'url("/assets/images/feed/tile/emptybookmark.png")';
+            checkboxLabel.style.backgroundImage = 'url("/assets/images/feed/tile/filledbookmark.png")';
         } else {
             checkboxLabel.style.backgroundImage = 'url("/assets/images/feed/tile/bookmark.png")';
         }

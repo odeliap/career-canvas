@@ -198,10 +198,6 @@
     width: 18px;
 }
 
-.starred {
-    background-color: #E5F3FD;
-}
-
 /* Buttons */
 
 .add-job-button a, #final-save-job-button, #remove-job-description-button {
@@ -301,10 +297,6 @@
 .job-view-subtitle:hover {
     color: #187bcd;
     border-bottom: 1px solid #187bcd;
-}
-
-.star-icon:hover {
-    background-color: #E5F3FD;
 }
 
 /* Pagination */

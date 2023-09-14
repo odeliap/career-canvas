@@ -51,7 +51,7 @@ jobInfos: Seq[JobInfo]
                     <div class="job-company">@jobInfo.company</div>
                     <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
                         @if(jobInfo.starred) {
-                        <img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" class="star-icon starred">
+                        <img src="@routes.Assets.versioned("images/feed/tile/filledbookmark.png")" class="star-icon">
                         } else {
                         <img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" class="star-icon">
                         }
@@ -85,6 +85,6 @@ jobInfos: Seq[JobInfo]
     </div>
 
     @FooterTemplate()
-    <script src="@routes.Assets.versioned("javascripts/jobFilters.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFilters.js")" type="text/javascript"></script>
 </div>
 }
