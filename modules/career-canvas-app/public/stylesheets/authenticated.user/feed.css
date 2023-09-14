@@ -268,7 +268,7 @@ select {
     background-color: #f0f0f0;
     color: #333;
     appearance: none;
-    background-image: url('/assets/images/feed/search/downarrow.png');
+    background-image: url('/assets/images/authenticated.user/feed/search/downarrow.png');
     background-size: 20px;
     background-repeat: no-repeat;
     background-position: right 5px center;
@@ -279,7 +279,7 @@ select {
 #showStarredLabel {
     width: 30px;
     height: 30px;
-    background-image: url('/assets/images/feed/tile/bookmark.png');
+    background-image: url('/assets/images/authenticated.user/feed/tile/bookmark.png');
     background-size: 80%;
     background-repeat: no-repeat;
     background-position: center;

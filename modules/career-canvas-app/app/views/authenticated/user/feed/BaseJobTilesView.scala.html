@@ -53,9 +53,9 @@
                     <div class="job-company">@jobInfo.company</div>
                     <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
                         @if(jobInfo.starred) {
-                        <img src="@routes.Assets.versioned("images/feed/tile/filledbookmark.png")" class="star-icon">
+                        <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/filledbookmark.png")" class="star-icon">
                         } else {
-                        <img src="@routes.Assets.versioned("images/feed/tile/bookmark.png")" class="star-icon">
+                        <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/bookmark.png")" class="star-icon">
                         }
                     </a>
                 </div>
@@ -64,13 +64,13 @@
             <div class="metadata-fields">
                 <div class="metadata">
                     <div class="metadata-tag" style="background-color: @utils.ColorUtils.jobStatusToColor(jobInfo.status);"></div>
-                    <img src="@routes.Assets.versioned("images/feed/tile/status/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
+                    <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/status/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
                     <p class="meta-title">Status:</p>
                     <p class="meta-content">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</p>
                 </div>
                 <div class="metadata">
                     <div class="metadata-tag" style="background-color: @utils.ColorUtils.localDateTimeToColor(jobInfo.lastUpdate.toLocalDateTime);"></div>
-                    <img src="@routes.Assets.versioned("images/feed/tile/calendar.png")" class="metadata-icon">
+                    <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/calendar.png")" class="metadata-icon">
                     <p class="meta-title">Last Update:</p>
                     <p class="meta-content">
                         @{
@@ -102,9 +102,9 @@
     </div>
 
     <div class="pagination">
-        <button id="prevPage"><img src="@routes.Assets.versioned("images/feed/pagination/previous.png")" class="pagination-arrow"></button>
+        <button id="prevPage"><img src="@routes.Assets.versioned("images/authenticated.user/feed/pagination/previous.png")" class="pagination-arrow"></button>
         <div id="pageNumbersContainer"></div>
-        <button id="nextPage"><img src="@routes.Assets.versioned("images/feed/pagination/next.png")" class="pagination-arrow"></button>
+        <button id="nextPage"><img src="@routes.Assets.versioned("images/authenticated.user/feed/pagination/next.png")" class="pagination-arrow"></button>
     </div>
 
     @FooterTemplate()

@@ -96,9 +96,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const checkboxLabel = document.getElementById('showStarredLabel');
 
         if (this.checked) {
-            checkboxLabel.style.backgroundImage = 'url("/assets/images/feed/tile/filledbookmark.png")';
+            checkboxLabel.style.backgroundImage = 'url("/assets/images/authenticated.user/feed/tile/filledbookmark.png")';
         } else {
-            checkboxLabel.style.backgroundImage = 'url("/assets/images/feed/tile/bookmark.png")';
+            checkboxLabel.style.backgroundImage = 'url("/assets/images/authenticated.user/feed/tile/bookmark.png")';
         }
     });
 
