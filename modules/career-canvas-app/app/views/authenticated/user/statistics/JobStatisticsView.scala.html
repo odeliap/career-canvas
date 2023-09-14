@@ -1,9 +1,9 @@
 @(
-statusPercentages: Html,
-searchDuration: Long,
-totalApplications: Int,
-totalOffers: Int,
-totalRejections: Int
+    statusPercentages: Html,
+    searchDuration: Long,
+    totalApplications: Int,
+    totalOffers: Int,
+    totalRejections: Int
 )
 
 @authenticated.user.AuthenticatedUserLayout("Statistics | Career Canvas") {
@@ -47,61 +47,58 @@ totalRejections: Int
         </div>
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    var percentages = @statusPercentages;
-                    const data = Array.from(percentages);
-                    var series = [];
-                    for(n in data) {
-                        series.push({
-                            name: data[n][0],
-                            y: data[n][1]
-                        })
-                    };
-                    const chart = Highcharts.chart('status-percentages-container', {
-                        credits: {
-                            enabled: false
-                        },
-                        chart: {
-                            plotBackgroundColor: null,
-                            plotBorderWidth: null,
-                            plotShadow: false,
-                            type: 'pie',
-                            backgroundColor: '#f5f3f3'
-                        },
-                        title: {
-                            text: 'Job Status Breakdown',
-                            align: 'left'
-                        },
-                        tooltip: {
-                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                        },
-                        accessibility: {
-                            point: {
-                                valueSuffix: '%'
+            document.addEventListener('DOMContentLoaded', function () {
+                var percentages = @statusPercentages;
+                const data = Array.from(percentages);
+                var series = [];
+                for(n in data) {
+                    series.push({
+                        name: data[n][0],
+                        y: data[n][1]
+                    })
+                };
+                const chart = Highcharts.chart('status-percentages-container', {
+                    credits: {
+                        enabled: false
+                    },
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie',
+                        backgroundColor: '#f5f3f3'
+                    },
+                    title: {
+                        text: 'Job Status Breakdown',
+                        align: 'left'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: '%'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
                             }
-                        },
-                        plotOptions: {
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                dataLabels: {
-                                    enabled: true,
-                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                                }
-                            }
-                        },
-                        series: [{
-                            name: 'Status',
-                            colors: ['#BCD2E8', '#91BAD6', '#73A5C6', '#528AAE', '#2E5984', '#1E3F66'],
-                            data: series
-                        }]
-                    });
+                        }
+                    },
+                    series: [{
+                        name: 'Status',
+                        colors: ['#BCD2E8', '#91BAD6', '#73A5C6', '#528AAE', '#2E5984', '#1E3F66'],
+                        data: series
+                    }]
+                });
             });
         </script>
-        <script>
-            const statisticsNavUnderline = document.getElementById("statistics-nav-underline");
-            statisticsNavUnderline.style.display = "block";
-        </script>
+        <script src="@routes.Assets.versioned("javascripts/authenticated.user/statistics/statisticsNavigationUnderline.js")" type="text/javascript"></script>
         @FooterTemplate()
     </div>
 }

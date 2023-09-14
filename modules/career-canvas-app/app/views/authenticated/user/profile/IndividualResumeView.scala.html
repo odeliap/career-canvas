@@ -1,6 +1,6 @@
 @(
-resumeTitle: String,
-signedUrl: String
+    resumeTitle: String,
+    signedUrl: String
 )(implicit request: MessagesRequestHeader)
 
 @UserProfileBaseView("Resume View | Career Canvas") {
@@ -9,8 +9,5 @@ signedUrl: String
     <a href="@signedUrl" download>
         <button class="download-resume-button">Download</button>
     </a>
-    <script>
-        const resumeTab = document.getElementById("resume-tab");
-        resumeTab.classList.add("highlight-profile-sidebar");
-    </script>
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/profile/resumesTabHighlightSidebar.js")" type="text/javascript"></script>
 }

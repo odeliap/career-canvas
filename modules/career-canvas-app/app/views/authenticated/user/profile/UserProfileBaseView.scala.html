@@ -1,34 +1,31 @@
 @(pageName: String)(content: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.AuthenticatedUserLayout(pageName) {
-<h2 id="settings-title">Settings</h2>
-<div class="container">
-    <div class="left-panel">
-        <div class="top-part">
-            <div class="settings-content">
-                <h4 id="settings-accounts-center-title">Accounts Center</h4>
-                <p class="settings-sub-content">Manage your account settings.</p>
+    <h2 id="settings-title">Settings</h2>
+    <div class="container">
+        <div class="left-panel">
+            <div class="top-part">
+                <div class="settings-content">
+                    <h4 id="settings-accounts-center-title">Accounts Center</h4>
+                    <p class="settings-sub-content">Manage your account settings.</p>
+                </div>
             </div>
-        </div>
-        <div class="bottom-part">
-            <div class="settings-tabs">
-                <div class="settings-sidebar-opts">
-                    <a href="@routes.ProfileController.editProfile()" class="settings-opts" id="edit-profile-tab">Edit profile</a>
-                    <a href="@routes.ProfileController.showResumes()" class="settings-opts" id="resumes-tab">Resumes</a>
+            <div class="bottom-part">
+                <div class="settings-tabs">
+                    <div class="settings-sidebar-opts">
+                        <a href="@routes.ProfileController.editProfile()" class="settings-opts" id="edit-profile-tab">Edit profile</a>
+                        <a href="@routes.ProfileController.showResumes()" class="settings-opts" id="resumes-tab">Resumes</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="right-section">
-        <div class="settings-content">
-            @content
+        <div class="right-section">
+            <div class="settings-content">
+                @content
+            </div>
         </div>
     </div>
-</div>
-@FooterTemplate()
-<script>
-    const profileNavUnderline = document.getElementById("profile-nav-underline");
-    profileNavUnderline.style.display = "block";
-</script>
+    @FooterTemplate()
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/profile/profileNavigationUnderline.js")" type="text/javascript"></script>
 }

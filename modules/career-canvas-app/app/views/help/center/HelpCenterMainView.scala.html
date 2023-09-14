@@ -2,60 +2,59 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>@title</title>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/helpcenter/helpCenter.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/logos/logo1.png")">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div id="help-center-header">
-        <img src="@routes.Assets.versioned("images/logos/logo1.png")" id="help-center-icon">
-        <p><a href="">Help Center</a></p>
-    </div>
-    <div class="split-body">
-        <div class="sidebar">
-            <div class="subnav">
-                <div class="subnav-item">
-                    <img src="@routes.Assets.versioned("images/helpcenter/user.png")" class="icon">
-                    <button class="subnav-btn">Manage Your Account</button>
+    <head>
+        <meta charset="UTF-8">
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/helpcenter/helpCenter.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/logos/logo1.png")">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div id="help-center-header">
+            <img src="@routes.Assets.versioned("images/logos/logo1.png")" id="help-center-icon">
+            <p><a href="">Help Center</a></p>
+        </div>
+        <div class="split-body">
+            <div class="sidebar">
+                <div class="subnav">
+                    <div class="subnav-item">
+                        <img src="@routes.Assets.versioned("images/helpcenter/user.png")" class="icon">
+                        <button class="subnav-btn">Manage Your Account</button>
+                    </div>
+                    <div class="subnav-content">
+                        <a href="">Signing Up and Getting Started</a>
+                        <a href="">Delete Your Account</a>
+                    </div>
                 </div>
-                <div class="subnav-content">
-                    <a href="">Signing Up and Getting Started</a>
-                    <a href="">Delete Your Account</a>
+                <div class="subnav">
+                    <div class="subnav-item">
+                        <img src="@routes.Assets.versioned("images/helpcenter/lock.png")" class="icon">
+                        <button class="subnav-btn">Privacy, Security and Reporting</button>
+                    </div>
+                    <div class="subnav-content">
+                        <a href="">Login and Passwords</a>
+                        <a href="">How to Report Things</a>
+                    </div>
+                </div>
+                <div class="subnav">
+                    <div class="subnav-item">
+                        <img src="@routes.Assets.versioned("images/helpcenter/alert.png")" class="icon">
+                        <button class="subnav-btn">Terms and Policies</button>
+                    </div>
+                    <div class="subnav-content">
+                        <a href="@routes.PolicyController.showPrivacyPolicy()">Privacy Policy</a>
+                        <a href="@routes.PolicyController.showTermsOfUse()">Terms of Use</a>
+                        <a href="@routes.PolicyController.showCookiesPolicy()">Cookies Policy</a>
+                    </div>
                 </div>
             </div>
-            <div class="subnav">
-                <div class="subnav-item">
-                    <img src="@routes.Assets.versioned("images/helpcenter/lock.png")" class="icon">
-                    <button class="subnav-btn">Privacy, Security and Reporting</button>
-                </div>
-                <div class="subnav-content">
-                    <a href="">Login and Passwords</a>
-                    <a href="">How to Report Things</a>
-                </div>
-            </div>
-            <div class="subnav">
-                <div class="subnav-item">
-                    <img src="@routes.Assets.versioned("images/helpcenter/alert.png")" class="icon">
-                    <button class="subnav-btn">Terms and Policies</button>
-                </div>
-                <div class="subnav-content">
-                    <a href="@routes.PolicyController.showPrivacyPolicy()">Privacy Policy</a>
-                    <a href="@routes.PolicyController.showTermsOfUse()">Terms of Use</a>
-                    <a href="@routes.PolicyController.showCookiesPolicy()">Cookies Policy</a>
-                </div>
+            <div class="split-page-content">
+                @* Content goes here *@
+                @content
             </div>
         </div>
-        <div class="split-page-content">
-            @* Content goes here *@
-            @content
-        </div>
-    </div>
-    <script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
-</body>
+    </body>
 </html>

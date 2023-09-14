@@ -1,166 +1,161 @@
 @(
-form: Form[careercanvas.io.model.user.BaseUser],
-postUrl: Call
+    form: Form[careercanvas.io.model.user.BaseUser],
+    postUrl: Call
 )(implicit request: MessagesRequestHeader)
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome | Career Canvas</title>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/landing/welcome.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/logos/logo1.png")">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&family=Jost:ital,wght@@1,300&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="header">
-        <img src="@routes.Assets.versioned("images/logos/logo2.png")" class="logo2">
-        <div class="header-buttons">
-            <a class="header-button header-join" href="@routes.LandingController.showSignUpForm()">Join Now</a>
-            <a class="header-button header-sign-in" href="@routes.LandingController.showLoginForm()">Sign In</a>
+    <head>
+        <meta charset="UTF-8">
+        <title>Welcome | Career Canvas</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/landing/welcome.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/logos/logo1.png")">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&family=Jost:ital,wght@@1,300&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="header">
+            <img src="@routes.Assets.versioned("images/logos/logo2.png")" class="logo2">
+            <div class="header-buttons">
+                <a class="header-button header-join" href="@routes.LandingController.showSignUpForm()">Join Now</a>
+                <a class="header-button header-sign-in" href="@routes.LandingController.showLoginForm()">Sign In</a>
+            </div>
         </div>
-    </div>
-    <div class="content">
-        <div class="content-left">
-            <p class="slogan">Welcome to your job search organization</p>
-            <div class="login-form">
-                @request.flash.data.map{ case (name, value) =>
-                @if(name.equals("error")) {
-                <div class="error-flash">@value</div>
-                } else if (name.equals("success")) {
-                <div class="success-flash">@value</div>
-                } else {
-                <div class="info-flash">@value</div>
-                }
-                }
+        <div class="content">
+            <div class="content-left">
+                <p class="slogan">Welcome to your job search organization</p>
+                <div class="login-form">
+                    @request.flash.data.map{ case (name, value) =>
+                        @if(name.equals("error")) {
+                            <div class="error-flash">@value</div>
+                        } else if (name.equals("success")) {
+                            <div class="success-flash">@value</div>
+                        } else {
+                            <div class="info-flash">@value</div>
+                        }
+                    }
 
-                @* Global errors are not tied to any particular form field *@
-                @if(form.hasGlobalErrors) {
-                @form.globalErrors.map { error: FormError =>
-                <div>
-                    Error: @error.key: @error.message
+                    @* Global errors are not tied to any particular form field *@
+                    @if(form.hasGlobalErrors) {
+                        @form.globalErrors.map { error: FormError =>
+                            <div>
+                                Error: @error.key: @error.message
+                            </div>
+                        }
+                    }
+
+                    @helper.form(postUrl, 'class -> "login-form-fields") {
+
+                        @helper.CSRF.formField
+
+                        <div class="form-descriptor">Email</div>
+
+                        @helper.inputText(
+                            form("username"),
+                            '_label -> "",
+                            'class -> "username",
+                            'size -> 60,
+                            '_showConstraints -> false
+                        )
+
+                        <div class="form-descriptor">Password</div>
+
+                        @helper.inputPassword(
+                            form("password"),
+                            '_label -> "",
+                            'class -> "password",
+                            'size -> 60,
+                            '_showConstraints -> false
+                        )
+
+                        <button class="login-button">Sign in</button>
+                    }
                 </div>
-                }
-                }
-
-                @helper.form(postUrl, 'class -> "login-form-fields") {
-
-                @helper.CSRF.formField
-
-                <div class="form-descriptor">Email</div>
-
-                @helper.inputText(
-                form("username"),
-                '_label -> "",
-                'class -> "username",
-                'size -> 60,
-                '_showConstraints -> false
-                )
-
-                <div class="form-descriptor">Password</div>
-
-                @helper.inputPassword(
-                form("password"),
-                '_label -> "",
-                'class -> "password",
-                'size -> 60,
-                '_showConstraints -> false
-                )
-
-                <button class="login-button">Sign in</button>
-                }
+                <a href="@routes.LandingController.forgotPassword" class="forgot-password-button">Forgot password?</a>
+                <div class="or-container">
+                    <div class="split-line"></div>
+                    <div class="or-text">or</div>
+                    <div class="split-line"></div>
+                </div>
+                <button id="join-now-button">New to CareerCanvas? Join now</button>
             </div>
-            <a href="@routes.LandingController.forgotPassword" class="forgot-password-button">Forgot password?</a>
-            <div class="or-container">
-                <div class="split-line"></div>
-                <div class="or-text">or</div>
-                <div class="split-line"></div>
-            </div>
-            <button id="join-now-button">New to CareerCanvas? Join now</button>
+            <img src="@routes.Assets.versioned("images/landing/welcome.png")" id="welcome-img">
         </div>
-        <img src="@routes.Assets.versioned("images/landing/welcome.png")" id="welcome-img">
-    </div>
-    <div class="content-gap"></div>
-    <div class="section" id="section-1">
-        <div class="subsection">
-            <div class="section-title">Streamline Your Job Search</div>
-            <div class="section-info">
-                With Career Canvas, all your job search activities are neatly organized in one user-friendly platform.
+        <div class="content-gap"></div>
+        <div class="section" id="section-1">
+            <div class="subsection">
+                <div class="section-title">Streamline Your Job Search</div>
+                <div class="section-info">
+                    With Career Canvas, all your job search activities are neatly organized in one user-friendly platform.
+                </div>
             </div>
+            <div class="subsection"></div>
         </div>
-        <div class="subsection"></div>
-    </div>
-    <div class="section" id="section-2">
-        <div class="subsection">
-            <div class="section-title">Efficient Application Tracking</div>
-            <div class="section-info">
-                Applying to multiple jobs can be overwhelming - but not with Career Canvas! Our platform allows you to
-                maintain a comprehensive career profile, helping you track your applications.
+        <div class="section" id="section-2">
+            <div class="subsection">
+                <div class="section-title">Efficient Application Tracking</div>
+                <div class="section-info">
+                    Applying to multiple jobs can be overwhelming - but not with Career Canvas! Our platform allows you to
+                    maintain a comprehensive career profile, helping you track your applications.
+                </div>
             </div>
+            <div class="subsection"></div>
         </div>
-        <div class="subsection"></div>
-    </div>
-    <div class="section" id="section-3">
-        <div class="subsection">
-            <div class="section-title">Automated Cover Letter Writing</div>
-            <div class="section-info">
-                Navigating the complexities of crafting the perfect cover letter can be daunting. With
-                Career Canvas's tools, you can effortlessly generate personalized, compelling cover letters and dynamically edit
-                them to align with each job of interest.
+        <div class="section" id="section-3">
+            <div class="subsection">
+                <div class="section-title">Automated Cover Letter Writing</div>
+                <div class="section-info">
+                    Navigating the complexities of crafting the perfect cover letter can be daunting. With
+                    Career Canvas's tools, you can effortlessly generate personalized, compelling cover letters and dynamically edit
+                    them to align with each job of interest.
+                </div>
             </div>
+            <div class="subsection"></div>
         </div>
-        <div class="subsection"></div>
-    </div>
-    <div class="section" id="section-4">
-        <div class="subsection">
-            <div class="section-title">Data-Driven Insights on Your Applications</div>
-            <div class="section-info">
-                Stay informed and strategize better with real-time insights on your job applications. Uncover vital
-                statistics such as your application-to-interview ratio and average response times. Utilize this data to
-                refine your job search strategy and enhance your chances of landing the perfect job.
+        <div class="section" id="section-4">
+            <div class="subsection">
+                <div class="section-title">Data-Driven Insights on Your Applications</div>
+                <div class="section-info">
+                    Stay informed and strategize better with real-time insights on your job applications. Uncover vital
+                    statistics such as your application-to-interview ratio and average response times. Utilize this data to
+                    refine your job search strategy and enhance your chances of landing the perfect job.
+                </div>
             </div>
+            <div class="subsection"></div>
         </div>
-        <div class="subsection"></div>
-    </div>
-    <div class="section" id="section-5">
-        <div class="subsection">
-            <div class="section-title">Join Our Growing Community</div>
-            <div class="section-info">
-                Become part of the Career Canvas community, to organize your job search efficiently and effectively. With
-                Career Canvas, you're not just applying to jobs - you're strategizing a fulfilling career.
+        <div class="section" id="section-5">
+            <div class="subsection">
+                <div class="section-title">Join Our Growing Community</div>
+                <div class="section-info">
+                    Become part of the Career Canvas community, to organize your job search efficiently and effectively. With
+                    Career Canvas, you're not just applying to jobs - you're strategizing a fulfilling career.
+                </div>
+            </div>
+            <div class="subsection"></div>
+        </div>
+        <div id="router">
+            <div class="router-section">
+                <h2 id="router-header">Career Canvas</h2>
+            </div>
+            <div class="router-section">
+                <div class="route">
+                    <div class="route-header">General</div>
+                    <a class="route-field" href="@routes.LandingController.showSignUpForm()">Sign Up</a>
+                    <a class="route-field" href="@routes.PolicyController.showTermsOfUse()">Help Center</a>
+                </div>
+                <div class="route">
+                    <div class="route-header">Browse Career Canvas</div>
+                </div>
+                <div class="route">
+                    <div class="route-header">Solutions</div>
+                </div>
+                <div class="route">
+                    <div class="route-header">Directories</div>
+                </div>
             </div>
         </div>
-        <div class="subsection"></div>
-    </div>
-    <div id="router">
-        <div class="router-section">
-            <h2 id="router-header">Career Canvas</h2>
-        </div>
-        <div class="router-section">
-            <div class="route">
-                <div class="route-header">General</div>
-                <a class="route-field" href="@routes.LandingController.showSignUpForm()">Sign Up</a>
-                <a class="route-field" href="@routes.PolicyController.showTermsOfUse()">Help Center</a>
-            </div>
-            <div class="route">
-                <div class="route-header">Browse Career Canvas</div>
-            </div>
-            <div class="route">
-                <div class="route-header">Solutions</div>
-            </div>
-            <div class="route">
-                <div class="route-header">Directories</div>
-            </div>
-        </div>
-    </div>
-    <script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
-    <script>
-        document.getElementById("join-now-button").onclick = function() {
-            location.href = "/users/signUp";
-        }
-    </script>
-</body>
+        <script src="@routes.Assets.versioned("javascripts/landing/joinNow.js")" type="text/javascript"></script>
+    </body>
 </html>

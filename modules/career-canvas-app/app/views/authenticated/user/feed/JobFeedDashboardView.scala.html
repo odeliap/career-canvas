@@ -1,49 +1,36 @@
 @(
-form: Form[careercanvas.io.model.job.JobPosting],
-getPostInfoUrl: Call,
-jobInfos: Seq[careercanvas.io.model.job.JobInfo]
+    form: Form[careercanvas.io.model.job.JobPosting],
+    getPostInfoUrl: Call,
+    jobInfos: Seq[careercanvas.io.model.job.JobInfo]
 )(implicit request: MessagesRequestHeader)
 
 @BaseJobTilesView(jobInfos) {
-<div class="add-job-page">
-    <div class="add-job-button"><a href="#" id="add-job">+</a></div>
-    <div class="job-url-input" style="display: none;">
-        @if(form.hasGlobalErrors) {
-            @form.globalErrors.map { error: FormError =>
-                <div>
-                    Error: @error.key: @error.message
-                </div>
+    <div class="add-job-page">
+        <div class="add-job-button"><a href="#" id="add-job">+</a></div>
+        <div class="job-url-input" style="display: none;">
+            @if(form.hasGlobalErrors) {
+                @form.globalErrors.map { error: FormError =>
+                    <div>
+                        Error: @error.key: @error.message
+                    </div>
+                }
             }
-        }
 
-        @helper.form(getPostInfoUrl, 'id -> "job-post-url-form") {
-            @helper.CSRF.formField
+            @helper.form(getPostInfoUrl, 'id -> "job-post-url-form") {
+                @helper.CSRF.formField
 
-            @helper.inputText(
-                form("postUrl"),
-                '_label -> "",
-                'placeholder -> "job post url",
-                'class -> "job-post-input-txt",
-                'size -> 60,
-                '_showConstraints -> false
-            )
+                @helper.inputText(
+                    form("postUrl"),
+                    '_label -> "",
+                    'placeholder -> "job post url",
+                    'class -> "job-post-input-txt",
+                    'size -> 60,
+                    '_showConstraints -> false
+                )
 
-            <button id="final-add-job-button">Add</button>
-        }
+                <button id="final-add-job-button">Add</button>
+            }
+        </div>
     </div>
-</div>
-} {
-    document.getElementById("add-job").addEventListener("click", function(e) {
-        e.preventDefault();
-        var jobUrlInputDiv = document.querySelector(".job-url-input");
-        if (jobUrlInputDiv.style.display === "none") {
-            jobUrlInputDiv.style.display = "block";
-            this.style.backgroundColor = '#0077B5';
-            this.style.color = 'white';
-        } else {
-            jobUrlInputDiv.style.display = "none";
-            this.style.backgroundImage = 'transparent';
-            this.style.color = '#333';
-        }
-    });
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/addJob.js")" type="text/javascript"></script>
 }

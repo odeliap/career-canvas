@@ -1,75 +1,75 @@
 @(
-email: String,
-form: Form[model.forms.ResetCodeForm],
-postUrl: Call
+    email: String,
+    form: Form[model.forms.ResetCodeForm],
+    postUrl: Call
 )(implicit request: MessagesRequestHeader)
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Forgot Password | Career Canvas</title>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/user/loginSignUp.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/landing/welcome.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">
-</head>
-<body class="forgot-password-page">
-<div class="forgot-password-header">
-    <img src="@routes.Assets.versioned("images/logos/logo2.png")" class="logo2">
-    <div>
-        <div class="blank-space"></div>
-        <div class="header-buttons">
-            <a class="header-button header-join" href="@routes.LandingController.showSignUpForm()">Join Now</a>
-            <a class="header-button header-sign-in" href="@routes.LandingController.showLoginForm()">Sign In</a>
-        </div>
-    </div>
-</div>
-<div class="reset-code-container">
-    <div class="reset-code-content">
-        <p id="reset-code-title">We sent a code to your email</p>
-        <div id="reset-code-subtitle">
-            Enter the 6-digit verification code sent to <p id="reset-code-email">@email</p>
-        </div>
-        <div class="reset-code-form">
-            @request.flash.data.map{ case (name, value) =>
-            @if(name.equals("error")) {
-            <div class="error-flash">@value</div>
-            } else if (name.equals("success")) {
-            <div class="success-flash">@value</div>
-            } else {
-            <div class="info-flash">@value</div>
-            }
-            }
-
-            @* Global errors are not tied to any particular form field *@
-            @if(form.hasGlobalErrors) {
-            @form.globalErrors.map { error: FormError =>
+    <head>
+        <title>Forgot Password | Career Canvas</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/user/loginSignUp.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/landing/welcome.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/common.css")">
+    </head>
+    <body class="forgot-password-page">
+        <div class="forgot-password-header">
+            <img src="@routes.Assets.versioned("images/logos/logo2.png")" class="logo2">
             <div>
-                Error: @error.key: @error.message
+                <div class="blank-space"></div>
+                <div class="header-buttons">
+                    <a class="header-button header-join" href="@routes.LandingController.showSignUpForm()">Join Now</a>
+                    <a class="header-button header-sign-in" href="@routes.LandingController.showLoginForm()">Sign In</a>
+                </div>
             </div>
-            }
-            }
-
-            @helper.form(postUrl, 'class -> "reset-code-form-fields") {
-
-            @helper.CSRF.formField
-
-            @helper.inputText(
-            form("code"),
-            '_label -> "",
-            'placeholder -> "6 digit code",
-            'class -> "code",
-            'size -> 60,
-            '_showConstraints -> false
-            )
-
-            <a class="resend-code-button">Resend code</a>
-
-            <button class="code-submit-button">Submit</button>
-            }
-
-            <p class="spam-folder-reminder">If you don't see the email in your inbox, check your spam folder.</p>
         </div>
-    </div>
-</div>
-</body>
+        <div class="reset-code-container">
+            <div class="reset-code-content">
+                <p id="reset-code-title">We sent a code to your email</p>
+                <div id="reset-code-subtitle">
+                    Enter the 6-digit verification code sent to <p id="reset-code-email">@email</p>
+                </div>
+                <div class="reset-code-form">
+                    @request.flash.data.map{ case (name, value) =>
+                        @if(name.equals("error")) {
+                            <div class="error-flash">@value</div>
+                        } else if (name.equals("success")) {
+                            <div class="success-flash">@value</div>
+                        } else {
+                            <div class="info-flash">@value</div>
+                        }
+                    }
+
+                    @* Global errors are not tied to any particular form field *@
+                    @if(form.hasGlobalErrors) {
+                        @form.globalErrors.map { error: FormError =>
+                        <div>
+                            Error: @error.key: @error.message
+                        </div>
+                        }
+                    }
+
+                    @helper.form(postUrl, 'class -> "reset-code-form-fields") {
+
+                        @helper.CSRF.formField
+
+                        @helper.inputText(
+                            form("code"),
+                            '_label -> "",
+                            'placeholder -> "6 digit code",
+                            'class -> "code",
+                            'size -> 60,
+                            '_showConstraints -> false
+                        )
+
+                        <a class="resend-code-button">Resend code</a>
+
+                        <button class="code-submit-button">Submit</button>
+                    }
+
+                    <p class="spam-folder-reminder">If you don't see the email in your inbox, check your spam folder.</p>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

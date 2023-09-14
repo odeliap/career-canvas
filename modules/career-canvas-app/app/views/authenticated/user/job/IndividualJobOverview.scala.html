@@ -1,6 +1,6 @@
 @(
-jobInfo: careercanvas.io.model.job.JobInfo,
-jobDescriptions: careercanvas.io.model.job.JobDescriptions
+    jobInfo: careercanvas.io.model.job.JobInfo,
+    jobDescriptions: careercanvas.io.model.job.JobDescriptions
 )(implicit request: MessagesRequestHeader)
 
 @BaseJobInformationView(jobInfo) {
@@ -20,8 +20,5 @@ jobDescriptions: careercanvas.io.model.job.JobDescriptions
         <h3>Job Description</h3>
         <div>@jobDescriptions.jobDescription</div>
     </div>
-    <script>
-        const overviewTab = document.getElementById("overview-tab");
-        overviewTab.classList.add("highlight-sidebar-section");
-    </script>
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/job/overviewTabHighlightSidebar.js")" type="text/javascript"></script>
 }

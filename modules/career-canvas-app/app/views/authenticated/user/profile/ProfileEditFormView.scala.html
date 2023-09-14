@@ -18,95 +18,92 @@
 
     @* Global errors are not tied to any particular form field *@
     @if(form.hasGlobalErrors) {
-    @form.globalErrors.map { error: FormError =>
-    <div>
-        Error: @error.key: @error.message
-    </div>
-    }
+        @form.globalErrors.map { error: FormError =>
+            <div>
+                Error: @error.key: @error.message
+            </div>
+        }
     }
 
     @helper.form(putUrl, 'id -> "edit-profile-form-fields") {
-    @helper.CSRF.formField
+        @helper.CSRF.formField
 
-    <div class="edit-container">
-        <div class="edit-key">LinkedIn</div>
-        <div class="edit-value">
-            @helper.inputText(
-            form("linkedIn"),
-            '_label -> "",
-            'placeholder -> userInfo.linkedIn.getOrElse(""),
-            'class -> "edit-value-field",
-            'size -> 60,
-            '_showConstraints -> false
-            )
+        <div class="edit-container">
+            <div class="edit-key">LinkedIn</div>
+            <div class="edit-value">
+                @helper.inputText(
+                    form("linkedIn"),
+                    '_label -> "",
+                    'placeholder -> userInfo.linkedIn.getOrElse(""),
+                    'class -> "edit-value-field",
+                    'size -> 60,
+                    '_showConstraints -> false
+                )
+            </div>
         </div>
-    </div>
 
-    <div class="edit-container">
-        <div class="edit-key">GitHub</div>
-        <div class="edit-value">
-            @helper.inputText(
-            form("gitHub"),
-            '_label -> "",
-            'placeholder -> userInfo.gitHub.getOrElse(""),
-            'class -> "edit-value-field",
-            'size -> 60,
-            '_showConstraints -> false
-            )
+        <div class="edit-container">
+            <div class="edit-key">GitHub</div>
+            <div class="edit-value">
+                @helper.inputText(
+                    form("gitHub"),
+                    '_label -> "",
+                    'placeholder -> userInfo.gitHub.getOrElse(""),
+                    'class -> "edit-value-field",
+                    'size -> 60,
+                    '_showConstraints -> false
+                )
+            </div>
         </div>
-    </div>
 
-    <div class="edit-container">
-        <div class="edit-key">Website</div>
-        <div class="edit-value">
-            @helper.inputText(
-            form("website"),
-            '_label -> "",
-            'placeholder -> userInfo.website.getOrElse(""),
-            'class -> "edit-value-field",
-            'size -> 60,
-            '_showConstraints -> false
-            )
+        <div class="edit-container">
+            <div class="edit-key">Website</div>
+            <div class="edit-value">
+                @helper.inputText(
+                    form("website"),
+                    '_label -> "",
+                    'placeholder -> userInfo.website.getOrElse(""),
+                    'class -> "edit-value-field",
+                    'size -> 60,
+                    '_showConstraints -> false
+                )
+            </div>
         </div>
-    </div>
 
-    <div class="edit-container">
-        <div class="edit-key">Email</div>
-        <div class="edit-value">
-            @helper.inputText(
-            form("email"),
-            '_label -> "",
-            'placeholder -> userInfo.email,
-            'class -> "edit-value-field",
-            'size -> 60,
-            '_showConstraints -> false
-            )
+        <div class="edit-container">
+            <div class="edit-key">Email</div>
+            <div class="edit-value">
+                @helper.inputText(
+                    form("email"),
+                    '_label -> "",
+                    'placeholder -> userInfo.email,
+                    'class -> "edit-value-field",
+                    'size -> 60,
+                    '_showConstraints -> false
+                )
+            </div>
         </div>
-    </div>
 
-    <div class="edit-container">
-        <div class="edit-key">Full Name</div>
-        <div class="edit-value">
-            @helper.inputText(
-            form("name"),
-            '_label -> "",
-            'placeholder -> userInfo.fullName,
-            'class -> "edit-value-field",
-            'size -> 60,
-            '_showConstraints -> false
-            )
+        <div class="edit-container">
+            <div class="edit-key">Full Name</div>
+            <div class="edit-value">
+                @helper.inputText(
+                    form("name"),
+                    '_label -> "",
+                    'placeholder -> userInfo.fullName,
+                    'class -> "edit-value-field",
+                    'size -> 60,
+                    '_showConstraints -> false
+                )
+            </div>
         </div>
-    </div>
 
-    <div class="edit-container">
-        <div class="edit-key"></div>
-        <div class="edit-value">
-            <button class="profile-edit-submit-btn">Submit</button>
+        <div class="edit-container">
+            <div class="edit-key"></div>
+            <div class="edit-value">
+                <button class="profile-edit-submit-btn">Submit</button>
+            </div>
         </div>
-    </div>
     }
-    <script>
-        const editProfileTab = document.getElementById("edit-profile-tab");
-        editProfileTab.classList.add("highlight-profile-sidebar");
-    </script>
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/profile/editProfileHighlightSidebar.js")" type="text/javascript"></script>
 }

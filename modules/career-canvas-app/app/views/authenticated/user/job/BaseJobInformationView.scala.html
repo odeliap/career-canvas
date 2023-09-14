@@ -1,5 +1,5 @@
 @(
-jobInfo: careercanvas.io.model.job.JobInfo
+    jobInfo: careercanvas.io.model.job.JobInfo
 )(content: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.AuthenticatedUserLayout(s"${jobInfo.company}: ${jobInfo.jobTitle}") {
@@ -17,8 +17,5 @@ jobInfo: careercanvas.io.model.job.JobInfo
             </div>
         </div>
     </div>
-    <script>
-        const jobFeedNavUnderline = document.getElementById("job-feed-nav-underline");
-        jobFeedNavUnderline.style.display = "block";
-    </script>
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFeedNavigationUnderline.js")" type="text/javascript"></script>
 }
