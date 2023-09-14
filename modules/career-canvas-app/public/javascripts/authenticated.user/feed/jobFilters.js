@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lastUpdateFilter = document.getElementById("lastUpdate");
     const companyFilter = document.getElementById("company");
     const showStarredCheckbox = document.getElementById("showStarred");
-    const ITEMS_PER_PAGE = 2;
+    const ITEMS_PER_PAGE = 30;
     let currentPage = 1;
     let maxPage = 1;
 
