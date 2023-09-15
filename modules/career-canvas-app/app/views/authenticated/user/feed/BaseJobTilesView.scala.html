@@ -18,6 +18,15 @@
         }
     </div>
 
+    <div class="arrows-container">
+        <button class="arrow-box arrow-left-end status-filter" id="Bookmarked-count" data-filter="Bookmarked">BOOKMARKED</button>
+        <button class="arrow-box arrow-right-left status-filter" id="Applying-count" data-filter="Applying">APPLYING</button>
+        <button class="arrow-box arrow-right-left status-filter" id="Applied-count" data-filter="Applied">APPLIED</button>
+        <button class="arrow-box arrow-right-left status-filter" id="Interviewing-count" data-filter="Interviewing">INTERVIEWING</button>
+        <button class="arrow-box arrow-right-left status-filter" id="Offer-count" data-filter="Offer">OFFER</button>
+        <button class="arrow-box arrow-right-end status-filter" id="Rejected-count" data-filter="Rejection">REJECTION</button>
+    </div>
+
     @content
 
     <div id="job-search-container">
@@ -60,7 +69,7 @@
 
     <div id="job-tiles">
         @jobInfos.map { jobInfo =>
-        <div class="job-tile" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
+        <div class="job-tile" data-status="@jobInfo.status.toString" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
             <div class="job-tile-header">
                 <div class="job-tile-subheader">
                     <div class="job-company">@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}</div>

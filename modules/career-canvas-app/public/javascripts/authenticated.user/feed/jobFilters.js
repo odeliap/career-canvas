@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lastUpdateFilter = document.getElementById("lastUpdate");
     const companyFilter = document.getElementById("company");
     const locationFilter = document.getElementById("location");
+
     const showStarredCheckbox = document.getElementById("showStarred");
     const ITEMS_PER_PAGE = 30;
     let currentPage = 1;
@@ -124,4 +125,61 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     filterRows();
+
+    function updateCountForStatus(status) {
+        const statusElements = document.querySelectorAll(`[data-status="${status}"]`);
+
+        const count = statusElements.length;
+
+        const countDisplayElementId = `${status}-count`;
+        const countDisplayElement = document.getElementById(countDisplayElementId);
+        if (countDisplayElement) {
+            if (count > 0) {
+                countDisplayElement.innerHTML = `<div><p>${count}</p> <p class="count-display">${status.toUpperCase()}</p></div>`;
+            }
+        } else {
+            console.warn(`No element found with the ID: ${countDisplayElementId}`);
+        }
+
+        if (count > 0) {
+            countDisplayElement.classList.add('count-arrow-box');
+        } else {
+            countDisplayElement.classList.remove('count-arrow-box');
+        }
+    }
+
+    updateCountForStatus('Bookmarked');
+    updateCountForStatus('Applying');
+    updateCountForStatus('Applied');
+    updateCountForStatus('Interviewing');
+    updateCountForStatus('Offer');
+    updateCountForStatus('Rejected');
+
+    let currentFilter = null;
+
+    document.querySelectorAll('.status-filter').forEach(button => {
+        button.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+
+            if (currentFilter === filter) {
+                currentFilter = null;
+                document.querySelectorAll('[data-status]').forEach(job => {
+                    job.style.display = 'block';
+                });
+            } else {
+                document.querySelectorAll('[data-status]').forEach(job => {
+                    job.style.display = 'none';
+                });
+
+                document.querySelectorAll(`[data-status="${filter}"]`).forEach(job => {
+                    job.style.display = 'block';
+                });
+
+                currentFilter = filter;
+                lastUpdateFilter.value = '876600';
+                companyFilter.value = '';
+                locationFilter.value = '';
+            }
+        });
+    });
 });

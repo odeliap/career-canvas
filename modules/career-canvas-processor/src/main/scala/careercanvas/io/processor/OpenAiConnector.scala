@@ -16,12 +16,13 @@ class OpenAiConnector @Inject()()(implicit ec: ExecutionContext) extends AwaitRe
   val openAiService: OpenAIService = OpenAIServiceFactory()
 
   def complete(prompt: String): String = {
-    openAiService
+    /*openAiService
       .createCompletion(prompt)
       .map { completion =>
         completion.choices.headOption.map(_.text).getOrElse("")
       }
-      .waitForResult
+      .waitForResult*/
+    "Fake string for now to save tokens"
   }
 
 }

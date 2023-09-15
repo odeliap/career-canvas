@@ -1,6 +1,6 @@
 -- !Ups
 
-create type job_status as enum('NotSubmitted', 'Submitted', 'InterviewScheduled', 'Interviewed', 'OfferMade', 'Rejected');
+create type job_status as enum('Bookmarked', 'Applying', 'Applied', 'Interviewing', 'Offer', 'Rejected');
 create type job_type as enum('FullTime', 'Contact', 'PartTime', 'Internship', 'Temporary');
 create type application_file as enum('CoverLetter', 'Response');
 

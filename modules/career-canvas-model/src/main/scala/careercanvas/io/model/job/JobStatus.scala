@@ -6,14 +6,14 @@ import play.api.libs.json.{JsString, Reads, Writes}
 sealed trait JobStatus extends EnumEntry
 
 object JobStatus {
-  case object NotSubmitted extends JobStatus
-  case object Submitted extends JobStatus
-  case object InterviewScheduled extends JobStatus
-  case object Interviewed extends JobStatus
-  case object OfferMade extends JobStatus
+  case object Bookmarked extends JobStatus
+  case object Applying extends JobStatus
+  case object Applied extends JobStatus
+  case object Interviewing extends JobStatus
+  case object Offer extends JobStatus
   case object Rejected extends JobStatus
 
-  private val values = Seq(NotSubmitted, Submitted, InterviewScheduled, Interviewed, OfferMade, Rejected)
+  private val values = Seq(Bookmarked, Applying, Applied, Interviewing, Offer, Rejected)
 
   implicit val jobStatusReads: Reads[JobStatus] = Reads { json =>
     json.validate[String].map(stringToEnum)

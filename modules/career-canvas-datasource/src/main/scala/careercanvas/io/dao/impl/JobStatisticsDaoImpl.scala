@@ -47,7 +47,7 @@ class JobStatisticsDaoImpl @Inject() (
       .run(tx.transactionally)
       .map{ case (earliestApplicationDate, totalApplications, statusGroupings) =>
         val statusPercentages = statusGroupingsToPercentages(statusGroupings, totalApplications)
-        val totalOffers = statusGroupingsToStatusCount(statusGroupings, JobStatus.OfferMade)
+        val totalOffers = statusGroupingsToStatusCount(statusGroupings, JobStatus.Offer)
         val totalRejections = statusGroupingsToStatusCount(statusGroupings, JobStatus.Rejected)
         val earliestAppEpochDays = earliestApplicationDate.toLocalDateTime.toLocalDate.toEpochDay
         val todayEpochDays = LocalDateTime.now().toLocalDate.toEpochDay

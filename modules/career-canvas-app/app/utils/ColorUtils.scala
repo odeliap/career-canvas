@@ -23,11 +23,11 @@ object ColorUtils {
 
   def jobStatusToColor(status: JobStatus): String = {
     status match {
-      case JobStatus.NotSubmitted => "#2E5984"
-      case JobStatus.Submitted => "#528AAE"
-      case JobStatus.InterviewScheduled => "#73A5C6"
-      case JobStatus.Interviewed => "#91BAD6"
-      case JobStatus.OfferMade => "#BCD2E8"
+      case JobStatus.Bookmarked => "#2E5984"
+      case JobStatus.Applying => "#528AAE"
+      case JobStatus.Applied => "#73A5C6"
+      case JobStatus.Interviewing => "#91BAD6"
+      case JobStatus.Offer => "#BCD2E8"
       case JobStatus.Rejected => "#1E3F66"
     }
   }

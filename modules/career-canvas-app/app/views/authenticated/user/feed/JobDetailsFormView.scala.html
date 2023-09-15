@@ -77,7 +77,14 @@
                             <div class="job-details-form-section-title">Status</div>
                             @helper.inputRadioGroup(
                                 form("status"),
-                                options = Seq("NotSubmitted" -> "Not Submitted", "Submitted" -> "Submitted", "Interview Scheduled" -> "InterviewScheduled", "Interviewed" -> "Interviewed", "OfferMade" -> "Offer Made", "Rejected" -> "Rejected"),
+                                options = Seq(
+                                    "Bookmarked" -> "Bookmarked",
+                                    "Applying" -> "Applying",
+                                    "Applied" -> "Applied",
+                                    "Interviewing" -> "Interviewing",
+                                    "Offer" -> "Offer",
+                                    "Rejected" -> "Rejected"
+                                ),
                                 '_label -> "",
                                 'id -> "job-description-status",
                                 'size -> 60
