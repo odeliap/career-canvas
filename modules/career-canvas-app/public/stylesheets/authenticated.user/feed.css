@@ -33,6 +33,8 @@
     border: none;
 }
 
+.arrow-box
+
 .arrow-box::before, .arrow-box::after {
     position: absolute;
     width: 0;
@@ -58,8 +60,12 @@
     margin-top: -40px;
 }
 
+.highlighted-count-arrow-box,
 .count-arrow-box:hover {
     background-color: #FED8B1;
+}
+
+.count-arrow-box:hover {
     cursor: pointer;
 }
 
@@ -130,29 +136,53 @@
     margin-left: auto;
 }
 
-/* Job URL Form */
+/* Add New Job Forms */
 
 #job-url-modal {
     display: none;
     font-family: 'Inter', sans-serif;
 }
 
-#add-new-job-url-title,
-#add-new-job-url-subtitle,
-#job-url-input-label {
-    margin-left: 2.5vw;
-}
-
-#add-new-job-url-title {
-    font-size: 22px;
-    font-weight: 900;
-    color: #3b719f;
-}
-
 #add-new-job-url-subtitle {
     margin-top: -16px;
     font-size: 12px;
     color: #3A3B3C;
+}
+
+#job-url-input {
+    padding: 16px 0 0 0;
+}
+
+#job-post-url-form,
+#job-description-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#job-post-url-form {
+    align-items: center;
+}
+
+#job-description-form {
+    align-items: flex-start;
+}
+
+#add-new-job-url-title,
+#add-new-job-description-title,
+#add-new-job-url-subtitle,
+#job-url-input-label,
+.job-details-label {
+    margin-left: 2.5vw;
+}
+
+#add-new-job-url-title,
+#add-new-job-description-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: #3b719f;
 }
 
 #job-url-input-label {
@@ -163,83 +193,25 @@
     color: #3A3B3C;
 }
 
-.job-url-input {
-    padding: 16px 0 0 0;
+.job-details-label {
+    margin-bottom: -5px;
 }
 
-#job-post-url-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    box-sizing: border-box;
-}
-
-#job-post-url-form input[type="text"] {
+#job-post-url-form input[type="text"],
+#job-description-form input[type="text"] {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin-right: 5.5vw;
     width: 52vw;
     font-size: 14px;
 }
-
-/* Job Details Form */
-
-.job-details-form-section-title {
-    font-weight: bold;
-    font-size: 10px;
-    color: black;
-    text-indent: 25px;
-}
-
-#job-description-form {
-    font-size: 12px;
-}
-
-#job-description-form-first-row,
-#job-description-form-second-row,
-#job-description-form-third-row{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    margin-right: 40px;
-}
-
-#job-description-company,
-#job-description-title,
-#job-description-status,
-#job-description-interview-round,
-#job-description-job-type,
-#job-description-location,
-#job-description-salary-range,
-#job-description-notes {
-    flex: 1;
-    margin-right: 10px;
+#job-post-url-form input[type="text"] {
+    margin-right: 5.5vw;
 }
 
 #job-description-form input[type="text"] {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 8px;
-}
-
-#job-description-company,
-#job-description-title {
-    width: 96%;
-    height: 20px;
-    font-size: 12px;
-}
-
-#job-description-notes {
-    width: 96%;
-    height: 150px;
-    margin-bottom: 20px;
-}
-
-#job-description-interview-round {
-    width: 40px;
+    margin-left: -1.75vw;
+    width: 50vw;
 }
 
 /* Job Tiles */
@@ -309,7 +281,9 @@
 
 /* Buttons */
 
-#final-add-job-button, .cancel-add {
+#final-add-job-button,
+#final-save-job-button,
+.cancel-add {
     margin-top: 10px;
     font-size: 14px;
     padding: 10px 20px;
@@ -318,7 +292,8 @@
     transition: background 0.3s;
 }
 
-#final-add-job-button {
+#final-add-job-button,
+#final-save-job-button {
     background-color: #0077B5;
     color: white;
 }
@@ -326,25 +301,6 @@
 .cancel-add {
     margin-right: 5px;
     color: #0077B5;
-}
-
-#final-save-job-button, #remove-job-description-button {
-    display: inline-block;
-    text-decoration: none;
-    background: transparent;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 1.5em;
-    transition: background 0.3s;
-}
-
-#final-save-job-button, #remove-job-description-button {
-    background-color: #0077B5;
-    color: white;
-}
-
-#remove-job-description-button {
-    font-weight: 500;
 }
 
 .view-job-button {

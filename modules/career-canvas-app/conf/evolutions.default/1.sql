@@ -34,7 +34,6 @@ create table if not exists job_statuses (
     status              job_status              not null,
     app_submission_date timestamp               null,
     last_update         timestamp,
-    interview_round     int                     null,
     notes               varchar(1024)           null,
     starred             boolean                 default false
 );

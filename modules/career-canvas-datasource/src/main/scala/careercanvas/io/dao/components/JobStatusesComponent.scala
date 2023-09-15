@@ -24,7 +24,6 @@ trait JobStatusesComponent {
     def status: Rep[JobStatus] = column[JobStatus]("status")
     def appSubmissionDate: Rep[Option[Timestamp]] = column[Option[Timestamp]]("app_submission_date")
     def lastUpdate: Rep[Timestamp] = column[Timestamp]("last_update")
-    def interviewRound: Rep[Option[Int]] = column[Option[Int]]("interview_round")
     def notes: Rep[Option[String]] = column[Option[String]]("notes")
     def starred: Rep[Boolean] = column[Boolean]("starred")
 
@@ -40,7 +39,6 @@ trait JobStatusesComponent {
       status,
       appSubmissionDate,
       lastUpdate,
-      interviewRound,
       notes,
       starred
     ) <> ((JobInfo.apply _).tupled, JobInfo.unapply)

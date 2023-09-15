@@ -36,9 +36,8 @@ class JobApplicationsService @Inject() (
       jobType = JobType.stringToEnum(data.jobType),
       location = data.location,
       salaryRange = data.salaryRange,
-      status = JobStatus.stringToEnum(data.status),
+      status = JobStatus.Bookmarked,
       appSubmissionDate = None,
-      interviewRound = data.interviewRound,
       notes = data.notes
     )
     jobApplicationsDao.addJob(jobInfo).waitForResult
@@ -54,7 +53,7 @@ class JobApplicationsService @Inject() (
 
   def starJob(userId: String, jobId: Long): Unit = {
     val starred = getJobById(userId, jobId).starred
-    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId, None, None, None, None, Option(!starred))
+    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId, None, None, None, Option(!starred))
     jobApplicationsDao.updateJobStatus(updateJobInfo)
   }
 

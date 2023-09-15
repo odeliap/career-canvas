@@ -6,7 +6,5 @@ case class UserProvidedJobDetails(
   jobType: String,
   location: String,
   salaryRange: String,
-  status: String,
-  interviewRound: Option[Int],
   notes: Option[String]
 )

@@ -160,15 +160,19 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.status-filter').forEach(button => {
         button.addEventListener('click', function() {
             const filter = this.getAttribute('data-filter');
+            const filterDisplayElementId = `${filter}-count`;
+            const filterDisplayElement = document.getElementById(filterDisplayElementId);
 
             if (currentFilter === filter) {
                 currentFilter = null;
                 document.querySelectorAll('[data-status]').forEach(job => {
                     job.style.display = 'block';
+                    filterDisplayElement.classList.remove('highlighted-count-arrow-box');
                 });
             } else {
                 document.querySelectorAll('[data-status]').forEach(job => {
                     job.style.display = 'none';
+                    filterDisplayElement.classList.add('highlighted-count-arrow-box');
                 });
 
                 document.querySelectorAll(`[data-status="${filter}"]`).forEach(job => {

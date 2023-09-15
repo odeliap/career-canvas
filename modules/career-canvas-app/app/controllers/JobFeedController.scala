@@ -41,8 +41,6 @@ class JobFeedController @Inject()(
       "jobType" -> default(text, baseJobInfo.jobType.toString),
       "location" -> default(text, baseJobInfo.location),
       "salaryRange" -> default(text, baseJobInfo.salaryRange),
-      "status" -> text,
-      "interviewRound" -> optional(number),
       "notes" -> optional(text)
         .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s.getOrElse(""), 1024)),
     )(UserProvidedJobDetails.apply)(UserProvidedJobDetails.unapply)

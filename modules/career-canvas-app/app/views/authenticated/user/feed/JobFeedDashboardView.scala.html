@@ -12,7 +12,7 @@
             <p id="add-new-job-url-title">Add a New Job Post</p>
             <p id="add-new-job-url-subtitle">We'll autofill the rest.</p>
             <p class="form-label" id="job-url-input-label">URL for Original Posting</p>
-            <div class="job-url-input">
+            <div id="job-url-input">
                 @if(form.hasGlobalErrors) {
                     @form.globalErrors.map { error: FormError =>
                         <div>
