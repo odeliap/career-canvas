@@ -25,6 +25,7 @@ GET     /feed/addJobDetails                 controllers.JobFeedController.showAd
 GET     /feed/saveJob                       controllers.JobFeedController.saveJob()
 GET     /feed/removeJobDetails              controllers.JobFeedController.removeJobDetails()
 GET     /feed/job/star                      controllers.JobFeedController.starJob(jobId: Long)
+PUT     /feed/job/updateStatus              controllers.JobFeedController.updateStatus()
 
 # Individual job pages
 GET     /feed/job                                   controllers.IndividualJobController.showJobView(jobInfo: careercanvas.io.model.job.JobInfo)

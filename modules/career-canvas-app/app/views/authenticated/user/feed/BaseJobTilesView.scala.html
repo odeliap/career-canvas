@@ -1,5 +1,7 @@
 @import careercanvas.io.model.job._
 @import java.sql.Timestamp
+@import play.api.libs.json._
+@import play.filters.csrf.CSRF
 @(
     jobInfos: Seq[JobInfo]
 )(content: Html)(implicit request: MessagesRequestHeader)
@@ -73,6 +75,7 @@
             @jobInfos.map { jobInfo =>
             <div class="job-tile" data-status="@jobInfo.status.toString" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
             <div class="job-tile-header">
+
                 <div class="job-tile-subheader">
                     <div class="job-company">@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}</div>
                     <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
@@ -83,15 +86,29 @@
                         }
                     </a>
                 </div>
+
                 <p class="job-title">@jobInfo.jobTitle</p>
+
             </div>
             <div class="metadata-fields">
+
                 <div class="metadata">
                     <div class="metadata-tag" style="background-color: @utils.ColorUtils.jobStatusToColor(jobInfo.status);"></div>
                     <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/status/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
                     <p class="meta-title">Status:</p>
-                    <p class="meta-content">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</p>
+                    <div id="status-dropdown">
+                        <button class="status-btn">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
+                        <div class="dropdown-menu" id="statusDropdown">
+                            <p class="dropdown-item @(if(jobInfo.status.toString == "Bookmarked") "active-status")" data-id="@jobInfo.jobId" data-status="Bookmarked">Bookmarked</p>
+                            <p class="dropdown-item @(if(jobInfo.status.toString == "Applying") "active-status")" data-id="@jobInfo.jobId" data-status="Applying">Applying</p>
+                            <p class="dropdown-item @(if(jobInfo.status.toString == "Applied") "active-status")" data-id="@jobInfo.jobId" data-status="Applied">Applied</p>
+                            <p class="dropdown-item @(if(jobInfo.status.toString == "Interviewing") "active-status")" data-id="@jobInfo.jobId" data-status="Interviewing">Interviewing</p>
+                            <p class="dropdown-item @(if(jobInfo.status.toString == "Offer") "active-status")" data-id="@jobInfo.jobId" data-status="Offer">Offer</p>
+                            <p class="dropdown-item @(if(jobInfo.status.toString == "Rejected") "active-status")" data-id="@jobInfo.jobId" data-status="Rejected">Rejected</p>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="metadata">
                     <div class="metadata-tag" style="background-color: @utils.ColorUtils.localDateTimeToColor(jobInfo.lastUpdate.toLocalDateTime);"></div>
                     <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/calendar.png")" class="metadata-icon">
@@ -135,4 +152,64 @@
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFilters.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFeedNavigationUnderline.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/search.js")" type="text/javascript"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const statusBtns = document.querySelectorAll('.status-btn');
+        const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
+
+        statusBtns.forEach(statusBtn => {
+            const dropdown = statusBtn.nextElementSibling; // assuming dropdown is next to the statusBtn
+
+            statusBtn.onclick = function(event) {
+                event.stopPropagation();
+                dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            }
+
+            dropdown.addEventListener('click', function(event) {
+                if (event.target.classList.contains('dropdown-item')) {
+
+                    const activeStatus = dropdown.querySelector('.active-status');
+                    if (activeStatus) {
+                        activeStatus.classList.remove('active-status');
+                    }
+
+                    event.target.classList.add('active-status');
+
+                    statusBtn.textContent = event.target.textContent;
+                    dropdown.style.display = 'none';
+
+                    const newStatus = event.target.getAttribute('data-status');
+                    const eventJobId = event.target.getAttribute('data-id');
+
+                    const payload = {
+                        status: newStatus,
+                        jobId: eventJobId
+                    };
+
+                    fetch('@routes.JobFeedController.updateStatus()', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Csrf-Token': csrfToken
+                        },
+                        body: JSON.stringify(payload)
+                    }).then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+            });
+        });
+
+        window.onclick = function() {
+            const dropdowns = document.querySelectorAll('.dropdown-menu');
+            dropdowns.forEach(dropdown => {
+                dropdown.style.display = 'none';
+            });
+        }
+    });
+    </script>
 }

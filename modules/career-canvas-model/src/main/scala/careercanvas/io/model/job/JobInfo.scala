@@ -30,7 +30,8 @@ case class JobInfo(
       status = updateJobInfo.status.getOrElse(this.status),
       appSubmissionDate = updateJobInfo.appSubmissionDate.orElse(this.appSubmissionDate),
       notes = updateJobInfo.notes.orElse(this.notes),
-      starred = updateJobInfo.starred.getOrElse(this.starred)
+      starred = updateJobInfo.starred.getOrElse(this.starred),
+      lastUpdate = updateJobInfo.lastUpdate
     )
   }
 

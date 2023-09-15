@@ -221,7 +221,7 @@
   padding: 20px;
   overflow: hidden;
   position: relative;
-  height: 275px;
+  height: 300px;
   background-color: #fff;
   border-radius: 15px;
   border: 1px solid #D3D3D3;
@@ -277,6 +277,41 @@
 .bookmark-icon {
     height: 18px;
     width: 18px;
+}
+
+.active-status {
+    background-color: #C49E78;
+}
+
+/* Status Dropdown */
+
+.status-btn {
+    border: none;
+    background-color: white;
+}
+
+#status-dropdown {
+    display: block;
+}
+
+.status-btn:hover {
+    background-color: #e9eff6;
+    cursor: pointer;
+}
+
+/* Dropdown */
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 0 10px;
+}
+
+.dropdown-item:hover {
+    background-color: #e0cbaf;
 }
 
 /* Buttons */
