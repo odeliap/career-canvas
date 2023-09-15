@@ -5,7 +5,7 @@
     showUrlModal: Boolean = false
 )(implicit request: MessagesRequestHeader)
 
-@authenticated.user.feed.BaseJobTilesView(jobInfos) {
+@authenticated.user.feed.BaseJobFeedView(jobInfos) {
     <div id="job-url-modal" class="modal" data-show="@showUrlModal">
         <div class="modal-content">
             <span id="closeModalBtn" class="close-btn">&times;</span>

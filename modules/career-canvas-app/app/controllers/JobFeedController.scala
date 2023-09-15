@@ -143,7 +143,7 @@ class JobFeedController @Inject()(
     val jobId = (request.body \ "jobId").as[String]
     val status = (request.body \ "status").as[JobStatus]
     jobApplicationsService.updateStatus(userId, jobId, status)
-    Ok(Json.obj("content" -> "ok"))
+    Ok(Json.obj("redirectTo" -> routes.JobFeedController.showJobFeedHome().url))
   }
 
   private def retrieveUserId(request: RequestHeader): String = request.session.data(Global.SESSION_USER_ID)

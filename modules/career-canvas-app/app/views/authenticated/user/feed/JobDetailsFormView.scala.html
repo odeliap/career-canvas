@@ -5,7 +5,7 @@
     baseJobInfo: careercanvas.io.model.job.BaseJobInfo
 )(implicit request: MessagesRequestHeader)
 
-@authenticated.user.feed.BaseJobTilesView(jobInfos) {
+@authenticated.user.feed.BaseJobFeedView(jobInfos) {
     <div id="job-descriptions-modal" class="modal">
         <div class="modal-content">
             <span id="closeModalBtn" class="close-btn">&times;</span>

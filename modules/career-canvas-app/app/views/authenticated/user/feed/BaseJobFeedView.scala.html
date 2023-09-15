@@ -71,75 +71,16 @@
 
         @content
 
-        <div id="job-tiles">
-            @jobInfos.map { jobInfo =>
-            <div class="job-tile" data-status="@jobInfo.status.toString" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
-            <div class="job-tile-header">
+        <button id="jobFeedToggleViewButton">Show List View</button>
 
-                <div class="job-tile-subheader">
-                    <div class="job-company">@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}</div>
-                    <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
-                        @if(jobInfo.starred) {
-                        <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/filledbookmark.png")" class="bookmark-icon">
-                        } else {
-                        <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/bookmark.png")" class="bookmark-icon">
-                        }
-                    </a>
-                </div>
-
-                <p class="job-title">@jobInfo.jobTitle</p>
-
-            </div>
-            <div class="metadata-fields">
-
-                <div class="metadata">
-                    <div class="metadata-tag" style="background-color: @utils.ColorUtils.jobStatusToColor(jobInfo.status);"></div>
-                    <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/status/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
-                    <p class="meta-title">Status:</p>
-                    <div id="status-dropdown">
-                        <button class="status-btn">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
-                        <div class="dropdown-menu" id="statusDropdown">
-                            <p class="dropdown-item @(if(jobInfo.status.toString == "Bookmarked") "active-status")" data-id="@jobInfo.jobId" status="Bookmarked">Bookmarked</p>
-                            <p class="dropdown-item @(if(jobInfo.status.toString == "Applying") "active-status")" data-id="@jobInfo.jobId" status="Applying">Applying</p>
-                            <p class="dropdown-item @(if(jobInfo.status.toString == "Applied") "active-status")" data-id="@jobInfo.jobId" status="Applied">Applied</p>
-                            <p class="dropdown-item @(if(jobInfo.status.toString == "Interviewing") "active-status")" data-id="@jobInfo.jobId" status="Interviewing">Interviewing</p>
-                            <p class="dropdown-item @(if(jobInfo.status.toString == "Offer") "active-status")" data-id="@jobInfo.jobId" status="Offer">Offer</p>
-                            <p class="dropdown-item @(if(jobInfo.status.toString == "Rejected") "active-status")" data-id="@jobInfo.jobId" status="Rejected">Rejected</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metadata">
-                    <div class="metadata-tag" style="background-color: @utils.ColorUtils.localDateTimeToColor(jobInfo.lastUpdate.toLocalDateTime);"></div>
-                    <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/calendar.png")" class="metadata-icon">
-                    <p class="meta-title">Last Update:</p>
-                    <p class="meta-content">
-                        @{
-                        val now = java.time.LocalDateTime.now()
-                        val lastUpdate = jobInfo.lastUpdate.toLocalDateTime
-                        val duration = java.time.Duration.between(lastUpdate, now)
-
-                        val formattedTime =
-                        if (duration.toSeconds < 60) {
-                        "just now"
-                        } else if (duration.toMinutes == 1) {
-                        "1 minute ago"
-                        } else if (duration.toMinutes < 60) {
-                        s"${duration.toMinutes} minutes ago"
-                        } else if (duration.toHours < 24) {
-                        s"${duration.toHours} hours ago"
-                        } else {
-                        s"${duration.toDays} days ago"
-                        }
-
-                        formattedTime
-                        }
-                    </p>
-                </div>
-            </div>
-            <a href="@routes.IndividualJobController.showJobView(jobInfo)" class="view-job-button">View Job</a>
+        <div id="tiles-view">
+            @TilesView(jobInfos)
         </div>
-        }
+
+        <div id="list-view">
+            @ListView(jobInfos)
+        </div>
+
     </div>
 
     <div class="pagination">
@@ -152,32 +93,11 @@
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFilters.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFeedNavigationUnderline.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/search.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/toggleFeedView.js")" type="text/javascript"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
         const statusBtns = document.querySelectorAll('.status-btn');
         const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
-
-        function updateCountForStatus(status) {
-            const statusElements = document.querySelectorAll(`[data-status="${status}"]`);
-
-            const count = statusElements.length;
-
-            const countDisplayElementId = `${status}-count`;
-            const countDisplayElement = document.getElementById(countDisplayElementId);
-            if (countDisplayElement) {
-                if (count > 0) {
-                    countDisplayElement.innerHTML = `<div><p>${count}</p> <p class="count-display">${status.toUpperCase()}</p></div>`;
-                }
-            } else {
-                console.warn(`No element found with the ID: ${countDisplayElementId}`);
-            }
-
-            if (count > 0) {
-                countDisplayElement.classList.add('count-arrow-box');
-            } else {
-                countDisplayElement.classList.remove('count-arrow-box');
-            }
-        }
 
         statusBtns.forEach(statusBtn => {
             const dropdown = statusBtn.nextElementSibling; // assuming dropdown is next to the statusBtn
@@ -208,13 +128,6 @@
                         jobId: eventJobId
                     };
 
-                    updateCountForStatus('Bookmarked');
-                    updateCountForStatus('Applying');
-                    updateCountForStatus('Applied');
-                    updateCountForStatus('Interviewing');
-                    updateCountForStatus('Offer');
-                    updateCountForStatus('Rejected');
-
                     fetch('@routes.JobFeedController.updateStatus()', {
                         method: 'PUT',
                         headers: {
@@ -222,9 +135,12 @@
                             'Csrf-Token': csrfToken
                         },
                         body: JSON.stringify(payload)
-                    }).then(response => response.json())
+                    })
+                    .then(response => response.json())
                     .then(data => {
-                        console.log(data);
+                        if (data.redirectTo) {
+                            window.location.href = data.redirectTo; // Redirects the browser
+                        }
                     })
                     .catch(error => {
                         console.error('Error:', error);

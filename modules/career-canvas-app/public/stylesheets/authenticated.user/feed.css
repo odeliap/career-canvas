@@ -89,6 +89,16 @@
     margin-bottom: 100px;
 }
 
+/* Toggle Feed Views */
+
+#tiles-view {
+    display: block;
+}
+
+#list-view {
+    display: none;
+}
+
 /* Modal */
 
 .modal {
