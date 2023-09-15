@@ -99,12 +99,12 @@
                     <div id="status-dropdown">
                         <button class="status-btn">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
                         <div class="dropdown-menu" id="statusDropdown">
-                            <p class="dropdown-item @(if(jobInfo.status.toString == "Bookmarked") "active-status")" data-id="@jobInfo.jobId" data-status="Bookmarked">Bookmarked</p>
-                            <p class="dropdown-item @(if(jobInfo.status.toString == "Applying") "active-status")" data-id="@jobInfo.jobId" data-status="Applying">Applying</p>
-                            <p class="dropdown-item @(if(jobInfo.status.toString == "Applied") "active-status")" data-id="@jobInfo.jobId" data-status="Applied">Applied</p>
-                            <p class="dropdown-item @(if(jobInfo.status.toString == "Interviewing") "active-status")" data-id="@jobInfo.jobId" data-status="Interviewing">Interviewing</p>
-                            <p class="dropdown-item @(if(jobInfo.status.toString == "Offer") "active-status")" data-id="@jobInfo.jobId" data-status="Offer">Offer</p>
-                            <p class="dropdown-item @(if(jobInfo.status.toString == "Rejected") "active-status")" data-id="@jobInfo.jobId" data-status="Rejected">Rejected</p>
+                            <p class="dropdown-item @(if(jobInfo.status.toString == "Bookmarked") "active-status")" data-id="@jobInfo.jobId" status="Bookmarked">Bookmarked</p>
+                            <p class="dropdown-item @(if(jobInfo.status.toString == "Applying") "active-status")" data-id="@jobInfo.jobId" status="Applying">Applying</p>
+                            <p class="dropdown-item @(if(jobInfo.status.toString == "Applied") "active-status")" data-id="@jobInfo.jobId" status="Applied">Applied</p>
+                            <p class="dropdown-item @(if(jobInfo.status.toString == "Interviewing") "active-status")" data-id="@jobInfo.jobId" status="Interviewing">Interviewing</p>
+                            <p class="dropdown-item @(if(jobInfo.status.toString == "Offer") "active-status")" data-id="@jobInfo.jobId" status="Offer">Offer</p>
+                            <p class="dropdown-item @(if(jobInfo.status.toString == "Rejected") "active-status")" data-id="@jobInfo.jobId" status="Rejected">Rejected</p>
                         </div>
                     </div>
                 </div>
@@ -157,6 +157,28 @@
         const statusBtns = document.querySelectorAll('.status-btn');
         const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
 
+        function updateCountForStatus(status) {
+            const statusElements = document.querySelectorAll(`[data-status="${status}"]`);
+
+            const count = statusElements.length;
+
+            const countDisplayElementId = `${status}-count`;
+            const countDisplayElement = document.getElementById(countDisplayElementId);
+            if (countDisplayElement) {
+                if (count > 0) {
+                    countDisplayElement.innerHTML = `<div><p>${count}</p> <p class="count-display">${status.toUpperCase()}</p></div>`;
+                }
+            } else {
+                console.warn(`No element found with the ID: ${countDisplayElementId}`);
+            }
+
+            if (count > 0) {
+                countDisplayElement.classList.add('count-arrow-box');
+            } else {
+                countDisplayElement.classList.remove('count-arrow-box');
+            }
+        }
+
         statusBtns.forEach(statusBtn => {
             const dropdown = statusBtn.nextElementSibling; // assuming dropdown is next to the statusBtn
 
@@ -178,13 +200,20 @@
                     statusBtn.textContent = event.target.textContent;
                     dropdown.style.display = 'none';
 
-                    const newStatus = event.target.getAttribute('data-status');
+                    const newStatus = event.target.getAttribute('status');
                     const eventJobId = event.target.getAttribute('data-id');
 
                     const payload = {
                         status: newStatus,
                         jobId: eventJobId
                     };
+
+                    updateCountForStatus('Bookmarked');
+                    updateCountForStatus('Applying');
+                    updateCountForStatus('Applied');
+                    updateCountForStatus('Interviewing');
+                    updateCountForStatus('Offer');
+                    updateCountForStatus('Rejected');
 
                     fetch('@routes.JobFeedController.updateStatus()', {
                         method: 'PUT',
