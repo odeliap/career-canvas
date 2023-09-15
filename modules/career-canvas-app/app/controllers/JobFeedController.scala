@@ -27,8 +27,8 @@ class JobFeedController @Inject()(
   val jobPostForm: Form[JobPosting] = Form (
     mapping(
       "postUrl" -> nonEmptyText
-        .verifying("too few chars", s => formUtils.lengthIsGreaterThanNCharacters(s, 4))
-        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 300))
+        .verifying("Too few characters", s => formUtils.lengthIsGreaterThanNCharacters(s, 4))
+        .verifying("Too many characters", s => formUtils.lengthIsLessThanNCharacters(s, 300))
     )(JobPosting.apply)(JobPosting.unapply)
   )
 
@@ -51,7 +51,7 @@ class JobFeedController @Inject()(
   private val getPostInfoUrl = routes.JobFeedController.processJobPost()
   private val saveJobUrl = routes.JobFeedController.saveJob()
 
-  def showJobFeedHome(showStarredOnly: Boolean = false): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
+  def showJobFeedHome(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = retrieveUserId(request)
     val userJobs = retrieveUserJobs(userId)
     Ok(views.html.authenticated.user.feed.JobFeedDashboardView(jobPostForm, getPostInfoUrl, userJobs))
@@ -62,7 +62,8 @@ class JobFeedController @Inject()(
     val userJobs = retrieveUserJobs(userId)
 
     val errorFunction = { formWithErrors: Form[JobPosting] =>
-      BadRequest(views.html.authenticated.user.feed.JobFeedDashboardView(formWithErrors, getPostInfoUrl, userJobs))
+      BadRequest(views.html.authenticated.user.feed.JobFeedDashboardView(formWithErrors, getPostInfoUrl, userJobs, showUrlModal = true))
+        .flashing("error" -> "Error processing url")
     }
 
     val successFunction = { data: JobPosting =>

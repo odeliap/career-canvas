@@ -5,71 +5,73 @@
 )(content: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.AuthenticatedUserLayout("Feed | Career Canvas") {
-<div class="main-page">
-    <div>
-        @request.flash.data.map{ case (name, value) =>
-        @if(name.equals("error")) {
-        <div class="error-flash">@value</div>
-        } else if (name.equals("success")) {
-        <div class="success-flash">@value</div>
-        } else {
-        <div class="info-flash">@value</div>
-        }
-        }
-    </div>
-
-    <div class="arrows-container">
-        <button class="arrow-box arrow-left-end status-filter" id="Bookmarked-count" data-filter="Bookmarked">BOOKMARKED</button>
-        <button class="arrow-box arrow-right-left status-filter" id="Applying-count" data-filter="Applying">APPLYING</button>
-        <button class="arrow-box arrow-right-left status-filter" id="Applied-count" data-filter="Applied">APPLIED</button>
-        <button class="arrow-box arrow-right-left status-filter" id="Interviewing-count" data-filter="Interviewing">INTERVIEWING</button>
-        <button class="arrow-box arrow-right-left status-filter" id="Offer-count" data-filter="Offer">OFFER</button>
-        <button class="arrow-box arrow-right-end status-filter" id="Rejected-count" data-filter="Rejection">REJECTION</button>
-    </div>
-
-    @content
-
-    <div id="job-search-container">
-        <form id="search" action="#">
-            <input type="text" class="search-container" id="searchBox" placeholder="Search by title or company" onkeypress="handle" />
-        </form>
-
+    <div class="main-page">
         <div>
-            <select class="filter-param" id="lastUpdate">
-                <optgroup label="Last Update">
-                    <option value="876600" class="default-opt">All time</option>
-                    <option value="168">Last 7 days</option>
-                    <option value="72">Last 3 days</option>
-                    <option value="24">Last 24 hours</option>
-                </optgroup>
-            </select>
-
-            <select class="filter-param" id="company">
-                <optgroup label="Company">
-                    <option value="" class="default-opt">All companies</option>
-                    @for(company <- jobInfos.map(info => "^[a-zA-Z0-9 ]*".r.findFirstIn(info.company).getOrElse("")).distinct) {
-                        <option value="@company">@company</option>
-                    }
-                </optgroup>
-            </select>
-
-            <select class="filter-param" id="location">
-                <optgroup label="Location">
-                    <option value="" class="default-opt">All Locations</option>
-                    @for(location <- jobInfos.map(info => "^[a-zA-Z0-9 ]*".r.findFirstIn(info.location).getOrElse("")).distinct) {
-                        <option value="@location">@location</option>
-                    }
-                </optgroup>
-            </select>
-
-            <input type="checkbox" id="showStarred">
-            <label for="showStarred" id="showStarredLabel"></label>
+            @request.flash.data.map{ case (name, value) =>
+            @if(name.equals("error")) {
+            <div class="error-flash">@value</div>
+            } else if (name.equals("success")) {
+            <div class="success-flash">@value</div>
+            } else {
+            <div class="info-flash">@value</div>
+            }
+            }
         </div>
-    </div>
 
-    <div id="job-tiles">
-        @jobInfos.map { jobInfo =>
-        <div class="job-tile" data-status="@jobInfo.status.toString" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
+        <div class="arrows-container">
+            <button class="arrow-box arrow-left-end status-filter" id="Bookmarked-count" data-filter="Bookmarked">BOOKMARKED</button>
+            <button class="arrow-box arrow-right-left status-filter" id="Applying-count" data-filter="Applying">APPLYING</button>
+            <button class="arrow-box arrow-right-left status-filter" id="Applied-count" data-filter="Applied">APPLIED</button>
+            <button class="arrow-box arrow-right-left status-filter" id="Interviewing-count" data-filter="Interviewing">INTERVIEWING</button>
+            <button class="arrow-box arrow-right-left status-filter" id="Offer-count" data-filter="Offer">OFFER</button>
+            <button class="arrow-box arrow-right-end status-filter" id="Rejected-count" data-filter="Rejection">REJECTION</button>
+        </div>
+
+        <div id="job-search-container">
+            <button id="add-job-button">+</button>
+
+            <form id="search" action="#">
+                <input type="text" class="search-container" id="searchBox" placeholder="Search by title or company" onkeypress="handle" />
+            </form>
+
+            <div>
+                <select class="filter-param" id="lastUpdate">
+                    <optgroup label="Last Update">
+                        <option value="876600" class="default-opt">All time</option>
+                        <option value="168">Last 7 days</option>
+                        <option value="72">Last 3 days</option>
+                        <option value="24">Last 24 hours</option>
+                    </optgroup>
+                </select>
+
+                <select class="filter-param" id="company">
+                    <optgroup label="Company">
+                        <option value="" class="default-opt">All companies</option>
+                        @for(company <- jobInfos.map(info => "^[a-zA-Z0-9 ]*".r.findFirstIn(info.company).getOrElse("")).distinct) {
+                        <option value="@company">@company</option>
+                        }
+                    </optgroup>
+                </select>
+
+                <select class="filter-param" id="location">
+                    <optgroup label="Location">
+                        <option value="" class="default-opt">All Locations</option>
+                        @for(location <- jobInfos.map(info => "^[a-zA-Z0-9 ]*".r.findFirstIn(info.location).getOrElse("")).distinct) {
+                        <option value="@location">@location</option>
+                        }
+                    </optgroup>
+                </select>
+
+                <input type="checkbox" id="showStarred">
+                <label for="showStarred" id="showStarredLabel"></label>
+            </div>
+        </div>
+
+        @content
+
+        <div id="job-tiles">
+            @jobInfos.map { jobInfo =>
+            <div class="job-tile" data-status="@jobInfo.status.toString" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
             <div class="job-tile-header">
                 <div class="job-tile-subheader">
                     <div class="job-company">@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}</div>
@@ -102,15 +104,15 @@
 
                         val formattedTime =
                         if (duration.toSeconds < 60) {
-                            "just now"
+                        "just now"
                         } else if (duration.toMinutes == 1) {
-                            "1 minute ago"
+                        "1 minute ago"
                         } else if (duration.toMinutes < 60) {
-                            s"${duration.toMinutes} minutes ago"
+                        s"${duration.toMinutes} minutes ago"
                         } else if (duration.toHours < 24) {
-                            s"${duration.toHours} hours ago"
+                        s"${duration.toHours} hours ago"
                         } else {
-                            s"${duration.toDays} days ago"
+                        s"${duration.toDays} days ago"
                         }
 
                         formattedTime
@@ -133,5 +135,4 @@
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFilters.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFeedNavigationUnderline.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/search.js")" type="text/javascript"></script>
-</div>
 }

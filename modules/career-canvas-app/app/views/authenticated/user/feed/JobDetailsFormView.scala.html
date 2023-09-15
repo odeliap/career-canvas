@@ -5,12 +5,10 @@
     baseJobInfo: careercanvas.io.model.job.BaseJobInfo
 )(implicit request: MessagesRequestHeader)
 
-@BaseJobTilesView(jobInfos) {
-    <div class="main-page">
-        <div class="add-job-page">
-            <div class="add-job-button">
-                <a href="#" id="save-job" class="add-job">+</a>
-            </div>
+@authenticated.user.feed.BaseJobTilesView(jobInfos) {
+    <div id="job-descriptions-modal" class="modal">
+        <div class="modal-content">
+            <span id="closeModalBtn" class="close-btn">&times;</span>
             <div class="job-description-input">
                 @if(form.hasGlobalErrors) {
                     @form.globalErrors.map { error: FormError =>
@@ -26,81 +24,66 @@
                     ) {
                     @helper.CSRF.formField
 
-                    <div id="job-description-form-first-row">
-                        <div class="job-details-form-section">
-                            <div class="job-details-form-section-title">Company</div>
-                            @if(baseJobInfo.company.nonEmpty) {
-                                @helper.inputText(
-                                    form("company"),
-                                    '_label -> "",
-                                    'placeholder -> baseJobInfo.company,
-                                    'id -> "job-description-company",
-                                    'size -> 60,
-                                    '_showConstraints -> false
-                                )
-                            } else {
-                                @helper.inputText(
-                                    form("company"),
-                                    '_label -> "",
-                                    'id -> "job-description-company",
-                                    'size -> 60,
-                                    '_showConstraints -> false
-                                )
-                            }
-                        </div>
-
-                        <div class="job-details-form-section">
-                            <div class="job-details-form-section-title">Job Title</div>
-                            @if(baseJobInfo.company.nonEmpty) {
-                                @helper.inputText(
-                                    form("jobTitle"),
-                                    '_label -> "",
-                                    'placeholder -> baseJobInfo.jobTitle,
-                                    'id -> "job-description-title",
-                                    'size -> 60,
-                                    '_showConstraints -> false
-                                )
-                            } else {
-                                @helper.inputText(
-                                    form("jobTitle"),
-                                    '_label -> "",
-                                    'id -> "job-description-title",
-                                    'size -> 60,
-                                    '_showConstraints -> false
-                                )
-                            }
-                        </div>
+                    <div class="job-details-form-section">
+                        <div class="job-details-form-section-title">Company</div>
+                        @if(baseJobInfo.company.nonEmpty) {
+                            @helper.inputText(
+                                form("company"),
+                                '_label -> "",
+                                'placeholder -> baseJobInfo.company,
+                                'id -> "job-description-company",
+                                'size -> 60,
+                                '_showConstraints -> false
+                            )
+                        } else {
+                            @helper.inputText(
+                                form("company"),
+                                '_label -> "",
+                                'id -> "job-description-company",
+                                'size -> 60,
+                                '_showConstraints -> false
+                            )
+                        }
                     </div>
 
-                    <div id="job-description-form-second-row">
-                        <div class="job-details-form-section">
-                            <div class="job-details-form-section-title">Status</div>
+                    <div class="job-details-form-section">
+                        <div class="job-details-form-section-title">Job Title</div>
+                        @if(baseJobInfo.company.nonEmpty) {
+                            @helper.inputText(
+                                form("jobTitle"),
+                                '_label -> "",
+                                'placeholder -> baseJobInfo.jobTitle,
+                                'id -> "job-description-title",
+                                'size -> 60,
+                                '_showConstraints -> false
+                            )
+                        } else {
+                            @helper.inputText(
+                                form("jobTitle"),
+                                '_label -> "",
+                                'id -> "job-description-title",
+                                'size -> 60,
+                                '_showConstraints -> false
+                            )
+                        }
+                        </div>
+
+                    <div class="job-details-form-section">
+                        <div class="job-details-form-section-title">Status</div>
                             @helper.inputRadioGroup(
                                 form("status"),
                                 options = Seq(
-                                    "Bookmarked" -> "Bookmarked",
-                                    "Applying" -> "Applying",
-                                    "Applied" -> "Applied",
-                                    "Interviewing" -> "Interviewing",
-                                    "Offer" -> "Offer",
-                                    "Rejected" -> "Rejected"
+                                "Bookmarked" -> "Bookmarked",
+                                "Applying" -> "Applying",
+                                "Applied" -> "Applied",
+                                "Interviewing" -> "Interviewing",
+                                "Offer" -> "Offer",
+                                "Rejected" -> "Rejected"
                                 ),
                                 '_label -> "",
                                 'id -> "job-description-status",
                                 'size -> 60
                             )
-                        </div>
-
-                        <div class="job-details-form-section">
-                            <div class="job-details-form-section-title">Interview Round</div>
-                            @helper.inputText(
-                                form("interviewRound"),
-                                '_label -> "",
-                                'id -> "job-description-interview-round",
-                                'size -> 60,
-                                '_showConstraints -> false
-                            )
-                        </div>
                     </div>
 
                     <div class="job-details-form-section">
@@ -108,12 +91,12 @@
                         @helper.inputRadioGroup(
                             form("jobType"),
                             options = Seq(
-                                "FullTime" -> "Full-Time",
-                                "Contract" -> "Contract",
-                                "PartTime" -> "Part-Time",
-                                "Internship" -> "Internship",
-                                "Temporary" -> "Temporary",
-                                "Unknown" -> "Unknown"
+                            "FullTime" -> "Full-Time",
+                            "Contract" -> "Contract",
+                            "PartTime" -> "Part-Time",
+                            "Internship" -> "Internship",
+                            "Temporary" -> "Temporary",
+                            "Unknown" -> "Unknown"
                             ),
                             '_label -> "",
                             'placeholder -> baseJobInfo.jobType,
@@ -122,50 +105,48 @@
                         )
                     </div>
 
-                    <div class="job-description-form-third-row">
-                        <div class="job-details-form-section">
-                            <div class="job-details-form-section-title">Location</div>
-                            @if(baseJobInfo.location.nonEmpty) {
-                                @helper.inputText(
-                                    form("location"),
-                                    '_label -> "",
-                                    'placeholder -> baseJobInfo.location,
-                                    'id -> "job-description-location",
-                                    'size -> 60,
-                                    '_showConstraints -> false
-                                )
-                            } else {
-                                @helper.inputText(
-                                    form("location"),
-                                    '_label -> "",
-                                    'id -> "job-description-location",
-                                    'size -> 60,
-                                    '_showConstraints -> false
-                                )
-                            }
-                        </div>
+                    <div class="job-details-form-section">
+                        <div class="job-details-form-section-title">Location</div>
+                        @if(baseJobInfo.location.nonEmpty) {
+                            @helper.inputText(
+                                form("location"),
+                                '_label -> "",
+                                'placeholder -> baseJobInfo.location,
+                                'id -> "job-description-location",
+                                'size -> 60,
+                                '_showConstraints -> false
+                            )
+                        } else {
+                            @helper.inputText(
+                                form("location"),
+                                '_label -> "",
+                                'id -> "job-description-location",
+                                'size -> 60,
+                                '_showConstraints -> false
+                            )
+                        }
+                    </div>
 
-                        <div class="job-details-form-section">
-                            <div class="job-details-form-section-title">Salary Range</div>
-                            @if(baseJobInfo.salaryRange.nonEmpty) {
-                                @helper.inputText(
-                                    form("salaryRange"),
-                                    '_label -> "",
-                                    'placeholder -> baseJobInfo.salaryRange,
-                                    'id -> "job-description-salary-range",
-                                    'size -> 60,
-                                    '_showConstraints -> false
-                                )
-                            } else {
-                                @helper.inputText(
-                                    form("salaryRange"),
-                                    '_label -> "",
-                                    'id -> "job-description-salary-range",
-                                    'size -> 60,
-                                    '_showConstraints -> false
-                                )
-                            }
-                        </div>
+                    <div class="job-details-form-section">
+                        <div class="job-details-form-section-title">Salary Range</div>
+                        @if(baseJobInfo.salaryRange.nonEmpty) {
+                            @helper.inputText(
+                                form("salaryRange"),
+                                '_label -> "",
+                                'placeholder -> baseJobInfo.salaryRange,
+                                'id -> "job-description-salary-range",
+                                'size -> 60,
+                                '_showConstraints -> false
+                            )
+                        } else {
+                            @helper.inputText(
+                                form("salaryRange"),
+                                '_label -> "",
+                                'id -> "job-description-salary-range",
+                                'size -> 60,
+                                '_showConstraints -> false
+                            )
+                        }
                     </div>
 
                     <div class="job-details-form-section">
@@ -178,12 +159,13 @@
                         )
                     </div>
 
-                    <button id="final-save-job-button">Save</button>
-                    <a href="@routes.JobFeedController.removeJobDetails()" id="remove-job-description-button">Discard</a>
+                    <div class="save-options">
+                        <a href="@routes.JobFeedController.removeJobDetails()" class="cancel-add">Cancel</a>
+                        <button id="final-save-job-button">Save</button>
+                    </div>
                 }
             </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/saveJob.js")" type="text/javascript"></script>
 }

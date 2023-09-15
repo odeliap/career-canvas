@@ -1,36 +1,46 @@
 @(
     form: Form[careercanvas.io.model.job.JobPosting],
     getPostInfoUrl: Call,
-    jobInfos: Seq[careercanvas.io.model.job.JobInfo]
+    jobInfos: Seq[careercanvas.io.model.job.JobInfo],
+    showUrlModal: Boolean = false
 )(implicit request: MessagesRequestHeader)
 
-@BaseJobTilesView(jobInfos) {
-    <div class="add-job-page">
-        <div class="add-job-button"><a href="#" id="add-job">+</a></div>
-        <div class="job-url-input" style="display: none;">
-            @if(form.hasGlobalErrors) {
-                @form.globalErrors.map { error: FormError =>
-                    <div>
-                        Error: @error.key: @error.message
+@authenticated.user.feed.BaseJobTilesView(jobInfos) {
+    <div id="job-url-modal" class="modal" data-show="@showUrlModal">
+        <div class="modal-content">
+            <span id="closeModalBtn" class="close-btn">&times;</span>
+            <p id="add-new-job-url-title">Add a New Job Post</p>
+            <p id="add-new-job-url-subtitle">We'll autofill the rest.</p>
+            <p class="form-label" id="job-url-input-label">URL for Original Posting</p>
+            <div class="job-url-input">
+                @if(form.hasGlobalErrors) {
+                    @form.globalErrors.map { error: FormError =>
+                        <div>
+                            Error: @error.key: @error.message
+                        </div>
+                    }
+                }
+
+                @helper.form(getPostInfoUrl, 'id -> "job-post-url-form") {
+                    @helper.CSRF.formField
+
+                    @helper.inputText(
+                        form("postUrl"),
+                        '_label -> "",
+                        'placeholder -> "URL for Original Posting",
+                        'class -> "job-post-input-txt",
+                        'size -> 60,
+                        '_showConstraints -> false
+                    )
+
+                    <div class="save-options">
+                        <a class="cancel-add" id="cancelAddJobUrl" href="#">Cancel</a>
+                        <button id="final-add-job-button">Add Job</button>
                     </div>
                 }
-            }
-
-            @helper.form(getPostInfoUrl, 'id -> "job-post-url-form") {
-                @helper.CSRF.formField
-
-                @helper.inputText(
-                    form("postUrl"),
-                    '_label -> "",
-                    'placeholder -> "job post url",
-                    'class -> "job-post-input-txt",
-                    'size -> 60,
-                    '_showConstraints -> false
-                )
-
-                <button id="final-add-job-button">Add</button>
-            }
+            </div>
         </div>
     </div>
-    <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/addJob.js")" type="text/javascript"></script>
+
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobUrlModal.js")" type="text/javascript"></script>
 }
