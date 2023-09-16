@@ -71,25 +71,24 @@
 
         @content
 
-        <button id="jobFeedToggleViewButton">Show List View</button>
-
-        <div id="tiles-view">
-            @TilesView(jobInfos)
+        <div class="pill-toggle-views">
+            <button onclick="showView('tiles-view', 'tilesToggleView')" id="tilesToggleView" class="toggle-view active-toggle-view">Tiles View</button>
+            <button onclick="showView('list-view', 'listToggleView')" id="listToggleView" class="toggle-view">List View</button>
+            <button onclick="showView('spreadsheet-view', 'spreadsheetToggleView')" id="spreadsheetToggleView" class="toggle-view">Spreadsheet View</button>
         </div>
 
-        <div id="list-view">
-            @ListView(jobInfos)
+        <div id="tiles-view">@TilesView(jobInfos)</div>
+        <div id="list-view" class="hidden">@ListView(jobInfos)</div>
+        <div id="spreadsheet-view" class="hidden">@SpreadsheetView(jobInfos)</div>
+
+        <div class="pagination">
+            <button id="prevPage"><img src="@routes.Assets.versioned("images/authenticated.user/feed/pagination/previous.png")" class="pagination-arrow"></button>
+            <div id="pageNumbersContainer"></div>
+            <button id="nextPage"><img src="@routes.Assets.versioned("images/authenticated.user/feed/pagination/next.png")" class="pagination-arrow"></button>
         </div>
 
+        @FooterTemplate()
     </div>
-
-    <div class="pagination">
-        <button id="prevPage"><img src="@routes.Assets.versioned("images/authenticated.user/feed/pagination/previous.png")" class="pagination-arrow"></button>
-        <div id="pageNumbersContainer"></div>
-        <button id="nextPage"><img src="@routes.Assets.versioned("images/authenticated.user/feed/pagination/next.png")" class="pagination-arrow"></button>
-    </div>
-
-    @FooterTemplate()
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFilters.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFeedNavigationUnderline.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/search.js")" type="text/javascript"></script>

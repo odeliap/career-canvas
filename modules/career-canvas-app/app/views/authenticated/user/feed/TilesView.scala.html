@@ -3,69 +3,70 @@
 <div id="job-tiles">
     @jobInfos.map { jobInfo =>
     <div class="job-tile" data-status="@jobInfo.status.toString" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
-    <div class="job-tile-header">
+        <div class="job-tile-header">
 
-        <div class="job-tile-subheader">
-            <div class="job-company">@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}</div>
-            <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
-                @if(jobInfo.starred) {
-                <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/filledbookmark.png")" class="bookmark-icon">
-                } else {
-                <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/bookmark.png")" class="bookmark-icon">
-                }
-            </a>
+            <div class="job-tile-subheader">
+                <div class="job-company">@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}</div>
+                <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
+                    @if(jobInfo.starred) {
+                    <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/filledbookmark.png")" class="bookmark-icon">
+                    } else {
+                    <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/bookmark.png")" class="bookmark-icon">
+                    }
+                </a>
+            </div>
+
+            <p class="job-title">@jobInfo.jobTitle</p>
+
         </div>
+        <div class="metadata-fields">
 
-        <p class="job-title">@jobInfo.jobTitle</p>
-
-    </div>
-    <div class="metadata-fields">
-
-        <div class="metadata">
-            <div class="metadata-tag" style="background-color: @utils.ColorUtils.jobStatusToColor(jobInfo.status);"></div>
-            <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/status/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
-            <p class="meta-title">Status:</p>
-            <div id="status-dropdown">
-                <button class="status-btn">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
-                <div class="dropdown-menu" id="statusDropdown">
-                    <p class="dropdown-item @(if(jobInfo.status.toString == "Bookmarked") "active-status")" data-id="@jobInfo.jobId" status="Bookmarked">Bookmarked</p>
-                    <p class="dropdown-item @(if(jobInfo.status.toString == "Applying") "active-status")" data-id="@jobInfo.jobId" status="Applying">Applying</p>
-                    <p class="dropdown-item @(if(jobInfo.status.toString == "Applied") "active-status")" data-id="@jobInfo.jobId" status="Applied">Applied</p>
-                    <p class="dropdown-item @(if(jobInfo.status.toString == "Interviewing") "active-status")" data-id="@jobInfo.jobId" status="Interviewing">Interviewing</p>
-                    <p class="dropdown-item @(if(jobInfo.status.toString == "Offer") "active-status")" data-id="@jobInfo.jobId" status="Offer">Offer</p>
-                    <p class="dropdown-item @(if(jobInfo.status.toString == "Rejected") "active-status")" data-id="@jobInfo.jobId" status="Rejected">Rejected</p>
+            <div class="metadata">
+                <div class="metadata-tag" style="background-color: @utils.ColorUtils.jobStatusToColor(jobInfo.status);"></div>
+                <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/status/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
+                <p class="meta-title">Status:</p>
+                <div id="status-dropdown">
+                    <button class="status-btn">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
+                    <div class="dropdown-menu" id="statusDropdown">
+                        <p class="dropdown-item @(if(jobInfo.status.toString == "Bookmarked") "active-status")" data-id="@jobInfo.jobId" status="Bookmarked">Bookmarked</p>
+                        <p class="dropdown-item @(if(jobInfo.status.toString == "Applying") "active-status")" data-id="@jobInfo.jobId" status="Applying">Applying</p>
+                        <p class="dropdown-item @(if(jobInfo.status.toString == "Applied") "active-status")" data-id="@jobInfo.jobId" status="Applied">Applied</p>
+                        <p class="dropdown-item @(if(jobInfo.status.toString == "Interviewing") "active-status")" data-id="@jobInfo.jobId" status="Interviewing">Interviewing</p>
+                        <p class="dropdown-item @(if(jobInfo.status.toString == "Offer") "active-status")" data-id="@jobInfo.jobId" status="Offer">Offer</p>
+                        <p class="dropdown-item @(if(jobInfo.status.toString == "Rejected") "active-status")" data-id="@jobInfo.jobId" status="Rejected">Rejected</p>
+                    </div>
                 </div>
             </div>
+
+            <div class="metadata">
+                <div class="metadata-tag" style="background-color: @utils.ColorUtils.localDateTimeToColor(jobInfo.lastUpdate.toLocalDateTime);"></div>
+                <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/calendar.png")" class="metadata-icon">
+                <p class="meta-title">Last Update:</p>
+                <p class="meta-content">
+                    @{
+                    val now = java.time.LocalDateTime.now()
+                    val lastUpdate = jobInfo.lastUpdate.toLocalDateTime
+                    val duration = java.time.Duration.between(lastUpdate, now)
+
+                    val formattedTime =
+                    if (duration.toSeconds < 60) {
+                    "just now"
+                    } else if (duration.toMinutes == 1) {
+                    "1 minute ago"
+                    } else if (duration.toMinutes < 60) {
+                    s"${duration.toMinutes} minutes ago"
+                    } else if (duration.toHours < 24) {
+                    s"${duration.toHours} hours ago"
+                    } else {
+                    s"${duration.toDays} days ago"
+                    }
+
+                    formattedTime
+                    }
+                </p>
+            </div>
         </div>
-
-        <div class="metadata">
-            <div class="metadata-tag" style="background-color: @utils.ColorUtils.localDateTimeToColor(jobInfo.lastUpdate.toLocalDateTime);"></div>
-            <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/calendar.png")" class="metadata-icon">
-            <p class="meta-title">Last Update:</p>
-            <p class="meta-content">
-                @{
-                val now = java.time.LocalDateTime.now()
-                val lastUpdate = jobInfo.lastUpdate.toLocalDateTime
-                val duration = java.time.Duration.between(lastUpdate, now)
-
-                val formattedTime =
-                if (duration.toSeconds < 60) {
-                "just now"
-                } else if (duration.toMinutes == 1) {
-                "1 minute ago"
-                } else if (duration.toMinutes < 60) {
-                s"${duration.toMinutes} minutes ago"
-                } else if (duration.toHours < 24) {
-                s"${duration.toHours} hours ago"
-                } else {
-                s"${duration.toDays} days ago"
-                }
-
-                formattedTime
-                }
-            </p>
-        </div>
+        <a href="@routes.IndividualJobController.showJobView(jobInfo)" class="view-job-button">View Job</a>
     </div>
-    <a href="@routes.IndividualJobController.showJobView(jobInfo)" class="view-job-button">View Job</a>
+    }
 </div>
-}

@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const jobsGrid = document.getElementById("job-tiles");
     const jobCards = jobsGrid.querySelectorAll(".job-tile");
+    const jobsList = document.getElementById("job-list");
+    const jobListItems = document.querySelectorAll(".job-list-item");
     const lastUpdateFilter = document.getElementById("lastUpdate");
     const companyFilter = document.getElementById("company");
     const locationFilter = document.getElementById("location");
@@ -38,11 +40,44 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        jobListItems.forEach((card, index) => {
+            const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
+            const company = card.getAttribute("data-company");
+            const location = card.getAttribute("data-location");
+            const starred = card.getAttribute("data-starred") === "true";
+            const showStarredOnly = showStarredCheckbox.checked;
+
+            if (lastUpdate >= timeLimit &&
+                (selectedCompany === "" || selectedCompany === company) &&
+                (selectedLocation === "" || selectedLocation === location) &&
+                (!showStarredOnly || starred)) {
+                filteredItems++;
+            }
+        });
+
         maxPage = Math.ceil(filteredItems / ITEMS_PER_PAGE);
 
         var displayCards = [];
 
         jobCards.forEach((card, index) => {
+            const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
+            const company = card.getAttribute("data-company");
+            const location = card.getAttribute("data-location");
+            const starred = card.getAttribute("data-starred") === "true";
+            const showStarredOnly = showStarredCheckbox.checked;
+
+            if (lastUpdate >= timeLimit &&
+                (selectedCompany === "" || selectedCompany === company) &&
+                (selectedLocation === "" || selectedLocation === location) &&
+                (!showStarredOnly || starred)) {
+
+                displayCards.push(card);
+            } else {
+                card.style.display = "none";
+            }
+        });
+
+        jobListItems.forEach((card, index) => {
             const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
             const company = card.getAttribute("data-company");
             const location = card.getAttribute("data-location");

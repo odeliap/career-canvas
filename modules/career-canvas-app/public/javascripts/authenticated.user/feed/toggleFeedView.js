@@ -1,17 +1,13 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const toggleButton = document.getElementById('jobFeedToggleViewButton');
-    const tilesView = document.getElementById('tiles-view');
-    const listView = document.getElementById('list-view');
+function showView(viewId, toggleId) {
+    document.getElementById('tiles-view').classList.add('hidden');
+    document.getElementById('list-view').classList.add('hidden');
+    document.getElementById('spreadsheet-view').classList.add('hidden');
 
-    toggleButton.addEventListener('click', function() {
-        if (tilesView.style.display === 'none') {
-            tilesView.style.display = 'block';
-            listView.style.display = 'none';
-            toggleButton.innerHTML = 'Show Tiles View';
-        } else {
-            tilesView.style.display = 'none';
-            listView.style.display = 'block';
-            toggleButton.innerHTML = 'Show List View';
-        }
-    });
-});
+    document.getElementById(viewId).classList.remove('hidden');
+
+    const toggleOpts = document.querySelectorAll('.toggle-view');
+
+    toggleOpts.forEach(toggleOpt => toggleOpt.classList.remove('active-toggle-view'));
+
+    document.getElementById(toggleId).classList.add('active-toggle-view');
+}
