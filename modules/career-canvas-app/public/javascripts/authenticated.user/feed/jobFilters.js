@@ -1,137 +1,58 @@
 document.addEventListener('DOMContentLoaded', function() {
     const jobsGrid = document.getElementById("job-tiles");
-    const jobCards = jobsGrid.querySelectorAll(".job-tile");
-
     const jobsList = document.getElementById("job-list");
-    const jobListItems = jobsList.querySelectorAll(".job-list-item");
-
     const spreadsheet = document.getElementById("spreadsheet-rows");
-    const spreadsheetRows = spreadsheet.querySelectorAll(".spreadsheet-row");
+    const allItems = {
+        'jobCards': jobsGrid.querySelectorAll(".job-tile"),
+        'jobListItems': jobsList.querySelectorAll(".job-list-item"),
+        'spreadsheetRows': spreadsheet.querySelectorAll(".spreadsheet-row")
+    };
 
     const lastUpdateFilter = document.getElementById("lastUpdate");
     const companyFilter = document.getElementById("company");
     const locationFilter = document.getElementById("location");
-
     const showStarredCheckbox = document.getElementById("showStarred");
+
     const ITEMS_PER_PAGE = 30;
     let currentPage = 1;
     let maxPage = 1;
 
-    function filterRows(resetPage = true) {
-        if (resetPage) {
-            currentPage = 1;
-        }
-
+    function filterCard(card) {
         const now = new Date().getTime();
         const hours = parseFloat(lastUpdateFilter.value);
         const timeLimit = now - hours * 60 * 60 * 1000;
         const selectedCompany = companyFilter.value;
         const selectedLocation = locationFilter.value;
+        const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
+        const company = card.getAttribute("data-company");
+        const location = card.getAttribute("data-location");
+        const starred = card.getAttribute("data-starred") === "true";
+        const showStarredOnly = showStarredCheckbox.checked;
+
+        return lastUpdate >= timeLimit &&
+            (selectedCompany === "" || selectedCompany === company) &&
+            (selectedLocation === "" || selectedLocation === location) &&
+            (!showStarredOnly || starred);
+    }
+
+    function filterRows(resetPage = true) {
+        if (resetPage) currentPage = 1;
 
         let filteredItems = 0;
+        let displayCards = [];
 
-        jobCards.forEach((card, index) => {
-            const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
-            const company = card.getAttribute("data-company");
-            const location = card.getAttribute("data-location");
-            const starred = card.getAttribute("data-starred") === "true";
-            const showStarredOnly = showStarredCheckbox.checked;
-
-            if (lastUpdate >= timeLimit &&
-                (selectedCompany === "" || selectedCompany === company) &&
-                (selectedLocation === "" || selectedLocation === location) &&
-                (!showStarredOnly || starred)) {
-                filteredItems++;
-            }
-        });
-
-        jobListItems.forEach((card, index) => {
-            const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
-            const company = card.getAttribute("data-company");
-            const location = card.getAttribute("data-location");
-            const starred = card.getAttribute("data-starred") === "true";
-            const showStarredOnly = showStarredCheckbox.checked;
-
-            if (lastUpdate >= timeLimit &&
-                (selectedCompany === "" || selectedCompany === company) &&
-                (selectedLocation === "" || selectedLocation === location) &&
-                (!showStarredOnly || starred)) {
-                filteredItems++;
-            }
-        });
-
-        spreadsheetRows.forEach((card, index) => {
-            const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
-            const company = card.getAttribute("data-company");
-            const location = card.getAttribute("data-location");
-            const starred = card.getAttribute("data-starred") === "true";
-            const showStarredOnly = showStarredCheckbox.checked;
-
-            if (lastUpdate >= timeLimit &&
-                (selectedCompany === "" || selectedCompany === company) &&
-                (selectedLocation === "" || selectedLocation === location) &&
-                (!showStarredOnly || starred)) {
-                filteredItems++;
-            }
-        });
+        for (let itemType in allItems) {
+            allItems[itemType].forEach(card => {
+                if (filterCard(card)) {
+                    filteredItems++;
+                    displayCards.push(card);
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
 
         maxPage = Math.ceil(filteredItems / ITEMS_PER_PAGE);
-
-        var displayCards = [];
-
-        jobCards.forEach((card, index) => {
-            const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
-            const company = card.getAttribute("data-company");
-            const location = card.getAttribute("data-location");
-            const starred = card.getAttribute("data-starred") === "true";
-            const showStarredOnly = showStarredCheckbox.checked;
-
-            if (lastUpdate >= timeLimit &&
-                (selectedCompany === "" || selectedCompany === company) &&
-                (selectedLocation === "" || selectedLocation === location) &&
-                (!showStarredOnly || starred)) {
-
-                displayCards.push(card);
-            } else {
-                card.style.display = "none";
-            }
-        });
-
-        jobListItems.forEach((card, index) => {
-            const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
-            const company = card.getAttribute("data-company");
-            const location = card.getAttribute("data-location");
-            const starred = card.getAttribute("data-starred") === "true";
-            const showStarredOnly = showStarredCheckbox.checked;
-
-            if (lastUpdate >= timeLimit &&
-                (selectedCompany === "" || selectedCompany === company) &&
-                (selectedLocation === "" || selectedLocation === location) &&
-                (!showStarredOnly || starred)) {
-
-                displayCards.push(card);
-            } else {
-                card.style.display = "none";
-            }
-        });
-
-        spreadsheetRows.forEach((card, index) => {
-            const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
-            const company = card.getAttribute("data-company");
-            const location = card.getAttribute("data-location");
-            const starred = card.getAttribute("data-starred") === "true";
-            const showStarredOnly = showStarredCheckbox.checked;
-
-            if (lastUpdate >= timeLimit &&
-                (selectedCompany === "" || selectedCompany === company) &&
-                (selectedLocation === "" || selectedLocation === location) &&
-                (!showStarredOnly || starred)) {
-
-                displayCards.push(card);
-            } else {
-                card.style.display = "none";
-            }
-        });
 
         displayCards.forEach((card, index) => {
             if (index >= (currentPage - 1) * ITEMS_PER_PAGE && index < currentPage * ITEMS_PER_PAGE) {
@@ -172,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
     lastUpdateFilter.addEventListener("change", filterRows);
     companyFilter.addEventListener("change", filterRows);
     locationFilter.addEventListener("change", filterRows);
+
     showStarredCheckbox.addEventListener("change", function() {
         filterRows();
         const checkboxLabel = document.getElementById('showStarredLabel');
