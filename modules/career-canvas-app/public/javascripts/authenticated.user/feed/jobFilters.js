@@ -137,18 +137,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (count > 0) {
-            countDisplayElement.classList.add('count-arrow-box');
+            countDisplayElement.classList.add('.count-arrow-box');
         } else {
-            countDisplayElement.classList.remove('count-arrow-box');
+            countDisplayElement.classList.remove('.count-arrow-box');
         }
     }
 
-    updateCountForStatus('Bookmarked');
-    updateCountForStatus('Applying');
-    updateCountForStatus('Applied');
-    updateCountForStatus('Interviewing');
-    updateCountForStatus('Offer');
-    updateCountForStatus('Rejected');
+    function updateCountForAllStatuses() {
+        updateCountForStatus('Bookmarked');
+        updateCountForStatus('Applying');
+        updateCountForStatus('Applied');
+        updateCountForStatus('Interviewing');
+        updateCountForStatus('Offer');
+        updateCountForStatus('Rejected');
+    }
+
+    updateCountForAllStatuses();
 
     let currentFilter = null;
 

@@ -365,12 +365,23 @@ select {
 
 .job-tile-header {
     margin-bottom: 20px;
-    margin-left: 50px;
+    display: flex;
+    justify-content: left;
+}
+
+.header-right {
+    width: 100%;
 }
 
 .job-tile-subheader {
     display: flex;
     justify-content: space-between;
+}
+
+.company-logo {
+    height: 40px;
+    width: 40px;
+    margin-right: 20px;
 }
 
 .job-company {

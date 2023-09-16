@@ -4,21 +4,22 @@
     @jobInfos.map { jobInfo =>
     <div class="job-tile" data-status="@jobInfo.status.toString" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
         <div class="job-tile-header">
-
-            <div class="job-tile-subheader">
-                <div class="job-company">@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}</div>
-                <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
-                    @if(jobInfo.starred) {
-                    <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/filledbookmark.png")" class="bookmark-icon">
-                    } else {
-                    <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/bookmark.png")" class="bookmark-icon">
-                    }
-                </a>
-            </div>
-
-            <div class="job-location">
-                <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/location.png")" class="location-icon">
-                <div>@jobInfo.location</div>
+            <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/logo-placeholder.png")" class="company-logo">
+            <div class="header-right">
+                <div class="job-tile-subheader">
+                    <div class="job-company">@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}</div>
+                    <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
+                        @if(jobInfo.starred) {
+                        <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/filledbookmark.png")" class="bookmark-icon">
+                        } else {
+                        <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/bookmark.png")" class="bookmark-icon">
+                        }
+                    </a>
+                </div>
+                <div class="job-location">
+                    <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/location.png")" class="location-icon">
+                    <div>@jobInfo.location</div>
+                </div>
             </div>
         </div>
         <p class="job-title">@jobInfo.jobTitle</p>
