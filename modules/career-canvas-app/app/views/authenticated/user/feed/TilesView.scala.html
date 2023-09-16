@@ -16,9 +16,12 @@
                 </a>
             </div>
 
-            <p class="job-title">@jobInfo.jobTitle</p>
-
+            <div class="job-location">
+                <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/location.png")" class="location-icon">
+                <div>@jobInfo.location</div>
+            </div>
         </div>
+        <p class="job-title">@jobInfo.jobTitle</p>
         <div class="metadata-fields">
 
             <div class="metadata">
@@ -65,8 +68,17 @@
                     }
                 </p>
             </div>
+
+            <hr>
+
+            <div class="tile-footer">
+                <div class="job-type">
+                    <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/briefcase.png")" class="footer-icon">
+                    @jobInfo.jobType
+                </div>
+                <a href="@routes.IndividualJobController.showJobView(jobInfo)" class="view-job-button">View Job</a>
+            </div>
         </div>
-        <a href="@routes.IndividualJobController.showJobView(jobInfo)" class="view-job-button">View Job</a>
     </div>
     }
 </div>
