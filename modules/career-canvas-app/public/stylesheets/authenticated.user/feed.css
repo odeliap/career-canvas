@@ -464,6 +464,39 @@ select {
     margin-right: 0;
 }
 
+/* Jobs Spreadsheet View */
+
+.spreadsheet-view {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.spreadsheet-view th, .spreadsheet-view td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: center;
+}
+
+.spreadsheet-view th {
+    background-color: #EEEAE5;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.spreadsheet-view th:hover {
+    background-color: #DED4C4;
+}
+
+.spreadsheet-view td {
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.spreadsheet-view tbody {
+    background-color: #f9f9f9;
+}
+
 /* Job Metadata */
 
 .job-company {

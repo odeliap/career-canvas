@@ -1,8 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const jobsGrid = document.getElementById("job-tiles");
     const jobCards = jobsGrid.querySelectorAll(".job-tile");
+
     const jobsList = document.getElementById("job-list");
-    const jobListItems = document.querySelectorAll(".job-list-item");
+    const jobListItems = jobsList.querySelectorAll(".job-list-item");
+
+    const spreadsheet = document.getElementById("spreadsheet-rows");
+    const spreadsheetRows = spreadsheet.querySelectorAll(".spreadsheet-row");
+
     const lastUpdateFilter = document.getElementById("lastUpdate");
     const companyFilter = document.getElementById("company");
     const locationFilter = document.getElementById("location");
@@ -55,6 +60,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        spreadsheetRows.forEach((card, index) => {
+            const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
+            const company = card.getAttribute("data-company");
+            const location = card.getAttribute("data-location");
+            const starred = card.getAttribute("data-starred") === "true";
+            const showStarredOnly = showStarredCheckbox.checked;
+
+            if (lastUpdate >= timeLimit &&
+                (selectedCompany === "" || selectedCompany === company) &&
+                (selectedLocation === "" || selectedLocation === location) &&
+                (!showStarredOnly || starred)) {
+                filteredItems++;
+            }
+        });
+
         maxPage = Math.ceil(filteredItems / ITEMS_PER_PAGE);
 
         var displayCards = [];
@@ -78,6 +98,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         jobListItems.forEach((card, index) => {
+            const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
+            const company = card.getAttribute("data-company");
+            const location = card.getAttribute("data-location");
+            const starred = card.getAttribute("data-starred") === "true";
+            const showStarredOnly = showStarredCheckbox.checked;
+
+            if (lastUpdate >= timeLimit &&
+                (selectedCompany === "" || selectedCompany === company) &&
+                (selectedLocation === "" || selectedLocation === location) &&
+                (!showStarredOnly || starred)) {
+
+                displayCards.push(card);
+            } else {
+                card.style.display = "none";
+            }
+        });
+
+        spreadsheetRows.forEach((card, index) => {
             const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
             const company = card.getAttribute("data-company");
             const location = card.getAttribute("data-location");
@@ -164,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateCountForStatus(status) {
         const statusElements = document.querySelectorAll(`[data-status="${status}"]`);
 
-        const count = statusElements.length;
+        const count = statusElements.length/3;
 
         const countDisplayElementId = `${status}-count`;
         const countDisplayElement = document.getElementById(countDisplayElementId);
