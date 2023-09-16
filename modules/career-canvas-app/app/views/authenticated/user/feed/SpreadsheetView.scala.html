@@ -15,19 +15,17 @@
         </tr>
         </thead>
         <tbody>
-            @jobInfos.map { jobInfo =>
-                <div class="spreadsheet-row" data-status="@jobInfo.status.toString" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
-                    <tr>
-                        <td>@jobInfo.company</td>
-                        <td>@jobInfo.jobTitle</td>
-                        <td>@jobInfo.jobType</td>
-                        <td>@jobInfo.location</td>
-                        <td>@jobInfo.salaryRange</td>
-                        <td>@jobInfo.status</td>
-                        <td>@jobInfo.lastUpdate.toLocalDateTime().toLocalDate()</td>
-                    </tr>
-                </div>
-            }
+        @jobInfos.map { jobInfo =>
+        <tr class="spreadsheet-row" data-status="@jobInfo.status.toString" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
+        <td>@jobInfo.company</td>
+        <td>@jobInfo.jobTitle</td>
+        <td>@jobInfo.jobType</td>
+        <td>@jobInfo.location</td>
+        <td>@jobInfo.salaryRange</td>
+        <td>@jobInfo.status</td>
+        <td>@jobInfo.lastUpdate.toLocalDateTime().toLocalDate()</td>
+        </tr>
+        }
         </tbody>
     </table>
 </div>

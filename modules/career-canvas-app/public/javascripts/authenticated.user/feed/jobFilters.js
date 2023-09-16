@@ -52,11 +52,17 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
+        console.log(filteredItems)
+
         maxPage = Math.ceil(filteredItems / ITEMS_PER_PAGE);
 
         displayCards.forEach((card, index) => {
             if (index >= (currentPage - 1) * ITEMS_PER_PAGE && index < currentPage * ITEMS_PER_PAGE) {
-                card.style.display = "block";
+                if (card.classList.contains("spreadsheet-row")) {
+                    card.style.display = "table-row";
+                } else {
+                    card.style.display = "block";
+                }
             } else {
                 card.style.display = "none";
             }
