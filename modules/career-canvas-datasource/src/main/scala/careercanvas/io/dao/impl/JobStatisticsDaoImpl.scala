@@ -32,7 +32,7 @@ class JobStatisticsDaoImpl @Inject() (
       .filter(_.userId === userId)
 
     val tx = for {
-      earliestApplicationDate <- userQuery.result.map(results => results.map(_.lastUpdate).min)
+      earliestApplicationDate <- userQuery.result.map(results => results.map(_.dateAdded).min)
 
       totalRows <- userQuery.result.map(_.size)
 
