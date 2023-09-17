@@ -77,9 +77,9 @@
             <button id="spreadsheetToggleView" class="toggle-view">Spreadsheet View</button>
         </div>
 
-        <div id="tiles-view">@TilesView(jobInfos)</div>
-        <div id="list-view" class="hidden">@ListView(jobInfos)</div>
-        <div id="spreadsheet-view" class="hidden">@SpreadsheetView(jobInfos)</div>
+        <div id="tiles-view">@layouts.TilesView(jobInfos)</div>
+        <div id="list-view" class="hidden">@layouts.ListView(jobInfos)</div>
+        <div id="spreadsheet-view" class="hidden">@layouts.SpreadsheetView(jobInfos)</div>
 
         <div class="pagination">
             <button id="prevPage"><img src="@routes.Assets.versioned("images/authenticated.user/feed/pagination/previous.png")" class="pagination-arrow"></button>
