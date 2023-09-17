@@ -209,7 +209,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (currentFilter === filter) {
                 currentFilter = null;
                 document.querySelectorAll('[data-status]').forEach(job => {
-                    job.style.display = 'block';
+                    if (job.classList.contains("spreadsheet-row")) {
+                        job.style.display = "table-row";
+                    } else {
+                        job.style.display = "block";
+                    }
                     filterDisplayElement.classList.remove('highlighted-count-arrow-box');
                 });
             } else {
@@ -219,7 +223,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 document.querySelectorAll(`[data-status="${filter}"]`).forEach(job => {
-                    job.style.display = 'block';
+                    if (job.classList.contains("spreadsheet-row")) {
+                        job.style.display = "table-row";
+                    } else {
+                        job.style.display = "block";
+                    }
                 });
 
                 currentFilter = filter;
