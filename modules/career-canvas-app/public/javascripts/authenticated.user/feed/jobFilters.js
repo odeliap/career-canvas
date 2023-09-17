@@ -13,9 +13,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const locationFilter = document.getElementById("location");
     const showStarredCheckbox = document.getElementById("showStarred");
 
-    const ITEMS_PER_PAGE = 30;
-    let currentPage = 1;
-    let maxPage = 1;
+    const tilesViewBtn = document.getElementById("tilesToggleView");
+    const listViewBtn = document.getElementById("listToggleView");
+    const spreadsheetViewBtn = document.getElementById("spreadsheetToggleView");
+
+    const tilesView = document.getElementById("tiles-view");
+    const listView = document.getElementById('list-view');
+    const spreadsheetView = document.getElementById('spreadsheet-view');
+
+    const ITEMS_PER_PAGE = 6;
+
+    let currentPage = {
+        'jobCards': 1,
+        'jobListItems': 1,
+        'spreadsheetRows': 1
+    };
+    let maxPage = {
+        'jobCards': 1,
+        'jobListItems': 1,
+        'spreadsheetRows': 1
+    };
+
+    function getActiveGrouping() {
+        if (!tilesView.classList.contains("hidden")) {
+            return 'jobCards';
+        } else if (!listView.classList.contains("hidden")) {
+            return 'jobListItems';
+        } else if (!spreadsheetView.classList.contains("hidden")) {
+            return 'spreadsheetRows';
+        }
+        return null;
+    }
 
     function filterCard(card) {
         const now = new Date().getTime();
@@ -36,28 +64,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function filterRows(resetPage = true) {
-        if (resetPage) currentPage = 1;
+        const currentGrouping = getActiveGrouping()
+        if (resetPage) currentPage[currentGrouping] = 1;
 
         let filteredItems = 0;
-        let displayCards = [];
 
-        for (let itemType in allItems) {
-            allItems[itemType].forEach(card => {
-                if (filterCard(card)) {
-                    filteredItems++;
-                    displayCards.push(card);
+        allItems[currentGrouping].forEach(card => {
+            if (filterCard(card)) {
+                filteredItems++;
+                if (card.classList.contains("spreadsheet-row")) {
+                    card.style.display = "table-row";
                 } else {
-                    card.style.display = "none";
+                    card.style.display = "block";
                 }
-            });
-        }
+            } else {
+                card.style.display = "none";
+            }
+        });
 
-        console.log(filteredItems)
+        maxPage[currentGrouping] = Math.ceil(filteredItems / ITEMS_PER_PAGE);
 
-        maxPage = Math.ceil(filteredItems / ITEMS_PER_PAGE);
-
-        displayCards.forEach((card, index) => {
-            if (index >= (currentPage - 1) * ITEMS_PER_PAGE && index < currentPage * ITEMS_PER_PAGE) {
+        allItems[currentGrouping].forEach((card, index) => {
+            if (index >= (currentPage[currentGrouping] - 1) * ITEMS_PER_PAGE && index < currentPage[currentGrouping] * ITEMS_PER_PAGE) {
                 if (card.classList.contains("spreadsheet-row")) {
                     card.style.display = "table-row";
                 } else {
@@ -75,25 +103,27 @@ document.addEventListener('DOMContentLoaded', function() {
         const pageNumbersContainer = document.getElementById('pageNumbersContainer');
         pageNumbersContainer.innerHTML = "";
 
-        for (let i = 1; i <= maxPage; i++) {
+        const currentGrouping = getActiveGrouping();
+
+        for (let i = 1; i <= maxPage[currentGrouping]; i++) {
             const pageElem = document.createElement("span");
             pageElem.textContent = i;
             pageElem.className = "page-number";
 
-            if (i === currentPage) {
+            if (i === currentPage[currentGrouping]) {
                 pageElem.classList.add("current");
             }
 
             pageElem.addEventListener("click", function() {
-                currentPage = i;
+                currentPage[currentGrouping] = i;
                 filterRows(false);
             });
 
             pageNumbersContainer.appendChild(pageElem);
         }
 
-        document.getElementById('prevPage').disabled = currentPage === 1;
-        document.getElementById('nextPage').disabled = currentPage >= maxPage;
+        document.getElementById('prevPage').disabled = currentPage[currentGrouping] === 1;
+        document.getElementById('nextPage').disabled = currentPage[currentGrouping] >= maxPage[currentGrouping];
     }
 
     lastUpdateFilter.addEventListener("change", filterRows);
@@ -112,15 +142,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('prevPage').addEventListener("click", function() {
-        if (currentPage > 1) {
-            currentPage--;
+        const currentGrouping = getActiveGrouping()
+        if (currentPage[currentGrouping] > 1) {
+            currentPage[currentGrouping]--;
             filterRows(false);
         }
     });
 
     document.getElementById('nextPage').addEventListener("click", function() {
-        if (currentPage < maxPage) {
-            currentPage++;
+        const currentGrouping = getActiveGrouping()
+        if (currentPage[currentGrouping] < maxPage[currentGrouping]) {
+            currentPage[currentGrouping]++;
             filterRows(false);
         }
     });
@@ -190,5 +222,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 locationFilter.value = '';
             }
         });
+    });
+
+    function showView(viewId, toggleId) {
+        tilesView.classList.add('hidden');
+        listView.classList.add('hidden');
+        spreadsheetView.classList.add('hidden');
+
+        document.getElementById(viewId).classList.remove('hidden');
+
+        const toggleOpts = document.querySelectorAll('.toggle-view');
+
+        toggleOpts.forEach(toggleOpt => toggleOpt.classList.remove('active-toggle-view'));
+
+        document.getElementById(toggleId).classList.add('active-toggle-view');
+        filterRows();
+    }
+
+    tilesViewBtn.addEventListener('click', function() {
+        showView('tiles-view', 'tilesToggleView');
+    });
+
+    listViewBtn.addEventListener('click', function() {
+        showView('list-view', 'listToggleView');
+    });
+
+    spreadsheetViewBtn.addEventListener('click', function() {
+        showView('spreadsheet-view', 'spreadsheetToggleView');
     });
 });
