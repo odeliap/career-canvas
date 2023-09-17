@@ -7,7 +7,6 @@ import careercanvas.io.model.metrics.{MetricsDao, StatusPercentage}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 
-import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext

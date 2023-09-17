@@ -608,6 +608,10 @@ select {
     background-color: #f9f9f9;
 }
 
+#spreadsheetCompany:hover {
+    text-decoration: underline;
+}
+
 /* Common Jobs View Elements */
 
 .bookmark-icon {
