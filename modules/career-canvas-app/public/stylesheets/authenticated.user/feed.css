@@ -589,10 +589,6 @@ select {
     text-align: center;
 }
 
-#spreadsheetStatusSection {
-
-}
-
 .spreadsheet-view th {
     background-color: #EEEAE5;
     font-weight: bold;
@@ -741,6 +737,12 @@ select {
 @media (max-width: 600px) {
     .box {
         flex: 0 1 100%;
+    }
+}
+
+@media (max-width: 750px) {
+    .spreadsheet-view th, .spreadsheet-view td, #spreadsheetStatusButton {
+        font-size: 8px;
     }
 }
 
