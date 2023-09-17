@@ -68,10 +68,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (resetPage) currentPage[currentGrouping] = 1;
 
         let filteredItems = 0;
+        let displayCards = [];
 
         allItems[currentGrouping].forEach(card => {
             if (filterCard(card)) {
                 filteredItems++;
+                displayCards.push(card);
                 if (card.classList.contains("spreadsheet-row")) {
                     card.style.display = "table-row";
                 } else {
@@ -84,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         maxPage[currentGrouping] = Math.ceil(filteredItems / ITEMS_PER_PAGE);
 
-        allItems[currentGrouping].forEach((card, index) => {
+        displayCards.forEach((card, index) => {
             if (index >= (currentPage[currentGrouping] - 1) * ITEMS_PER_PAGE && index < currentPage[currentGrouping] * ITEMS_PER_PAGE) {
                 if (card.classList.contains("spreadsheet-row")) {
                     card.style.display = "table-row";
@@ -127,7 +129,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     lastUpdateFilter.addEventListener("change", filterRows);
-    companyFilter.addEventListener("change", filterRows);
+    companyFilter.addEventListener("change", function() {
+        console.log('Company Filter changed:', this.value);
+        filterRows();
+    });
+
     locationFilter.addEventListener("change", filterRows);
 
     showStarredCheckbox.addEventListener("change", function() {
