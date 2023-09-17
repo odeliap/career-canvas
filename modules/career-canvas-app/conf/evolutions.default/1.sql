@@ -33,6 +33,7 @@ create table if not exists job_statuses (
     salary_range        varchar(255)            not null,
     status              job_status              not null,
     app_submission_date timestamp               null,
+    date_added          timestamp               default now(),
     last_update         timestamp,
     notes               varchar(1024)           null,
     starred             boolean                 default false

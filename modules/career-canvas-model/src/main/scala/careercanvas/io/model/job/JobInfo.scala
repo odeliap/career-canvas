@@ -20,6 +20,7 @@ case class JobInfo(
   salaryRange: String,
   status: JobStatus,
   appSubmissionDate: Option[Timestamp],
+  dateAdded: Timestamp = Timestamp.from(Instant.now()),
   lastUpdate: Timestamp = Timestamp.from(Instant.now()),
   notes: Option[String] = None,
   starred: Boolean = false
@@ -29,6 +30,7 @@ case class JobInfo(
     this.copy(
       status = updateJobInfo.status.getOrElse(this.status),
       appSubmissionDate = updateJobInfo.appSubmissionDate.orElse(this.appSubmissionDate),
+      dateAdded = updateJobInfo.dateAdded.getOrElse(this.dateAdded),
       notes = updateJobInfo.notes.orElse(this.notes),
       starred = updateJobInfo.starred.getOrElse(this.starred),
       lastUpdate = updateJobInfo.lastUpdate
@@ -60,6 +62,7 @@ object JobInfo {
       (JsPath \ "salaryRange").write[String] and
       (JsPath \ "status").write[JobStatus] and
       (JsPath \ "appSubmissionDate").writeNullable[Timestamp] and
+      (JsPath \ "dateAdded").write[Timestamp] and
       (JsPath \ "lastUpdate").write[Timestamp] and
       (JsPath \ "notes").writeNullable[String] and
       (JsPath \ "starred").write[Boolean]
@@ -76,6 +79,7 @@ object JobInfo {
       (__ \ "salaryRange").read[String] and
       (__ \ "status").read[JobStatus] and
       (__ \ "appSubmissionDate").readNullable[Timestamp] and
+      (__ \ "dateAdded").read[Timestamp] and
       (__ \ "lastUpdate").read[Timestamp] and
       (__ \ "notes").readNullable[String] and
       (__ \ "starred").read[Boolean]
@@ -104,6 +108,10 @@ object JobInfo {
             }
           }
 
+          val dateAdded = params.get("dateAdded").flatMap(_.headOption).map { dateStr =>
+            Timestamp.from(ZonedDateTime.parse(dateStr).toInstant)
+          }.getOrElse(Timestamp.from(Instant.now()))
+
           val lastUpdate = params.get("lastUpdate").flatMap(_.headOption).map { dateStr =>
             Timestamp.from(ZonedDateTime.parse(dateStr).toInstant)
           }.getOrElse(Timestamp.from(Instant.now()))
@@ -111,17 +119,18 @@ object JobInfo {
           val notes = params.get("notes").flatMap(_.headOption)
           val starred = params.get("starred").flatMap(_.headOption).exists(_.toBoolean)
 
-          Right(JobInfo(userId, jobId, postUrl, company, jobTitle, jobType, location, salaryRange, status, appSubmissionDate, lastUpdate, notes, starred))
+          Right(JobInfo(userId, jobId, postUrl, company, jobTitle, jobType, location, salaryRange, status, appSubmissionDate, dateAdded, lastUpdate, notes, starred))
         }.getOrElse(Left("Unable to bind JobInfo"))
       }
     }
 
     override def unbind(key: String, jobInfo: JobInfo): String = {
       val appSubmissionDate = jobInfo.appSubmissionDate.map(_.toInstant.atZone(ZoneId.systemDefault()).toString).getOrElse("")
+      val dateAdded = jobInfo.dateAdded.toInstant.atZone(ZoneId.systemDefault()).toString
       val lastUpdate = jobInfo.lastUpdate.toInstant.atZone(ZoneId.systemDefault()).toString
       val notes = jobInfo.notes.getOrElse("")
 
-      s"userId=${jobInfo.userId}&jobId=${jobInfo.jobId}&postUrl=${jobInfo.postUrl}&company=${jobInfo.company}&jobTitle=${jobInfo.jobTitle}&jobType=${jobInfo.jobType}&location=${jobInfo.location}&salaryRange=${jobInfo.salaryRange}&status=${jobInfo.status}&appSubmissionDate=$appSubmissionDate&lastUpdate=$lastUpdate&notes=$notes&starred=${jobInfo.starred}"
+      s"userId=${jobInfo.userId}&jobId=${jobInfo.jobId}&postUrl=${jobInfo.postUrl}&company=${jobInfo.company}&jobTitle=${jobInfo.jobTitle}&jobType=${jobInfo.jobType}&location=${jobInfo.location}&salaryRange=${jobInfo.salaryRange}&status=${jobInfo.status}&appSubmissionDate=$appSubmissionDate&dateAdded=${dateAdded}&lastUpdate=$lastUpdate&notes=$notes&starred=${jobInfo.starred}"
     }
   }
 }

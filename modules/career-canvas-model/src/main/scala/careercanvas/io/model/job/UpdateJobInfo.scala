@@ -8,6 +8,7 @@ case class UpdateJobInfo(
   jobId: Long,
   status: Option[JobStatus],
   appSubmissionDate: Option[Timestamp],
+  dateAdded: Option[Timestamp],
   notes: Option[String],
   starred: Option[Boolean],
   lastUpdate: Timestamp = Timestamp.valueOf(LocalDateTime.now())

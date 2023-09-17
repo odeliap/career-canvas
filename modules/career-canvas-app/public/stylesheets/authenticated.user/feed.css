@@ -355,7 +355,6 @@ select {
 .job-tile {
   box-sizing: border-box;
   padding: 20px;
-  overflow: hidden;
   position: relative;
   height: 300px;
   background-color: #fff;
@@ -590,6 +589,10 @@ select {
     text-align: center;
 }
 
+#spreadsheetStatusSection {
+
+}
+
 .spreadsheet-view th {
     background-color: #EEEAE5;
     font-weight: bold;
@@ -626,10 +629,6 @@ select {
     border: none;
 }
 
-.status-dropdown {
-    display: block;
-}
-
 .status-btn:hover {
     background-color: #e9eff6;
     cursor: pointer;
@@ -644,6 +643,7 @@ select {
     border: 1px solid #ccc;
     background-color: white;
     padding: 0 10px;
+    margin-left: -7px;
 }
 
 .dropdown-item:hover {

@@ -11,6 +11,7 @@
             <th>Location</th>
             <th>Salary Range</th>
             <th>Status</th>
+            <th>Date Added</th>
             <th>Last Update</th>
         </tr>
         </thead>
@@ -33,6 +34,7 @@
                 <p class="dropdown-item @(if(jobInfo.status.toString == "Rejected") "active-status")" data-id="@jobInfo.jobId" status="Rejected">Rejected</p>
             </div>
         </td>
+        <td>@jobInfo.dateAdded.toLocalDateTime().toLocalDate()</td>
         <td class="lastUpdate@jobInfo.jobId">@jobInfo.lastUpdate.toLocalDateTime().toLocalDate()</td>
         </tr>
         }

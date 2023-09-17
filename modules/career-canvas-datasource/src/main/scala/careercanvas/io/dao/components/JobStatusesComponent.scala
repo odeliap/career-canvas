@@ -23,6 +23,7 @@ trait JobStatusesComponent {
     def salaryRange: Rep[String] = column[String]("salary_range")
     def status: Rep[JobStatus] = column[JobStatus]("status")
     def appSubmissionDate: Rep[Option[Timestamp]] = column[Option[Timestamp]]("app_submission_date")
+    def dateAdded: Rep[Timestamp] = column[Timestamp]("date_added")
     def lastUpdate: Rep[Timestamp] = column[Timestamp]("last_update")
     def notes: Rep[Option[String]] = column[Option[String]]("notes")
     def starred: Rep[Boolean] = column[Boolean]("starred")
@@ -38,6 +39,7 @@ trait JobStatusesComponent {
       salaryRange,
       status,
       appSubmissionDate,
+      dateAdded,
       lastUpdate,
       notes,
       starred
