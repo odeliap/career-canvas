@@ -33,7 +33,7 @@
             <button id="addJobButton">+</button>
 
             <form id="search" action="#">
-                <input type="text" class="search-container" id="searchBox" placeholder="Search by title or company" onkeypress="handle" />
+                <input type="text" class="search-container" id="searchBox" placeholder="Search by title or company"/>
             </form>
 
             <div>
@@ -91,7 +91,6 @@
     </div>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFilters.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFeedNavigationUnderline.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/search.js")" type="text/javascript"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             function updateCountForStatus(status) {

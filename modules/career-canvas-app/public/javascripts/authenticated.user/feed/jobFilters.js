@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const companyFilter = document.getElementById("company");
     const locationFilter = document.getElementById("location");
     const showStarredCheckbox = document.getElementById("showStarred");
+    const searchInput = document.getElementById("searchBox");
 
     const tilesViewBtn = document.getElementById("tilesToggleView");
     const listViewBtn = document.getElementById("listToggleView");
@@ -51,8 +52,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const timeLimit = now - hours * 60 * 60 * 1000;
         const selectedCompany = companyFilter.value;
         const selectedLocation = locationFilter.value;
+        const selectedSearch = searchInput.value.toLowerCase();
+
         const lastUpdate = parseFloat(card.getAttribute("data-lastupdate"));
         const company = card.getAttribute("data-company");
+        const jobTitle = card.getAttribute("data-title");
         const location = card.getAttribute("data-location");
         const starred = card.getAttribute("data-starred") === "true";
         const showStarredOnly = showStarredCheckbox.checked;
@@ -60,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return lastUpdate >= timeLimit &&
             (selectedCompany === "" || selectedCompany === company) &&
             (selectedLocation === "" || selectedLocation === location) &&
+            ((company.toLowerCase().includes(selectedSearch) || jobTitle.toLowerCase().includes(selectedSearch)) || selectedSearch === "") &&
             (!showStarredOnly || starred);
     }
 
@@ -129,12 +134,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     lastUpdateFilter.addEventListener("change", filterRows);
+
     companyFilter.addEventListener("change", function() {
         console.log('Company Filter changed:', this.value);
         filterRows();
     });
 
     locationFilter.addEventListener("change", filterRows);
+
+    searchInput.addEventListener('keydown', function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            filterRows();
+        }
+    });
+
+    searchInput.addEventListener('input', function() {
+        filterRows();
+      });
 
     showStarredCheckbox.addEventListener("change", function() {
         filterRows();

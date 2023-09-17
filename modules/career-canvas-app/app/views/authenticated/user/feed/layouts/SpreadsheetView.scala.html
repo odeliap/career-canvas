@@ -18,7 +18,7 @@
         </thead>
         <tbody>
         @jobInfos.map { jobInfo =>
-        <tr class="spreadsheet-row job-id-@jobInfo.jobId" data-status="@jobInfo.status.toString" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
+        <tr class="spreadsheet-row job-id-@jobInfo.jobId" data-status="@jobInfo.status.toString" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-title="@jobInfo.jobTitle" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
         <td><a href="@routes.IndividualJobController.showJobView(jobInfo)" id="spreadsheetCompany">@jobInfo.company</a></td>
         <td>@jobInfo.jobTitle</td>
         <td>@jobInfo.jobType</td>

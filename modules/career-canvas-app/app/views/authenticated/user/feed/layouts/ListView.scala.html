@@ -5,6 +5,7 @@
         <div class="job-list-item job-id-@jobInfo.jobId"
              data-status="@jobInfo.status.toString"
              data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}"
+             data-title="@jobInfo.jobTitle"
              data-lastupdate="@jobInfo.lastUpdate.getTime"
              data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}"
              data-starred="@jobInfo.starred.toString.toLowerCase()">
