@@ -1,2 +1,2 @@
-const jobFeedNavUnderline = document.getElementById("job-feed-nav-underline");
+const jobFeedNavUnderline = document.getElementById("jobFeedNavUnderline");
 jobFeedNavUnderline.style.display = "block";

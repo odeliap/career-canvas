@@ -1,2 +1,2 @@
-const statisticsNavUnderline = document.getElementById("statistics-nav-underline");
+const statisticsNavUnderline = document.getElementById("statisticsNavUnderline");
 statisticsNavUnderline.style.display = "block";

@@ -6,11 +6,11 @@
 )(implicit request: MessagesRequestHeader)
 
 @authenticated.user.feed.BaseJobFeedView(jobInfos) {
-    <div id="job-descriptions-modal" class="modal">
+    <div id="jobDescriptionsModal" class="modal">
         <div class="modal-content">
-            <span id="closeModalBtn" class="close-btn">&times;</span>
-            <p id="add-new-job-description-title">Verify Job Details</p>
-            <div id="job-description-input">
+            <a id="closeModalBtn" class="close-btn" href="@routes.JobFeedController.removeJobDetails()">&times;</a>
+            <p id="addNewJobDescriptionTitle">Verify Job Details</p>
+            <div id="jobDescriptionInput">
                 @if(form.hasGlobalErrors) {
                     @form.globalErrors.map { error: FormError =>
                         <div>
@@ -116,7 +116,7 @@
 
                     <div class="save-options">
                         <a href="@routes.JobFeedController.removeJobDetails()" class="cancel-add">Cancel</a>
-                        <button id="final-save-job-button">Save</button>
+                        <button id="finalSaveJobButton">Save</button>
                     </div>
                 }
             </div>

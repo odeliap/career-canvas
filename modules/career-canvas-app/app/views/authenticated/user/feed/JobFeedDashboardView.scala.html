@@ -6,13 +6,13 @@
 )(implicit request: MessagesRequestHeader)
 
 @authenticated.user.feed.BaseJobFeedView(jobInfos) {
-    <div id="job-url-modal" class="modal" data-show="@showUrlModal">
+    <div id="jobUrlModal" class="modal" data-show="@showUrlModal">
         <div class="modal-content">
             <span id="closeModalBtn" class="close-btn">&times;</span>
-            <p id="add-new-job-url-title">Add a New Job Post</p>
-            <p id="add-new-job-url-subtitle">We'll autofill the rest.</p>
-            <p class="form-label" id="job-url-input-label">URL for Original Posting</p>
-            <div id="job-url-input">
+            <p id="addNewJobUrlTitle">Add a New Job Post</p>
+            <p id="addNewJobUrlSubtitle">We'll autofill the rest.</p>
+            <p class="form-label" id="jobUrlInputLabel">URL for Original Posting</p>
+            <div id="jobUrlInput">
                 @if(form.hasGlobalErrors) {
                     @form.globalErrors.map { error: FormError =>
                         <div>
@@ -35,7 +35,7 @@
 
                     <div class="save-options">
                         <a class="cancel-add" id="cancelAddJobUrl" href="#">Cancel</a>
-                        <button id="final-add-job-button">Add Job</button>
+                        <button id="finalAddJobButton">Add Job</button>
                     </div>
                 }
             </div>

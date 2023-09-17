@@ -1,4 +1,4 @@
-const documentsTab = document.getElementById("documents-tab");
+const documentsTab = document.getElementById("documentsTab");
 documentsTab.classList.add("highlight-sidebar-section");
 
 function toggleView(viewId) {

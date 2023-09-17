@@ -1,6 +1,6 @@
 @(jobInfos: Seq[careercanvas.io.model.job.JobInfo])
 
-<div id="job-tiles">
+<div id="jobTiles">
     @jobInfos.map { jobInfo =>
     <div class="job-tile job-id-@jobInfo.jobId"
          data-status="@jobInfo.status.toString"

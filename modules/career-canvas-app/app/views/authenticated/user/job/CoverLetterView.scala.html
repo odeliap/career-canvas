@@ -11,8 +11,8 @@
 <div class="cover-letter">
     <section class="cover-letter-content">
         <div class="if-generated">
-            <label for="adjust-buttons">Improve:</label>
-            <div id="adjust-buttons">
+            <label for="adjustButtons">Improve:</label>
+            <div id="adjustButtons">
                 @careercanvas.io.model.job.ResponseImprovement.values.map { improvement =>
                 <button class="custom-button" id="@improvement.toString" onclick="toggleButton(this)">@improvement.toString.split("(?=[A-Z])").mkString(" ")</button>
                 }

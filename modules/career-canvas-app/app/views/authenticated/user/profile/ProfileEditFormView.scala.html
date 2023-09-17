@@ -5,7 +5,7 @@
 )(implicit request: MessagesRequestHeader)
 
 @UserProfileBaseView("Edit Profile | Career Canvas") {
-    <h2 id="edit-profile-header">Edit profile</h2>
+    <h2 id="editProfileHeader">Edit profile</h2>
     @request.flash.data.map{ case (name, value) =>
         @if(name.equals("error")) {
             <div class="error-flash">@value</div>

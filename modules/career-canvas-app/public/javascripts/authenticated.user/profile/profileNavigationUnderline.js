@@ -1,2 +1,2 @@
-const profileNavUnderline = document.getElementById("profile-nav-underline");
+const profileNavUnderline = document.getElementById("profileNavUnderline");
 profileNavUnderline.style.display = "block";

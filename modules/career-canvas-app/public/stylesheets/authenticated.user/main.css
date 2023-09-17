@@ -63,7 +63,7 @@ body {
 }
 
 .navigation-el:hover,
-.profile-dropdown:hover #profile-dropbtn {
+.profile-dropdown:hover #profileDropbtn {
   color: black;
 }
 
@@ -130,7 +130,7 @@ body {
   margin: auto 20px auto auto;
 }
 
-#profile-dropbtn {
+#profileDropbtn {
   border: none;
   outline: none;
   background-color: inherit;

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const jobsGrid = document.getElementById("job-tiles");
-    const jobsList = document.getElementById("job-list");
-    const spreadsheet = document.getElementById("spreadsheet-rows");
+    const jobsGrid = document.getElementById("jobTiles");
+    const jobsList = document.getElementById("jobList");
+    const spreadsheet = document.getElementById("spreadsheetRows");
     const allItems = {
         'jobCards': jobsGrid.querySelectorAll(".job-tile"),
         'jobListItems': jobsList.querySelectorAll(".job-list-item"),
@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const listViewBtn = document.getElementById("listToggleView");
     const spreadsheetViewBtn = document.getElementById("spreadsheetToggleView");
 
-    const tilesView = document.getElementById("tiles-view");
-    const listView = document.getElementById('list-view');
-    const spreadsheetView = document.getElementById('spreadsheet-view');
+    const tilesView = document.getElementById("tilesView");
+    const listView = document.getElementById('listView');
+    const spreadsheetView = document.getElementById('spreadsheetView');
 
     const ITEMS_PER_PAGE = 30;
 
@@ -221,14 +221,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     tilesViewBtn.addEventListener('click', function() {
-        showView('tiles-view', 'tilesToggleView');
+        showView('tilesView', 'tilesToggleView');
     });
 
     listViewBtn.addEventListener('click', function() {
-        showView('list-view', 'listToggleView');
+        showView('listView', 'listToggleView');
     });
 
     spreadsheetViewBtn.addEventListener('click', function() {
-        showView('spreadsheet-view', 'spreadsheetToggleView');
+        showView('spreadsheetView', 'spreadsheetToggleView');
     });
 });

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('job-url-modal');
-    const showModalBtn = document.getElementById('add-job-button');
+    const modal = document.getElementById('jobUrlModal');
+    const showModalBtn = document.getElementById('addJobButton');
     const closeModalBtn = document.getElementById('closeModalBtn');
     const cancelBtn = document.getElementById('cancelAddJobUrl');
     var loadedBefore = false;
