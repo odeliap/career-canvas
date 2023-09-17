@@ -51,8 +51,8 @@
                 <p class="job-list-item-job-type bottom-list-item">@jobInfo.jobType</p>
                 <p class="job-list-item-salary-range bottom-list-item">@jobInfo.salaryRange</p>
                 <div class="job-list-item-status bottom-list-item">
-                    <div id="status-dropdown">
-                        <button class="status-btn">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
+                    <div class="status-dropdown">
+                        <button class="status-btn" id="listStatusButton">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
                         <div class="dropdown-menu" id="statusDropdown">
                             <p class="dropdown-item @(if(jobInfo.status.toString == "Bookmarked") "active-status")" data-id="@jobInfo.jobId" status="Bookmarked">Bookmarked</p>
                             <p class="dropdown-item @(if(jobInfo.status.toString == "Applying") "active-status")" data-id="@jobInfo.jobId" status="Applying">Applying</p>

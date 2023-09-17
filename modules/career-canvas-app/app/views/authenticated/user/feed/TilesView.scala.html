@@ -34,8 +34,8 @@
                 <div class="metadata-tag" style="background-color: @utils.ColorUtils.jobStatusToColor(jobInfo.status);"></div>
                 <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/status/" + jobInfo.status + ".png")" alt="@{jobInfo.status}" class="metadata-icon">
                 <p class="meta-title">Status:</p>
-                <div id="status-dropdown">
-                    <button class="status-btn">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
+                <div class="status-dropdown">
+                    <button class="status-btn" id="tilesStatusButton">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
                     <div class="dropdown-menu" id="statusDropdown">
                         <p class="dropdown-item @(if(jobInfo.status.toString == "Bookmarked") "active-status")" data-id="@jobInfo.jobId" status="Bookmarked">Bookmarked</p>
                         <p class="dropdown-item @(if(jobInfo.status.toString == "Applying") "active-status")" data-id="@jobInfo.jobId" status="Applying">Applying</p>

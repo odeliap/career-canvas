@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const listView = document.getElementById('list-view');
     const spreadsheetView = document.getElementById('spreadsheet-view');
 
-    const ITEMS_PER_PAGE = 6;
+    const ITEMS_PER_PAGE = 30;
 
     let currentPage = {
         'jobCards': 1,

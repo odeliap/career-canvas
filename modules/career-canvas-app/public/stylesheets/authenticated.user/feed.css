@@ -472,6 +472,10 @@ select {
     font-weight: bold;
 }
 
+#tilesStatusButton {
+    background-color: white;
+}
+
 /* Jobs List View */
 
 #job-list {
@@ -568,6 +572,10 @@ select {
     margin-right: 0;
 }
 
+#listStatusButton {
+    background-color: white;
+}
+
 /* Jobs Spreadsheet View */
 
 .spreadsheet-view {
@@ -597,7 +605,7 @@ select {
     font-size: 14px;
 }
 
-.spreadsheet-view tbody {
+.spreadsheet-view tbody, #spreadsheetStatusButton {
     background-color: #f9f9f9;
 }
 
@@ -616,10 +624,9 @@ select {
 
 .status-btn {
     border: none;
-    background-color: white;
 }
 
-#status-dropdown {
+.status-dropdown {
     display: block;
 }
 
@@ -669,7 +676,7 @@ select {
 
 /* Hover Effects */
 
-.job-tile:hover {
+.job-tile:hover, .job-list-item:hover {
     border: 1px solid #3A3B3C;
 }
 

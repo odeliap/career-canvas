@@ -22,7 +22,17 @@
         <td>@jobInfo.jobType</td>
         <td>@jobInfo.location</td>
         <td>@jobInfo.salaryRange</td>
-        <td>@jobInfo.status</td>
+        <td class="status-dropdown" id="spreadsheetStatusSection">
+            <button class="status-btn" id="spreadsheetStatusButton">@jobInfo.status.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
+            <div class="dropdown-menu">
+                <p class="dropdown-item @(if(jobInfo.status.toString == "Bookmarked") "active-status")" data-id="@jobInfo.jobId" status="Bookmarked">Bookmarked</p>
+                <p class="dropdown-item @(if(jobInfo.status.toString == "Applying") "active-status")" data-id="@jobInfo.jobId" status="Applying">Applying</p>
+                <p class="dropdown-item @(if(jobInfo.status.toString == "Applied") "active-status")" data-id="@jobInfo.jobId" status="Applied">Applied</p>
+                <p class="dropdown-item @(if(jobInfo.status.toString == "Interviewing") "active-status")" data-id="@jobInfo.jobId" status="Interviewing">Interviewing</p>
+                <p class="dropdown-item @(if(jobInfo.status.toString == "Offer") "active-status")" data-id="@jobInfo.jobId" status="Offer">Offer</p>
+                <p class="dropdown-item @(if(jobInfo.status.toString == "Rejected") "active-status")" data-id="@jobInfo.jobId" status="Rejected">Rejected</p>
+            </div>
+        </td>
         <td class="lastUpdate@jobInfo.jobId">@jobInfo.lastUpdate.toLocalDateTime().toLocalDate()</td>
         </tr>
         }
