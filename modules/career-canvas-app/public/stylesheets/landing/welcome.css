@@ -135,19 +135,19 @@
 
 /* Section Background Colors */
 
-#section-1 {
+#section1 {
     background-color: #D6D4D2;
 }
 
-#section-2, #section-5 {
+#section2, #section5 {
     background-color: white;
 }
 
-#section-3 {
+#section3 {
     background-color: #f6f0e8;
 }
 
-#section-4, #router {
+#section4, #router {
     background-color: #F5F5F5;
 }
 
@@ -183,7 +183,7 @@
     margin-left: 30px;
 }
 
-#router-header {
+#routerHeader {
     margin-right: 30px;
 }
 
@@ -208,7 +208,7 @@
     margin: 0 15px;
 }
 
-#join-now-button {
+#joinNowButton {
     margin-left: 10px;
     margin-top: 20px;
     border-radius: 30px;
@@ -233,7 +233,7 @@
 
 /* Images */
 
-#welcome-img {
+#welcomeImg {
     right: 0;
     width: 45%;
     height: 45%;
@@ -251,7 +251,7 @@
     color: #187bcd;
 }
 
-#join-now-button:hover, .header-join:hover, .username:hover, .password:hover {
+#joinNowButton:hover, .header-join:hover, .username:hover, .password:hover {
     background-color: #F5F5F5;
 }
 
@@ -279,7 +279,7 @@
         height: 50px;
     }
 
-    .login-button, #join-now-button {
+    .login-button, #joinNowButton {
         width: 405px;
     }
 
@@ -299,7 +299,7 @@
         margin: 0 15px;
     }
 
-    #welcome-img {
+    #welcomeImg {
         visibility: hidden;
         height: 0px;
     }

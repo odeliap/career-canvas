@@ -187,42 +187,44 @@
 
 /* Text */
 
-#forgot-password-title, #reset-code-title, #set-new-password-title {
+#forgotPasswordTitle,
+#resetCodeTitle,
+#setNewPasswordTitle {
     font-weight: bold;
 }
 
-#forgot-password-title {
+#forgotPasswordTitle {
     font-size: 32px;
     margin-left: 20px;
     margin-bottom: -5px;
 }
 
-#reset-code-title, #set-new-password-title {
+#resetCodeTitle, #setNewPasswordTitle {
     font-size: 22px;
     margin-left: 20px;
     margin-bottom: -5px;
     padding-bottom: 20px;
 }
 
-#set-new-password-title {
+#setNewPasswordTitle {
     margin-top: 40px;
 }
 
-#forgot-password-subtitle,
-#reset-code-subtitle,
-#set-new-password-subtitle {
+#forgotPasswordSubtitle,
+#resetCodeSubtitle,
+#setNewPasswordSubtitle {
     font-size: 14px;
 }
 
-#forgot-password-subtitle {
+#forgotPasswordSubtitle {
     margin-left: 20px;
 }
 
-#reset-code-subtitle, #set-new-password-subtitle {
+#resetCodeSubtitle, #setNewPasswordSubtitle {
     margin-left: 20px;
 }
 
-#reset-code-email {
+#resetCodeEmail {
     margin-top: 3px;
     font-weight: bold;
 }

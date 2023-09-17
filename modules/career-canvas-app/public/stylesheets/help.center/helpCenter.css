@@ -1,6 +1,6 @@
 /* Header */
 
-#help-center-header {
+#helpCenterHeader {
     font-size: 17px;
     font-weight: 500;
     padding: 3px 16px;
@@ -105,7 +105,7 @@
 
 /* Icons */
 
-#help-center-icon {
+#helpCenterIcon {
     width: 55px;
     height: 55px;
     padding-right: 6px;

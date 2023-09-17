@@ -8,7 +8,7 @@
         <div class="individual-job-overview-section">
             <div class="individual-job-header">
                 <p class="individual-job-view-company">@jobInfo.company</p>
-                <a href="@jobInfo.postUrl" class="see-post-button">See Post</a>
+                <a href="@jobInfo.postUrl" class="see-post-button" target="_blank">See Post</a>
             </div>
             <div class="individual-job-subheader">
                 <p class="individual-job-view-title">@jobInfo.jobTitle &mdash;</p>
@@ -16,26 +16,31 @@
             </div>
             <div class="individual-job-view-salary">@jobInfo.salaryRange</div>
         </div>
+        <div class="arrows-container">
+            @for(status <- Seq("Bookmarked", "Applying", "Applied", "Interviewing", "Offer", "Rejected")) {
+                <div class="arrow-box @(if(status == "Bookmarked") { "arrow-left-end" } else if (status == "Rejected") { "arrow-right-left" } else { "arrow-right-end"}) @(if (status == jobInfo.status.toString) { "status-current" } else if (status != jobInfo.status.toString && Seq("Bookmarked", "Applying", "Applied", "Interviewing", "Offer", "Rejected").indexOf(status.toString) < Seq("Bookmarked", "Applying", "Applied", "Interviewing", "Offer", "Rejected").indexOf(jobInfo.status.toString)) { "status-before" } else { "status-after" })">@status</div>
+            }
+        </div>
         <div class="individual-job-overview-section individual-job-overview-meta">
-            <div id="individual-job-view-about">
+            <div id="individualJobViewAbout">
                 <h3>About</h3>
                 <p>@jobDescriptions.about</p>
             </div>
         </div>
         <div class="individual-job-overview-section individual-job-overview-meta">
-            <div id="individual-job-view-requirements">
+            <div id="individualJobViewRequirements">
                 <h3>Requirements</h3>
                 <p>@jobDescriptions.requirements</p>
             </div>
         </div>
         <div class="individual-job-overview-section individual-job-overview-meta">
-            <div id="individual-job-view-tech-stack">
+            <div id="individualJobViewTechStack">
                 <h3>Tech Stack</h3>
                 <p>@jobDescriptions.techStack</p>
             </div>
         </div>
         <div class="individual-job-overview-section individual-job-overview-meta">
-            <div id="individual-job-view-notes">
+            <div id="individualJobViewNotes">
                 <h3>Notes</h3>
                 <p>@jobInfo.notes</p>
             </div>

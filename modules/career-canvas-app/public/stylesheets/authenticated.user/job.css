@@ -97,6 +97,20 @@
     margin-top: -30px;
 }
 
+.status-current, .status-before, .status-after {
+    height: 30px;
+}
+
+.status-current {
+    background-color: #D3D3D3;
+    color: #4c4c4c;
+}
+
+.status-before {
+    background-color: #949494;
+    color: #ECECEC;
+}
+
 .see-post-button {
     background-color: #0077B5;
     color: #fff;
@@ -143,6 +157,7 @@
     color: #2e4a9e;
     background-color: #BDD5E7;
     font-weight: bold;
+    font-size: 12px;
 }
 
 

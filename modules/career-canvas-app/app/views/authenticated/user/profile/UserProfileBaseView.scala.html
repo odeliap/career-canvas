@@ -1,20 +1,20 @@
 @(pageName: String)(content: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.AuthenticatedUserLayout(pageName) {
-    <h2 id="settings-title">Settings</h2>
+    <h2 id="settingsTitle">Settings</h2>
     <div class="container">
         <div class="left-panel">
             <div class="top-part">
                 <div class="settings-content">
-                    <h4 id="settings-accounts-center-title">Accounts Center</h4>
+                    <h4 id="settingsAccountsCenterTitle">Accounts Center</h4>
                     <p class="settings-sub-content">Manage your account settings.</p>
                 </div>
             </div>
             <div class="bottom-part">
                 <div class="settings-tabs">
                     <div class="settings-sidebar-opts">
-                        <a href="@routes.ProfileController.editProfile()" class="settings-opts" id="edit-profile-tab">Edit profile</a>
-                        <a href="@routes.ProfileController.showResumes()" class="settings-opts" id="resumes-tab">Resumes</a>
+                        <a href="@routes.ProfileController.editProfile()" class="settings-opts" id="editProfileTab">Edit profile</a>
+                        <a href="@routes.ProfileController.showResumes()" class="settings-opts" id="resumesTab">Resumes</a>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 /* Page Title */
 
-#settings-title {
+#settingsTitle {
   margin-left: 25px;
 }
 
@@ -114,7 +114,7 @@
   height: 20px;
 }
 
-#edit-profile-form-fields input[type="text"] {
+#editProfileFormFields input[type="text"] {
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 8px;
@@ -145,7 +145,7 @@
 /* Screen Sizing */
 
 @media only screen and (max-width: 650px) {
-    #settings-accounts-center-title, .settings-opts {
+    #settingsAccountsCenterTitle, .settings-opts {
         font-size: 12px;
     }
 

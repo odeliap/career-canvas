@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var isConfirmed = window.confirm('Are you sure you want to delete this resume?');
 
             if (isConfirmed) {
-                event.target.closest('#delete-resume-form').submit();
+                event.target.closest('#deleteResumeForm').submit();
             }
         });
     });

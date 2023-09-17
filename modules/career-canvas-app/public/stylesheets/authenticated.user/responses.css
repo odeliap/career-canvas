@@ -41,9 +41,9 @@
     margin: 5px;
 }
 
-#generate-cover-letter-button,
-#improve-button,
-#save-cover-letter-button {
+#generateCoverLetterButton,
+#improveButton,
+#saveCoverLetterButton {
     display: block;
     width: 100%;
     background-color: #0077B5;
@@ -58,9 +58,9 @@
 }
 
 .custom-button:hover,
-#generate-cover-letter-button:hover,
-#improve-button:hover,
-#save-cover-letter-button:hover {
+#generateCoverLetterButton:hover,
+#improveButton:hover,
+#saveCoverLetterButton:hover {
     background-color: #357ABD;
 }
 

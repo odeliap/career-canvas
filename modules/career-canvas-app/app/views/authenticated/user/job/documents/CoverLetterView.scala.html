@@ -18,17 +18,17 @@
                 }
             </div>
             <div class="custom-input">
-                <label for="custom-text">Custom Improvement Request:</label>
-                <textarea id="custom-text" placeholder="Enter your custom text here"></textarea>
+                <label for="customText">Custom Improvement Request:</label>
+                <textarea id="customText" placeholder="Enter your custom text here"></textarea>
             </div>
         </div>
         <div class="if-not-generated">
-            <a href="javascript:void(0);" id="generate-cover-letter-button" onclick="generateCoverLetter()">Generate Cover Letter</a>
+            <a href="javascript:void(0);" id="generateCoverLetterButton" onclick="generateCoverLetter()">Generate Cover Letter</a>
         </div>
         <div class="if-generated">
-            <a href="javascript:void(0);" id="improve-button" onclick="improveCoverLetter()">Improve Cover Letter</a>
+            <a href="javascript:void(0);" id="improveButton" onclick="improveCoverLetter()">Improve Cover Letter</a>
         </div>
-        <div id="loading-popup" class="loading-popup">
+        <div id="loadingPopup" class="loading-popup">
             <div class="loading-spinner"></div>
             <div class="loading-text">Loading...</div>
         </div>
@@ -38,7 +38,7 @@
         <textarea id="generated-letter"></textarea>
     </section>
     <div class="if-generated">
-    <a id="save-cover-letter-button" href="javascript:void(0);" onclick="saveCoverLetterWithPrompt();">Save</a>
+    <a id="saveCoverLetterButton" href="javascript:void(0);" onclick="saveCoverLetterWithPrompt();">Save</a>
     </div>
 </div>
 <script>
@@ -84,7 +84,7 @@
             improvementButton.style.backgroundColor = "";
         }
         selectedImprovements.clear();
-        const customText = document.getElementById('custom-text');
+        const customText = document.getElementById('customText');
         customText.value = "";
     }
 
@@ -118,12 +118,12 @@
     }
 
     function showLoadingPopup() {
-        const loadingPopup = document.getElementById('loading-popup');
+        const loadingPopup = document.getElementById('loadingPopup');
         loadingPopup.style.display = 'flex';
     }
 
     function hideLoadingPopup() {
-        const loadingPopup = document.getElementById('loading-popup');
+        const loadingPopup = document.getElementById('loadingPopup');
         loadingPopup.style.display = 'none';
     }
 
@@ -176,7 +176,7 @@
         showLoadingPopup();
 
         const content = document.getElementById("generated-letter").innerHTML;
-        const customImprovement = document.getElementById('custom-text').value;
+        const customImprovement = document.getElementById('customText').value;
         const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
 
         const payload = {
