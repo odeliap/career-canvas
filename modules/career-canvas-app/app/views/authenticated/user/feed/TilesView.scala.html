@@ -2,10 +2,11 @@
 
 <div id="job-tiles">
     @jobInfos.map { jobInfo =>
-    <div class="job-tile"
+    <div class="job-tile job-id-@jobInfo.jobId"
          data-status="@jobInfo.status.toString"
          data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}"
-         data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}"
+         data-lastupdate="@jobInfo.lastUpdate.getTime"
+         data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}"
          data-starred="@jobInfo.starred.toString.toLowerCase()">
         <div class="job-tile-header">
             <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/logo-placeholder.png")" class="company-logo">
@@ -50,7 +51,7 @@
                 <div class="metadata-tag" style="background-color: @utils.ColorUtils.localDateTimeToColor(jobInfo.lastUpdate.toLocalDateTime);"></div>
                 <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/calendar.png")" class="metadata-icon">
                 <p class="meta-title">Last Update:</p>
-                <p class="meta-content">
+                <p class="meta-content lastUpdate@jobInfo.jobId">
                     @{
                     val now = java.time.LocalDateTime.now()
                     val lastUpdate = jobInfo.lastUpdate.toLocalDateTime

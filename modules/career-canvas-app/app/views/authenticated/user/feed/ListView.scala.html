@@ -2,7 +2,7 @@
 
 <div id="job-list">
     @jobInfos.map { jobInfo =>
-        <div class="job-list-item"
+        <div class="job-list-item job-id-@jobInfo.jobId"
              data-status="@jobInfo.status.toString"
              data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}"
              data-lastupdate="@jobInfo.lastUpdate.getTime"
@@ -11,7 +11,7 @@
             <div class="job-list-item-header">
                 <p class="job-list-item-title">@jobInfo.jobTitle</p>
                 <div class="job-list-item-header-right">
-                    <p class="job-list-item-last-update">
+                    <p class="job-list-item-last-update lastUpdate@jobInfo.jobId">
                         @{
                         val now = java.time.LocalDateTime.now()
                         val lastUpdate = jobInfo.lastUpdate.toLocalDateTime

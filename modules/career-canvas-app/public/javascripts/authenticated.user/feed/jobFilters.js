@@ -165,39 +165,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     filterRows();
 
-    function updateCountForStatus(status) {
-        const statusElements = document.querySelectorAll(`[data-status="${status}"]`);
-
-        const count = statusElements.length/3;
-
-        const countDisplayElementId = `${status}-count`;
-        const countDisplayElement = document.getElementById(countDisplayElementId);
-        if (countDisplayElement) {
-            if (count > 0) {
-                countDisplayElement.innerHTML = `<div><p>${count}</p> <p class="count-display">${status.toUpperCase()}</p></div>`;
-            }
-        } else {
-            console.warn(`No element found with the ID: ${countDisplayElementId}`);
-        }
-
-        if (count > 0) {
-            countDisplayElement.classList.add('.count-arrow-box');
-        } else {
-            countDisplayElement.classList.remove('.count-arrow-box');
-        }
-    }
-
-    function updateCountForAllStatuses() {
-        updateCountForStatus('Bookmarked');
-        updateCountForStatus('Applying');
-        updateCountForStatus('Applied');
-        updateCountForStatus('Interviewing');
-        updateCountForStatus('Offer');
-        updateCountForStatus('Rejected');
-    }
-
-    updateCountForAllStatuses();
-
     let currentFilter = null;
 
     document.querySelectorAll('.status-filter').forEach(button => {
