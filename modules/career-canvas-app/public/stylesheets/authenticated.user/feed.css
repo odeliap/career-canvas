@@ -738,29 +738,12 @@ select {
     .box {
         flex: 0 1 100%;
     }
-
-    .spreadsheet-view th, .spreadsheet-view td, #spreadsheetStatusButton {
-        font-size: 8px;
-    }
-
-    #spreadsheetLastUpdateLabel, #spreadsheetLastUpdate {
-        display: none;
-    }
-}
-
-@media (max-width: 700px) {
-    .spreadsheet-view th, .spreadsheet-view td, #spreadsheetStatusButton {
-        font-size: 9px;
-    }
 }
 
 @media (max-width: 900px) {
-    .spreadsheet-view th, .spreadsheet-view td, #spreadsheetStatusButton {
-        font-size: 10px;
-    }
-
-    #spreadsheetBookmarkLabel, #spreadsheetBookmark {
-        display: none;
+    #spreadsheetRows {
+        overflow-x: auto;
+        width: 100%;
     }
 }
 
