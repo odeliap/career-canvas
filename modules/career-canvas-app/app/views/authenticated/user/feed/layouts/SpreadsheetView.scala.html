@@ -12,7 +12,8 @@
             <th>Salary Range</th>
             <th>Status</th>
             <th>Date Added</th>
-            <th>Last Update</th>
+            <th id="spreadsheetLastUpdateLabel">Last Update</th>
+            <th id="spreadsheetBookmarkLabel">Bookmarked</th>
         </tr>
         </thead>
         <tbody>
@@ -35,7 +36,16 @@
             </div>
         </td>
         <td>@jobInfo.dateAdded.toLocalDateTime().toLocalDate()</td>
-        <td class="lastUpdate@jobInfo.jobId">@jobInfo.lastUpdate.toLocalDateTime().toLocalDate()</td>
+        <td class="lastUpdate@jobInfo.jobId" id="spreadsheetLastUpdate">@jobInfo.lastUpdate.toLocalDateTime().toLocalDate()</td>
+        <td id="spreadsheetBookmark">
+            <a href="@routes.JobFeedController.starJob(jobInfo.jobId)">
+                @if(jobInfo.starred) {
+                    <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/filledbookmark.png")" class="bookmark-icon">
+                } else {
+                    <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/bookmark.png")" class="bookmark-icon">
+                }
+            </a>
+        </td>
         </tr>
         }
         </tbody>
