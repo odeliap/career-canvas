@@ -16,10 +16,11 @@
     flex: 0 0 250px;
     position: sticky;
     top: 0;
-    height: 100vh;
+    height: calc(100vh - 20px);
     background-color: white;
     overflow-x: hidden;
     padding-top: 20px;
+    margin-bottom: -20px;
 }
 
 .sidebar ul {
@@ -48,6 +49,7 @@
 
 #backToFeedButton {
     padding: 10px;
+    margin-left: 10px;
     font-size: 14px;
     font-weight: bold;
 }
@@ -59,13 +61,44 @@
 
 /* Overview Page */
 
+#individualJobOverview {
+    background-color: white;
+    border: 1px solid #EFE7DF;
+    margin: 0 -60px 50px -60px;
+}
+
+.individual-job-overview-section {
+    border: 1px solid #EFE7DF;
+    padding: 0 20px 30px 20px;
+}
+
+.individual-job-overview-section h3 {
+    border-bottom: 1px solid #EFE7DF;
+    margin: 0 -20px;
+    padding: 20px;
+    color: #8C8984;
+}
+
+.individual-job-overview-meta p {
+    color: #949494;
+    font-size: 15px;
+    font-weight: 300;
+}
+
 .individual-job-header {
     display: flex;
     justify-content: space-between;
+    margin-top: -10px;
 }
 
-.apply-button {
-    background-color: #007BFF;
+.individual-job-subheader {
+    display: flex;
+    justify-content: left;
+    margin-top: -30px;
+}
+
+.see-post-button {
+    background-color: #0077B5;
     color: #fff;
     border: none;
     padding: 12px 25px;
@@ -73,33 +106,33 @@
     font-weight: bold;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 25px;
+    margin-top: 30px;
     height: 10%;
     width: 100px;
     text-align: center;
     vertical-align: center;
 }
 
-.apply-button:hover {
-    background-color: #0056b3;
+.see-post-button:hover {
+    background-color: #2E5984;
 }
 
 .individual-job-view-company {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: bold;
-    font-family: Arial;
-    letter-spacing: -1.5px;
+    color: #333333;
 }
 
 .individual-job-view-title {
-    font-weight: bold;
-    font-size: 32px;
+    font-weight: 900;
+    font-size: 20px;
     color: #333333;
-    margin-top: 10px;
+    margin-right: 5px;
 }
 
 .individual-job-view-location {
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: 200;
 }
 
 .individual-job-view-salary {
@@ -110,10 +143,6 @@
     color: #2e4a9e;
     background-color: #BDD5E7;
     font-weight: bold;
-}
-
-#individual-job-view-about {
-    margin-bottom: 20px;
 }
 
 
@@ -151,8 +180,26 @@
 
 /* Screen Resizing */
 
+@media screen and (max-width: 600px) {
+    .individual-job-view-company {
+        font-size: 28px;
+        margin-top: 35px;
+    }
+
+    .individual-job-view-title, .individual-job-view-location {
+        font-size: 18px;
+    }
+
+}
+
 @media screen and (max-width: 768px) {
     .sidebar {
         flex: 0 0 150px;
+    }
+
+    .see-post-button {
+        padding: 8px 18px;
+        margin-top: 36px;
+        font-size: 12px;
     }
 }

@@ -4,25 +4,42 @@
 )(implicit request: MessagesRequestHeader)
 
 @BaseJobInformationView(jobInfo) {
-    <div class="individual-job-header">
-        <p class="individual-job-view-company">@jobInfo.company</p>
-        <a href="@jobInfo.postUrl" class="apply-button">Apply Now</a>
-    </div>
-    <p class="individual-job-view-title">@jobInfo.jobTitle</p>
-    <p class="individual-job-view-location">@jobInfo.location</p>
-    <div class="individual-job-view-salary">@jobInfo.salaryRange</div>
-    <div id="individual-job-view-about">
-        <h3>About</h3>
-        <div>@jobDescriptions.about</div>
-    </div>
-    <hr>
-    <div id="individual-job-view-requirements">
-        <h3>Requirements</h3>
-        <div>@jobDescriptions.requirements</div>
-    </div>
-    <div id="individual-job-view-tech-stack">
-        <h3>Tech Stack</h3>
-        <div>@jobDescriptions.techStack</div>
+    <div id="individualJobOverview">
+        <div class="individual-job-overview-section">
+            <div class="individual-job-header">
+                <p class="individual-job-view-company">@jobInfo.company</p>
+                <a href="@jobInfo.postUrl" class="see-post-button">See Post</a>
+            </div>
+            <div class="individual-job-subheader">
+                <p class="individual-job-view-title">@jobInfo.jobTitle &mdash;</p>
+                <p class="individual-job-view-location">@jobInfo.location</p>
+            </div>
+            <div class="individual-job-view-salary">@jobInfo.salaryRange</div>
+        </div>
+        <div class="individual-job-overview-section individual-job-overview-meta">
+            <div id="individual-job-view-about">
+                <h3>About</h3>
+                <p>@jobDescriptions.about</p>
+            </div>
+        </div>
+        <div class="individual-job-overview-section individual-job-overview-meta">
+            <div id="individual-job-view-requirements">
+                <h3>Requirements</h3>
+                <p>@jobDescriptions.requirements</p>
+            </div>
+        </div>
+        <div class="individual-job-overview-section individual-job-overview-meta">
+            <div id="individual-job-view-tech-stack">
+                <h3>Tech Stack</h3>
+                <p>@jobDescriptions.techStack</p>
+            </div>
+        </div>
+        <div class="individual-job-overview-section individual-job-overview-meta">
+            <div id="individual-job-view-notes">
+                <h3>Notes</h3>
+                <p>@jobInfo.notes</p>
+            </div>
+        </div>
     </div>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/job/overviewTabHighlightSidebar.js")" type="text/javascript"></script>
 }
