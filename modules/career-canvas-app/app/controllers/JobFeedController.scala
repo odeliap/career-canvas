@@ -126,9 +126,7 @@ class JobFeedController @Inject()(
   }
 
   def removeJobDetails(): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
-    val userId = retrieveUserId(request)
-    val userJobs = retrieveUserJobs(userId)
-    Ok(views.html.authenticated.user.feed.JobFeedDashboardView(jobPostForm, getPostInfoUrl, userJobs))
+    Redirect(routes.JobFeedController.showJobFeedHome())
       .withSession(request.session -- Seq("company", "jobTitle", "postUrl"))
   }
 
