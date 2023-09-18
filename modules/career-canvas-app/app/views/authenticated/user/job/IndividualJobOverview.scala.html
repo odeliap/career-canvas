@@ -34,7 +34,7 @@
                 </div>
                 <p id="individualJobAboutContent">@jobDescriptions.about</p>
                 <div class="edit-meta-area hidden" id="jobAboutEditorSection">
-                    @TextEditor("jobAboutEditor")
+                    @TextEditor("jobAboutEditor", "job/updateAbout", jobInfo.jobId)
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
                 </div>
                 <p id="individualJobRequirementsContent">@jobDescriptions.requirements</p>
                 <div class="edit-meta-area hidden" id="jobRequirementsEditorSection">
-                    @TextEditor("jobRequirementsEditor")
+                    @TextEditor("jobRequirementsEditor", "job/updateRequirements", jobInfo.jobId)
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
                 </div>
                 <p id="individualJobTechStackContent">@jobDescriptions.techStack</p>
                 <div class="edit-meta-area hidden" id="jobTechStackEditorSection">
-                    @TextEditor("jobTechStackEditor")
+                    @TextEditor("jobTechStackEditor", "job/updateTechStack", jobInfo.jobId)
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@
                 </div>
                 <p id="individualJobNotesContent">@jobInfo.notes.getOrElse("")</p>
                 <div class="edit-meta-area hidden" id="jobNotesEditorSection">
-                    @TextEditor("jobNotesEditor")
+                    @TextEditor("jobNotesEditor", "job/updateNotes", jobInfo.jobId)
                 </div>
             </div>
         </div>

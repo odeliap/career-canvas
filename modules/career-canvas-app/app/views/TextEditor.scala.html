@@ -1,4 +1,10 @@
-@(textEditorId: String)
+@import play.api.libs.json._
+@import play.filters.csrf.CSRF
+@(
+    textEditorId: String,
+    putRoute: String,
+    jobId: Long
+)(implicit request: MessagesRequestHeader)
 
 <html lang="en">
 <head>
@@ -28,39 +34,69 @@
 <div class="actions-section">
     <hr>
     <div class="action-buttons">
-        <button class="save-text-edit">Save Changes</button>
+        <button class="save-text-edit" id="save@textEditorId">Save Changes</button>
         <button class="cancel-text-edit">Cancel</button>
     </div>
 </div>
 
 <script>
-    function applyHeading(heading) {
-      const editor = document.getElementById(@textEditorId);
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
-      const headingElement = document.createElement(heading);
-      headingElement.appendChild(range.extractContents());
-      range.insertNode(headingElement);
+  function applyHeading(heading) {
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    const headingElement = document.createElement(heading);
+    headingElement.appendChild(range.extractContents());
+    range.insertNode(headingElement);
+  }
+
+  const buttonStates = {
+    boldButton: false,
+    italicButton: false,
+    underlineButton: false
+  };
+
+  function toggleStyle(style) {
+    document.execCommand(style, false, null);
+    const buttonId = `${style}Button`;
+
+    if (!buttonStates[buttonId]) {
+      document.getElementById(buttonId).style.color = "#187bcd";
+    } else {
+      document.getElementById(buttonId).style.color = "#3A3B3C";
     }
 
-    let buttonStates = {
-      boldButton: false,
-      italicButton: false,
-      underlineButton: false
+    buttonStates[buttonId] = !buttonStates[buttonId];
+  }
+</script>
+<script>
+  document.getElementById('save@textEditorId').addEventListener('click', function() {
+    const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
+    const updatedContent = document.getElementById("@textEditorId").innerHTML; // Use @textEditorId here
+    const data = {
+      jobId: @jobId,
+      updateText: updatedContent
     };
 
-    function toggleStyle(style) {
-      document.execCommand(style, false, null);
-      const buttonId = `${style}Button`;
+    console.log('@putRoute');
 
-      if (!buttonStates[buttonId]) {
-        document.getElementById(buttonId).style.color = "#187bcd";
-      } else {
-        document.getElementById(buttonId).style.color = "#3A3B3C";
-      }
-
-      buttonStates[buttonId] = !buttonStates[buttonId];
-    }
+    fetch("@putRoute", {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Csrf-Token': csrfToken
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log('Data saved successfully.');
+        } else {
+          console.error('Failed to save data.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
 </script>
 </body>
 </html>
