@@ -2,8 +2,7 @@
 @import play.filters.csrf.CSRF
 @(
     textEditorId: String,
-    putRoute: String,
-    jobId: Long
+    putRoute: Call
 )(implicit request: MessagesRequestHeader)
 
 <html lang="en">
@@ -72,30 +71,27 @@
     const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
     const updatedContent = document.getElementById("@textEditorId").innerHTML; // Use @textEditorId here
     const data = {
-      jobId: @jobId,
       updateText: updatedContent
     };
 
-    console.log('@putRoute');
-
-    fetch("@putRoute", {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Csrf-Token': csrfToken
-      },
-      body: JSON.stringify(data),
-    })
-      .then(response => {
-        if (response.ok) {
-          console.log('Data saved successfully.');
-        } else {
-          console.error('Failed to save data.');
+    var xhr = new XMLHttpRequest();
+    xhr.open('PUT', "@putRoute", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Csrf-Token', csrfToken);
+    xhr.onreadystatechange = function() {
+      // If the request completed successfully, handle it here
+      if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
+        console.log('Data saved successfully.');
+        // If there was a redirect, navigate the browser
+        if (xhr.responseURL !== "@putRoute") {
+          window.location.href = xhr.responseURL;
         }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+      } else if (xhr.readyState === 4) {
+        console.error('Failed to save data.');
+      }
+    };
+    xhr.send(JSON.stringify(data));
+
   });
 </script>
 </body>

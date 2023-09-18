@@ -52,56 +52,67 @@ class IndividualJobController @Inject()(
     }
   }
 
-  def updateNotes(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
+  def updateNotes(jobId: Long): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
     val userId = retrieveUserId(request)
-    val jobIdValidation = (request.body \ "jobId").validate[Long]
+    val jobInfo = jobApplicationsService.getJobById(userId, jobId)
     val updatedNotesValidation = (request.body \ "updateText").validate[String]
 
-    (jobIdValidation, updatedNotesValidation) match {
-      case (JsSuccess(jobId, _), JsSuccess(updatedNotes, _)) =>
-        jobApplicationsService.updateNotes(userId, jobId, updatedNotes)
-        Ok(Json.obj("content" -> "Updated notes section"))
+    updatedNotesValidation match {
+      case JsSuccess(updatedNotes, _) =>
+        jobApplicationsService.updateNotes(userId, jobInfo.jobId, updatedNotes)
+        Redirect(routes.IndividualJobController.showJobView(jobInfo))
+          .flashing("success" -> "Updated notes section")
       case _ =>
-        BadRequest(Json.obj("error" -> "Invalid JSON format"))
+        Redirect(routes.IndividualJobController.showJobView(jobInfo))
+          .flashing("error" -> "Invalid JSON format")
     }
   }
 
-  def updateAbout(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
-    val jobIdValidation = (request.body \ "jobId").validate[Long]
+  def updateAbout(jobId: Long): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
+    val userId = retrieveUserId(request)
+    val jobInfo = jobApplicationsService.getJobById(userId, jobId)
     val updatedAboutValidation = (request.body \ "updateText").validate[String]
 
-    (jobIdValidation, updatedAboutValidation) match {
-      case (JsSuccess(jobId, _), JsSuccess(updatedAbout, _)) =>
-        jobApplicationsService.updateAbout(jobId, updatedAbout)
-        Ok(Json.obj("content" -> "Updated about section"))
+    updatedAboutValidation match {
+      case JsSuccess(updatedAbout, _) =>
+        jobApplicationsService.updateAbout(jobInfo.jobId, updatedAbout)
+        Redirect(routes.IndividualJobController.showJobView(jobInfo))
+          .flashing("success" -> "Updated about section")
       case _ =>
-        BadRequest(Json.obj("error" -> "Invalid JSON format"))
+        Redirect(routes.IndividualJobController.showJobView(jobInfo))
+          .flashing("error" -> "Invalid JSON format")
      }
   }
 
-  def updateRequirements(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
-    val jobIdValidation = (request.body \ "jobId").validate[Long]
+  def updateRequirements(jobId: Long): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
+    val userId = retrieveUserId(request)
+    val jobInfo = jobApplicationsService.getJobById(userId, jobId)
     val updatedRequirementsValidation = (request.body \ "updateText").validate[String]
 
-    (jobIdValidation, updatedRequirementsValidation) match {
-      case (JsSuccess(jobId, _), JsSuccess(updatedRequirements, _)) =>
-        jobApplicationsService.updateRequirements(jobId, updatedRequirements)
-        Ok(Json.obj("content" -> "Updated requirements section"))
+    updatedRequirementsValidation match {
+      case JsSuccess(updatedRequirements, _) =>
+        jobApplicationsService.updateRequirements(jobInfo.jobId, updatedRequirements)
+        Redirect(routes.IndividualJobController.showJobView(jobInfo))
+          .flashing("success" -> "Updated requirements section")
       case _ =>
-        BadRequest(Json.obj("error" -> "Invalid JSON format"))
+        Redirect(routes.IndividualJobController.showJobView(jobInfo))
+          .flashing("error" -> "Invalid JSON format")
     }
   }
 
-  def updateTechStack(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
-    val jobIdValidation = (request.body \ "jobId").validate[Long]
+  def updateTechStack(jobId: Long): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
+    val userId = retrieveUserId(request)
+    val jobInfo = jobApplicationsService.getJobById(userId, jobId)
     val updatedTechStackValidation = (request.body \ "updateText").validate[String]
 
-    (jobIdValidation, updatedTechStackValidation) match {
-      case (JsSuccess(jobId, _), JsSuccess(updatedTechStack, _)) =>
-        jobApplicationsService.updateTechStack(jobId, updatedTechStack)
-        Ok(Json.obj("content" -> "Updated tech stack section"))
+    updatedTechStackValidation match {
+      case JsSuccess(updatedTechStack, _) =>
+        jobApplicationsService.updateTechStack(jobInfo.jobId, updatedTechStack)
+        Redirect(routes.IndividualJobController.showJobView(jobInfo))
+          .flashing("success" -> "Updated tech stack section")
       case _ =>
-        BadRequest(Json.obj("error" -> "Invalid JSON format"))
+        Redirect(routes.IndividualJobController.showJobView(jobInfo))
+          .flashing("error" -> "Invalid JSON format")
     }
   }
 
