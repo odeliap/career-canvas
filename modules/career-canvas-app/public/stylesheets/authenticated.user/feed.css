@@ -147,10 +147,6 @@ select {
     border: 1px solid #4169e1;
 }
 
-.hidden {
-    display: none;
-}
-
 #tilesToggleView {
     border-radius: 50px 0 0 50px;
 }

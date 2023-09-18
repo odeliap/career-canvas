@@ -5,46 +5,59 @@
 
 @BaseJobInformationView(jobInfo) {
     <div id="individualJobOverview">
-        <div class="individual-job-overview-section">
-            <div class="individual-job-header">
+        <div class="individual-job-overview-section" id="individualJobOverviewHeading">
+            <div class="individual-job-header-top">
                 <p class="individual-job-view-company">@jobInfo.company</p>
                 <a href="@jobInfo.postUrl" class="see-post-button" target="_blank">See Post</a>
             </div>
-            <div class="individual-job-subheader">
+            <div class="individual-job-header-middle">
                 <p class="individual-job-view-title">@jobInfo.jobTitle &mdash;</p>
                 <p class="individual-job-view-location">@jobInfo.location</p>
             </div>
             <div class="individual-job-view-salary">@jobInfo.salaryRange</div>
         </div>
-        <div class="arrows-container">
+        <div class="arrows-container" id="individualJobStatusBar">
             @for(status <- Seq("Bookmarked", "Applying", "Applied", "Interviewing", "Offer", "Rejected")) {
                 <div class="arrow-box @(if(status == "Bookmarked") { "arrow-left-end" } else if (status == "Rejected") { "arrow-right-left" } else { "arrow-right-end"}) @(if (status == jobInfo.status.toString) { "status-current" } else if (status != jobInfo.status.toString && Seq("Bookmarked", "Applying", "Applied", "Interviewing", "Offer", "Rejected").indexOf(status.toString) < Seq("Bookmarked", "Applying", "Applied", "Interviewing", "Offer", "Rejected").indexOf(jobInfo.status.toString)) { "status-before" } else { "status-after" })">@status</div>
             }
         </div>
         <div class="individual-job-overview-section individual-job-overview-meta">
             <div id="individualJobViewAbout">
-                <h3>About</h3>
-                <p>@jobDescriptions.about</p>
+                <div class="individual-job-overview-section-title">
+                    <h3>About</h3>
+                    <button class="individual-job-overview-toggle-button individual-job-overview-toggle-button-img show-toggle-image" id="individualJobAboutToggleBtn"></button>
+                </div>
+                <p id="individualJobAboutContent">@jobDescriptions.about</p>
             </div>
         </div>
         <div class="individual-job-overview-section individual-job-overview-meta">
             <div id="individualJobViewRequirements">
-                <h3>Requirements</h3>
-                <p>@jobDescriptions.requirements</p>
+                <div class="individual-job-overview-section-title">
+                    <h3>Requirements</h3>
+                    <button class="individual-job-overview-toggle-button individual-job-overview-toggle-button-img show-toggle-image" id="individualJobRequirementsToggleBtn"></button>
+                </div>
+                <p id="individualJobRequirementsContent">@jobDescriptions.requirements</p>
             </div>
         </div>
         <div class="individual-job-overview-section individual-job-overview-meta">
             <div id="individualJobViewTechStack">
-                <h3>Tech Stack</h3>
-                <p>@jobDescriptions.techStack</p>
+                <div class="individual-job-overview-section-title">
+                    <h3>Tech Stack</h3>
+                    <button class="individual-job-overview-toggle-button individual-job-overview-toggle-button-img show-toggle-image" id="individualJobTechStackToggleBtn"></button>
+                </div>
+                <p id="individualJobTechStackContent">@jobDescriptions.techStack</p>
             </div>
         </div>
         <div class="individual-job-overview-section individual-job-overview-meta">
             <div id="individualJobViewNotes">
-                <h3>Notes</h3>
-                <p>@jobInfo.notes</p>
+                <div class="individual-job-overview-section-title">
+                    <h3>Notes</h3>
+                    <button class="individual-job-overview-toggle-button individual-job-overview-toggle-button-img show-toggle-image" id="individualJobNotesToggleBtn"></button>
+                </div>
+                <p id="individualJobNotesContent">@jobInfo.notes</p>
             </div>
         </div>
     </div>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/job/overviewTabHighlightSidebar.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/job/overviewTabToggles.js")" type="text/javascript"></script>
 }

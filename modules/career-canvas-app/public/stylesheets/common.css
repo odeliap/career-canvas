@@ -91,6 +91,12 @@ li {
     overflow: hidden;
 }
 
+/* Hide */
+
+.hidden {
+    display: none;
+}
+
 /* Flash Messages */
 
 .success-flash {
