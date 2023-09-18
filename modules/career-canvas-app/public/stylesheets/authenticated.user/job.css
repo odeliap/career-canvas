@@ -147,7 +147,7 @@
 .individual-job-overview-section-title-left {
     display: flex;
     justify-content: flex-start;
-    width: 250px;
+    min-width: 250px;
 }
 
 .individual-job-overview-section-title h3 {

@@ -62,6 +62,26 @@ class JobApplicationsService @Inject() (
     jobApplicationsDao.updateJobStatus(updateJobInfo).waitForResult
   }
 
+  def updateNotes(userId: String, jobId: Long, updatedNotes: String): Unit = {
+    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId, None, Option(Timestamp.valueOf(LocalDateTime.now())), None, Option(updatedNotes), None)
+    jobApplicationsDao.updateJobStatus(updateJobInfo).waitForResult
+  }
+
+  def updateAbout(jobId: Long, updatedAbout: String): Unit = {
+    val updateJobDescriptions = UpdateJobDescriptions(jobId, Option(updatedAbout), None, None)
+    jobDescriptionsDao.updateJob(updateJobDescriptions)
+  }
+
+  def updateRequirements(jobId: Long, updatedRequirements: String): Unit = {
+    val updateJobDescriptions = UpdateJobDescriptions(jobId, None, Option(updatedRequirements), None)
+    jobDescriptionsDao.updateJob(updateJobDescriptions)
+  }
+
+  def updateTechStack(jobId: Long, updatedTechStack: String): Unit = {
+    val updateJobDescriptions = UpdateJobDescriptions(jobId, None, None, Option(updatedTechStack))
+    jobDescriptionsDao.updateJob(updateJobDescriptions)
+  }
+
   def getJobById(userId: String, jobId: Long): JobInfo = {
     jobApplicationsDao.getJobById(userId.toLong, jobId).waitForResult
   }

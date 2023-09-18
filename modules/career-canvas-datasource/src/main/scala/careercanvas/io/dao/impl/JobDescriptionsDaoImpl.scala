@@ -2,7 +2,7 @@ package careercanvas.io.dao.impl
 
 import careercanvas.io.JobDescriptionsDao
 import careercanvas.io.dao.components.JobDescriptionsComponent
-import careercanvas.io.model.job.JobDescriptions
+import careercanvas.io.model.job.{JobDescriptions, UpdateJobDescriptions}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 
@@ -27,6 +27,21 @@ class JobDescriptionsDaoImpl @Inject()(
     val insertQuery = JobDescriptionsQuery returning JobDescriptionsQuery.map(_.jobId) += jobDescriptions
 
     db.run(insertQuery)
+  }
+
+  override def updateJob(updateJobDescriptions: UpdateJobDescriptions): Future[Unit] = {
+    val jobDescriptionsQuery = JobDescriptionsQuery
+      .filter(_.jobId === updateJobDescriptions.jobId)
+
+    val tx = for {
+      jobDescriptions <- jobDescriptionsQuery.result.head
+
+      _ <- jobDescriptionsQuery.update(jobDescriptions.patch(
+        updateJobDescriptions
+      ))
+    } yield ()
+
+    db.run(tx.transactionally).map(_ => ())
   }
 
   override def removeJob(jobId: Long): Future[Unit] = {

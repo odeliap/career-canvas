@@ -9,7 +9,6 @@ import service.JobApplicationsService
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
-import play.api.libs.json._
 import utils.FormUtils
 
 import javax.inject.Inject
@@ -134,14 +133,6 @@ class JobFeedController @Inject()(
     val userId = retrieveUserId(request)
     jobApplicationsService.starJob(userId, jobId)
     Redirect(routes.JobFeedController.showJobFeedHome())
-  }
-
-  def updateStatus(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
-    val userId = retrieveUserId(request)
-    val jobId = (request.body \ "jobId").as[String]
-    val status = (request.body \ "status").as[JobStatus]
-    jobApplicationsService.updateStatus(userId, jobId, status)
-    Ok(Json.obj("content" -> "status updated"))
   }
 
   private def retrieveUserId(request: RequestHeader): String = request.session.data(Global.SESSION_USER_ID)

@@ -38,6 +38,73 @@ class IndividualJobController @Inject()(
     Ok(views.html.authenticated.user.job.DocumentsToggleView(jobInfo, applicationFiles))
   }
 
+  def updateStatus(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
+    val userId = retrieveUserId(request)
+    val jobIdValidation = (request.body \ "jobId").validate[String]
+    val statusValidation = (request.body \ "status").validate[JobStatus]
+
+    (jobIdValidation, statusValidation) match {
+      case (JsSuccess(jobId, _), JsSuccess(status, _)) =>
+        jobApplicationsService.updateStatus(userId, jobId, status)
+        Ok(Json.obj("content" -> "Updated status"))
+      case _ =>
+        BadRequest(Json.obj("error" -> "Invalid JSON format"))
+    }
+  }
+
+  def updateNotes(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
+    val userId = retrieveUserId(request)
+    val jobIdValidation = (request.body \ "jobId").validate[Long]
+    val updatedNotesValidation = (request.body \ "updateText").validate[String]
+
+    (jobIdValidation, updatedNotesValidation) match {
+      case (JsSuccess(jobId, _), JsSuccess(updatedNotes, _)) =>
+        jobApplicationsService.updateNotes(userId, jobId, updatedNotes)
+        Ok(Json.obj("content" -> "Updated notes section"))
+      case _ =>
+        BadRequest(Json.obj("error" -> "Invalid JSON format"))
+    }
+  }
+
+  def updateAbout(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
+    val jobIdValidation = (request.body \ "jobId").validate[Long]
+    val updatedAboutValidation = (request.body \ "updateText").validate[String]
+
+    (jobIdValidation, updatedAboutValidation) match {
+      case (JsSuccess(jobId, _), JsSuccess(updatedAbout, _)) =>
+        jobApplicationsService.updateAbout(jobId, updatedAbout)
+        Ok(Json.obj("content" -> "Updated about section"))
+      case _ =>
+        BadRequest(Json.obj("error" -> "Invalid JSON format"))
+     }
+  }
+
+  def updateRequirements(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
+    val jobIdValidation = (request.body \ "jobId").validate[Long]
+    val updatedRequirementsValidation = (request.body \ "updateText").validate[String]
+
+    (jobIdValidation, updatedRequirementsValidation) match {
+      case (JsSuccess(jobId, _), JsSuccess(updatedRequirements, _)) =>
+        jobApplicationsService.updateRequirements(jobId, updatedRequirements)
+        Ok(Json.obj("content" -> "Updated requirements section"))
+      case _ =>
+        BadRequest(Json.obj("error" -> "Invalid JSON format"))
+    }
+  }
+
+  def updateTechStack(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
+    val jobIdValidation = (request.body \ "jobId").validate[Long]
+    val updatedTechStackValidation = (request.body \ "updateText").validate[String]
+
+    (jobIdValidation, updatedTechStackValidation) match {
+      case (JsSuccess(jobId, _), JsSuccess(updatedTechStack, _)) =>
+        jobApplicationsService.updateTechStack(jobId, updatedTechStack)
+        Ok(Json.obj("content" -> "Updated tech stack section"))
+      case _ =>
+        BadRequest(Json.obj("error" -> "Invalid JSON format"))
+    }
+  }
+
   def generateCoverLetter(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
     val fullName = retrieveUserName(request)
     val jobInfoValidation = (request.body \ "jobInfo").validate[JobInfo]
