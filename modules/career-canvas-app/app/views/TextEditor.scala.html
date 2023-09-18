@@ -2,6 +2,7 @@
 @import play.filters.csrf.CSRF
 @(
     textEditorId: String,
+    previousText: String,
     putRoute: Call
 )(implicit request: MessagesRequestHeader)
 
@@ -28,13 +29,14 @@
 </div>
 
 <div id="@textEditorId" class="editor" contentEditable="true">
+    @previousText
 </div>
 
 <div class="actions-section">
     <hr>
     <div class="action-buttons">
         <button class="save-text-edit" id="save@textEditorId">Save Changes</button>
-        <button class="cancel-text-edit">Cancel</button>
+        <button class="cancel-text-edit" id="cancel@textEditorId">Cancel</button>
     </div>
 </div>
 
@@ -67,6 +69,11 @@
   }
 </script>
 <script>
+  document.getElementById('cancel@textEditorId').addEventListener('click', function() {
+    const editorContent = document.getElementById("@textEditorId");
+    editorContent.innerHTML = '@previousText';
+  });
+
   document.getElementById('save@textEditorId').addEventListener('click', function() {
     const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
     const updatedContent = document.getElementById("@textEditorId").innerHTML; // Use @textEditorId here
