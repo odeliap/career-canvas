@@ -105,13 +105,19 @@
 
 #individualJobOverviewHeading {
     border-bottom: 1px solid #EFE7DF;
-    padding-bottom: 30px;
-}
-
-.individual-job-header-top {
+    padding-bottom: 20px;
     display: flex;
     justify-content: space-between;
-    margin-top: -10px;
+}
+
+.individual-job-header-left {
+    padding: 5px;
+    margin-top: 20px;
+}
+
+.individual-job-header-left:hover {
+    border: 1px solid #C2B5A8;
+    padding-top:
 }
 
 .individual-job-header-middle {
@@ -133,6 +139,7 @@
     color: #949494;
     font-size: 15px;
     font-weight: 300;
+    min-height: 50px;
 }
 
 .individual-job-overview-section-title {
@@ -218,7 +225,7 @@
     background-image: url('/assets/images/common/toggle/hide.png');
 }
 
-.status-current, .status-before, .status-after {
+.status-current, .status-before, .status-after, .delete-job-button {
     height: 30px;
 }
 
@@ -230,6 +237,22 @@
 .status-before {
     background-color: #949494;
     color: #ECECEC;
+}
+
+.delete-job-button, #deleteJobButton {
+    background-color: #BFD7ED;
+    color: #0074B7;
+}
+
+#deleteJobButton {
+    border: none;
+    margin-right: 15px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.status-current, .status-before, .status-after, #deleteJobButton:hover {
+    cursor: pointer;
 }
 
 .see-post-button {
@@ -253,6 +276,7 @@
 }
 
 .individual-job-view-company {
+    margin-top: 0px;
     font-size: 32px;
     font-weight: bold;
     color: #333333;
