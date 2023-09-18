@@ -24,40 +24,73 @@
         <div class="individual-job-overview-section individual-job-overview-meta">
             <div id="individualJobViewAbout">
                 <div class="individual-job-overview-section-title">
-                    <h3>About</h3>
+                    <div class="individual-job-overview-section-title-left">
+                        <h3>About</h3>
+                        <button class="edit-meta-button" id="editAboutContentButton">
+                            <img class="edit-button-icon" src="@routes.Assets.versioned("images/authenticated.user/job/edit.png")"> Edit
+                        </button>
+                    </div>
                     <button class="individual-job-overview-toggle-button individual-job-overview-toggle-button-img show-toggle-image" id="individualJobAboutToggleBtn"></button>
                 </div>
                 <p id="individualJobAboutContent">@jobDescriptions.about</p>
+                <div class="edit-meta-area hidden" id="jobAboutEditorSection">
+                    @TextEditor("jobAboutEditor")
+                </div>
             </div>
         </div>
         <div class="individual-job-overview-section individual-job-overview-meta">
             <div id="individualJobViewRequirements">
                 <div class="individual-job-overview-section-title">
-                    <h3>Requirements</h3>
+                    <div class="individual-job-overview-section-title-left">
+                        <h3>Requirements</h3>
+                        <button class="edit-meta-button" id="editRequirementsContentButton">
+                            <img class="edit-button-icon" src="@routes.Assets.versioned("images/authenticated.user/job/edit.png")"> Edit
+                        </button>
+                    </div>
                     <button class="individual-job-overview-toggle-button individual-job-overview-toggle-button-img show-toggle-image" id="individualJobRequirementsToggleBtn"></button>
                 </div>
                 <p id="individualJobRequirementsContent">@jobDescriptions.requirements</p>
+                <div class="edit-meta-area hidden" id="jobRequirementsEditorSection">
+                    @TextEditor("jobRequirementsEditor")
+                </div>
             </div>
         </div>
         <div class="individual-job-overview-section individual-job-overview-meta">
             <div id="individualJobViewTechStack">
                 <div class="individual-job-overview-section-title">
-                    <h3>Tech Stack</h3>
+                    <div class="individual-job-overview-section-title-left">
+                        <h3>Tech Stack</h3>
+                        <button class="edit-meta-button" id="editTechStackContentButton">
+                            <img class="edit-button-icon" src="@routes.Assets.versioned("images/authenticated.user/job/edit.png")"> Edit
+                        </button>
+                    </div>
                     <button class="individual-job-overview-toggle-button individual-job-overview-toggle-button-img show-toggle-image" id="individualJobTechStackToggleBtn"></button>
                 </div>
                 <p id="individualJobTechStackContent">@jobDescriptions.techStack</p>
+                <div class="edit-meta-area hidden" id="jobTechStackEditorSection">
+                    @TextEditor("jobTechStackEditor")
+                </div>
             </div>
         </div>
         <div class="individual-job-overview-section individual-job-overview-meta">
             <div id="individualJobViewNotes">
                 <div class="individual-job-overview-section-title">
-                    <h3>Notes</h3>
+                    <div class="individual-job-overview-section-title-left">
+                        <h3>Notes</h3>
+                        <button class="edit-meta-button" id="editNotesContentButton">
+                            <img class="edit-button-icon" src="@routes.Assets.versioned("images/authenticated.user/job/edit.png")"> Edit
+                        </button>
+                    </div>
                     <button class="individual-job-overview-toggle-button individual-job-overview-toggle-button-img show-toggle-image" id="individualJobNotesToggleBtn"></button>
                 </div>
-                <p id="individualJobNotesContent">@jobInfo.notes</p>
+                <p id="individualJobNotesContent">@jobInfo.notes.getOrElse("")</p>
+                <div class="edit-meta-area hidden" id="jobNotesEditorSection">
+                    @TextEditor("jobNotesEditor")
+                </div>
             </div>
         </div>
     </div>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/job/overviewTabHighlightSidebar.js")" type="text/javascript"></script>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/job/overviewTabToggles.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/job/overviewEditContents.js")" type="text/javascript"></script>
 }

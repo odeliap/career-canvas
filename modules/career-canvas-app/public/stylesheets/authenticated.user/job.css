@@ -144,9 +144,43 @@
     justify-content: space-between;
 }
 
+.individual-job-overview-section-title-left {
+    display: flex;
+    justify-content: flex-start;
+    width: 250px;
+}
+
 .individual-job-overview-section-title h3 {
-    width: 200px;
     color: #8C8984;
+    margin-right: 15px;
+}
+
+.edit-meta-button {
+    display: flex;
+    justify-content: space-between;
+    background-color: inherit;
+    border: none;
+    font-size: 14px;
+    border: 1px solid #DEDEDE;
+    border-radius: 5px;
+    padding: 6px 10px 0 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.edit-meta-button:hover {
+    background-color: #ebf2f6;
+}
+
+.edit-button-icon {
+    height: 12px;
+    width: 12px;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+
+.edit-meta-area {
+    margin-bottom: 20px;
 }
 
 .individual-job-overview-toggle-button {

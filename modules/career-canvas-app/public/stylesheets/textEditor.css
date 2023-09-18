@@ -1,0 +1,79 @@
+.editor {
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 200px;
+}
+
+#headingSelect {
+  background-color: white;
+  border: none;
+}
+
+.editor-buttons {
+  margin-top: 10px;
+  color: #3A3B3C;
+  border: 1px solid #ccc;
+}
+
+#boldButton, #italicButton, #underlineButton {
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  background-color: white;
+}
+
+#italicButton {
+  font-style: italic;
+}
+
+#underlineButton {
+  text-decoration: underline;
+}
+
+.actions-section {
+    padding: 15px 10px 10px 10px;
+    border: 1px solid #ccc;
+}
+
+.actions-section hr {
+    background-color: #ABC7E3;
+    height: 2px;
+    border: none;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.save-text-edit,
+.cancel-text-edit {
+    margin-top: 10px;
+    font-size: 14px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.save-text-edit {
+    background-color: #0077B5;
+    color: white;
+}
+
+.cancel-text-edit {
+    margin-left: 5px;
+    color: #0077B5;
+    background-color: white;
+}
+
+/* Hover Effects */
+
+.save-text-edit:hover {
+    background-color: #2E5984;
+    cursor: pointer;
+}
+
+.cancel-text-edit:hover {
+    background-color: #eeeeee;
+}

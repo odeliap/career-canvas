@@ -1,0 +1,66 @@
+@(textEditorId: String)
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Text Editor</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/textEditor.css")">
+</head>
+<body>
+
+<div class="editor-buttons">
+    <select id="headingSelect" onchange="applyHeading(this.value)">
+        <option value="normal">Normal</option>
+        <option value="h1">Heading 1</option>
+        <option value="h2">Heading 2</option>
+        <option value="h3">Heading 3</option>
+    </select>
+
+    <button id="boldButton" onclick="toggleStyle('bold')">B</button>
+    <button id="italicButton" onclick="toggleStyle('italic')">I</button>
+    <button id="underlineButton" onclick="toggleStyle('underline')">U</button>
+</div>
+
+<div id="@textEditorId" class="editor" contentEditable="true">
+</div>
+
+<div class="actions-section">
+    <hr>
+    <div class="action-buttons">
+        <button class="save-text-edit">Save Changes</button>
+        <button class="cancel-text-edit">Cancel</button>
+    </div>
+</div>
+
+<script>
+    function applyHeading(heading) {
+      const editor = document.getElementById(@textEditorId);
+      const selection = window.getSelection();
+      const range = selection.getRangeAt(0);
+      const headingElement = document.createElement(heading);
+      headingElement.appendChild(range.extractContents());
+      range.insertNode(headingElement);
+    }
+
+    let buttonStates = {
+      boldButton: false,
+      italicButton: false,
+      underlineButton: false
+    };
+
+    function toggleStyle(style) {
+      document.execCommand(style, false, null);
+      const buttonId = `${style}Button`;
+
+      if (!buttonStates[buttonId]) {
+        document.getElementById(buttonId).style.color = "#187bcd";
+      } else {
+        document.getElementById(buttonId).style.color = "#3A3B3C";
+      }
+
+      buttonStates[buttonId] = !buttonStates[buttonId];
+    }
+</script>
+</body>
+</html>

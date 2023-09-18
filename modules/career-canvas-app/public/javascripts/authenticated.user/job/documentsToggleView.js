@@ -1,5 +1,7 @@
 const documentsTab = document.getElementById("documentsTab");
+const compressedDocumentsTab = document.getElementById("compressedDocumentsTab");
 documentsTab.classList.add("highlight-sidebar-section");
+compressedDocumentsTab.classList.add("highlight-sidebar-section");
 
 function toggleView(viewId) {
     const views = document.querySelectorAll('.view-content');
