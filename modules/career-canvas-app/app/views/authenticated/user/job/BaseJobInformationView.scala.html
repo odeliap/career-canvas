@@ -5,11 +5,29 @@
 @authenticated.user.AuthenticatedUserLayout(s"${jobInfo.company}: ${jobInfo.jobTitle}") {
     <div class="base-job-info-page">
         <div class="page-container">
-            <div class="sidebar">
-                <a href="@routes.JobFeedController.showJobFeedHome()" id="backToFeedButton">Back to Feed</a>
+            <div class="sidebar extended-sidebar" id="jobInfoSidebar">
+                <div id="backToFeedSection">
+                    <a class="extended-sidebar-item" id="extendedBackToFeedButton" href="@routes.JobFeedController.showJobFeedHome()">Back to Feed</a>
+                    <button id="sidebarToggle"></button>
+                </div>
                 <ul>
-                    <li><a id="overviewTab" href="@routes.IndividualJobController.showJobView(jobInfo)">Overview</a></li>
-                    <li><a id="documentsTab" href="@routes.IndividualJobController.showDocumentsView(jobInfo)">Documents</a></li>
+                    <li class="extended-sidebar-item"><a id="overviewTab" href="@routes.IndividualJobController.showJobView(jobInfo)">Overview</a></li>
+                    <li class="extended-sidebar-item"><a id="documentsTab" href="@routes.IndividualJobController.showDocumentsView(jobInfo)">Documents</a></li>
+                    <li class="compressed-sidebar-item hidden">
+                        <a id="compressedBackToFeedButton">
+                            <img class="compressed-sidebar-icon" src="@routes.Assets.versioned("images/authenticated.user/job/sidebar/caret-circle-double-left.png")">
+                        </a>
+                    </li>
+                    <li class="compressed-sidebar-item hidden">
+                        <a id="compressedOverviewTab" href="@routes.IndividualJobController.showJobView(jobInfo)">
+                            <img class="compressed-sidebar-icon" src="@routes.Assets.versioned("images/authenticated.user/job/sidebar/magnifying-glass.png")">
+                        </a>
+                    </li>
+                    <li class="compressed-sidebar-item hidden">
+                        <a id="compressedDocumentsTab" href="@routes.IndividualJobController.showDocumentsView(jobInfo)">
+                            <img class="compressed-sidebar-icon" src="@routes.Assets.versioned("images/authenticated.user/job/sidebar/folder.png")">
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="input">
@@ -18,4 +36,5 @@
         </div>
     </div>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/feed/jobFeedNavigationUnderline.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("javascripts/authenticated.user/job/sidebarToggleView.js")" type="text/javascript"></script>
 }

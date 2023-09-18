@@ -13,7 +13,6 @@
 }
 
 .sidebar {
-    flex: 0 0 250px;
     position: sticky;
     top: 0;
     height: calc(100vh - 20px);
@@ -21,6 +20,19 @@
     overflow-x: hidden;
     padding-top: 20px;
     margin-bottom: -20px;
+}
+
+.extended-sidebar {
+    flex: 0 0 250px;
+}
+
+.compressed-sidebar {
+    flex: 0 0 60px;
+}
+
+.compressed-sidebar-icon {
+    height: 20px;
+    width: 20px;
 }
 
 .sidebar ul {
@@ -47,11 +59,35 @@
     border-radius: 5px;
 }
 
-#backToFeedButton {
+#backToFeedSection {
+    display: flex;
+    justify-content: space-between;
+}
+
+#extendedBackToFeedButton {
     padding: 10px;
     margin-left: 10px;
     font-size: 14px;
     font-weight: bold;
+}
+
+#sidebarToggle {
+    width: 35px;
+    height: 100%;
+    padding-top: 30px;
+    margin-right: 5px;
+    appearance: none;
+    border: none;
+    background-color: white;
+    background-image: url('/assets/images/common/toggle/list.png');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    transition: background-color 0.3s ease;
+}
+
+.compressed-sidebar-toggle-button-icon {
+    margin-left: 10px;
 }
 
 .input {
@@ -104,13 +140,13 @@
     border-bottom: 1px solid #EFE7DF;
     margin: 0 -20px;
     padding: 0 20px;
-    color: #8C8984;
     display: flex;
     justify-content: space-between;
 }
 
 .individual-job-overview-section-title h3 {
     width: 200px;
+    color: #8C8984;
 }
 
 .individual-job-overview-toggle-button {
