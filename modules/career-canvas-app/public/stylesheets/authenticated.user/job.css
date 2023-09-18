@@ -239,6 +239,14 @@
     color: #ECECEC;
 }
 
+.status-item-button {
+    margin-right: 15px;
+    border: none;
+    background-color: inherit;
+    color: inherit;
+    font-weight: bold;
+}
+
 .delete-job-button, #deleteJobButton {
     background-color: #BFD7ED;
     color: #0074B7;
@@ -249,6 +257,8 @@
     margin-right: 15px;
     font-size: 10px;
     font-weight: bold;
+    background-color: inhert;
+    color: inherit;
 }
 
 .status-current, .status-before, .status-after, #deleteJobButton:hover {

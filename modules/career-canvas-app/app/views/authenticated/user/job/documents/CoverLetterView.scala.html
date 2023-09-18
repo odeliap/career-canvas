@@ -136,8 +136,6 @@
             jobInfo: jobInfoJson
         };
 
-        console.log(JSON.stringify(payload));
-
         fetch("@routes.IndividualJobController.generateCoverLetter()", {
             method: 'POST',
             headers: {
