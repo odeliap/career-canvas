@@ -5,12 +5,9 @@
     coverLetters: Seq[careercanvas.io.model.job.ApplicationFile]
 )(implicit request: MessagesRequestHeader)
 
-<div class="cover-letter-header">
-    <h1>Cover Letters</h1>
-</div>
 <div class="cover-letter">
-    <section class="cover-letter-content">
-        <div class="if-generated">
+    <section id="coverLetterContent" class="hidden">
+        <div id="adjustmentsSection">
             <label for="adjustButtons">Improve:</label>
             <div id="adjustButtons">
                 @careercanvas.io.model.job.ResponseImprovement.values.map { improvement =>
@@ -22,50 +19,24 @@
                 <textarea id="customText" placeholder="Enter your custom text here"></textarea>
             </div>
         </div>
-        <div class="if-not-generated">
-            <a href="javascript:void(0);" id="generateCoverLetterButton" onclick="generateCoverLetter()">Generate Cover Letter</a>
-        </div>
-        <div class="if-generated">
-            <a href="javascript:void(0);" id="improveButton" onclick="improveCoverLetter()">Improve Cover Letter</a>
-        </div>
+        <a id="improveCoverLetterButton" href="javascript:void(0);" onclick="improveCoverLetter()">Improve Cover Letter</a>
         <div id="loadingPopup" class="loading-popup">
             <div class="loading-spinner"></div>
             <div class="loading-text">Loading...</div>
         </div>
     </section>
     <section class="output">
+        <a id="generateCoverLetterButton" href="javascript:void(0);" onclick="generateCoverLetter()">Generate Cover Letter</a>
         <h2>Generated Cover Letter</h2>
         <textarea id="generated-letter"></textarea>
     </section>
-    <div class="if-generated">
-    <a id="saveCoverLetterButton" href="javascript:void(0);" onclick="saveCoverLetterWithPrompt();">Save</a>
-    </div>
+    <a id="saveCoverLetterButton" class="hidden" href="javascript:void(0);" onclick="saveCoverLetterWithPrompt();">Save</a>
 </div>
 <script>
     const jobInfoJson = @Html(Json.toJson(jobInfo).toString);
 </script>
 <script>
-    window.onload = function() {
-        displayConditionalDiv();
-    };
-
-    window.addEventListener("DOMContentLoaded", function() {
-        const textarea = document.getElementById("generated-letter");
-        adjustHeight(textarea);
-    });
-
     const selectedImprovements = new Set();
-
-    document.addEventListener("input", function(event) {
-        if (event.target.tagName.toLowerCase() === "textarea") {
-            adjustHeight(event.target);
-        }
-    });
-
-    function adjustHeight(textarea) {
-        textarea.style.height = "auto";
-        textarea.style.height = textarea.scrollHeight + "px";
-    }
 
     function toggleButton(button) {
         const improvementName = button.id;
@@ -86,35 +57,6 @@
         selectedImprovements.clear();
         const customText = document.getElementById('customText');
         customText.value = "";
-    }
-
-    function isDivEmpty(divId) {
-        var divElement = document.getElementById(divId);
-        if (divElement && divElement.innerHTML.trim() !== "") {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    function displayConditionalDiv() {
-        var generatedDivs = document.querySelectorAll('.if-generated');
-        var notGeneratedDivs = document.querySelectorAll('.if-not-generated');
-        if (isDivEmpty('generated-letter')) {
-            generatedDivs.forEach(function(element) {
-                element.style.display = 'none';
-            });
-            notGeneratedDivs.forEach(function(element) {
-                element.style.display = 'block';
-            });
-        } else {
-            generatedDivs.forEach(function(element) {
-                element.style.display = 'block';
-            });
-            notGeneratedDivs.forEach(function(element) {
-                element.style.display = 'none';
-            });
-        }
     }
 
     function showLoadingPopup() {
@@ -158,9 +100,14 @@
                 const generatedLetterDiv = document.getElementById('generated-letter');
                 generatedLetterDiv.innerHTML = data.content;
 
-                const textarea = document.getElementById("generated-letter");
-                adjustHeight(textarea);
-                displayConditionalDiv();
+                const coverLetterContent = document.getElementById('coverLetterContent');
+                const saveCoverLetterBtn = document.getElementById('saveCoverLetterButton');
+                const generateCoverLetterBtn = document.getElementById('generateCoverLetterButton');
+
+                coverLetterContent.classList.remove('hidden');
+                saveCoverLetterBtn.classList.remove('hidden');
+                generateCoverLetterBtn.classList.add('hidden');
+
                 hideLoadingPopup();
             }
         })
@@ -206,10 +153,7 @@
                 const generatedLetterDiv = document.getElementById('generated-letter');
                 generatedLetterDiv.innerHTML = data.content;
 
-                const textarea = document.getElementById("generated-letter");
-                adjustHeight(textarea);
                 clearImprovementsBackground();
-                displayConditionalDiv();
                 hideLoadingPopup();
             }
         })
@@ -231,25 +175,21 @@
                 coverLetter: coverLetterContent
             };
 
-            fetch("@routes.IndividualJobController.saveCoverLetter()", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Csrf-Token': csrfToken
-                },
-                credentials: 'same-origin',
-                body: JSON.stringify(payload)
-            })
-            .then(response => response.text())
-            .then(data => {
-                document.documentElement.innerHTML = data;
-                const flashMessage = "Cover Letter Saved.";
-                alert(flashMessage);
-            })
-            .catch(error => {
-                console.error('There was an error with the request:', error);
-                alert('Something went wrong when saving the cover letter.');
-            });
+            var xhr = new XMLHttpRequest();
+            xhr.open('PUT', "@routes.IndividualJobController.saveCoverLetter()", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('Csrf-Token', csrfToken);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
+                    console.log('Data saved successfully.');
+                    if (xhr.responseURL !== "@routes.IndividualJobController.saveCoverLetter()") {
+                        window.location.href = xhr.responseURL;
+                    }
+                } else if (xhr.readyState === 4) {
+                    console.error('Failed to save data.');
+                }
+            };
+            xhr.send(JSON.stringify(payload));
         }
     }
 </script>
