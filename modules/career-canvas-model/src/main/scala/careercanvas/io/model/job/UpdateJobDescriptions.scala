@@ -4,5 +4,6 @@ case class UpdateJobDescriptions(
   jobId: Long,
   about: Option[String],
   requirements: Option[String],
-  techStack: Option[String]
+  techStack: Option[String],
+  notes: Option[String]
 )

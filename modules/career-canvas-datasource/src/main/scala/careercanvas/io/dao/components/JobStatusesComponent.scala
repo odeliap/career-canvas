@@ -25,7 +25,6 @@ trait JobStatusesComponent {
     def appSubmissionDate: Rep[Option[Timestamp]] = column[Option[Timestamp]]("app_submission_date")
     def dateAdded: Rep[Timestamp] = column[Timestamp]("date_added")
     def lastUpdate: Rep[Timestamp] = column[Timestamp]("last_update")
-    def notes: Rep[Option[String]] = column[Option[String]]("notes")
     def starred: Rep[Boolean] = column[Boolean]("starred")
 
     def * : ProvenShape[JobInfo] = (
@@ -41,7 +40,6 @@ trait JobStatusesComponent {
       appSubmissionDate,
       dateAdded,
       lastUpdate,
-      notes,
       starred
     ) <> ((JobInfo.apply _).tupled, JobInfo.unapply)
 

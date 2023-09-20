@@ -19,7 +19,8 @@ create table if not exists job_descriptions (
     job_id              serial                  not null unique,
     about               varchar(1024)           not null,
     requirements        varchar(1024)           not null,
-    tech_stack          varchar(1024)           not null
+    tech_stack          varchar(1024)           not null,
+    notes               varchar(1024)           null
 );
 
 create table if not exists job_statuses (
@@ -35,7 +36,6 @@ create table if not exists job_statuses (
     app_submission_date timestamp               null,
     date_added          timestamp               default now(),
     last_update         timestamp,
-    notes               varchar(1024)           null,
     starred             boolean                 default false
 );
 

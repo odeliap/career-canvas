@@ -59,7 +59,7 @@ class IndividualJobController @Inject()(
 
     updatedNotesValidation match {
       case JsSuccess(updatedNotes, _) =>
-        jobApplicationsService.updateNotes(userId, jobInfo.jobId, updatedNotes)
+        jobApplicationsService.updateNotes(jobInfo.jobId, updatedNotes)
         Redirect(routes.IndividualJobController.showJobView(jobInfo))
           .flashing("success" -> "Updated notes section")
       case _ =>

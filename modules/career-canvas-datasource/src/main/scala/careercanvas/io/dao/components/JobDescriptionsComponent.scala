@@ -15,12 +15,14 @@ trait JobDescriptionsComponent {
     def about: Rep[String] = column[String]("about")
     def requirements: Rep[String] = column[String]("requirements")
     def techStack: Rep[String] = column[String]("tech_stack")
+    def notes: Rep[Option[String]] = column[Option[String]]("notes")
 
     def * : ProvenShape[JobDescriptions] = (
       jobId,
       about,
       requirements,
-      techStack
+      techStack,
+      notes
     ) <> (JobDescriptions.tupled, JobDescriptions.unapply)
 
   }

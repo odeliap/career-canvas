@@ -25,7 +25,7 @@ class JobApplicationsService @Inject() (
   extends AwaitResult {
 
   def createJob(data: UserProvidedJobDetails, postUrl: String, userId: String): Unit = {
-    val jobDescriptions = jobDescriptionsResolver.resolve(postUrl)
+    val jobDescriptions = jobDescriptionsResolver.resolve(postUrl).copy(notes = data.notes)
     val jobId = jobDescriptionsDao.addJob(jobDescriptions).waitForResult
     val jobInfo = JobInfo(
       jobId = jobId,
@@ -38,7 +38,6 @@ class JobApplicationsService @Inject() (
       salaryRange = data.salaryRange,
       status = JobStatus.Bookmarked,
       appSubmissionDate = None,
-      notes = data.notes
     )
     jobApplicationsDao.addJob(jobInfo).waitForResult
   }
@@ -53,32 +52,32 @@ class JobApplicationsService @Inject() (
 
   def starJob(userId: String, jobId: Long): Unit = {
     val starred = getJobById(userId, jobId).starred
-    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId, None, None, None, None, Option(!starred))
+    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId, None, None, None, Option(!starred))
     jobApplicationsDao.updateJobStatus(updateJobInfo)
   }
 
   def updateStatus(userId: String, jobId: String, status: JobStatus): Unit = {
-    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId.toLong, Option(status), Option(Timestamp.valueOf(LocalDateTime.now())), None, None, None)
+    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId.toLong, Option(status), Option(Timestamp.valueOf(LocalDateTime.now())), None, None)
     jobApplicationsDao.updateJobStatus(updateJobInfo).waitForResult
   }
 
-  def updateNotes(userId: String, jobId: Long, updatedNotes: String): Unit = {
-    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId, None, Option(Timestamp.valueOf(LocalDateTime.now())), None, Option(updatedNotes), None)
-    jobApplicationsDao.updateJobStatus(updateJobInfo).waitForResult
+  def updateNotes(jobId: Long, updatedNotes: String): Unit = {
+    val updateJobInfo = UpdateJobDescriptions(jobId, None, None, None, Option(updatedNotes))
+    jobDescriptionsDao.updateJob(updateJobInfo).waitForResult
   }
 
   def updateAbout(jobId: Long, updatedAbout: String): Unit = {
-    val updateJobDescriptions = UpdateJobDescriptions(jobId, Option(updatedAbout), None, None)
+    val updateJobDescriptions = UpdateJobDescriptions(jobId, Option(updatedAbout), None, None, None)
     jobDescriptionsDao.updateJob(updateJobDescriptions)
   }
 
   def updateRequirements(jobId: Long, updatedRequirements: String): Unit = {
-    val updateJobDescriptions = UpdateJobDescriptions(jobId, None, Option(updatedRequirements), None)
+    val updateJobDescriptions = UpdateJobDescriptions(jobId, None, Option(updatedRequirements), None, None)
     jobDescriptionsDao.updateJob(updateJobDescriptions)
   }
 
   def updateTechStack(jobId: Long, updatedTechStack: String): Unit = {
-    val updateJobDescriptions = UpdateJobDescriptions(jobId, None, None, Option(updatedTechStack))
+    val updateJobDescriptions = UpdateJobDescriptions(jobId, None, None, Option(updatedTechStack), None)
     jobDescriptionsDao.updateJob(updateJobDescriptions)
   }
 

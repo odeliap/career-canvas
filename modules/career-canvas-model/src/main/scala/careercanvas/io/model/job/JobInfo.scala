@@ -22,7 +22,6 @@ case class JobInfo(
   appSubmissionDate: Option[Timestamp],
   dateAdded: Timestamp = Timestamp.from(Instant.now()),
   lastUpdate: Timestamp = Timestamp.from(Instant.now()),
-  notes: Option[String] = None,
   starred: Boolean = false
 ) {
 
@@ -31,7 +30,6 @@ case class JobInfo(
       status = updateJobInfo.status.getOrElse(this.status),
       appSubmissionDate = updateJobInfo.appSubmissionDate.orElse(this.appSubmissionDate),
       dateAdded = updateJobInfo.dateAdded.getOrElse(this.dateAdded),
-      notes = updateJobInfo.notes.orElse(this.notes),
       starred = updateJobInfo.starred.getOrElse(this.starred),
       lastUpdate = updateJobInfo.lastUpdate
     )
@@ -64,7 +62,6 @@ object JobInfo {
       (JsPath \ "appSubmissionDate").writeNullable[Timestamp] and
       (JsPath \ "dateAdded").write[Timestamp] and
       (JsPath \ "lastUpdate").write[Timestamp] and
-      (JsPath \ "notes").writeNullable[String] and
       (JsPath \ "starred").write[Boolean]
     )(unlift(JobInfo.unapply))
 
@@ -81,7 +78,6 @@ object JobInfo {
       (__ \ "appSubmissionDate").readNullable[Timestamp] and
       (__ \ "dateAdded").read[Timestamp] and
       (__ \ "lastUpdate").read[Timestamp] and
-      (__ \ "notes").readNullable[String] and
       (__ \ "starred").read[Boolean]
     )(JobInfo.apply _)
 
@@ -116,10 +112,9 @@ object JobInfo {
             Timestamp.from(ZonedDateTime.parse(dateStr).toInstant)
           }.getOrElse(Timestamp.from(Instant.now()))
 
-          val notes = params.get("notes").flatMap(_.headOption)
           val starred = params.get("starred").flatMap(_.headOption).exists(_.toBoolean)
 
-          Right(JobInfo(userId, jobId, postUrl, company, jobTitle, jobType, location, salaryRange, status, appSubmissionDate, dateAdded, lastUpdate, notes, starred))
+          Right(JobInfo(userId, jobId, postUrl, company, jobTitle, jobType, location, salaryRange, status, appSubmissionDate, dateAdded, lastUpdate, starred))
         }.getOrElse(Left("Unable to bind JobInfo"))
       }
     }
@@ -128,9 +123,8 @@ object JobInfo {
       val appSubmissionDate = jobInfo.appSubmissionDate.map(_.toInstant.atZone(ZoneId.systemDefault()).toString).getOrElse("")
       val dateAdded = jobInfo.dateAdded.toInstant.atZone(ZoneId.systemDefault()).toString
       val lastUpdate = jobInfo.lastUpdate.toInstant.atZone(ZoneId.systemDefault()).toString
-      val notes = jobInfo.notes.getOrElse("")
 
-      s"userId=${jobInfo.userId}&jobId=${jobInfo.jobId}&postUrl=${jobInfo.postUrl}&company=${jobInfo.company}&jobTitle=${jobInfo.jobTitle}&jobType=${jobInfo.jobType}&location=${jobInfo.location}&salaryRange=${jobInfo.salaryRange}&status=${jobInfo.status}&appSubmissionDate=$appSubmissionDate&dateAdded=${dateAdded}&lastUpdate=$lastUpdate&notes=$notes&starred=${jobInfo.starred}"
+      s"userId=${jobInfo.userId}&jobId=${jobInfo.jobId}&postUrl=${jobInfo.postUrl}&company=${jobInfo.company}&jobTitle=${jobInfo.jobTitle}&jobType=${jobInfo.jobType}&location=${jobInfo.location}&salaryRange=${jobInfo.salaryRange}&status=${jobInfo.status}&appSubmissionDate=$appSubmissionDate&dateAdded=${dateAdded}&lastUpdate=$lastUpdate&starred=${jobInfo.starred}"
     }
   }
 }

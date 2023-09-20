@@ -91,9 +91,9 @@
                     </div>
                     <button class="individual-job-overview-toggle-button individual-job-overview-toggle-button-img show-toggle-image" id="individualJobNotesToggleBtn"></button>
                 </div>
-                <p id="individualJobNotesContent">@jobInfo.notes.getOrElse("")</p>
+                <p id="individualJobNotesContent">@jobDescriptions.notes.getOrElse("")</p>
                 <div class="edit-meta-area hidden" id="jobNotesEditorSection">
-                    @TextEditor("jobNotesEditor", jobInfo.notes.getOrElse(""), routes.IndividualJobController.updateNotes(jobInfo.jobId))
+                    @TextEditor("jobNotesEditor", jobDescriptions.notes.getOrElse(""), routes.IndividualJobController.updateNotes(jobInfo.jobId))
                 </div>
             </div>
         </div>
