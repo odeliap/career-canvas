@@ -46,7 +46,7 @@ class IndividualJobController @Inject()(
     (jobIdValidation, statusValidation) match {
       case (JsSuccess(jobId, _), JsSuccess(status, _)) =>
         jobApplicationsService.updateStatus(userId, jobId, status)
-        Ok(Json.obj("content" -> "Updated status"))
+        Ok(Json.obj("success" -> "Updated status"))
       case _ =>
         BadRequest(Json.obj("error" -> "Invalid JSON format"))
     }

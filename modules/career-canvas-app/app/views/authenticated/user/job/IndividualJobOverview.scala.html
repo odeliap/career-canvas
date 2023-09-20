@@ -123,8 +123,6 @@
                     status: statusToUpdate,
                 };
 
-                console.log(payload);
-
                 fetch("@routes.IndividualJobController.updateStatus()", {
                     method: 'PUT',
                     headers: {
@@ -137,6 +135,8 @@
                 .then(data => {
                     if (data.success) {
                         updateStatusVisuals(statusToUpdate);
+                    } else {
+                        console.log('Failed to update status');
                     }
                 });
             });
