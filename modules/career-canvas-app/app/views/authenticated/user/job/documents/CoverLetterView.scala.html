@@ -208,7 +208,7 @@
             };
 
             var xhr = new XMLHttpRequest();
-            xhr.open('PUT', "@routes.IndividualJobController.saveCoverLetter()", true);
+            xhr.open('POST', "@routes.IndividualJobController.saveCoverLetter()", true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.setRequestHeader('Csrf-Token', csrfToken);
             xhr.onreadystatechange = function() {
