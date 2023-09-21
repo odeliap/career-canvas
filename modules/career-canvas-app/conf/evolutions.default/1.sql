@@ -26,7 +26,7 @@ create table if not exists job_descriptions (
 create table if not exists job_statuses (
     user_id             serial                  not null references user_info(id),
     job_id              serial                  not null references job_descriptions(job_id),
-    posting_url         varchar(255)            not null,
+    posting_url         varchar(1024)            not null,
     company             varchar(255)            not null,
     job_title           varchar(255)            not null,
     jobtype             job_type                not null,

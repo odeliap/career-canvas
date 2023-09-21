@@ -28,7 +28,7 @@ class JobFeedController @Inject()(
     mapping(
       "postUrl" -> nonEmptyText
         .verifying("Too few characters", s => formUtils.lengthIsGreaterThanNCharacters(s, 4))
-        .verifying("Too many characters", s => formUtils.lengthIsLessThanNCharacters(s, 300))
+        .verifying("Too many characters", s => formUtils.lengthIsLessThanNCharacters(s, 1024))
     )(JobPosting.apply)(JobPosting.unapply)
   )
 
@@ -37,7 +37,7 @@ class JobFeedController @Inject()(
       "company" -> default(text, baseJobInfo.company)
         .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 40)),
       "jobTitle" -> default(text, baseJobInfo.jobTitle)
-        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 40)),
+        .verifying("too many chars", s => formUtils.lengthIsLessThanNCharacters(s, 100)),
       "jobType" -> default(text, baseJobInfo.jobType.toString),
       "location" -> default(text, baseJobInfo.location),
       "salaryRange" -> default(text, baseJobInfo.salaryRange),
