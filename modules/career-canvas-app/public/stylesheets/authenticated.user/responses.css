@@ -1,7 +1,53 @@
 /* Generate Cover Letter Page */
 
-.cover-letter {
-    padding: 20px 0;
+#generateCoverLetterButton {
+    display: flex;
+    justify-content: left;
+}
+
+.cover-letter-plus {
+    background-image: url('/assets/images/authenticated.user/job/documents/initial-plus.png');
+    background-size: 80px;
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    transition: background-color 0.3s ease;
+    height: 100px;
+    width: 100px;
+    margin-left: 40px;
+    margin-top: 70px;
+}
+
+#generateCoverLetterButton:hover .cover-letter-plus {
+    background-image: url('/assets/images/authenticated.user/job/documents/blue-plus.png');
+}
+
+#generateCoverLetterLeft {
+    border: 1px solid #D3D3D3;
+    border-radius: 5px;
+    width: 193px;
+    height: 250px;
+    margin-left: 20px;
+}
+
+#generateCoverLetterRight {
+    margin-top: -20px;
+    padding-left: 30px;
+    color: #979797;
+}
+
+#generateCoverLetterButtonTitle {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: -5px;
+}
+
+#generateCoverLetterButtonSubtitle {
+    font-size: 12px;
+    width: 200px;
+}
+
+#coverLetterContent {
+    margin: 0 20px 40px 20px;
 }
 
 #adjustButtons {
@@ -9,7 +55,7 @@
 }
 
 .custom-button {
-    background-color: #4a90e2;
+    background-color: #F4D3C7;
     color: #fff;
     border: none;
     padding: 10px;
@@ -17,17 +63,21 @@
     cursor: pointer;
     font-size: 8px;
     font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s;
     margin: 5px;
 }
 
 .custom-button:hover {
-    background-color: #357ABD;
+    background-color: #EF9D7F;
 }
 
-.custom-input {
-    margin-top: 16px;
+.output {
+    margin-top: 30px;
+    margin-bottom: -15px;
+}
+
+#coverLetterActions {
+    display: flex;
+    justify-content: left;
 }
 
 label {
@@ -36,19 +86,14 @@ label {
 
 textarea {
     width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
     min-height: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     resize: vertical;
+    overflow: auto;
     margin: 20px 0;
-}
-
-.output {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
 }
 
 /* Custom Responses */
@@ -62,7 +107,6 @@ textarea {
 }
 
 .response-question-wrapper {
-    background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;

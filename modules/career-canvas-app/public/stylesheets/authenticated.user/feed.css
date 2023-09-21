@@ -247,7 +247,7 @@ select {
 #addNewJobDescriptionTitle {
     font-size: 22px;
     font-weight: 900;
-    color: #3b719f;
+    color: #7091AD;
 }
 
 #jobUrlInputLabel {
@@ -596,6 +596,8 @@ select {
 
 #finalAddJobButton,
 #finalSaveJobButton,
+#saveCoverLetterButton,
+#improveCoverLetterButton,
 .cancel-add {
     margin-top: 10px;
     font-size: 14px;
@@ -606,8 +608,10 @@ select {
 }
 
 #finalAddJobButton,
-#finalSaveJobButton {
-    background-color: #0077B5;
+#finalSaveJobButton,
+#saveCoverLetterButton,
+#improveCoverLetterButton {
+    background-color: #7091AD;
     color: white;
 }
 
@@ -623,7 +627,9 @@ select {
 }
 
 #finalAddJobButton:hover,
-#finalSaveJobButton:hover {
+#finalSaveJobButton:hover,
+#saveCoverLetterButton:hover,
+#improveCoverLetterButton:hover {
     background-color: #2E5984;
     cursor: pointer;
 }

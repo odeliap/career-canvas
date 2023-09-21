@@ -6,11 +6,14 @@
 )(implicit request: MessagesRequestHeader)
 
 @BaseJobInformationView(jobInfo) {
-    <div class="toggle-container">
-        <button class="toggle-button active" onclick="toggleView('view1')">Cover Letters</button>
-        <button class="toggle-button" onclick="toggleView('view2')">Responses</button>
+    <div id="documentsPage">
+        <p id="documentsTitle">Documents</p>
+        <div class="toggle-container">
+            <button class="toggle-button active" onclick="toggleView('view1')">Cover Letters</button>
+            <button class="toggle-button" onclick="toggleView('view2')">Custom Questions</button>
+        </div>
+        <div class="view-content" id="view1">@documents.CoverLetterView(jobInfo, files)</div>
+        <div class="view-content" id="view2" style="display: none;">@documents.ResponseView(jobInfo, files)</div>
     </div>
-    <div class="view-content" id="view1">@documents.CoverLetterView(jobInfo, files)</div>
-    <div class="view-content" id="view2" style="display: none;">@documents.ResponseView(jobInfo, files)</div>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/job/documentsToggleView.js")" type="text/javascript"></script>
 }

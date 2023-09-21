@@ -18,19 +18,32 @@
                 <label for="customText">Custom Improvement Request:</label>
                 <textarea id="customText" placeholder="Enter your custom text here"></textarea>
             </div>
+            <a id="improveCoverLetterButton" href="javascript:void(0);" onclick="improveCoverLetter()">Improve Cover Letter</a>
         </div>
-        <a id="improveCoverLetterButton" href="javascript:void(0);" onclick="improveCoverLetter()">Improve Cover Letter</a>
+        <section class="output" id="outputtedContent">
+            <label for="generatedLetter">Letter Content</label>
+            <textarea id="generatedLetter"></textarea>
+        </section>
+        <div id="coverLetterActions">
+            <a id="saveCoverLetterButton" class="hidden" href="javascript:void(0);" onclick="saveCoverLetterWithPrompt();">Save</a>
+            <a id="cancelCoverLetterButton" class="cancel-add hidden" href="javascript:void(0);" onclick="resetView();">Cancel</a>
+        </div>
         <div id="loadingPopup" class="loading-popup">
             <div class="loading-spinner"></div>
             <div class="loading-text">Loading...</div>
         </div>
     </section>
-    <section class="output">
-        <a id="generateCoverLetterButton" href="javascript:void(0);" onclick="generateCoverLetter()">Generate Cover Letter</a>
-        <h2>Generated Cover Letter</h2>
-        <textarea id="generated-letter"></textarea>
-    </section>
-    <a id="saveCoverLetterButton" class="hidden" href="javascript:void(0);" onclick="saveCoverLetterWithPrompt();">Save</a>
+    <div id="generateSection">
+        <a id="generateCoverLetterButton" href="javascript:void(0);" onclick="generateCoverLetter()">
+            <div id="generateCoverLetterLeft">
+                <div class="cover-letter-plus"></div>
+            </div>
+            <div id="generateCoverLetterRight">
+                <p id="generateCoverLetterButtonTitle">New Cover Letter</p>
+                <p id="generateCoverLetterButtonSubtitle">Make a custom cover letter for this application.</p>
+            </div>
+        </a>
+    </div>
 </div>
 <script>
     const jobInfoJson = @Html(Json.toJson(jobInfo).toString);
@@ -42,10 +55,10 @@
         const improvementName = button.id;
         if (selectedImprovements.has(improvementName)) {
             selectedImprovements.delete(improvementName);
-            button.style.backgroundColor = ""; // Reset button color
+            button.style.backgroundColor = "";
         } else {
             selectedImprovements.add(improvementName);
-            button.style.backgroundColor = "#357ABD";
+            button.style.backgroundColor = "#EF9D7F";
         }
     }
 
@@ -57,6 +70,23 @@
         selectedImprovements.clear();
         const customText = document.getElementById('customText');
         customText.value = "";
+    }
+
+    function resetView() {
+        clearImprovementsBackground();
+
+        const generatedLetterDiv = document.getElementById('generatedLetter');
+        generatedLetterDiv.innerHTML = '';
+
+        const coverLetterContent = document.getElementById('coverLetterContent');
+        const saveCoverLetterBtn = document.getElementById('saveCoverLetterButton');
+        const cancelCoverLetterBtn = document.getElementById('cancelCoverLetterButton');
+        const generateSection = document.getElementById('generateSection');
+
+        coverLetterContent.classList.add('hidden');
+        saveCoverLetterBtn.classList.add('hidden');
+        cancelCoverLetterBtn.classList.add('hidden');
+        generateSection.classList.remove('hidden');
     }
 
     function showLoadingPopup() {
@@ -97,16 +127,18 @@
         })
         .then(data => {
             if (data && data.content) {
-                const generatedLetterDiv = document.getElementById('generated-letter');
+                const generatedLetterDiv = document.getElementById('generatedLetter');
                 generatedLetterDiv.innerHTML = data.content;
 
                 const coverLetterContent = document.getElementById('coverLetterContent');
                 const saveCoverLetterBtn = document.getElementById('saveCoverLetterButton');
-                const generateCoverLetterBtn = document.getElementById('generateCoverLetterButton');
+                const cancelCoverLetterBtn = document.getElementById('cancelCoverLetterButton');
+                const generateSection = document.getElementById('generateSection');
 
                 coverLetterContent.classList.remove('hidden');
                 saveCoverLetterBtn.classList.remove('hidden');
-                generateCoverLetterBtn.classList.add('hidden');
+                cancelCoverLetterBtn.classList.remove('hidden');
+                generateSection.classList.add('hidden');
 
                 hideLoadingPopup();
             }
@@ -120,7 +152,7 @@
     function improveCoverLetter() {
         showLoadingPopup();
 
-        const content = document.getElementById("generated-letter").innerHTML;
+        const content = document.getElementById('generatedLetter').innerHTML;
         const customImprovement = document.getElementById('customText').value;
         const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
 
@@ -150,7 +182,7 @@
         })
         .then(data => {
             if (data && data.content) {
-                const generatedLetterDiv = document.getElementById('generated-letter');
+                const generatedLetterDiv = document.getElementById('generatedLetter');
                 generatedLetterDiv.innerHTML = data.content;
 
                 clearImprovementsBackground();
@@ -167,7 +199,7 @@
         const name = prompt("Please enter a name to save:");
         const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
         if (name) {
-            const coverLetterContent = document.getElementById('generated-letter').innerHTML;
+            const coverLetterContent = document.getElementById('generatedLetter').innerHTML;
 
             const payload = {
                 jobId: @jobInfo.jobId,
