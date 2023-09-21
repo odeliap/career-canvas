@@ -213,7 +213,8 @@
             xhr.setRequestHeader('Csrf-Token', csrfToken);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
-                    console.log('Data saved successfully.');
+                    const flashMessage = "Response Saved.";
+                    alert(flashMessage);
                     if (xhr.responseURL !== "@routes.IndividualJobController.saveCoverLetter()") {
                         window.location.href = xhr.responseURL;
                     }

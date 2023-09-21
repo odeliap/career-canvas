@@ -5,9 +5,6 @@
     responses: Seq[careercanvas.io.model.job.ApplicationFile]
 )(implicit request: MessagesRequestHeader)
 
-<div class="response-header">
-    <h1>Responses</h1>
-</div>
 <div class="responses">
     <section class="response-content">
         <button class="response-add-question-btn" onclick="addQuestion()">+</button>
@@ -29,7 +26,6 @@
         if (questionCount < 10) {
             questionCount++;
 
-            // Create question input area
             const questionDiv = document.createElement('div');
             questionDiv.classList.add('response-question-wrapper');
             questionDiv.id = `questionWrapper${questionCount}`;
@@ -42,7 +38,6 @@
                 <button class="response-button save-response-button" onclick="saveResponseWithPrompt(${questionCount})">Save</button>
             `;
 
-            // Append the question area to the container
             document.getElementById('questionsContainer').appendChild(questionDiv);
         } else {
             alert("Maximum of 10 questions reached. Delete responses to add new ones.");
@@ -117,7 +112,7 @@
             const name = prompt("Please enter a name to save:");
             const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
             if (name) {
-                const responseContent = document.getElementById('answer${questionCount}').innerHTML;
+                const responseContent = answerInput.innerHTML;
 
                 const payload = {
                     jobId: @jobInfo.jobId,

@@ -99,7 +99,7 @@ textarea {
 /* Custom Responses */
 
 .responses {
-    margin-top: 20px;
+    margin: 0 20px 40px 20px;
 }
 
 .response-hidden {
@@ -142,7 +142,7 @@ textarea {
 }
 
 .response-button {
-    background-color: #0077B5;
+    background-color: #7091AD;
     border: none;
     border-radius: 8px;
     color: white;
@@ -156,9 +156,34 @@ textarea {
 }
 
 .response-add-question-btn {
-    font-size: 20px;
-    padding: 8px 12px;
-    background-color: #0077B5;
+    background-color: #7091AD;
+    color: #E7E9EF;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 37px;
+    height: 37px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-right: 10px;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.response-add-question-btn:hover {
+    cursor: pointer;
+    width: 250px;
+    text-overflow: clip;
+}
+
+.response-add-question-btn:hover::after {
+    content: " Add a New Custom Question";
 }
 
 /* Loading Pop Up */
