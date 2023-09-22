@@ -7,14 +7,14 @@
 )(implicit request: MessagesRequestHeader)
 
 <div class="cover-letter">
-    <div class="existing-documents">
+    <div class="existing-documents" id="existingCoverLetters">
         @applicationFileUrls.filter(_.applicationFile.fileType == ApplicationFileType.CoverLetter).map{ coverLetterUrl =>
-            <div class="existing-cover-letter">
-                <embed src="@coverLetterUrl.url" type="application/pdf" class="existing-cover-letter-left" />
-                <div class="existing-cover-letter-right">
-                    <p class="existing-cover-letter-title">@coverLetterUrl.applicationFile.name</p>
-                    <p class="existing-cover-letter-last-update">Updated @utils.TimeUtils.format(coverLetterUrl.applicationFile.lastUpdate)</p>
-                    <div class="existing-cover-letter-subsection">
+            <div class="existing-response">
+                <embed src="@coverLetterUrl.url" type="application/pdf" class="existing-response-left" />
+                <div class="existing-response-right">
+                    <p class="existing-response-title">@coverLetterUrl.applicationFile.name</p>
+                    <p class="existing-response-last-update">Updated @utils.TimeUtils.format(coverLetterUrl.applicationFile.lastUpdate)</p>
+                    <div class="existing-response-subsection">
                         <a class="document-action" href="#">
                             <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/edit.png")" class="document-action-image">
                             <p>Edit</p>
@@ -23,7 +23,7 @@
                             <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/copy.png")" class="document-action-image">
                             <p>Make a copy</p>
                         </a>
-                        <a class="document-action" href="#">
+                        <a class="document-action" href="@coverLetterUrl.url" download="@coverLetterUrl.applicationFile.name" target="_blank">
                             <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/download.png")" class="document-action-image">
                             <p>Download PDF</p>
                         </a>
@@ -126,11 +126,15 @@
         const coverLetterContent = document.getElementById('coverLetterContent');
         const saveCoverLetterBtn = document.getElementById('saveCoverLetterButton');
         const cancelCoverLetterBtn = document.getElementById('cancelCoverLetterButton');
+
+        const existingCoverLetters = document.getElementById('existingCoverLetters');
         const generateSection = document.getElementById('generateSection');
 
         coverLetterContent.classList.add('hidden');
         saveCoverLetterBtn.classList.add('hidden');
         cancelCoverLetterBtn.classList.add('hidden');
+
+        existingCoverLetters.classList.remove('hidden');
         generateSection.classList.remove('hidden');
     }
 
@@ -178,11 +182,15 @@
                 const coverLetterContent = document.getElementById('coverLetterContent');
                 const saveCoverLetterBtn = document.getElementById('saveCoverLetterButton');
                 const cancelCoverLetterBtn = document.getElementById('cancelCoverLetterButton');
+
+                const existingCoverLetters = document.getElementById('existingCoverLetters');
                 const generateSection = document.getElementById('generateSection');
 
                 coverLetterContent.classList.remove('hidden');
                 saveCoverLetterBtn.classList.remove('hidden');
                 cancelCoverLetterBtn.classList.remove('hidden');
+
+                existingCoverLetters.classList.add('hidden');
                 generateSection.classList.add('hidden');
 
                 hideLoadingPopup();

@@ -115,25 +115,25 @@ h3 {
 /* Download Button */
 
 .download-resume-button {
-  background-color: #0073b1;  /* Blue background */
-  color: #ffffff;  /* White text */
-  border: none;  /* Remove default borders */
-  border-radius: 15px;  /* Rounded corners */
-  padding: 10px 20px;  /* Padding around text */
-  font-size: 16px;  /* Text size */
-  text-align: center;  /* Center-align text */
-  cursor: pointer;  /* Hand cursor on hover */
-  transition: background-color 0.3s ease, transform 0.3s ease;  /* Transition effects */
+  background-color: #7091AD;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   margin-top: 20px;
   width: 100%;
 }
 
 .download-resume-button:hover {
-  background-color: #0056d6;  /* Slightly darker blue on hover */
+  background-color: #0056d6;
 }
 
 .download-resume-button:active {
-  transform: scale(0.95);  /* Slightly reduce size when clicked */
+  transform: scale(0.95);
 }
 
 /* Delete Button */

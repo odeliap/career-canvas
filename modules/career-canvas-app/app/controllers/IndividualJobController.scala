@@ -173,7 +173,7 @@ class IndividualJobController @Inject()(
     val jobId = (request.body \ "jobId").as[Long]
     val name = (request.body \ "name").as[String]
     val response = (request.body \ "response").as[String]
-    jobApplicationsService.saveFile(userId, jobId, name, response, ApplicationFileType.Response)
+    jobApplicationsService.saveFile(userId, jobId, name, response, ApplicationFileType.CustomResponse)
     val jobInfo = jobApplicationsService.getJobById(userId, jobId)
     Redirect(routes.IndividualJobController.showDocumentsView(jobInfo))
   }

@@ -8,21 +8,21 @@ sealed trait ApplicationFileType extends EnumEntry
 object ApplicationFileType {
 
   case object CoverLetter extends ApplicationFileType
-  case object Response extends ApplicationFileType
+  case object CustomResponse extends ApplicationFileType
 
-  private val values = Seq(CoverLetter, Response)
+  private val values = Seq(CoverLetter, CustomResponse)
 
   val default: ApplicationFileType = CoverLetter
 
   implicit val applicationFileTypeReads: Reads[ApplicationFileType] = {
     case JsString("CoverLetter") => JsSuccess(CoverLetter)
-    case JsString("Response")    => JsSuccess(Response)
+    case JsString("Response")    => JsSuccess(CustomResponse)
     case _ => JsError("Cannot parse as ApplicationFileType")
   }
 
   implicit val applicationFileTypeWrites: Writes[ApplicationFileType] = {
     case CoverLetter => JsString("CoverLetter")
-    case Response    => JsString("Response")
+    case CustomResponse    => JsString("Response")
   }
 
   implicit val applicationFileTypeFormat: Format[ApplicationFileType] = Format(applicationFileTypeReads, applicationFileTypeWrites)

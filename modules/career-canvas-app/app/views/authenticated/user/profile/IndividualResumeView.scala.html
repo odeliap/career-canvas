@@ -6,7 +6,7 @@
 @UserProfileBaseView("Resume View | Career Canvas") {
     <h2>@resumeTitle</h2>
     <embed src="@signedUrl" type="application/pdf" class="stored-resume" />
-    <a href="@signedUrl" download>
+    <a href="@signedUrl" download="@resumeTitle">
         <button class="download-resume-button">Download</button>
     </a>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/profile/resumesTabHighlightSidebar.js")" type="text/javascript"></script>

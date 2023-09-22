@@ -2,7 +2,7 @@
 
 create type job_status as enum('Bookmarked', 'Applying', 'Applied', 'Interviewing', 'Offer', 'Rejected');
 create type job_type as enum('FullTime', 'Contact', 'PartTime', 'Internship', 'Temporary');
-create type application_file as enum('CoverLetter', 'Response');
+create type application_file as enum('CoverLetter', 'CustomResponse');
 
 create table if not exists user_info (
     id                  serial                  primary key,
