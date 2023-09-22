@@ -1,20 +1,19 @@
 @import play.api.libs.json._
 @import play.filters.csrf.CSRF
+@import careercanvas.io.model.job._
 @(
-    jobInfo: careercanvas.io.model.job.JobInfo,
-    coverLetters: Seq[careercanvas.io.model.job.ApplicationFile]
+    jobInfo: JobInfo,
+    applicationFileUrls: Seq[ApplicationFileUrl]
 )(implicit request: MessagesRequestHeader)
 
 <div class="cover-letter">
     <div class="existing-documents">
-        @coverLetters.map{ coverLetter =>
+        @applicationFileUrls.filter(_.applicationFile.fileType == ApplicationFileType.CoverLetter).map{ coverLetterUrl =>
             <div class="existing-cover-letter">
-                <div class="existing-cover-letter-left">
-                    ???
-                </div>
+                <embed src="@coverLetterUrl.url" type="application/pdf" class="existing-cover-letter-left" />
                 <div class="existing-cover-letter-right">
-                    <p class="existing-cover-letter-title">@coverLetter.name</p>
-                    <p class="existing-cover-letter-last-update">Updated @utils.TimeUtils.format(coverLetter.lastUpdate)</p>
+                    <p class="existing-cover-letter-title">@coverLetterUrl.applicationFile.name</p>
+                    <p class="existing-cover-letter-last-update">Updated @utils.TimeUtils.format(coverLetterUrl.applicationFile.lastUpdate)</p>
                     <div class="existing-cover-letter-subsection">
                         <a class="document-action" href="#">
                             <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/edit.png")" class="document-action-image">
@@ -41,7 +40,7 @@
         <div id="adjustmentsSection">
             <label for="adjustButtons">Improve:</label>
             <div id="adjustButtons">
-                @careercanvas.io.model.job.ResponseImprovement.values.map { improvement =>
+                @ResponseImprovement.values.map { improvement =>
                 <button class="custom-button" id="@improvement.toString" onclick="toggleButton(this)">@improvement.toString.split("(?=[A-Z])").mkString(" ")</button>
                 }
             </div>
@@ -174,7 +173,7 @@
         .then(data => {
             if (data && data.content) {
                 const generatedLetterDiv = document.getElementById('generatedLetter');
-                generatedLetterDiv.innerHTML = data.content;
+                generatedLetterDiv.value = data.content;
 
                 const coverLetterContent = document.getElementById('coverLetterContent');
                 const saveCoverLetterBtn = document.getElementById('saveCoverLetterButton');
@@ -199,7 +198,7 @@
     function improveCoverLetter() {
         showLoadingPopup();
 
-        const content = document.getElementById('generatedLetter').innerHTML;
+        const content = document.getElementById('generatedLetter').value;
         const customImprovement = document.getElementById('customText').value;
         const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
 
@@ -230,7 +229,7 @@
         .then(data => {
             if (data && data.content) {
                 const generatedLetterDiv = document.getElementById('generatedLetter');
-                generatedLetterDiv.innerHTML = data.content;
+                generatedLetterDiv.value = data.content;
 
                 clearImprovementsBackground();
                 hideLoadingPopup();
@@ -247,7 +246,9 @@
         const name = prompt("Please enter a name to save:");
         const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
         if (name) {
-            const coverLetterContent = document.getElementById('generatedLetter').innerHTML;
+            const coverLetterContent = document.getElementById('generatedLetter').value;
+
+            console.log('Found cover letter content' + coverLetterContent);
 
             const payload = {
                 jobId: @jobInfo.jobId,

@@ -34,8 +34,8 @@ class IndividualJobController @Inject()(
 
   def showDocumentsView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = retrieveUserId(request)
-    val applicationFiles = jobApplicationsService.getApplicationsFiles(userId, jobInfo.jobId)
-    Ok(views.html.authenticated.user.job.DocumentsToggleView(jobInfo, applicationFiles))
+    val applicationFileUrls = jobApplicationsService.getApplicationsFiles(userId, jobInfo.jobId)
+    Ok(views.html.authenticated.user.job.DocumentsToggleView(jobInfo, applicationFileUrls))
   }
 
   def updateStatus(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>

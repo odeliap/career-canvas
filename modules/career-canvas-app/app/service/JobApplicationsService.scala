@@ -89,16 +89,19 @@ class JobApplicationsService @Inject() (
     jobApplicationsDao.getJobs(userId.toLong).waitForResult
   }
 
-  def getApplicationsFiles(userId: String, jobId: Long): Seq[ApplicationFile] = {
+  def getApplicationsFiles(userId: String, jobId: Long): Seq[ApplicationFileUrl] = {
     jobApplicationFilesDao
       .getFilesByJob(userId.toLong, jobId)
       .waitForResult
+      .map { applicationFile =>
+        ApplicationFileUrl(applicationFile, storageService.generateSignedUrl(applicationFile.bucket, applicationFile.prefix))
+      }
   }
 
   def saveFile(userId: String, jobId: Long, name: String, content: String, applicationFileType: ApplicationFileType): Unit = {
     val bucket = "career-canvas-application-files"
     val sanitizedName = stringUtils.sanitizeName(name)
-    val prefix = s"$userId/$jobId/$sanitizedName"
+    val prefix = s"$userId/$jobId/$sanitizedName.pdf"
     storageService.saveStringToTempFileAndUpload(content, bucket, prefix)
     val applicationFile = ApplicationFile(
       userId.toLong,

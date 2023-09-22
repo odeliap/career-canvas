@@ -91,7 +91,7 @@
 
 .input {
     flex: 1;
-    margin: 20px 80px;
+    margin: 20px 20px;
 }
 
 /* Overview Page */
@@ -99,7 +99,7 @@
 #individualJobOverview, #documentsPage {
     background-color: white;
     border: 1px solid #EFE7DF;
-    margin: 0 -60px 50px -60px;
+    width: 100%;
 }
 
 #individualJobOverviewHeading {
@@ -314,10 +314,6 @@
 }
 
 /* Documents Toggle Page */
-
-#documentsPage {
-    min-height: 500px;
-}
 
 #documentsTitle {
     font-weight: 600;

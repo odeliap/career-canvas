@@ -3,12 +3,14 @@ package careercanvas.io.storage
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.services.s3.model._
 
-import java.io.{File, InputStream}
+import java.io.{File, FileOutputStream, InputStream}
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.presigner.S3Presigner
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
+import com.itextpdf.text._
+import com.itextpdf.text.pdf.PdfWriter
 
-import java.nio.file.{Files, Paths}
+import java.nio.file.Files
 import java.time.Duration
 
 class S3StorageService(s3Client: S3Client, presigner: S3Presigner) extends StorageService {
@@ -52,8 +54,13 @@ class S3StorageService(s3Client: S3Client, presigner: S3Presigner) extends Stora
   }
 
   override def saveStringToTempFileAndUpload(content: String, bucketName: String, key: String): Unit = {
-    val tempFile = Files.createTempFile("prefix", ".txt")
-    Files.write(tempFile, content.getBytes)
+    val tempFile = Files.createTempFile("prefix", ".pdf")
+
+    val document = new Document()
+    PdfWriter.getInstance(document, new FileOutputStream(tempFile.toFile))
+    document.open()
+    document.add(new Paragraph(content))
+    document.close()
 
     try {
       s3Client.putObject(

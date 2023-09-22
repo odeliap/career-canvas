@@ -1,8 +1,9 @@
 @import play.api.libs.json._
 @import play.filters.csrf.CSRF
+@import careercanvas.io.model.job._
 @(
-    jobInfo: careercanvas.io.model.job.JobInfo,
-    responses: Seq[careercanvas.io.model.job.ApplicationFile]
+    jobInfo: JobInfo,
+    applicationFileUrls: Seq[ApplicationFileUrl]
 )(implicit request: MessagesRequestHeader)
 
 <div class="responses">

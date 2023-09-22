@@ -38,6 +38,10 @@ object Dependencies {
     object standard {
       val betterFilesVersion = "3.9.1"
     }
+
+    object pdf {
+      val itextVersion = "5.5.13"
+    }
   }
 
   object libraries {
@@ -86,6 +90,11 @@ object Dependencies {
     object standard {
       import versions.standard._
       val betterFiles = "com.github.pathikrit" %% "better-files" % betterFilesVersion
+    }
+
+    object pdf {
+      import versions.pdf._
+      val itext = "com.itextpdf" % "itextpdf" % itextVersion
     }
   }
 

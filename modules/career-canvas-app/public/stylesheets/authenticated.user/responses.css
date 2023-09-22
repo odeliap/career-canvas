@@ -1,7 +1,15 @@
 /* Generate Cover Letter Page */
 
 .existing-documents {
-    overflow-x: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding-right: 20px;
+}
+
+.existing-cover-letter {
+    flex :1;
+    display: flex;
+    justify-content: left;
 }
 
 #generateSection {
@@ -9,7 +17,7 @@
     margin-bottom: 50px;
 }
 
-#generateCoverLetterButton, .existing-cover-letter {
+#generateCoverLetterButton {
     display: flex;
     justify-content: left;
 }
@@ -43,6 +51,7 @@
     font-size: 5px;
     box-sizing: border-box;
     overflow-y: auto;
+    margin-bottom: 20px;
 }
 
 #generateCoverLetterRight, .existing-cover-letter-right {

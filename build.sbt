@@ -88,7 +88,8 @@ lazy val careerCanvasProcessor = (project in file("modules/career-canvas-process
       libraries.openai.guice,
       libraries.aws.s3,
       libraries.mail.sendGrid,
-      libraries.mail.javaXSun
+      libraries.mail.javaXSun,
+      libraries.pdf.itext
     )
   ).dependsOn(
     careerCanvasModel

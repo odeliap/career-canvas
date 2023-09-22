@@ -1,8 +1,9 @@
 @import play.api.libs.json._
 @import play.filters.csrf.CSRF
+@import careercanvas.io.model.job._
 @(
-    jobInfo: careercanvas.io.model.job.JobInfo,
-    files: Seq[careercanvas.io.model.job.ApplicationFile]
+    jobInfo: JobInfo,
+    files: Seq[ApplicationFileUrl]
 )(implicit request: MessagesRequestHeader)
 
 @BaseJobInformationView(jobInfo) {
