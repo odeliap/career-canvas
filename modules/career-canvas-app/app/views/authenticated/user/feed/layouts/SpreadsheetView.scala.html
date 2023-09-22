@@ -4,6 +4,7 @@
 <div id="spreadsheetRows">
     <table class="spreadsheet-view">
         <thead>
+        @if(jobInfos.nonEmpty) {
         <tr>
             <th>Company</th>
             <th>Job Title</th>
@@ -15,6 +16,7 @@
             <th id="spreadsheetLastUpdateLabel">Last Update</th>
             <th id="spreadsheetBookmarkLabel">Bookmarked</th>
         </tr>
+        }
         </thead>
         <tbody>
         @jobInfos.map { jobInfo =>
