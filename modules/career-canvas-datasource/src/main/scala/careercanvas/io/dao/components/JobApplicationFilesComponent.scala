@@ -20,7 +20,7 @@ trait JobApplicationFilesComponent {
     def fileType: Rep[ApplicationFileType] = column[ApplicationFileType]("file_type")
     def bucket: Rep[String] = column[String]("bucket")
     def prefix: Rep[String] = column[String]("prefix")
-    def uploadDate: Rep[Timestamp] = column[Timestamp]("upload_date")
+    def lastUpdate: Rep[Timestamp] = column[Timestamp]("last_update")
 
     def * : ProvenShape[ApplicationFile] = (
       userId,
@@ -30,7 +30,7 @@ trait JobApplicationFilesComponent {
       fileType,
       bucket,
       prefix,
-      uploadDate
+      lastUpdate
     ) <> ((ApplicationFile.apply _).tupled, ApplicationFile.unapply)
   }
 

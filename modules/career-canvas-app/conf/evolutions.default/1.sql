@@ -56,7 +56,7 @@ create table job_application_files (
     file_type           application_file       not null,
     bucket              varchar(120)           not null,
     prefix              varchar(320)           not null,
-    upload_date         timestamp
+    last_update         timestamp
 );
 
 create table user_reset_codes (

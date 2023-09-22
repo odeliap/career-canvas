@@ -6,6 +6,37 @@
 )(implicit request: MessagesRequestHeader)
 
 <div class="cover-letter">
+    <div class="existing-documents">
+        @coverLetters.foreach{ coverLetter =>
+            <div class="existing-cover-letter">
+                <div class="existing-cover-letter-left">
+                    ???
+                </div>
+                <div class="existing-cover-letter-right">
+                    <p class="existing-cover-letter-title">???</p>
+                    <p class="existing-cover-letter-last-update">Updated ???</p>
+                    <div class="existing-cover-letter-subsection">
+                        <a class="document-action" href="#">
+                            <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/edit.png")" class="document-action-image">
+                            <p>Edit</p>
+                        </a>
+                        <a class="document-action" href="#">
+                            <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/copy.png")" class="document-action-image">
+                            <p>Make a copy</p>
+                        </a>
+                        <a class="document-action" href="#">
+                            <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/download.png")" class="document-action-image">
+                            <p>Download PDF</p>
+                        </a>
+                        <a class="document-action" href="#">
+                            <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/more.png")" class="document-action-image">
+                            <p>More</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
     <section id="coverLetterContent" class="hidden">
         <div id="adjustmentsSection">
             <label for="adjustButtons">Improve:</label>

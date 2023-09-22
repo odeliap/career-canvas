@@ -8,14 +8,14 @@ import java.sql.Timestamp
 import scala.util.Try
 
 case class ApplicationFile(
-  userId: Long,
-  jobId: Long,
-  fileId: Long,
-  name: String,
-  fileType: ApplicationFileType,
-  bucket: String,
-  prefix: String,
-  uploadDate: Timestamp
+    userId: Long,
+    jobId: Long,
+    fileId: Long,
+    name: String,
+    fileType: ApplicationFileType,
+    bucket: String,
+    prefix: String,
+    lastUpdate: Timestamp
 )
 
 object ApplicationFile {
@@ -55,7 +55,7 @@ object ApplicationFile {
 
 
     override def unbind(key: String, appFile: ApplicationFile): String = {
-      val uploadDate = appFile.uploadDate.toInstant.atZone(ZoneId.systemDefault()).toString
+      val uploadDate = appFile.lastUpdate.toInstant.atZone(ZoneId.systemDefault()).toString
 
       s"userId=${appFile.userId}&jobId=${appFile.jobId}&fileId=${appFile.fileId}&name=${appFile.name}&fileType=${appFile.fileType}&bucket=${appFile.bucket}&prefix=${appFile.prefix}&uploadDate=$uploadDate"
     }
