@@ -288,8 +288,13 @@ select {
     text-align: center;
 }
 
+#noJobsFoundImage {
+    width: 400px;
+    height: 400px;
+}
+
 #noJobsFoundText {
-    margin-top: -60px;
+    margin-top: -30px;
 }
 
 #noJobsFoundTitle {
