@@ -20,9 +20,9 @@ class JobResponseWriter @Inject()(
 
   val openAiService: OpenAIService = OpenAIServiceFactory()
 
-  def generateCoverLetter(jobInfo: JobInfo, name: String): Response = {
+  def generateCoverLetter(jobInfo: JobInfo, resumeVersion: Option[Int], name: String): Response = {
     val task = "Generate a cover letter."
-    generateResponse(jobInfo, name, task)
+    generateResponse(jobInfo, name, resumeVersion, task)
   }
 
   def improveResponse(coverLetter: String, improvements: Seq[ResponseImprovement], customImprovement: String): Response = {
@@ -31,7 +31,7 @@ class JobResponseWriter @Inject()(
     promptToResponse(fullPrompt)
   }
 
-  def generateResponse(jobInfo: JobInfo, name: String, task: String): Response = {
+  def generateResponse(jobInfo: JobInfo, name: String, resumeVersion: Option[Int], task: String): Response = {
     val jobPostContent = scraper.getPageContent(jobInfo.postUrl)
     val fullPrompt = resolveFullPrompt(name, jobInfo.company, jobInfo.jobTitle, jobPostContent, task)
     promptToResponse(fullPrompt)

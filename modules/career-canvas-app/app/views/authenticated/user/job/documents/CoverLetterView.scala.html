@@ -1,8 +1,10 @@
 @import play.api.libs.json._
 @import play.filters.csrf.CSRF
 @import careercanvas.io.model.job._
+@import careercanvas.io.model.user.Resume
 @(
     jobInfo: JobInfo,
+    resumes: Seq[Resume],
     applicationFileUrls: Seq[ApplicationFileUrl]
 )(implicit request: MessagesRequestHeader)
 
@@ -74,15 +76,21 @@
         </div>
     </section>
     <div id="generateSection">
-        <a id="generateCoverLetterButton" href="javascript:void(0);" onclick="generateCoverLetter()">
-            <div id="generateCoverLetterLeft">
+        <div id="generateCoverLetterButton">
+            <a id="generateCoverLetterLeft" href="javascript:void(0);" onclick="generateCoverLetter()">
                 <div class="cover-letter-plus"></div>
-            </div>
+            </a>
             <div id="generateCoverLetterRight">
                 <p id="generateCoverLetterButtonTitle">New Cover Letter</p>
                 <p id="generateCoverLetterButtonSubtitle">Make a custom cover letter for this application.</p>
+                <p class="resume-prompt">Choose Resume to generate with</p>
+                <select class="resume-dropdown" id="coverLetterResumeDropdown">
+                    @resumes.map { resume =>
+                        <option value="@resume.version">@resume.name</option>
+                    }
+                </select>
             </div>
-        </a>
+        </div>
     </div>
 </div>
 <script>
@@ -255,8 +263,12 @@
 
         const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
 
+        var dropdown = document.getElementById('coverLetterResumeDropdown');
+        var selectedResume = dropdown.options[dropdown.selectedIndex];
+
         const payload = {
-            jobInfo: jobInfoJson
+            jobInfo: jobInfoJson,
+            resume: selectedResume.value.toString()
         };
 
         fetch("@routes.IndividualJobController.generateCoverLetter()", {

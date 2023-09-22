@@ -1,7 +1,8 @@
 package service
 
-import careercanvas.io.{JobApplicationFilesDao, JobApplicationsDao, JobDescriptionsDao}
+import careercanvas.io._
 import careercanvas.io.model.job._
+import careercanvas.io.model.user.Resume
 import careercanvas.io.processor.JobResponseWriter
 import careercanvas.io.processor.resolvers.JobDescriptionsResolver
 import careercanvas.io.storage.StorageService
@@ -17,6 +18,7 @@ class JobApplicationsService @Inject() (
   jobApplicationsDao: JobApplicationsDao,
   jobApplicationFilesDao: JobApplicationFilesDao,
   jobDescriptionsDao: JobDescriptionsDao,
+  resumeDao: ResumeDao,
   jobDescriptionsResolver: JobDescriptionsResolver,
   jobResponseWriter: JobResponseWriter,
   storageService: StorageService,
@@ -89,6 +91,10 @@ class JobApplicationsService @Inject() (
     jobApplicationsDao.getJobs(userId.toLong).waitForResult
   }
 
+  def getResumes(userId: String): Seq[Resume] = {
+    resumeDao.getAll(userId.toLong).waitForResult
+  }
+
   def getApplicationsFiles(userId: String, jobId: Long): Seq[ApplicationFileUrl] = {
     jobApplicationFilesDao
       .getFilesByJob(userId.toLong, jobId)
@@ -122,12 +128,12 @@ class JobApplicationsService @Inject() (
     jobApplicationFilesDao.delete(userId.toLong, jobId, fileId).waitForResult
   }
 
-  def generateCoverLetter(jobInfo: JobInfo, name: String): Response = {
-    jobResponseWriter.generateCoverLetter(jobInfo, name)
+  def generateCoverLetter(jobInfo: JobInfo, resumeVersion: String, name: String): Response = {
+    jobResponseWriter.generateCoverLetter(jobInfo, stringUtils.stringToOptionInt(resumeVersion), name)
   }
 
-  def generateResponse(jobInfo: JobInfo, name: String, question: String): Response = {
-    jobResponseWriter.generateResponse(jobInfo, name, question)
+  def generateResponse(jobInfo: JobInfo, name: String, resumeVersion: String, question: String): Response = {
+    jobResponseWriter.generateResponse(jobInfo, name, stringUtils.stringToOptionInt(resumeVersion), question)
   }
 
   def improveResponse(response: String, improvements: Seq[ResponseImprovement], customImprovement: String): Response = {

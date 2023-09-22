@@ -1,8 +1,10 @@
 @import play.api.libs.json._
 @import play.filters.csrf.CSRF
 @import careercanvas.io.model.job._
+@import careercanvas.io.model.user.Resume
 @(
     jobInfo: JobInfo,
+    resumes: Seq[Resume],
     files: Seq[ApplicationFileUrl]
 )(implicit request: MessagesRequestHeader)
 
@@ -13,8 +15,8 @@
             <button class="toggle-button active" onclick="toggleView('view1')">Cover Letters</button>
             <button class="toggle-button" onclick="toggleView('view2')">Custom Questions</button>
         </div>
-        <div class="view-content" id="view1">@documents.CoverLetterView(jobInfo, files)</div>
-        <div class="view-content" id="view2" style="display: none;">@documents.CustomQuestionsView(jobInfo, files)</div>
+        <div class="view-content" id="view1">@documents.CoverLetterView(jobInfo, resumes, files)</div>
+        <div class="view-content" id="view2" style="display: none;">@documents.CustomQuestionsView(jobInfo, resumes, files)</div>
     </div>
     <script src="@routes.Assets.versioned("javascripts/authenticated.user/job/documentsToggleView.js")" type="text/javascript"></script>
 }

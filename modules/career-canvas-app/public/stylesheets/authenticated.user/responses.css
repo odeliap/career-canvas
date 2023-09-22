@@ -87,6 +87,21 @@
     color: #088FFA;
 }
 
+.resume-prompt {
+    font-size: 14px;
+    font-weight: 500;
+    width: 300px;
+    margin-top: 15px;
+    margin-bottom: -5px;
+    color: #979797;
+}
+
+.resume-dropdown {
+    width: 100%;
+    margin-left: 0px;
+    background-color: #f6f6f6;
+}
+
 /* Generate Cover Letter Page */
 
 #generateCoverLetterLeft {
@@ -128,7 +143,11 @@
     background-image: url('/assets/images/authenticated.user/job/documents/blue-plus.png');
 }
 
-#generateCoverLetterRight {color: #979797;
+#generateCoverLetterLeft:hover {
+    cursor: pointer;
+}
+
+#generateCoverLetterRight {
     color: #979797;
 }
 

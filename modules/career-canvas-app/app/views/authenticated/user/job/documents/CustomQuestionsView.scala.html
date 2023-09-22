@@ -1,8 +1,10 @@
 @import play.api.libs.json._
 @import play.filters.csrf.CSRF
 @import careercanvas.io.model.job._
+@import careercanvas.io.model.user.Resume
 @(
     jobInfo: JobInfo,
+    resumes: Seq[Resume],
     applicationFileUrls: Seq[ApplicationFileUrl]
 )(implicit request: MessagesRequestHeader)
 
@@ -166,6 +168,12 @@
                 <button class="response-delete-btn" onclick="deleteQuestion(${questionCount})">Delete ×</button>
                 <input class="response-question-input" type="text" placeholder="Enter Question ${questionCount}" id="question${questionCount}">
                 <button class="response-button" onclick="submitQuestion(${questionCount})">Submit</button>
+                <p class="resume-prompt" id="resumePrompt${questionCount}">Choose Resume to generate with</p>
+                <select class="resume-dropdown" id="resumeDropdown${questionCount}">
+                    @resumes.map { resume =>
+                        <option value="@resume.version">@resume.name</option>
+                    }
+                </select>
                 <textarea class="response-hidden" id="answer${questionCount}"></textarea>
                 <button class="response-button save-response-button" onclick="saveResponseWithPrompt(${questionCount})">Save</button>
             `;
@@ -188,13 +196,17 @@
         if (questionInput.value.trim() !== "") {
             const questionInput = document.getElementById(`question${id}`);
             const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
+
+            var dropdown = document.getElementById('coverLetterResumeDropdown');
+            var selectedResume = dropdown.options[dropdown.selectedIndex];
+
             const payload = {
                 jobInfo: jobInfoJson,
-                question: questionInput.value
+                question: questionInput.value,
+                resume: selectedResume.value.toString()
             };
             console.log(JSON.stringify(payload));
 
-            // Display the loading button
             document.getElementById('loadingBtn').style.display = 'block';
 
             fetch("@routes.IndividualJobController.generateResponse()", {
@@ -209,6 +221,8 @@
             .then(response => {
                 // Hide the loading button regardless of the fetch result
                 document.getElementById('loadingBtn').style.display = 'none';
+                document.getElementById(`resumePrompt${id}`).style.display = 'none';
+                document.getElementById(`resumeDropdown${id}`).style.display = 'none';
 
                 if (response.ok) {
                     return response.json();

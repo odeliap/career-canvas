@@ -34,8 +34,9 @@ class IndividualJobController @Inject()(
 
   def showDocumentsView(jobInfo: JobInfo): Action[AnyContent] = authenticatedUserMessagesAction { implicit request: MessagesRequest[AnyContent] =>
     val userId = retrieveUserId(request)
+    val resumes = jobApplicationsService.getResumes(userId)
     val applicationFileUrls = jobApplicationsService.getApplicationsFiles(userId, jobInfo.jobId)
-    Ok(views.html.authenticated.user.job.DocumentsToggleView(jobInfo, applicationFileUrls))
+    Ok(views.html.authenticated.user.job.DocumentsToggleView(jobInfo, resumes, applicationFileUrls))
   }
 
   def updateStatus(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
@@ -119,10 +120,11 @@ class IndividualJobController @Inject()(
   def generateCoverLetter(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
     val fullName = retrieveUserName(request)
     val jobInfoValidation = (request.body \ "jobInfo").validate[JobInfo]
+    val resumeValidation = (request.body \ "resume").validate[String]
 
-    jobInfoValidation match {
-      case JsSuccess(jobInfo, _) =>
-        val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo, fullName)
+    (jobInfoValidation, resumeValidation) match {
+      case (JsSuccess(jobInfo, _), JsSuccess(resumeVersion, _)) =>
+        val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo, resumeVersion, fullName)
         Ok(Json.obj("content" -> coverLetter.content))
       case _ =>
         BadRequest(Json.obj("error" -> "Invalid JSON format"))
@@ -133,10 +135,11 @@ class IndividualJobController @Inject()(
     val fullName = retrieveUserName(request)
     val questionValidation = (request.body \ "question").validate[String]
     val jobInfoValidation = (request.body \ "jobInfo").validate[JobInfo]
+    val resumeValidation = (request.body \ "resume").validate[String]
 
-    (questionValidation, jobInfoValidation) match {
-      case (JsSuccess(question, _), JsSuccess(jobInfo, _)) =>
-        val response = jobApplicationsService.generateResponse(jobInfo, fullName, question)
+    (questionValidation, jobInfoValidation, resumeValidation) match {
+      case (JsSuccess(question, _), JsSuccess(jobInfo, _), JsSuccess(resumeVersion, _)) =>
+        val response = jobApplicationsService.generateResponse(jobInfo, fullName, resumeVersion, question)
         Ok(Json.obj("content" -> response.content))
       case _ =>
         BadRequest(Json.obj("error" -> "Invalid JSON format"))

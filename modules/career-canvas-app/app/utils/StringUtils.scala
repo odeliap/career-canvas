@@ -12,4 +12,12 @@ class StringUtils {
       .replace('_', '-')
   }
 
+  def stringToOptionInt(s: String): Option[Int] = {
+    try {
+      Some(s.toInt)
+    } catch {
+      case _: NumberFormatException => None
+    }
+  }
+
 }
