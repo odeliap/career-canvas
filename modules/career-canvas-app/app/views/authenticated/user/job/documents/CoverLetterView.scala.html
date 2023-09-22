@@ -7,14 +7,14 @@
 
 <div class="cover-letter">
     <div class="existing-documents">
-        @coverLetters.foreach{ coverLetter =>
+        @coverLetters.map{ coverLetter =>
             <div class="existing-cover-letter">
                 <div class="existing-cover-letter-left">
                     ???
                 </div>
                 <div class="existing-cover-letter-right">
-                    <p class="existing-cover-letter-title">???</p>
-                    <p class="existing-cover-letter-last-update">Updated ???</p>
+                    <p class="existing-cover-letter-title">@coverLetter.name</p>
+                    <p class="existing-cover-letter-last-update">Updated @utils.TimeUtils.format(coverLetter.lastUpdate)</p>
                     <div class="existing-cover-letter-subsection">
                         <a class="document-action" href="#">
                             <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/edit.png")" class="document-action-image">
@@ -80,6 +80,21 @@
     const jobInfoJson = @Html(Json.toJson(jobInfo).toString);
 </script>
 <script>
+    function autoResize(element) {
+      element.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+      });
+
+      element.style.height = element.scrollHeight + 'px';
+    }
+
+    const customText = document.getElementById('customText');
+    const generatedLetter = document.getElementById('generatedLetter');
+
+    autoResize(customText);
+    autoResize(generatedLetter);
+
     const selectedImprovements = new Set();
 
     function toggleButton(button) {
@@ -172,6 +187,7 @@
                 generateSection.classList.add('hidden');
 
                 hideLoadingPopup();
+                autoResize(generatedLetter);
             }
         })
         .catch(error => {
@@ -218,6 +234,7 @@
 
                 clearImprovementsBackground();
                 hideLoadingPopup();
+                autoResize(generatedLetter);
             }
         })
         .catch(error => {
