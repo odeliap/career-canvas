@@ -37,6 +37,7 @@
     display: block;
     background: white;
     border: none;
+    text-align: left;
 }
 
 .subnav-content {
