@@ -1,23 +1,20 @@
-/* Page Title */
-
-#settingsTitle {
-  margin-left: 25px;
-}
-
 /* Container */
 
 .container {
   display: flex;
-  width: 100%;
+  width: 90%;
   height: 900px;
   margin: 0;
   padding: 0;
+  background-color: white;
+  margin: 20px auto;
+  border: 1px solid #D3D3D3;
 }
 
 /* Left Panel */
 
 .left-panel {
-  width: 25%;
+  width: 30%;
   height: 880px;
   display: flex;
   flex-direction: column;
@@ -26,35 +23,34 @@
 /* Right Section */
 
 .right-section {
-  width: 75%;
-  height: 850px;
-  border-radius: 10px;
-  border: 1px solid #D3D3D3;
-  margin: 20px;
-  background-color: white;
+  width: 70%;
+  height: 100%;
+  border-left: 1px solid #D3D3D3;
+  padding: 0 30px;
 }
 
 /* Top Part */
 
 .top-part {
   height: 33.333%;
-  border-radius: 10px;
-  border: 1px solid #D3D3D3;
-  margin: 20px 20px 10px;
-  background-color: white;
+  margin: 7%;
+  border-radius: 15px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Bottom Part */
 
 .bottom-part {
   height: 66.667%;
-  border-radius: 10px;
-  border: 1px solid #D3D3D3;
-  margin: 10px 20px 10px;
-  background-color: white;
 }
 
 /* Settings Content */
+
+#settingsTitle {
+    font-weight: bold;
+    font-size: 22px;
+    padding: 15px;
+}
 
 .settings-content {
   padding: 20px;
@@ -63,6 +59,7 @@
 
 .settings-tabs {
   box-sizing: border-box;
+  padding: 0 10%;
 }
 
 .settings-sub-content {
@@ -71,32 +68,34 @@
 
 .settings-opts {
   font-size: 14px;
-  padding: 15px 30px;
+  padding: 15px;
+  border-radius: 10px;
 }
 
 .settings-opts:hover {
-  font-weight: bold;
-  border-left: 2px solid #D3D3D3;
-  background-color: #F5F5F4;
+  background-color: #ECECEC;
 }
 
 .highlight-profile-sidebar {
-  font-weight: bold;
-  border-left: 2px solid black;
+  background-color: #ECECEC;
 }
 
 /* Edit Container */
+
+.form-header {
+    font-weight: 400;
+}
 
 .edit-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  padding: 5px 30px 30px 30px;
+  padding: 5px 30px 10px 30px;
 }
 
 .edit-key {
-  font-weight: bold;
+  font-weight: 600;
   width: 25%;
   text-align: right;
   padding-right: 30px;
@@ -109,9 +108,22 @@
   padding-left: 30px;
 }
 
+.edit-value p {
+  margin-left: -10px;
+  width: 90%;
+  font-size: 12px;
+  color: #949494;
+}
+
 .edit-value-field {
-  width: 70%;
+  width: 90%;
   height: 20px;
+  margin-left: -50px;
+  margin-right: 20px;
+}
+
+#editProfileFormFields {
+    margin-left: -10%;
 }
 
 #editProfileFormFields input[type="text"] {
@@ -122,10 +134,6 @@
 
 /* Headers and Buttons */
 
-#editProfileHeader {
-  padding-bottom: 35px;
-}
-
 .profile-edit-submit-btn {
   background: #7091AD;
   width: 76px;
@@ -135,7 +143,7 @@
   color: white;
   font-size: 13px;
   font-weight: bold;
-  margin-left: 40px;
+  margin-left: -10px;
 }
 
 .settings-sidebar-opts {

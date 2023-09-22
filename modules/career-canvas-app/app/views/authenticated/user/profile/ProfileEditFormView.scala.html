@@ -5,7 +5,7 @@
 )(implicit request: MessagesRequestHeader)
 
 @UserProfileBaseView("Edit Profile | Career Canvas") {
-    <h2 id="editProfileHeader">Edit profile</h2>
+    <h2 class="form-header">Edit profile</h2>
     @request.flash.data.map{ case (name, value) =>
         @if(name.equals("error")) {
             <div class="error-flash">@value</div>
@@ -39,6 +39,11 @@
                     'size -> 60,
                     '_showConstraints -> false
                 )
+                <p>Integrating LinkedIn for custom job application generation streamlines the application process,
+                    allowing applicants to populate forms with accurate profile data, reducing errors and enhancing
+                    efficiency for both employers and job seekers. This digital synergy creates a seamless experience,
+                    reflecting the evolving dynamics of the modern job market.
+                </p>
             </div>
         </div>
 
@@ -53,6 +58,9 @@
                     'size -> 60,
                     '_showConstraints -> false
                 )
+                <p>For software engineers, a linked GitHub account showcases coding skills and project involvement,
+                    giving recruiters direct insight into a candidate's expertise and contributions.
+                </p>
             </div>
         </div>
 

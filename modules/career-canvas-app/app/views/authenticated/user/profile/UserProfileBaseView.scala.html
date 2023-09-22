@@ -1,7 +1,6 @@
 @(pageName: String)(content: Html)(implicit request: MessagesRequestHeader)
 
 @authenticated.user.AuthenticatedUserLayout(pageName) {
-    <h2 id="settingsTitle">Settings</h2>
     <div class="container">
         <div class="left-panel">
             <div class="top-part">
@@ -12,6 +11,7 @@
             </div>
             <div class="bottom-part">
                 <div class="settings-tabs">
+                    <p id="settingsTitle">Settings</p>
                     <div class="settings-sidebar-opts">
                         <a href="@routes.ProfileController.editProfile()" class="settings-opts" id="editProfileTab">Edit profile</a>
                         <a href="@routes.ProfileController.showResumes()" class="settings-opts" id="resumesTab">Resumes</a>
