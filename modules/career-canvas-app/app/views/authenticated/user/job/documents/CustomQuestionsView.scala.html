@@ -18,18 +18,28 @@
                     <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/edit.png")" class="document-action-image">
                     <p>Edit</p>
                 </a>
-                <a class="document-action" href="#">
-                    <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/copy.png")" class="document-action-image">
-                    <p>Make a copy</p>
-                </a>
                 <a class="document-action" href="@responseUrl.url" download="@responseUrl.applicationFile.name" target="_blank">
                     <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/download.png")" class="document-action-image">
                     <p>Download PDF</p>
                 </a>
-                <a class="document-action" href="#">
+                <a class="document-action more-action" href="javascript:void(0);">
                     <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/more.png")" class="document-action-image">
                     <p>More</p>
                 </a>
+                <div class="more-dropdown-content hidden">
+                    <a class="document-action" href="javascript:void(0);" onclick="showDeleteConfirmationModal(@responseUrl.applicationFile.fileId)">
+                        <img src="@routes.Assets.versioned("images/common/trash.png")" class="document-action-image">
+                        <p>Delete</p>
+                    </a>
+                </div>
+                <!-- Delete confirmation modal -->
+                <div id="@responseUrl.applicationFile.fileId" class="more-delete-modal">
+                    <div class="more-delete-modal-content">
+                        <p>Are you sure you want to delete this file?</p>
+                        <button onclick="confirmDelete(@responseUrl.applicationFile.fileId)">Yes</button>
+                        <button onclick="closeDeleteConfirmationModal(@responseUrl.applicationFile.fileId)">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -45,6 +55,98 @@
     </section>
 </div>
 <script>
+    function findClosestFollowingDivWithClass(elem, className) {
+        let nextSibling = elem.nextElementSibling;
+
+        while (nextSibling) {
+            if (nextSibling.tagName.toLowerCase() === 'div' && nextSibling.classList.contains(className)) {
+                return nextSibling; // Found it
+            }
+
+            nextSibling = nextSibling.nextElementSibling;
+        }
+
+        return null;
+    }
+
+    const responseMoreActions = document.querySelectorAll('.more-action');
+
+    let responseHideTimeout;
+
+    responseMoreActions.forEach(function(moreAction) {
+        moreAction.addEventListener('mouseenter', function() {
+            const dropdownContent = findClosestFollowingDivWithClass(this, 'more-dropdown-content');
+            if (dropdownContent) {
+                dropdownContent.classList.remove('hidden');
+            }
+        });
+
+        moreAction.addEventListener('mouseleave', function() {
+            const dropdownContent = findClosestFollowingDivWithClass(this, 'more-dropdown-content');
+            if (dropdownContent) {
+                responseHideTimeout = setTimeout(function() {
+                    dropdownContent.classList.add('hidden');
+                }, 500); // 500ms delay for hiding; adjust as needed
+            }
+        });
+
+        // Check the dropdownContent events
+        const dropdownContent = findClosestFollowingDivWithClass(moreAction, 'more-dropdown-content');
+        if (dropdownContent) {
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(responseHideTimeout); // Clear the timeout if user moves to the dropdown
+            });
+
+            dropdownContent.addEventListener('mouseleave', function(e) {
+                const rect = this.getBoundingClientRect();
+                // Check if mouse left the dropdown and went more than 50 pixels below it
+                if (e.clientY > rect.bottom + 50) {
+                    this.classList.add('hidden');
+                } else {
+                    responseHideTimeout = setTimeout(() => {
+                        this.classList.add('hidden');
+                    }, 500); // Hide after 500ms delay to allow returning to the dropdown or moreAction
+                }
+            });
+        }
+    });
+
+    function showDeleteConfirmationModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.style.display = 'block';
+    }
+
+    function closeDeleteConfirmationModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.style.display = 'none';
+    }
+
+    function confirmDelete(id) {
+        const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
+
+        const payload = {
+            jobId: @jobInfo.jobId,
+            fileId: id
+        };
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', "@routes.IndividualJobController.deleteResponse()", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Csrf-Token', csrfToken);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
+                if (xhr.responseURL !== "@routes.IndividualJobController.deleteResponse()") {
+                    window.location.href = xhr.responseURL;
+                }
+            } else if (xhr.readyState === 4) {
+                console.error('Failed to delete response.');
+            }
+        };
+        xhr.send(JSON.stringify(payload));
+
+        closeDeleteConfirmationModal();
+    }
+
     let questionCount = 0;
 
     function adjustHeight(textarea) {

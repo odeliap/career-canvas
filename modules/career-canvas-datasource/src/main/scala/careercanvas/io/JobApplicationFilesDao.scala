@@ -10,6 +10,6 @@ trait JobApplicationFilesDao {
 
   def getFilesByJob(userId: Long, jobId: Long): Future[Seq[ApplicationFile]]
 
-  def delete(fileId: Long): Future[Unit]
+  def delete(userId: Long, jobId: Long, fileId: Long): Future[Unit]
 
 }

@@ -178,6 +178,15 @@ class IndividualJobController @Inject()(
     Redirect(routes.IndividualJobController.showDocumentsView(jobInfo))
   }
 
+  def deleteResponse(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
+    val userId = retrieveUserId(request)
+    val jobId = (request.body \ "jobId").as[Long]
+    val fileId = (request.body \ "fileId").as[Long]
+    jobApplicationsService.deleteResponse(userId, jobId, fileId)
+    val jobInfo = jobApplicationsService.getJobById(userId, jobId)
+    Redirect(routes.IndividualJobController.showDocumentsView(jobInfo))
+  }
+
   private def retrieveUserId(request: RequestHeader): String = request.session.data(Global.SESSION_USER_ID)
   private def retrieveUserName(request: RequestHeader): String = request.session.data(Global.SESSION_USER_FULL_NAME)
 

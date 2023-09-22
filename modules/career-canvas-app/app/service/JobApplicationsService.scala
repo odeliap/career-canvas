@@ -118,6 +118,10 @@ class JobApplicationsService @Inject() (
       .waitForResult
   }
 
+  def deleteResponse(userId: String, jobId: Long, fileId: Long): Unit = {
+    jobApplicationFilesDao.delete(userId.toLong, jobId, fileId).waitForResult
+  }
+
   def generateCoverLetter(jobInfo: JobInfo, name: String): Response = {
     jobResponseWriter.generateCoverLetter(jobInfo, name)
   }

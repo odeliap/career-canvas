@@ -4,6 +4,8 @@
     display: flex;
     flex-wrap: wrap;
     padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
 }
 
 .existing-response {
@@ -17,8 +19,6 @@
     border-radius: 5px;
     width: 193px;
     height: 250px;
-    margin-left: 20px;
-    margin-bottom: 20px;
     padding: 5px;
     font-size: 5px;
     box-sizing: border-box;
@@ -32,7 +32,7 @@
 
 .existing-response-title {
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 300;
     margin-bottom: -5px;
 }
 
@@ -40,6 +40,51 @@
     font-size: 12px;
     color: #979797;
     margin-bottom: 20px;
+}
+
+
+.document-action {
+    font-size: 16px;
+    margin-top: -15px;
+    display: flex;
+    justify-content: left;
+}
+
+.document-action-image {
+    width: 18px;
+    height: 18px;
+    margin-right: 15px;
+    margin-top: 15px;
+}
+
+.more-dropdown-content {
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding-top: 10px;
+}
+
+.more-delete-modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.more-delete-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+}
+
+.existing-response-title:hover, .document-action:hover {
+    color: #088FFA;
 }
 
 /* Generate Cover Letter Page */
@@ -55,20 +100,6 @@
 #generateCoverLetterRight {
     margin-top: -20px;
     padding-left: 30px;
-}
-
-.document-action {
-    font-size: 16px;
-    margin-top: -15px;
-    display: flex;
-    justify-content: left;
-}
-
-.document-action-image {
-    width: 18px;
-    height: 18px;
-    margin-right: 15px;
-    margin-top: 15px;
 }
 
 #generateSection {
