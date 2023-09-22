@@ -258,6 +258,10 @@
         loadingPopup.style.display = 'none';
     }
 
+    function getValueOrElse(element, defaultValue) {
+      return element && element.value ? element.value : defaultValue;
+    }
+
     function generateCoverLetter() {
         showLoadingPopup();
 
@@ -268,7 +272,7 @@
 
         const payload = {
             jobInfo: jobInfoJson,
-            resume: selectedResume.value.toString()
+            resume: getValueOrElse(selectedResume, "null").toString()
         };
 
         fetch("@routes.IndividualJobController.generateCoverLetter()", {

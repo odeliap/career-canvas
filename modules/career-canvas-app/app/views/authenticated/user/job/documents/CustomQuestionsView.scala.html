@@ -190,6 +190,10 @@
         questionCount--;
     }
 
+    function getValueOrElse(element, defaultValue) {
+      return element && element.value ? element.value : defaultValue;
+    }
+
     function submitQuestion(id) {
         const questionInput = document.getElementById(`question${id}`);
 
@@ -203,7 +207,7 @@
             const payload = {
                 jobInfo: jobInfoJson,
                 question: questionInput.value,
-                resume: selectedResume.value.toString()
+                resume: getValueOrElse(selectedResume, "null").toString()
             };
             console.log(JSON.stringify(payload));
 
