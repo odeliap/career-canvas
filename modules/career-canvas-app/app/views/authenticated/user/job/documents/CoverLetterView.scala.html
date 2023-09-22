@@ -253,6 +253,14 @@
     function saveCoverLetterWithPrompt() {
         const name = prompt("Please enter a name to save:");
         const csrfToken = "@CSRF.getToken(request).map(_.value).getOrElse("")";
+
+        const existingFileNames = @Html(Json.toJson(applicationFileUrls.map(_.applicationFile.name)).toString);
+
+        if (existingFileNames.includes(name)) {
+            alert("An application file for this job with this name already exists. Please choose a different name.");
+            return;
+        }
+
         if (name) {
             const coverLetterContent = document.getElementById('generatedLetter').value;
 
