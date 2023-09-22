@@ -77,6 +77,10 @@
             <button id="spreadsheetToggleView" class="toggle-view">Spreadsheet View</button>
         </div>
 
+        @if(jobInfos.isEmpty) {
+            @authenticated.user.feed.NoTiles()
+        }
+
         <div id="tilesView">@layouts.TilesView(jobInfos)</div>
         <div id="listView" class="hidden">@layouts.ListView(jobInfos)</div>
         <div id="spreadsheetView" class="hidden">@layouts.SpreadsheetView(jobInfos)</div>

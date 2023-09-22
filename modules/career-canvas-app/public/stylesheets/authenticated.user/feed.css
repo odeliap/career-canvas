@@ -280,6 +280,22 @@ select {
     width: 50vw;
 }
 
+/* No Jobs Found */
+
+.no-jobs-found {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+#noJobsFoundText {
+    margin-top: -60px;
+}
+
+#noJobsFoundTitle {
+    font-size: 22px;
+}
+
 /* Job Tiles View */
 
 #jobTiles {
