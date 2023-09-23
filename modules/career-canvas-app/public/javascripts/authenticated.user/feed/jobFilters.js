@@ -235,6 +235,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.getElementById(toggleId).classList.add('active-toggle-view');
         filterRows();
+
+        document.querySelectorAll('.status-filter').forEach(button => {
+            const filter = button.getAttribute('data-filter');
+            const filterDisplayElementId = `${filter}-count`;
+            const filterDisplayElement = document.getElementById(filterDisplayElementId);
+            filterDisplayElement.classList.remove('highlighted-count-arrow-box');
+        });
     }
 
     tilesViewBtn.addEventListener('click', function() {
