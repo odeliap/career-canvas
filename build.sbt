@@ -89,8 +89,9 @@ lazy val careerCanvasProcessor = (project in file("modules/career-canvas-process
       libraries.aws.s3,
       libraries.mail.sendGrid,
       libraries.mail.javaXSun,
-      libraries.pdf.itext
+      libraries.pdf.itext,
+      libraries.pdf.pdfBox
     )
   ).dependsOn(
-    careerCanvasModel
+    careerCanvasModel, careerCanvasDatasource
   )

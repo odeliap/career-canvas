@@ -2,10 +2,14 @@ package careercanvas.io.processor
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import careercanvas.io.model.job.{ResponseImprovement, JobInfo, Response}
+import careercanvas.io.ResumeDao
+import careercanvas.io.model.job.{JobInfo, Response, ResponseImprovement}
 import careercanvas.io.scraper.Scraper
+import careercanvas.io.storage.StorageService
 import careercanvas.io.util.AwaitResult
 import io.cequence.openaiscala.service.{OpenAIService, OpenAIServiceFactory}
+import org.apache.pdfbox.pdmodel.PDDocument
+import org.apache.pdfbox.text.PDFTextStripper
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
@@ -13,7 +17,9 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class JobResponseWriter @Inject()(
   scraper: Scraper,
-  openAiConnector: OpenAiConnector
+  openAiConnector: OpenAiConnector,
+  storageService: StorageService,
+  resumeDao: ResumeDao
 )(implicit ec: ExecutionContext) extends AwaitResult  {
 
   implicit val materializer: Materializer = Materializer(ActorSystem())
@@ -32,9 +38,22 @@ class JobResponseWriter @Inject()(
   }
 
   def generateResponse(jobInfo: JobInfo, name: String, resumeVersion: Option[Int], task: String): Response = {
+    val resumeContentsOpt = resumeVersion.map( version => getResumeContents(jobInfo.userId, version))
     val jobPostContent = scraper.getPageContent(jobInfo.postUrl)
-    val fullPrompt = resolveFullPrompt(name, jobInfo.company, jobInfo.jobTitle, jobPostContent, task)
+    val fullPrompt = resolveFullPrompt(name, jobInfo.company, jobInfo.jobTitle, jobPostContent, resumeContentsOpt, task)
     promptToResponse(fullPrompt)
+  }
+
+  private def getResumeContents(userId: Long, resumeVersion: Int): String = {
+    val resume = resumeDao.getByVersion(userId, resumeVersion).waitForResult
+    val inputStream = storageService.getInputStream(resume.bucket, resume.prefix)
+    val document = PDDocument.load(inputStream)
+    try {
+      val stripper = new PDFTextStripper()
+      stripper.getText(document)
+    } finally {
+      document.close()
+    }
   }
 
   private def promptToResponse(fullPrompt: String): Response = {
@@ -48,7 +67,7 @@ class JobResponseWriter @Inject()(
     providedImprovementsPrompt + customImprovementPrompt
   }
 
-  private def resolveFullPrompt(name: String, company: String, jobTitle: String, content: String, task: String): String = {
+  private def resolveFullPrompt(name: String, company: String, jobTitle: String, content: String, resume: Option[String], task: String): String = {
     s"""Given the following position details:
        |Applicant Name: $name
        |Job Title: $jobTitle
@@ -57,8 +76,14 @@ class JobResponseWriter @Inject()(
        |
        |Complete the following task: $task
        |
+       |${resolveResumePrompt(resume)}
+       |
        |Please format the response with newline characters suitable for Scala code.
     """.stripMargin
+  }
+
+  private def resolveResumePrompt(resume: Option[String]): String = {
+    resume.map(r => s"Tailor the content to the following applicant resume: $r").getOrElse("")
   }
 
   private def resolveResponseImprovementPrompt(coverLetter: String, improvementPrompts: String): String = {

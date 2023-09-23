@@ -41,6 +41,7 @@ object Dependencies {
 
     object pdf {
       val itextVersion = "5.5.13"
+      val pdfBoxVersion = "2.0.24"
     }
   }
 
@@ -95,6 +96,7 @@ object Dependencies {
     object pdf {
       import versions.pdf._
       val itext = "com.itextpdf" % "itextpdf" % itextVersion
+      val pdfBox = "org.apache.pdfbox" % "pdfbox" % pdfBoxVersion
     }
   }
 

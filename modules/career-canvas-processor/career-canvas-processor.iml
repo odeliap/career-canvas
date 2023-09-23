@@ -10,6 +10,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="career-canvas-datasource" exported="" />
     <orderEntry type="module" module-name="career-canvas-model" exported="" />
     <orderEntry type="library" name="sbt: aopalliance:aopalliance:1.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-annotations:2.11.4:jar" level="project" />
@@ -91,6 +92,8 @@
     <orderEntry type="library" name="sbt: net.codingwell:scala-guice_2.13:5.1.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.apache.httpcomponents:httpclient:4.5.13:jar" level="project" />
     <orderEntry type="library" name="sbt: org.apache.httpcomponents:httpcore:4.4.13:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.pdfbox:fontbox:2.0.24:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.pdfbox:pdfbox:2.0.24:jar" level="project" />
     <orderEntry type="library" name="sbt: org.bouncycastle:bcprov-jdk15on:1.67:jar" level="project" />
     <orderEntry type="library" name="sbt: org.checkerframework:checker-qual:3.8.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.jsoup:jsoup:1.15.3:jar" level="project" />
