@@ -17,7 +17,7 @@
                     <p class="existing-response-title">@coverLetterUrl.applicationFile.name</p>
                     <p class="existing-response-last-update">Updated @utils.TimeUtils.format(coverLetterUrl.applicationFile.lastUpdate)</p>
                     <div class="existing-response-subsection">
-                        <a class="document-action" href="#">
+                        <a class="document-action" href="@routes.DocumentsController.editDocument(coverLetterUrl.applicationFile)">
                             <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/edit.png")" class="document-action-image">
                             <p>Edit</p>
                         </a>
@@ -31,7 +31,7 @@
                         </a>
                         <div class="more-dropdown-content hidden">
                             <a class="document-action" href="javascript:void(0);" onclick="showDeleteConfirmationModal(@coverLetterUrl.applicationFile.fileId)">
-                                <img src="@routes.Assets.versioned("images/common/trash.png")" class="document-action-image">
+                                <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/trash.png")" class="document-action-image">
                                 <p>Delete</p>
                             </a>
                         </div>
@@ -172,12 +172,12 @@
         };
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', "@routes.IndividualJobController.deleteResponse()", true);
+        xhr.open('POST', "@routes.DocumentsController.deleteResponse()", true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.setRequestHeader('Csrf-Token', csrfToken);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
-                if (xhr.responseURL !== "@routes.IndividualJobController.deleteResponse()") {
+                if (xhr.responseURL !== "@routes.DocumentsController.deleteResponse()") {
                     window.location.href = xhr.responseURL;
                 }
             } else if (xhr.readyState === 4) {
@@ -275,7 +275,7 @@
             resume: getValueOrElse(selectedResume, "null").toString()
         };
 
-        fetch("@routes.IndividualJobController.generateCoverLetter()", {
+        fetch("@routes.DocumentsController.generateCoverLetter()", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -335,7 +335,7 @@
             response: content
         };
 
-        fetch("@routes.IndividualJobController.generateResponseImprovement()", {
+        fetch("@routes.DocumentsController.generateResponseImprovement()", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -391,14 +391,14 @@
             };
 
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', "@routes.IndividualJobController.saveCoverLetter()", true);
+            xhr.open('POST', "@routes.DocumentsController.saveCoverLetter()", true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.setRequestHeader('Csrf-Token', csrfToken);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
                     const flashMessage = "Response Saved.";
                     alert(flashMessage);
-                    if (xhr.responseURL !== "@routes.IndividualJobController.saveCoverLetter()") {
+                    if (xhr.responseURL !== "@routes.DocumentsController.saveCoverLetter()") {
                         window.location.href = xhr.responseURL;
                     }
                 } else if (xhr.readyState === 4) {

@@ -29,19 +29,22 @@ GET     /feed/job/star                      controllers.JobFeedController.starJo
 # Individual job pages
 GET     /feed/job                                   controllers.IndividualJobController.showJobView(jobInfo: careercanvas.io.model.job.JobInfo)
 POST    /feed/delete/:jobId                         controllers.IndividualJobController.deleteJob(jobId: Long)
-GET     /feed/job/showDocuments                     controllers.IndividualJobController.showDocumentsView(jobInfo: careercanvas.io.model.job.JobInfo)
 PUT     /feed/job/updateStatus                      controllers.IndividualJobController.updateStatus()
 PUT     /feed/job/updateJobType                     controllers.IndividualJobController.updateJobType()
 PUT     /feed/job/updateNotes                       controllers.IndividualJobController.updateNotes(jobId: Long)
 PUT     /feed/job/updateAbout                       controllers.IndividualJobController.updateAbout(jobId: Long)
 PUT     /feed/job/updateRequirements                controllers.IndividualJobController.updateRequirements(jobId: Long)
 PUT     /feed/job/updateTechStack                   controllers.IndividualJobController.updateTechStack(jobId: Long)
-POST    /feed/job/generateCoverLetter               controllers.IndividualJobController.generateCoverLetter()
-POST    /feed/job/generateResponse                  controllers.IndividualJobController.generateResponse()
-POST    /feed/job/generateResponseImprovement       controllers.IndividualJobController.generateResponseImprovement()
-POST    /feed/job/saveCoverLetter                   controllers.IndividualJobController.saveCoverLetter()
-POST    /feed/job/saveResponse                      controllers.IndividualJobController.saveResponse()
-POST    /feed/job/deleteResponse                    controllers.IndividualJobController.deleteResponse()
+
+# Documents pages
+GET     /feed/job/showDocuments                     controllers.DocumentsController.showDocumentsView(jobInfo: careercanvas.io.model.job.JobInfo)
+POST    /feed/job/generateCoverLetter               controllers.DocumentsController.generateCoverLetter()
+POST    /feed/job/generateResponse                  controllers.DocumentsController.generateResponse()
+POST    /feed/job/generateResponseImprovement       controllers.DocumentsController.generateResponseImprovement()
+POST    /feed/job/saveCoverLetter                   controllers.DocumentsController.saveCoverLetter()
+POST    /feed/job/saveResponse                      controllers.DocumentsController.saveResponse()
+POST    /feed/job/deleteResponse                    controllers.DocumentsController.deleteResponse()
+GET     /feed/job/editDocument                      controllers.DocumentsController.editDocument(applicationFile: careercanvas.io.model.job.ApplicationFile)
 
 # Pages for job statistics
 GET     /jobStats                   controllers.JobStatisticsController.showJobStats()

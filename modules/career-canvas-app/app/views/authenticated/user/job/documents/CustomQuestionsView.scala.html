@@ -30,7 +30,7 @@
                 </a>
                 <div class="more-dropdown-content hidden">
                     <a class="document-action" href="javascript:void(0);" onclick="showDeleteConfirmationModal(@responseUrl.applicationFile.fileId)">
-                        <img src="@routes.Assets.versioned("images/common/trash.png")" class="document-action-image">
+                        <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/trash.png")" class="document-action-image">
                         <p>Delete</p>
                     </a>
                 </div>
@@ -132,12 +132,12 @@
         };
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', "@routes.IndividualJobController.deleteResponse()", true);
+        xhr.open('POST', "@routes.DocumentsController.deleteResponse()", true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.setRequestHeader('Csrf-Token', csrfToken);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
-                if (xhr.responseURL !== "@routes.IndividualJobController.deleteResponse()") {
+                if (xhr.responseURL !== "@routes.DocumentsController.deleteResponse()") {
                     window.location.href = xhr.responseURL;
                 }
             } else if (xhr.readyState === 4) {
@@ -213,7 +213,7 @@
 
             document.getElementById('loadingBtn').style.display = 'block';
 
-            fetch("@routes.IndividualJobController.generateResponse()", {
+            fetch("@routes.DocumentsController.generateResponse()", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -279,14 +279,14 @@
                 };
 
                 var xhr = new XMLHttpRequest();
-                xhr.open('POST', "@routes.IndividualJobController.saveResponse()", true);
+                xhr.open('POST', "@routes.DocumentsController.saveResponse()", true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.setRequestHeader('Csrf-Token', csrfToken);
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
                         const flashMessage = "Response Saved.";
                         alert(flashMessage);
-                        if (xhr.responseURL !== "@routes.IndividualJobController.saveResponse()") {
+                        if (xhr.responseURL !== "@routes.DocumentsController.saveResponse()") {
                             window.location.href = xhr.responseURL;
                         }
                     } else if (xhr.readyState === 4) {

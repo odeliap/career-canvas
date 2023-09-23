@@ -15,6 +15,7 @@
             <button class="toggle-button active" onclick="toggleView('view1')">Cover Letters</button>
             <button class="toggle-button" onclick="toggleView('view2')">Custom Questions</button>
         </div>
+        <hr>
         <div class="view-content" id="view1">@documents.CoverLetterView(jobInfo, resumes, files)</div>
         <div class="view-content" id="view2" style="display: none;">@documents.CustomQuestionsView(jobInfo, resumes, files)</div>
     </div>

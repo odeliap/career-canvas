@@ -328,7 +328,6 @@
     display: flex;
     justify-content: flex-start;
     padding-left: 20px;
-    margin-bottom: 40px;
     gap: 20px;
 }
 
@@ -350,6 +349,11 @@
     border-bottom: 3px solid #7091AD;
     padding-top: 18px;
     color: #3B3B3B;
+}
+
+#documentsPage hr {
+    margin: -1px 20px 40px 20px;
+    border: 0.75px solid #D3D3D3;
 }
 
 .view-content {
