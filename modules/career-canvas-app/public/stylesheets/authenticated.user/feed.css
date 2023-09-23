@@ -345,7 +345,6 @@ select {
 .job-company {
     font-weight: bold;
     font-size: 15px;
-    cursor: pointer;
     transition: color 0.3s ease;
     color: #444444;
 }
@@ -374,7 +373,7 @@ select {
     border: 0.5px solid #DEDEDE;
 }
 
-.metadata, .metadata .status-btn {
+.metadata, .metadata .status-btn, .job-type-btn {
     display: flex;
     justify-content: left;
     align-items: center;
@@ -430,8 +429,12 @@ select {
     font-weight: bold;
 }
 
-#tilesStatusButton {
+#tilesStatusButton, #tilesJobTypeButton {
     background-color: white;
+}
+
+#tilesJobTypeButton {
+    font-size: 12px;
 }
 
 /* Jobs List View */
@@ -503,11 +506,14 @@ select {
     font-family: Helvetica, sans-serif;
 }
 
-.job-list-item-bottom, .job-list-item-bottom .status-btn {
+.job-list-item-bottom, .job-list-item-bottom .status-btn, .job-list-item-bottom .job-type-btn {
     font-size: 12px;
-    margin-top: -15px;
     color: #808080;
     font-weight: 300;
+}
+
+.job-list-item-bottom, .job-list-item-bottom .status-btn {
+    margin-top: -15px;
 }
 
 .job-list-item-status {
@@ -530,8 +536,12 @@ select {
     margin-right: 0;
 }
 
-#listStatusButton {
+#listStatusButton, #listJobTypeButton {
     background-color: white;
+}
+
+#listJobTypeButton {
+    margin-top: 11px;
 }
 
 /* Jobs Spreadsheet View */
@@ -567,8 +577,14 @@ select {
     font-size: 14px;
 }
 
-.spreadsheet-view tbody, #spreadsheetStatusButton {
+.spreadsheet-view tbody, #spreadsheetStatusButton, #spreadsheetJobTypeButton {
     background-color: #f9f9f9;
+}
+
+#spreadsheetStatusButton, #spreadsheetJobTypeButton {
+    color: black;
+    font-weight: 300;
+    font-size: 12px;
 }
 
 #spreadsheetCompany:hover {
@@ -586,13 +602,13 @@ select {
     background-color: #C49E78;
 }
 
-/* Status Dropdown */
+/* Edit Dropdowns */
 
-.status-btn {
+.status-btn, .job-type-btn {
     border: none;
 }
 
-.status-btn:hover {
+.status-btn:hover, .job-type-btn:hover {
     background-color: #e9eff6;
     cursor: pointer;
 }
@@ -657,11 +673,6 @@ select {
 
 .cancel-add:hover {
     background-color: #eeeeee;
-}
-
-.job-view-subtitle:hover {
-    color: #187bcd;
-    border-bottom: 1px solid #187bcd;
 }
 
 /* Pagination */

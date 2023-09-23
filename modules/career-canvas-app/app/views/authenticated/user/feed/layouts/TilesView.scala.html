@@ -81,7 +81,17 @@
             <div class="tile-footer">
                 <div class="job-type">
                     <img src="@routes.Assets.versioned("images/authenticated.user/feed/tile/briefcase.png")" class="footer-icon">
-                    @jobInfo.jobType
+                    <div class="job-type-dropdown">
+                        <button class="job-type-btn" id="tilesJobTypeButton">@jobInfo.jobType.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
+                        <div class="dropdown-menu" id="jobTypeDropdown">
+                            <p class="dropdown-item @(if(jobInfo.jobType.toString == "FullTime") "active-status")" data-id="@jobInfo.jobId" job-type="FullTime">FullTime</p>
+                            <p class="dropdown-item @(if(jobInfo.jobType.toString == "Contract") "active-status")" data-id="@jobInfo.jobId" job-type="Contract">Contract</p>
+                            <p class="dropdown-item @(if(jobInfo.jobType.toString == "PartTime") "active-status")" data-id="@jobInfo.jobId" job-type="PartTime">PartTime</p>
+                            <p class="dropdown-item @(if(jobInfo.jobType.toString == "Internship") "active-status")" data-id="@jobInfo.jobId" job-type="Internship">Internship</p>
+                            <p class="dropdown-item @(if(jobInfo.jobType.toString == "Temporary") "active-status")" data-id="@jobInfo.jobId" job-type="Temporary">Temporary</p>
+                            <p class="dropdown-item @(if(jobInfo.jobType.toString == "Unknown") "active-status")" data-id="@jobInfo.jobId" job-type="Unknown">Unknown</p>
+                        </div>
+                    </div>
                 </div>
                 <a href="@routes.IndividualJobController.showJobView(jobInfo)" class="view-job-button">View Job</a>
             </div>

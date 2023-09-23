@@ -7,6 +7,7 @@ case class UpdateJobInfo(
   userId: Long,
   jobId: Long,
   status: Option[JobStatus],
+  jobType: Option[JobType],
   appSubmissionDate: Option[Timestamp],
   dateAdded: Option[Timestamp],
   starred: Option[Boolean],

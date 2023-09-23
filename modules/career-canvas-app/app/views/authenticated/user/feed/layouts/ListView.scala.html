@@ -49,7 +49,17 @@
             </div>
             <div class="job-list-item-section job-list-item-bottom">
                 <p class="job-list-item-location bottom-list-item">@jobInfo.location</p>
-                <p class="job-list-item-job-type bottom-list-item">@jobInfo.jobType</p>
+                <div class="job-type-dropdown">
+                    <button class="job-type-btn bottom-list-item" id="listJobTypeButton">@jobInfo.jobType.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
+                    <div class="dropdown-menu" id="jobTypeDropdown">
+                        <p class="dropdown-item @(if(jobInfo.jobType.toString == "FullTime") "active-status")" data-id="@jobInfo.jobId" job-type="FullTime">FullTime</p>
+                        <p class="dropdown-item @(if(jobInfo.jobType.toString == "Contract") "active-status")" data-id="@jobInfo.jobId" job-type="Contract">Contract</p>
+                        <p class="dropdown-item @(if(jobInfo.jobType.toString == "PartTime") "active-status")" data-id="@jobInfo.jobId" job-type="PartTime">PartTime</p>
+                        <p class="dropdown-item @(if(jobInfo.jobType.toString == "Internship") "active-status")" data-id="@jobInfo.jobId" job-type="Internship">Internship</p>
+                        <p class="dropdown-item @(if(jobInfo.jobType.toString == "Temporary") "active-status")" data-id="@jobInfo.jobId" job-type="Temporary">Temporary</p>
+                        <p class="dropdown-item @(if(jobInfo.jobType.toString == "Unknown") "active-status")" data-id="@jobInfo.jobId" job-type="Unknown">Unknown</p>
+                    </div>
+                </div>
                 <p class="job-list-item-salary-range bottom-list-item">@jobInfo.salaryRange</p>
                 <div class="job-list-item-status bottom-list-item">
                     <div class="status-dropdown">

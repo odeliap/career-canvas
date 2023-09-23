@@ -31,6 +31,7 @@ GET     /feed/job                                   controllers.IndividualJobCon
 POST    /feed/delete/:jobId                         controllers.IndividualJobController.deleteJob(jobId: Long)
 GET     /feed/job/showDocuments                     controllers.IndividualJobController.showDocumentsView(jobInfo: careercanvas.io.model.job.JobInfo)
 PUT     /feed/job/updateStatus                      controllers.IndividualJobController.updateStatus()
+PUT     /feed/job/updateJobType                     controllers.IndividualJobController.updateJobType()
 PUT     /feed/job/updateNotes                       controllers.IndividualJobController.updateNotes(jobId: Long)
 PUT     /feed/job/updateAbout                       controllers.IndividualJobController.updateAbout(jobId: Long)
 PUT     /feed/job/updateRequirements                controllers.IndividualJobController.updateRequirements(jobId: Long)

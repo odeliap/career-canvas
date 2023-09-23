@@ -53,6 +53,20 @@ class IndividualJobController @Inject()(
     }
   }
 
+  def updateJobType(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
+    val userId = retrieveUserId(request)
+    val jobIdValidation = (request.body \ "jobId").validate[String]
+    val jobTypeValidation = (request.body \ "jobType").validate[JobType]
+
+    (jobIdValidation, jobTypeValidation) match {
+      case (JsSuccess(jobId, _), JsSuccess(jobType, _)) =>
+        jobApplicationsService.updateJobType(userId, jobId, jobType)
+        Ok(Json.obj("success" -> "Updated job type"))
+      case _ =>
+        BadRequest(Json.obj("error" -> "Invalid JSON format"))
+    }
+  }
+
   def updateNotes(jobId: Long): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
     val userId = retrieveUserId(request)
     val jobInfo = jobApplicationsService.getJobById(userId, jobId)

@@ -27,6 +27,7 @@ case class JobInfo(
 
   def patch(updateJobInfo: UpdateJobInfo): JobInfo = {
     this.copy(
+      jobType = updateJobInfo.jobType.getOrElse(this.jobType),
       status = updateJobInfo.status.getOrElse(this.status),
       appSubmissionDate = updateJobInfo.appSubmissionDate.orElse(this.appSubmissionDate),
       dateAdded = updateJobInfo.dateAdded.getOrElse(this.dateAdded),

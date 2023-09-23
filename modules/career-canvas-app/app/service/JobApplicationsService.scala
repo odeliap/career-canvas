@@ -54,12 +54,17 @@ class JobApplicationsService @Inject() (
 
   def starJob(userId: String, jobId: Long): Unit = {
     val starred = getJobById(userId, jobId).starred
-    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId, None, None, None, Option(!starred))
+    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId, None, None, None, None, Option(!starred))
     jobApplicationsDao.updateJobStatus(updateJobInfo)
   }
 
   def updateStatus(userId: String, jobId: String, status: JobStatus): Unit = {
-    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId.toLong, Option(status), Option(Timestamp.valueOf(LocalDateTime.now())), None, None)
+    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId.toLong, Option(status), None, Option(Timestamp.valueOf(LocalDateTime.now())), None, None)
+    jobApplicationsDao.updateJobStatus(updateJobInfo).waitForResult
+  }
+
+  def updateJobType(userId: String, jobId: String, jobType: JobType): Unit = {
+    val updateJobInfo = UpdateJobInfo(userId.toLong, jobId.toLong, None, Option(jobType), Option(Timestamp.valueOf(LocalDateTime.now())), None, None)
     jobApplicationsDao.updateJobStatus(updateJobInfo).waitForResult
   }
 

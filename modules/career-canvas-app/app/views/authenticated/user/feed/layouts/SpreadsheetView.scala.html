@@ -23,7 +23,17 @@
         <tr class="spreadsheet-row job-id-@jobInfo.jobId" data-status="@jobInfo.status.toString" data-company="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.company)}" data-title="@jobInfo.jobTitle" data-lastupdate="@jobInfo.lastUpdate.getTime" data-location="@{"^[a-zA-Z0-9 ]*".r.findFirstIn(jobInfo.location)}" data-starred="@jobInfo.starred.toString.toLowerCase()">
         <td><a href="@routes.IndividualJobController.showJobView(jobInfo)" id="spreadsheetCompany">@jobInfo.company</a></td>
         <td>@jobInfo.jobTitle</td>
-        <td>@jobInfo.jobType</td>
+        <td class="job-type-dropdown" id="spreadsheetJobTypeSection">
+            <button class="job-type-btn" id="spreadsheetJobTypeButton">@jobInfo.jobType.toString.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2")</button>
+            <div class="dropdown-menu">
+                <p class="dropdown-item @(if(jobInfo.jobType.toString == "FullTime") "active-status")" data-id="@jobInfo.jobId" job-type="FullTime">Full Time</p>
+                <p class="dropdown-item @(if(jobInfo.jobType.toString == "Contract") "active-status")" data-id="@jobInfo.jobId" job-type="Contract">Contract</p>
+                <p class="dropdown-item @(if(jobInfo.jobType.toString == "PartTime") "active-status")" data-id="@jobInfo.jobId" job-type="PartTime">Part Time</p>
+                <p class="dropdown-item @(if(jobInfo.jobType.toString == "Internship") "active-status")" data-id="@jobInfo.jobId" job-type="Internship">Internship</p>
+                <p class="dropdown-item @(if(jobInfo.jobType.toString == "Temporary") "active-status")" data-id="@jobInfo.jobId" job-type="Temporary">Temporary</p>
+                <p class="dropdown-item @(if(jobInfo.jobType.toString == "Unknown") "active-status")" data-id="@jobInfo.jobId" job-type="Unknown">Unknown</p>
+            </div>
+        </td>
         <td>@jobInfo.location</td>
         <td>@jobInfo.salaryRange</td>
         <td class="status-dropdown" id="spreadsheetStatusSection">

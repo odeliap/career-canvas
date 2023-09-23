@@ -196,6 +196,70 @@
                 });
             });
 
+            const jobTypeBtns = document.querySelectorAll('.job-type-btn');
+
+            jobTypeBtns.forEach(jobTypeBtn => {
+                const dropdown = jobTypeBtn.nextElementSibling;
+
+                jobTypeBtn.onclick = function(event) {
+                    event.stopPropagation();
+                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+                }
+
+                dropdown.addEventListener('click', function(event) {
+                    if (event.target.classList.contains('dropdown-item')) {
+
+                        const activeJobType = dropdown.querySelector('.active-job-type');
+                        if (activeJobType) {
+                            activeJobType.classList.remove('active-job-type');
+                        }
+
+                        event.target.classList.add('active-job-type');
+
+                        jobTypeBtn.textContent = event.target.textContent;
+                        dropdown.style.display = 'none';
+
+                        const newJobType = event.target.getAttribute('job-type');
+                        const eventJobId = event.target.getAttribute('data-id');
+
+                        const eventJobIdClass = '.job-id-' + eventJobId;
+                        const eventLastUpdateClass = '.lastUpdate' + eventJobId;
+
+                        console.log(eventLastUpdateClass);
+
+                        const payload = {
+                            jobType: newJobType,
+                            jobId: eventJobId
+                        };
+
+                        fetch('@routes.IndividualJobController.updateJobType()', {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Csrf-Token': csrfToken
+                            },
+                            body: JSON.stringify(payload)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            eventJobInfos = document.querySelectorAll(eventJobIdClass);
+                            eventJobInfos.forEach( eventJobInfo => {
+                                eventJobInfo.setAttribute('data-status', newJobType);
+                                eventJobInfo.setAttribute('data-lastupdate', new Date().getTime());
+                            });
+                            eventLastUpdates = document.querySelectorAll(eventLastUpdateClass);
+                            eventLastUpdates.forEach( eventLastUpdate => {
+                                eventLastUpdate.innerHTML = "just now";
+                            });
+                            console.log(data.content);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                });
+            });
+
             window.onclick = function() {
                 const dropdowns = document.querySelectorAll('.dropdown-menu');
                 dropdowns.forEach(dropdown => {
