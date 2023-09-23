@@ -16,7 +16,7 @@
             <p class="existing-response-title">@responseUrl.applicationFile.name</p>
             <p class="existing-response-last-update">Updated @utils.TimeUtils.format(responseUrl.applicationFile.lastUpdate)</p>
             <div class="existing-response-subsection">
-                <a class="document-action" href="#">
+                <a class="document-action" href="@routes.DocumentsController.editDocument(responseUrl.applicationFile)">
                     <img src="@routes.Assets.versioned("images/authenticated.user/job/documents/edit.png")" class="document-action-image">
                     <p>Edit</p>
                 </a>

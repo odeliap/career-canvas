@@ -9,7 +9,12 @@
     <div id="individualJobOverview">
         <div class="individual-job-overview-section" id="individualJobOverviewHeading">
             <div class="individual-job-header-left">
-                <p class="individual-job-view-company">@jobInfo.company</p>
+                <div class="individual-job-header-top">
+                    <p class="individual-job-view-company">@jobInfo.company</p>
+                    <button class="edit-meta-button" id="editHeader">
+                        <img class="edit-button-icon" src="@routes.Assets.versioned("images/authenticated.user/job/edit.png")"> Edit
+                    </button>
+                </div>
                 <div class="individual-job-header-middle">
                     <p class="individual-job-view-title">@jobInfo.jobTitle &mdash;</p>
                     <p class="individual-job-view-location">@jobInfo.location</p>

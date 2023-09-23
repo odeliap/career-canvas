@@ -116,7 +116,27 @@
 
 .individual-job-header-left:hover {
     border: 1px solid #C2B5A8;
-    padding-top:
+}
+
+.individual-job-header-left:hover #editHeader {
+    display: block;
+}
+
+.individual-job-header-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+#editHeader {
+    margin-top: 0;
+    height: 35px;
+    border: none;
+    display: none;
+}
+
+#editHeader:hover {
+    background-color: inherit;
+    cursor: pointer;
 }
 
 .individual-job-header-middle {
