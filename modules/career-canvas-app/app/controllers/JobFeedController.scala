@@ -65,8 +65,13 @@ class JobFeedController @Inject()(
     }
 
     val successFunction = { data: JobPosting =>
-      val baseJobInfo = baseJobInfoResolver.resolve(data.postUrl)
-      Redirect(routes.JobFeedController.showAddJobDetailsForm(baseJobInfo))
+      if (userJobs.length >= 1500) {
+        BadRequest(views.html.authenticated.user.feed.JobFeedDashboardView(jobPostForm, getPostInfoUrl, userJobs, showUrlModal = true))
+          .flashing("error" -> "You've hit the maximum postings limit. Please delete jobs to proceed.")
+      } else {
+        val baseJobInfo = baseJobInfoResolver.resolve(data.postUrl)
+        Redirect(routes.JobFeedController.showAddJobDetailsForm(baseJobInfo))
+      }
     }
 
     val formValidationResult: Form[JobPosting] = jobPostForm.bindFromRequest
