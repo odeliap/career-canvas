@@ -236,12 +236,19 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById(toggleId).classList.add('active-toggle-view');
         filterRows();
 
-        document.querySelectorAll('.status-filter').forEach(button => {
-            const filter = button.getAttribute('data-filter');
-            const filterDisplayElementId = `${filter}-count`;
-            const filterDisplayElement = document.getElementById(filterDisplayElementId);
-            filterDisplayElement.classList.remove('highlighted-count-arrow-box');
-        });
+        if(currentFilter) {
+            document.querySelectorAll('[data-status]').forEach(job => {
+                job.style.display = 'none';
+            });
+
+            document.querySelectorAll(`[data-status="${currentFilter}"]`).forEach(job => {
+                if (job.classList.contains("spreadsheet-row")) {
+                    job.style.display = "table-row";
+                } else {
+                    job.style.display = "block";
+                }
+            });
+        }
     }
 
     tilesViewBtn.addEventListener('click', function() {
