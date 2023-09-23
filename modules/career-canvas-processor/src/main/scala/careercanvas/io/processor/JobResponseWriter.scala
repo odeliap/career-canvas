@@ -4,6 +4,7 @@ import akka.actor.ActorSystem
 import akka.stream.Materializer
 import careercanvas.io.ResumeDao
 import careercanvas.io.model.job.{JobInfo, Response, ResponseImprovement}
+import careercanvas.io.model.user.UserInfo
 import careercanvas.io.scraper.Scraper
 import careercanvas.io.storage.StorageService
 import careercanvas.io.util.AwaitResult
@@ -26,9 +27,9 @@ class JobResponseWriter @Inject()(
 
   val openAiService: OpenAIService = OpenAIServiceFactory()
 
-  def generateCoverLetter(jobInfo: JobInfo, resumeVersion: Option[Int], name: String): Response = {
+  def generateCoverLetter(jobInfo: JobInfo, resumeVersion: Option[Int], userInfo: UserInfo): Response = {
     val task = "Generate a cover letter."
-    generateResponse(jobInfo, name, resumeVersion, task)
+    generateResponse(jobInfo, userInfo, resumeVersion, task)
   }
 
   def improveResponse(coverLetter: String, improvements: Seq[ResponseImprovement], customImprovement: String): Response = {
@@ -37,10 +38,10 @@ class JobResponseWriter @Inject()(
     promptToResponse(fullPrompt)
   }
 
-  def generateResponse(jobInfo: JobInfo, name: String, resumeVersion: Option[Int], task: String): Response = {
+  def generateResponse(jobInfo: JobInfo, userInfo: UserInfo, resumeVersion: Option[Int], task: String): Response = {
     val resumeContentsOpt = resumeVersion.map( version => getResumeContents(jobInfo.userId, version))
     val jobPostContent = scraper.getPageContent(jobInfo.postUrl)
-    val fullPrompt = resolveFullPrompt(name, jobInfo.company, jobInfo.jobTitle, jobPostContent, resumeContentsOpt, task)
+    val fullPrompt = resolveFullPrompt(userInfo, jobInfo.company, jobInfo.jobTitle, jobPostContent, resumeContentsOpt, task)
     promptToResponse(fullPrompt)
   }
 
@@ -67,9 +68,12 @@ class JobResponseWriter @Inject()(
     providedImprovementsPrompt + customImprovementPrompt
   }
 
-  private def resolveFullPrompt(name: String, company: String, jobTitle: String, content: String, resume: Option[String], task: String): String = {
-    s"""Given the following position details:
-       |Applicant Name: $name
+  private def resolveFullPrompt(userInfo: UserInfo, company: String, jobTitle: String, content: String, resume: Option[String], task: String): String = {
+    s"""Given the following applicant and position details:
+       |Applicant Name: ${userInfo.fullName}
+       |Applicant Email: ${userInfo.email}
+       |${resolveApplicantLinks(userInfo)}
+       |
        |Job Title: $jobTitle
        |Company: $company
        |Job Description: $content
@@ -84,6 +88,18 @@ class JobResponseWriter @Inject()(
 
   private def resolveResumePrompt(resume: Option[String]): String = {
     resume.map(r => s"Tailor the content to the following applicant resume: $r").getOrElse("")
+  }
+
+  private def resolveApplicantLinks(userInfo: UserInfo): String = {
+    val linksMap = Map(
+      "LinkedIn" -> userInfo.linkedIn,
+      "GitHub" -> userInfo.gitHub,
+      "Website" -> userInfo.website
+    )
+
+    linksMap.collect {
+      case (platform, Some(link)) if link.trim.nonEmpty => s"$platform: $link"
+    }.mkString("\n\n")
   }
 
   private def resolveResponseImprovementPrompt(coverLetter: String, improvementPrompts: String): String = {

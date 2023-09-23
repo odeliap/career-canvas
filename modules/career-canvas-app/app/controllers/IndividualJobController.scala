@@ -132,13 +132,12 @@ class IndividualJobController @Inject()(
   }
 
   def generateCoverLetter(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
-    val fullName = retrieveUserName(request)
     val jobInfoValidation = (request.body \ "jobInfo").validate[JobInfo]
     val resumeValidation = (request.body \ "resume").validate[String]
 
     (jobInfoValidation, resumeValidation) match {
       case (JsSuccess(jobInfo, _), JsSuccess(resumeVersion, _)) =>
-        val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo, resumeVersion, fullName)
+        val coverLetter = jobApplicationsService.generateCoverLetter(jobInfo, resumeVersion)
         Ok(Json.obj("content" -> coverLetter.content))
       case _ =>
         BadRequest(Json.obj("error" -> "Invalid JSON format"))
@@ -146,14 +145,13 @@ class IndividualJobController @Inject()(
   }
 
   def generateResponse(): Action[JsValue] = authenticatedUserMessagesAction(parse.json) { implicit request =>
-    val fullName = retrieveUserName(request)
     val questionValidation = (request.body \ "question").validate[String]
     val jobInfoValidation = (request.body \ "jobInfo").validate[JobInfo]
     val resumeValidation = (request.body \ "resume").validate[String]
 
     (questionValidation, jobInfoValidation, resumeValidation) match {
       case (JsSuccess(question, _), JsSuccess(jobInfo, _), JsSuccess(resumeVersion, _)) =>
-        val response = jobApplicationsService.generateResponse(jobInfo, fullName, resumeVersion, question)
+        val response = jobApplicationsService.generateResponse(jobInfo, resumeVersion, question)
         Ok(Json.obj("content" -> response.content))
       case _ =>
         BadRequest(Json.obj("error" -> "Invalid JSON format"))

@@ -19,6 +19,7 @@ class JobApplicationsService @Inject() (
   jobApplicationFilesDao: JobApplicationFilesDao,
   jobDescriptionsDao: JobDescriptionsDao,
   resumeDao: ResumeDao,
+  userDao: UserDao,
   jobDescriptionsResolver: JobDescriptionsResolver,
   jobResponseWriter: JobResponseWriter,
   storageService: StorageService,
@@ -133,12 +134,14 @@ class JobApplicationsService @Inject() (
     jobApplicationFilesDao.delete(userId.toLong, jobId, fileId).waitForResult
   }
 
-  def generateCoverLetter(jobInfo: JobInfo, resumeVersion: String, name: String): Response = {
-    jobResponseWriter.generateCoverLetter(jobInfo, stringUtils.stringToOptionInt(resumeVersion), name)
+  def generateCoverLetter(jobInfo: JobInfo, resumeVersion: String): Response = {
+    val userInfo = userDao.getUser(jobInfo.userId).waitForResult.get
+    jobResponseWriter.generateCoverLetter(jobInfo, stringUtils.stringToOptionInt(resumeVersion), userInfo)
   }
 
-  def generateResponse(jobInfo: JobInfo, name: String, resumeVersion: String, question: String): Response = {
-    jobResponseWriter.generateResponse(jobInfo, name, stringUtils.stringToOptionInt(resumeVersion), question)
+  def generateResponse(jobInfo: JobInfo, resumeVersion: String, question: String): Response = {
+    val userInfo = userDao.getUser(jobInfo.userId).waitForResult.get
+    jobResponseWriter.generateResponse(jobInfo, userInfo, stringUtils.stringToOptionInt(resumeVersion), question)
   }
 
   def improveResponse(response: String, improvements: Seq[ResponseImprovement], customImprovement: String): Response = {
