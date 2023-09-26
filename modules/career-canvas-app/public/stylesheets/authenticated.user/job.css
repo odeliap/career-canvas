@@ -85,6 +85,10 @@
     transition: background-color 0.3s ease;
 }
 
+#sidebarToggle:hover {
+    cursor: pointer;
+}
+
 .compressed-sidebar-toggle-button-icon {
     margin-left: 10px;
 }
